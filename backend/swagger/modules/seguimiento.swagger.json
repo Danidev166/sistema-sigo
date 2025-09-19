@@ -1,0 +1,123 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Seguimiento API",
+    "version": "1.0.1"
+  },
+  "tags": [
+    {
+      "name": "Seguimiento",
+      "description": "Operaciones CRUD para la gestión de seguimientos a estudiantes"
+    }
+  ],
+  "paths": {
+    "/api/seguimiento": {
+      "get": {
+        "tags": ["Seguimiento"],
+        "summary": "Listar todos los seguimientos",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": { "description": "Lista de seguimientos" }
+        }
+      },
+      "post": {
+        "tags": ["Seguimiento"],
+        "summary": "Crear un nuevo seguimiento",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Seguimiento" }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Seguimiento creado" }
+        }
+      }
+    },
+    "/api/seguimiento/estudiante/{id}": {
+      "get": {
+        "tags": ["Seguimiento"],
+        "summary": "Obtener seguimientos por estudiante",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "200": { "description": "Seguimientos del estudiante" }
+        }
+      }
+    },
+    "/api/seguimiento/{id}": {
+      "get": {
+        "tags": ["Seguimiento"],
+        "summary": "Obtener seguimiento por ID",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "200": { "description": "Seguimiento encontrado" },
+          "404": { "description": "No encontrado" }
+        }
+      },
+      "put": {
+        "tags": ["Seguimiento"],
+        "summary": "Actualizar seguimiento por ID",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Seguimiento" }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Seguimiento actualizado" }
+        }
+      },
+      "delete": {
+        "tags": ["Seguimiento"],
+        "summary": "Eliminar seguimiento por ID",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "200": { "description": "Seguimiento eliminado" }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Seguimiento": {
+        "type": "object",
+        "properties": {
+          "id_estudiante": { "type": "integer", "example": 1 },
+          "fecha": { "type": "string", "format": "date", "example": "2025-05-10" },
+          "tipo": { "type": "string", "example": "Psicológico" },
+          "descripcion": { "type": "string", "example": "Seguimiento emocional" },
+          "profesional": { "type": "string", "example": "Ps. Juan Pérez" },
+          "subtipo": { "type": "string", "example": "Ansiedad" },
+          "archivo": { "type": "string", "example": "documento.pdf" },
+          "urgencias": { "type": "string", "example": "Alta" }
+        },
+        "required": ["id_estudiante", "fecha", "tipo", "descripcion", "profesional"]
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

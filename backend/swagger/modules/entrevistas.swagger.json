@@ -1,0 +1,161 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Entrevistas API",
+    "version": "1.0.1"
+  },
+  "tags": [
+    {
+      "name": "Entrevistas",
+      "description": "Operaciones CRUD para la gestión de entrevistas con estudiantes"
+    }
+  ],
+  "paths": {
+    "/api/entrevistas": {
+      "get": {
+        "tags": ["Entrevistas"],
+        "summary": "Listar todas las entrevistas",
+        "responses": {
+          "200": { "description": "Lista de entrevistas obtenida exitosamente" }
+        }
+      },
+      "post": {
+        "tags": ["Entrevistas"],
+        "summary": "Registrar nueva entrevista",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Entrevista" }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Entrevista creada exitosamente" }
+        }
+      }
+    },
+    "/api/entrevistas/registrar-desde-agenda/{idAgenda}": {
+      "post": {
+        "tags": ["Entrevistas"],
+        "summary": "Registrar entrevista desde agenda",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "idAgenda", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/EntrevistaDesdeAgenda" }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Entrevista registrada desde Agenda" },
+          "404": { "description": "Agenda no encontrada" }
+        }
+      }
+    },
+    "/api/entrevistas/estudiante/{id}": {
+      "get": {
+        "tags": ["Entrevistas"],
+        "summary": "Listar entrevistas por estudiante",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } },
+          { "name": "estado", "in": "query", "schema": { "type": "string" }, "description": "Filtrar por estado (ej: realizada)" }
+        ],
+        "responses": {
+          "200": { "description": "Lista de entrevistas del estudiante" },
+          "404": { "description": "No se encontraron entrevistas" }
+        }
+      }
+    },
+    "/api/entrevistas/por-mes": {
+      "get": {
+        "tags": ["Entrevistas"],
+        "summary": "Obtener entrevistas por mes",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": { "description": "Estadísticas de entrevistas por mes" }
+        }
+      }
+    },
+    "/api/entrevistas/{id}": {
+      "get": {
+        "tags": ["Entrevistas"],
+        "summary": "Obtener entrevista por ID",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "200": { "description": "Entrevista encontrada" },
+          "404": { "description": "Entrevista no encontrada" }
+        }
+      },
+      "put": {
+        "tags": ["Entrevistas"],
+        "summary": "Actualizar entrevista por ID",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Entrevista" }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Entrevista actualizada exitosamente" },
+          "404": { "description": "Entrevista no encontrada" }
+        }
+      },
+      "delete": {
+        "tags": ["Entrevistas"],
+        "summary": "Eliminar entrevista por ID",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "200": { "description": "Entrevista eliminada exitosamente" },
+          "404": { "description": "Entrevista no encontrada" }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Entrevista": {
+        "type": "object",
+        "properties": {
+          "id_estudiante": { "type": "integer", "example": 9 },
+          "id_orientador": { "type": "integer", "example": 2 },
+          "fecha_entrevista": { "type": "string", "format": "date-time", "example": "2025-05-20T10:00:00" },
+          "motivo": { "type": "string", "example": "Entrevista por baja académica" },
+          "observaciones": { "type": "string", "example": "El estudiante manifestó desmotivación generalizada y problemas de sueño." },
+          "conclusiones": { "type": "string", "example": "Se acordó seguimiento semanal" },
+          "acciones_acordadas": { "type": "string", "example": "Derivar a psicólogo y establecer horario de estudio" },
+          "estado": { "type": "string", "example": "realizada" }
+        },
+        "required": ["id_estudiante", "id_orientador", "fecha_entrevista", "motivo"]
+      },
+      "EntrevistaDesdeAgenda": {
+        "type": "object",
+        "properties": {
+          "observaciones": { "type": "string", "example": "Observaciones de la entrevista" },
+          "conclusiones": { "type": "string", "example": "Conclusiones de la entrevista" },
+          "acciones_acordadas": { "type": "string", "example": "Acciones acordadas" }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

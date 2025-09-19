@@ -1,0 +1,44 @@
+name: Performance Audit
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lighthouse:
+    name: Lighthouse Performance Audit
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        cache-dependency-path: sigo-frontend/package-lock.json
+        
+    - name: Install dependencies
+      working-directory: ./sigo-frontend
+      run: npm ci
+      
+    - name: Build application
+      working-directory: ./sigo-frontend
+      run: npm run build
+      
+    - name: Start preview server
+      working-directory: ./sigo-frontend
+      run: |
+        npm run preview &
+        sleep 10
+        
+    - name: Run Lighthouse CI
+      uses: treosh/lighthouse-ci-action@v10
+      with:
+        configPath: './sigo-frontend/.lighthouserc.json'
+        uploadArtifacts: true
+        temporaryPublicStorage: true

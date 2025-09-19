@@ -1,0 +1,109 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Intervenciones API",
+    "version": "1.0.1"
+  },
+  "tags": [
+    {
+      "name": "Intervenciones",
+      "description": "Operaciones CRUD para la gestión de intervenciones realizadas a estudiantes"
+    }
+  ],
+  "paths": {
+    "/api/intervenciones": {
+      "get": {
+        "tags": ["Intervenciones"],
+        "summary": "Listar todas las intervenciones",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": { "description": "Lista de intervenciones obtenida exitosamente" }
+        }
+      },
+      "post": {
+        "tags": ["Intervenciones"],
+        "summary": "Registrar nueva intervención",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Intervencion" }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Intervención creada exitosamente" }
+        }
+      }
+    },
+    "/api/intervenciones/{id}": {
+      "get": {
+        "tags": ["Intervenciones"],
+        "summary": "Obtener intervención por ID",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Intervención encontrada" },
+          "404": { "description": "Intervención no encontrada" }
+        }
+      },
+      "put": {
+        "tags": ["Intervenciones"],
+        "summary": "Actualizar intervención",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Intervencion" }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Intervención actualizada exitosamente" },
+          "404": { "description": "Intervención no encontrada" }
+        }
+      },
+      "delete": {
+        "tags": ["Intervenciones"],
+        "summary": "Eliminar intervención por ID",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Intervención eliminada exitosamente" },
+          "404": { "description": "Intervención no encontrada" }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Intervencion": {
+        "type": "object",
+        "properties": {
+          "fecha": { "type": "string", "format": "date", "example": "2025-05-11" },
+          "estudianteId": { "type": "integer", "example": 1 },
+          "tipo": { "type": "string", "example": "Psicológica" },
+          "detalle": { "type": "string", "example": "Seguimiento emocional por situación familiar" },
+          "responsable": { "type": "string", "example": "Psicóloga escolar" }
+        },
+        "required": ["fecha", "estudianteId", "tipo", "detalle"]
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

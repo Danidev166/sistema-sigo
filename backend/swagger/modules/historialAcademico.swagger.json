@@ -1,0 +1,122 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Historial Académico API",
+    "version": "1.0.1"
+  },
+  "tags": [
+    {
+      "name": "Historial Académico",
+      "description": "Operaciones CRUD para la gestión del historial académico de estudiantes"
+    }
+  ],
+  "paths": {
+    "/api/historial-academico": {
+      "get": {
+        "tags": ["Historial Académico"],
+        "summary": "Listar todos los historiales académicos",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": { "description": "Lista de historiales académicos obtenida exitosamente" }
+        }
+      },
+      "post": {
+        "tags": ["Historial Académico"],
+        "summary": "Crear historial académico",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/HistorialAcademico" }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Historial académico creado exitosamente" }
+        }
+      }
+    },
+    "/api/historial-academico/estudiante/{id}": {
+      "get": {
+        "tags": ["Historial Académico"],
+        "summary": "Obtener historiales académicos por estudiante",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "anio", "in": "query", "schema": { "type": "integer" }, "description": "Año para filtrar historiales" }
+        ],
+        "responses": {
+          "200": { "description": "Historiales académicos del estudiante" }
+        }
+      }
+    },
+    "/api/historial-academico/{id}": {
+      "get": {
+        "tags": ["Historial Académico"],
+        "summary": "Obtener historial académico por ID",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Historial académico encontrado" },
+          "404": { "description": "Historial académico no encontrado" }
+        }
+      },
+      "put": {
+        "tags": ["Historial Académico"],
+        "summary": "Actualizar historial académico",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/HistorialAcademico" }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Historial académico actualizado exitosamente" },
+          "404": { "description": "Historial académico no encontrado" }
+        }
+      },
+      "delete": {
+        "tags": ["Historial Académico"],
+        "summary": "Eliminar historial académico por ID",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Historial académico eliminado exitosamente" },
+          "404": { "description": "Historial académico no encontrado" }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "HistorialAcademico": {
+        "type": "object",
+        "properties": {
+          "estudianteId": { "type": "integer", "example": 1 },
+          "anio": { "type": "integer", "example": 2024 },
+          "detalle": { "type": "string", "example": "Promovido a 4° medio con desempeño destacado en matemáticas" },
+          "observaciones": { "type": "string", "example": "Recomendación para orientación vocacional" }
+        },
+        "required": ["estudianteId", "anio", "detalle"]
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

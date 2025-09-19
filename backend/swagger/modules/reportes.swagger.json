@@ -1,0 +1,78 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Reportes API",
+    "version": "1.0.1"
+  },
+  "tags": [
+    {
+      "name": "Reportes",
+      "description": "Operaciones para la generación de reportes individuales, generales, gráficos y PDF."
+    }
+  ],
+  "paths": {
+    "/api/reportes/estudiante/{id}": {
+      "get": {
+        "tags": ["Reportes"],
+        "summary": "Obtener reporte resumen por estudiante",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Reporte resumen del estudiante generado exitosamente" },
+          "404": { "description": "Estudiante no encontrado" }
+        }
+      }
+    },
+    "/api/reportes/general": {
+      "get": {
+        "tags": ["Reportes"],
+        "summary": "Obtener reporte general de todos los estudiantes",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": { "description": "Reporte general generado exitosamente" }
+        }
+      }
+    },
+    "/api/reportes/graficos/asistencia-mensual": {
+      "get": {
+        "tags": ["Reportes"],
+        "summary": "Obtener gráfico de asistencia mensual",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": { "description": "Datos de asistencia mensual generados exitosamente" }
+        }
+      }
+    },
+    "/api/reportes/graficos/motivos-entrevistas": {
+      "get": {
+        "tags": ["Reportes"],
+        "summary": "Obtener gráfico de motivos de entrevistas",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": { "description": "Datos de motivos de entrevistas generados exitosamente" }
+        }
+      }
+    },
+    "/api/reportes/generar-pdf": {
+      "get": {
+        "tags": ["Reportes"],
+        "summary": "Generar PDF del reporte",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": { "description": "PDF generado exitosamente" }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

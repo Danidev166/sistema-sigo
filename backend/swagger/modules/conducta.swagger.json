@@ -1,0 +1,121 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Conducta API",
+    "version": "1.0.1"
+  },
+  "tags": [
+    {
+      "name": "Conducta",
+      "description": "Operaciones CRUD para la gestión de la conducta de los estudiantes"
+    }
+  ],
+  "paths": {
+    "/api/conducta": {
+      "get": {
+        "tags": ["Conducta"],
+        "summary": "Listar registros de conducta",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": { "description": "Lista de registros de conducta obtenida exitosamente" }
+        }
+      },
+      "post": {
+        "tags": ["Conducta"],
+        "summary": "Registrar nuevo caso de conducta",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Conducta" }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Registro de conducta creado exitosamente" }
+        }
+      }
+    },
+    "/api/conducta/estudiante/{id}": {
+      "get": {
+        "tags": ["Conducta"],
+        "summary": "Obtener registros de conducta por ID de estudiante",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "200": { "description": "Registros encontrados" }
+        }
+      }
+    },
+    "/api/conducta/{id}": {
+      "get": {
+        "tags": ["Conducta"],
+        "summary": "Obtener registro de conducta por ID",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "200": { "description": "Registro encontrado" },
+          "404": { "description": "Registro no encontrado" }
+        }
+      },
+      "put": {
+        "tags": ["Conducta"],
+        "summary": "Actualizar registro de conducta",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Conducta" }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Registro actualizado exitosamente" },
+          "404": { "description": "Registro no encontrado" }
+        }
+      },
+      "delete": {
+        "tags": ["Conducta"],
+        "summary": "Eliminar registro de conducta por ID",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "200": { "description": "Registro eliminado exitosamente" },
+          "404": { "description": "Registro no encontrado" }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Conducta": {
+        "type": "object",
+        "properties": {
+          "fecha": { "type": "string", "format": "date", "example": "2025-05-11" },
+          "id_estudiante": { "type": "integer", "example": 9 },
+          "observacion": { "type": "string", "example": "Agresión verbal hacia otro alumno en recreo" },
+          "categoria": { "type": "string", "example": "agresividad" }
+        },
+        "required": ["fecha", "id_estudiante", "observacion", "categoria"]
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

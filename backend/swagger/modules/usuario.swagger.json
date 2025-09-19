@@ -1,0 +1,155 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Usuarios API",
+    "version": "1.0.1"
+  },
+  "tags": [
+    {
+      "name": "Usuarios",
+      "description": "Operaciones CRUD para la gestión de usuarios del sistema"
+    }
+  ],
+  "paths": {
+    "/api/usuarios": {
+      "get": {
+        "tags": ["Usuarios"],
+        "summary": "Listar todos los usuarios",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": { "description": "Lista de usuarios obtenida exitosamente" },
+          "401": { "description": "No autorizado" }
+        }
+      },
+      "post": {
+        "tags": ["Usuarios"],
+        "summary": "Crear nuevo usuario",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/UsuarioCrear" }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Usuario creado exitosamente" }
+        }
+      }
+    },
+    "/api/usuarios/{id}": {
+      "get": {
+        "tags": ["Usuarios"],
+        "summary": "Obtener usuario por ID",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Usuario encontrado" },
+          "404": { "description": "Usuario no encontrado" },
+          "401": { "description": "No autorizado" }
+        }
+      },
+      "put": {
+        "tags": ["Usuarios"],
+        "summary": "Actualizar usuario por ID",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/UsuarioActualizar" }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Usuario actualizado exitosamente" },
+          "404": { "description": "Usuario no encontrado" },
+          "401": { "description": "No autorizado" }
+        }
+      },
+      "delete": {
+        "tags": ["Usuarios"],
+        "summary": "Eliminar usuario por ID",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Usuario eliminado exitosamente" },
+          "404": { "description": "Usuario no encontrado" },
+          "401": { "description": "No autorizado" }
+        }
+      }
+    },
+    "/api/usuarios/{id}/estado": {
+      "patch": {
+        "tags": ["Usuarios"],
+        "summary": "Actualizar estado del usuario",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/UsuarioEstado" }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Estado actualizado correctamente" },
+          "400": { "description": "El estado debe ser booleano" },
+          "401": { "description": "No autorizado" }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "UsuarioCrear": {
+        "type": "object",
+        "properties": {
+          "nombre": { "type": "string", "example": "Daniel" },
+          "apellido": { "type": "string", "example": "González" },
+          "rut": { "type": "string", "example": "11.111.111-1" },
+          "email": { "type": "string", "example": "daniel@ejemplo.com" },
+          "password": { "type": "string", "example": "123456" },
+          "rol": { "type": "string", "example": "admin" }
+        },
+        "required": ["nombre", "apellido", "rut", "email", "password", "rol"]
+      },
+      "UsuarioActualizar": {
+        "type": "object",
+        "properties": {
+          "nombre": { "type": "string", "example": "Daniel" },
+          "apellido": { "type": "string", "example": "González" },
+          "rut": { "type": "string", "example": "11.111.111-1" },
+          "email": { "type": "string", "example": "daniel@ejemplo.com" },
+          "rol": { "type": "string", "example": "admin" }
+        },
+        "required": ["nombre", "apellido", "rut", "email", "rol"]
+      },
+      "UsuarioEstado": {
+        "type": "object",
+        "properties": {
+          "estado": { "type": "boolean", "example": true }
+        },
+        "required": ["estado"]
+      }
+    }
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Seguimiento Psicosocial API",
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "Seguimiento Psicosocial",
+      "description": "Operaciones CRUD para la gestión de seguimiento psicosocial de estudiantes"
+    }
+  ],
+  "paths": {
+    "/api/seguimiento-psicosocial": {
+      "get": {
+        "tags": ["Seguimiento Psicosocial"],
+        "summary": "Listar todos los seguimientos psicosociales",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": { "description": "Lista de seguimientos psicosociales obtenida exitosamente" }
+        }
+      },
+      "post": {
+        "tags": ["Seguimiento Psicosocial"],
+        "summary": "Registrar nuevo seguimiento psicosocial",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/SeguimientoPsicosocial" }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Seguimiento psicosocial registrado exitosamente" }
+        }
+      }
+    },
+    "/api/seguimiento-psicosocial/{id}": {
+      "get": {
+        "tags": ["Seguimiento Psicosocial"],
+        "summary": "Obtener seguimiento psicosocial por ID",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Seguimiento psicosocial encontrado" },
+          "404": { "description": "Seguimiento psicosocial no encontrado" }
+        }
+      },
+      "put": {
+        "tags": ["Seguimiento Psicosocial"],
+        "summary": "Actualizar seguimiento psicosocial",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/SeguimientoPsicosocial" }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Seguimiento psicosocial actualizado exitosamente" },
+          "404": { "description": "Seguimiento psicosocial no encontrado" }
+        }
+      },
+      "delete": {
+        "tags": ["Seguimiento Psicosocial"],
+        "summary": "Eliminar seguimiento psicosocial por ID",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Seguimiento psicosocial eliminado exitosamente" },
+          "404": { "description": "Seguimiento psicosocial no encontrado" }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "SeguimientoPsicosocial": {
+        "type": "object",
+        "properties": {
+          "fecha": { "type": "string", "format": "date", "example": "2025-05-11" },
+          "estudianteId": { "type": "integer", "example": 1 },
+          "detalle": { "type": "string", "example": "Apoyo psicológico por situación familiar" },
+          "profesional": { "type": "string", "example": "Psicóloga escolar" }
+        },
+        "required": ["fecha", "estudianteId", "detalle", "profesional"]
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+} 

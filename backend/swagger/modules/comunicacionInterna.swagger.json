@@ -1,0 +1,121 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API de Comunicación Interna",
+    "description": "Endpoints para gestionar la comunicación interna entre usuarios.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    { "url": "http://localhost:3001/api", "description": "Servidor de desarrollo" }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": { "type": "http", "scheme": "bearer", "bearerFormat": "JWT" }
+    },
+    "schemas": {
+      "ComunicacionInterna": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "description": "ID único" },
+          "id_remitente": { "type": "integer", "description": "ID del remitente" },
+          "id_destinatario": { "type": "integer", "description": "ID del destinatario" },
+          "asunto": { "type": "string", "description": "Asunto del mensaje" },
+          "mensaje": { "type": "string", "description": "Mensaje" },
+          "prioridad": { "type": "string", "description": "Prioridad" },
+          "leida": { "type": "boolean", "description": "¿Leída?" },
+          "fecha_envio": { "type": "string", "format": "date-time", "description": "Fecha de envío" },
+          "fecha_lectura": { "type": "string", "format": "date-time", "description": "Fecha de lectura" },
+          "adjuntos": { "type": "string", "description": "Archivos adjuntos" }
+        },
+        "required": ["id_remitente", "id_destinatario", "asunto", "mensaje"]
+      },
+      "ComunicacionInternaResponse": {
+        "type": "object",
+        "properties": {
+          "message": { "type": "string" },
+          "comunicacion": { "$ref": "#/components/schemas/ComunicacionInterna" }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": { "error": { "type": "string" } }
+      }
+    }
+  },
+  "paths": {
+    "/comunicacion-interna": {
+      "get": {
+        "tags": ["Comunicación Interna"],
+        "summary": "Obtener todos los mensajes de comunicación interna",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": { "description": "Lista de mensajes", "content": { "application/json": { "schema": { "type": "array", "items": { "$ref": "#/components/schemas/ComunicacionInterna" } } } } },
+          "401": { "description": "No autorizado", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "500": { "description": "Error interno", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+        }
+      },
+      "post": {
+        "tags": ["Comunicación Interna"],
+        "summary": "Crear mensaje de comunicación interna",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ComunicacionInterna" } } }
+        },
+        "responses": {
+          "201": { "description": "Creado", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ComunicacionInternaResponse" } } } },
+          "400": { "description": "Datos inválidos", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "401": { "description": "No autorizado", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+        }
+      }
+    },
+    "/comunicacion-interna/{id}": {
+      "get": {
+        "tags": ["Comunicación Interna"],
+        "summary": "Obtener mensaje por ID",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "200": { "description": "Mensaje encontrado", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ComunicacionInterna" } } } },
+          "404": { "description": "No encontrado", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "401": { "description": "No autorizado", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+        }
+      },
+      "put": {
+        "tags": ["Comunicación Interna"],
+        "summary": "Actualizar mensaje por ID",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ComunicacionInterna" } } }
+        },
+        "responses": {
+          "200": { "description": "Actualizado", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ComunicacionInternaResponse" } } } },
+          "400": { "description": "Datos inválidos", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "401": { "description": "No autorizado", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+        }
+      },
+      "delete": {
+        "tags": ["Comunicación Interna"],
+        "summary": "Eliminar mensaje por ID",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "200": { "description": "Eliminado", "content": { "application/json": { "schema": { "type": "object", "properties": { "message": { "type": "string" } } } } } },
+          "404": { "description": "No encontrado", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "401": { "description": "No autorizado", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+        }
+      }
+    }
+  },
+  "tags": [
+    { "name": "Comunicación Interna", "description": "Operaciones sobre la comunicación interna entre usuarios" }
+  ]
+} 

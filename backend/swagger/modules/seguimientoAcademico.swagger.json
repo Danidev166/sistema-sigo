@@ -1,0 +1,110 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Seguimiento Académico API",
+    "version": "1.0.1"
+  },
+  "tags": [
+    {
+      "name": "Seguimiento Académico",
+      "description": "Operaciones CRUD para la gestión de seguimiento académico de estudiantes"
+    }
+  ],
+  "paths": {
+    "/api/seguimiento-academico": {
+      "get": {
+        "tags": ["Seguimiento Académico"],
+        "summary": "Listar seguimientos académicos",
+        "responses": {
+          "200": { "description": "Lista de seguimientos académicos obtenida exitosamente" }
+        }
+      },
+      "post": {
+        "tags": ["Seguimiento Académico"],
+        "summary": "Registrar nuevo seguimiento académico",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/SeguimientoAcademico" }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Seguimiento académico registrado exitosamente" }
+        }
+      }
+    },
+    "/api/seguimiento-academico/estudiante/{id}": {
+      "get": {
+        "tags": ["Seguimiento Académico"],
+        "summary": "Obtener seguimientos académicos por estudiante",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } },
+          { "name": "anio", "in": "query", "schema": { "type": "integer" }, "description": "Año para filtrar seguimientos" }
+        ],
+        "responses": {
+          "200": { "description": "Seguimientos académicos del estudiante" }
+        }
+      }
+    },
+    "/api/seguimiento-academico/{id}": {
+      "get": {
+        "tags": ["Seguimiento Académico"],
+        "summary": "Obtener seguimiento académico por ID",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Seguimiento académico encontrado" },
+          "404": { "description": "Seguimiento académico no encontrado" }
+        }
+      },
+      "put": {
+        "tags": ["Seguimiento Académico"],
+        "summary": "Actualizar seguimiento académico",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/SeguimientoAcademico" }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Seguimiento académico actualizado exitosamente" },
+          "404": { "description": "Seguimiento académico no encontrado" }
+        }
+      },
+      "delete": {
+        "tags": ["Seguimiento Académico"],
+        "summary": "Eliminar seguimiento académico por ID",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Seguimiento académico eliminado exitosamente" },
+          "404": { "description": "Seguimiento académico no encontrado" }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "SeguimientoAcademico": {
+        "type": "object",
+        "properties": {
+          "fecha": { "type": "string", "format": "date", "example": "2025-05-11" },
+          "estudianteId": { "type": "integer", "example": 1 },
+          "avance": { "type": "string", "example": "Mejoró en comprensión lectora" },
+          "recomendaciones": { "type": "string", "example": "Refuerzo en matemáticas" },
+          "responsable": { "type": "string", "example": "Docente jefe" }
+        },
+        "required": ["fecha", "estudianteId", "avance"]
+      }
+    }
+  }
+}

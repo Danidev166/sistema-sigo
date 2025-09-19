@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  # Base de datos SQL Server
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: sigo-sqlserver
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=12345678
+      - MSSQL_PID=Express
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    networks:
+      - sigo-network
+
+  # Backend API
+  backend:
+    build: ./backend
+    container_name: sigo-backend
+    environment:
+      - NODE_ENV=production
+      - DB_SERVER=sqlserver
+      - DB_USER=sa
+      - DB_PASSWORD=12345678
+      - DB_NAME=sistema_educacional
+      - DB_PORT=1433
+      - JWT_SECRET=ec11e9e5e0441caf922866776e42ef49bcf9c4e28b7e6b7ab97a61d5eaf3b51e6109a6cf69d12f3530f18f98280847eccc52e44712041205196413b5e050c3c8
+      - PORT=3001
+    ports:
+      - "3001:3001"
+    depends_on:
+      - sqlserver
+    networks:
+      - sigo-network
+
+  # Frontend
+  frontend:
+    build: ./sigo-frontend
+    container_name: sigo-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - sigo-network
+
+volumes:
+  sqlserver_data:
+
+networks:
+  sigo-network:
+    driver: bridge

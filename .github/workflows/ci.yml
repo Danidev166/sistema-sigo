@@ -1,0 +1,115 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  # Job para el frontend
+  frontend:
+    name: Frontend CI
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        cache-dependency-path: sigo-frontend/package-lock.json
+        
+    - name: Install dependencies
+      working-directory: ./sigo-frontend
+      run: npm ci
+      
+    - name: Run linting
+      working-directory: ./sigo-frontend
+      run: npm run lint
+      
+    - name: Run tests
+      working-directory: ./sigo-frontend
+      run: npm run test:run
+      continue-on-error: true
+      
+    - name: Build application
+      working-directory: ./sigo-frontend
+      run: npm run build
+      
+    - name: Security audit
+      working-directory: ./sigo-frontend
+      run: npm run audit
+      continue-on-error: true
+      
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: frontend-build
+        path: sigo-frontend/dist/
+        retention-days: 7
+
+  # Job para el backend
+  backend:
+    name: Backend CI
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        cache-dependency-path: backend/package-lock.json
+        
+    - name: Install dependencies
+      working-directory: ./backend
+      run: npm ci
+      
+    - name: Run linting
+      working-directory: ./backend
+      run: npm run lint || echo "No lint script found"
+      continue-on-error: true
+      
+    - name: Run tests
+      working-directory: ./backend
+      run: npm run test || echo "No test script found"
+      continue-on-error: true
+      
+    - name: Security audit
+      working-directory: ./backend
+      run: npm audit --audit-level=moderate
+      continue-on-error: true
+
+  # Job de deployment (solo en main)
+  deploy:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+    needs: [frontend, backend]
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Download frontend artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: frontend-build
+        path: ./dist
+        
+    - name: Deploy to Vercel
+      uses: amondnet/vercel-action@v25
+      with:
+        vercel-token: ${{ secrets.VERCEL_TOKEN }}
+        vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+        vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+        working-directory: ./dist
+        vercel-args: '--prod'
+

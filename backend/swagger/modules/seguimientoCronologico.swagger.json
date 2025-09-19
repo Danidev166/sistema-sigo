@@ -1,0 +1,124 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API de Seguimiento Cronológico",
+    "description": "Endpoints para gestionar el seguimiento cronológico de estudiantes.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    { "url": "http://localhost:3001/api", "description": "Servidor de desarrollo" }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": { "type": "http", "scheme": "bearer", "bearerFormat": "JWT" }
+    },
+    "schemas": {
+      "SeguimientoCronologico": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "description": "ID único" },
+          "id_estudiante": { "type": "integer", "description": "ID del estudiante" },
+          "fecha": { "type": "string", "format": "date-time", "description": "Fecha de la acción" },
+          "tipo_accion": { "type": "string", "description": "Tipo de acción" },
+          "categoria": { "type": "string", "description": "Categoría" },
+          "descripcion": { "type": "string", "description": "Descripción" },
+          "profesional_responsable": { "type": "string", "description": "Profesional responsable" },
+          "estado": { "type": "string", "description": "Estado" },
+          "observaciones": { "type": "string", "description": "Observaciones" },
+          "archivos_adjuntos": { "type": "string", "description": "Archivos adjuntos" },
+          "prioridad": { "type": "string", "description": "Prioridad" },
+          "fecha_creacion": { "type": "string", "format": "date-time", "description": "Fecha de creación" },
+          "fecha_modificacion": { "type": "string", "format": "date-time", "description": "Fecha de modificación" }
+        },
+        "required": ["id_estudiante", "fecha", "tipo_accion", "categoria", "descripcion", "profesional_responsable"]
+      },
+      "SeguimientoCronologicoResponse": {
+        "type": "object",
+        "properties": {
+          "message": { "type": "string" },
+          "seguimiento": { "$ref": "#/components/schemas/SeguimientoCronologico" }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": { "error": { "type": "string" } }
+      }
+    }
+  },
+  "paths": {
+    "/seguimiento-cronologico": {
+      "get": {
+        "tags": ["Seguimiento Cronológico"],
+        "summary": "Obtener todos los seguimientos cronológicos",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": { "description": "Lista de seguimientos", "content": { "application/json": { "schema": { "type": "array", "items": { "$ref": "#/components/schemas/SeguimientoCronologico" } } } } },
+          "401": { "description": "No autorizado", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "500": { "description": "Error interno", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+        }
+      },
+      "post": {
+        "tags": ["Seguimiento Cronológico"],
+        "summary": "Crear seguimiento cronológico",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/SeguimientoCronologico" } } }
+        },
+        "responses": {
+          "201": { "description": "Creado", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/SeguimientoCronologicoResponse" } } } },
+          "400": { "description": "Datos inválidos", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "401": { "description": "No autorizado", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+        }
+      }
+    },
+    "/seguimiento-cronologico/{id}": {
+      "get": {
+        "tags": ["Seguimiento Cronológico"],
+        "summary": "Obtener seguimiento por ID",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "200": { "description": "Seguimiento encontrado", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/SeguimientoCronologico" } } } },
+          "404": { "description": "No encontrado", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "401": { "description": "No autorizado", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+        }
+      },
+      "put": {
+        "tags": ["Seguimiento Cronológico"],
+        "summary": "Actualizar seguimiento por ID",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/SeguimientoCronologico" } } }
+        },
+        "responses": {
+          "200": { "description": "Actualizado", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/SeguimientoCronologicoResponse" } } } },
+          "400": { "description": "Datos inválidos", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "401": { "description": "No autorizado", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+        }
+      },
+      "delete": {
+        "tags": ["Seguimiento Cronológico"],
+        "summary": "Eliminar seguimiento por ID",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "200": { "description": "Eliminado", "content": { "application/json": { "schema": { "type": "object", "properties": { "message": { "type": "string" } } } } } },
+          "404": { "description": "No encontrado", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "401": { "description": "No autorizado", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+        }
+      }
+    }
+  },
+  "tags": [
+    { "name": "Seguimiento Cronológico", "description": "Operaciones sobre el seguimiento cronológico de estudiantes" }
+  ]
+} 

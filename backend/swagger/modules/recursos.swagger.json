@@ -1,0 +1,212 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Recursos API",
+    "version": "1.0.1"
+  },
+  "tags": [
+    {
+      "name": "Recursos",
+      "description": "Operaciones CRUD para la gestión de recursos institucionales y sus entregas"
+    }
+  ],
+  "paths": {
+    "/api/recursos": {
+      "get": {
+        "tags": ["Recursos"],
+        "summary": "Listar todos los recursos",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": { "description": "Lista de recursos obtenida exitosamente" }
+        }
+      },
+      "post": {
+        "tags": ["Recursos"],
+        "summary": "Registrar nuevo recurso",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/RecursoCrear" }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Recurso registrado exitosamente" }
+        }
+      }
+    },
+    "/api/recursos/entregas": {
+      "get": {
+        "tags": ["Recursos"],
+        "summary": "Listar todas las entregas de recursos",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": { "description": "Lista de entregas obtenida exitosamente" }
+        }
+      },
+      "post": {
+        "tags": ["Recursos"],
+        "summary": "Registrar nueva entrega de recurso",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/EntregaRecurso" }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Entrega registrada exitosamente" }
+        }
+      }
+    },
+    "/api/recursos/entregas/:id": {
+      "get": {
+        "tags": ["Recursos"],
+        "summary": "Obtener entrega por ID",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Entrega encontrada" },
+          "404": { "description": "Entrega no encontrada" }
+        }
+      },
+      "put": {
+        "tags": ["Recursos"],
+        "summary": "Actualizar entrega",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/EntregaRecurso" }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Entrega actualizada exitosamente" },
+          "404": { "description": "Entrega no encontrada" }
+        }
+      },
+      "delete": {
+        "tags": ["Recursos"],
+        "summary": "Eliminar entrega",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Entrega eliminada exitosamente" },
+          "404": { "description": "Entrega no encontrada" }
+        }
+      }
+    },
+    "/api/recursos/entregas/estudiante/:id": {
+      "get": {
+        "tags": ["Recursos"],
+        "summary": "Obtener entregas por estudiante",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Entregas del estudiante" }
+        }
+      }
+    },
+    "/api/recursos/{id}": {
+      "get": {
+        "tags": ["Recursos"],
+        "summary": "Obtener recurso por ID",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Recurso encontrado" },
+          "404": { "description": "Recurso no encontrado" }
+        }
+      },
+      "put": {
+        "tags": ["Recursos"],
+        "summary": "Actualizar recurso existente",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/RecursoActualizar" }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Recurso actualizado exitosamente" },
+          "404": { "description": "Recurso no encontrado" }
+        }
+      },
+      "delete": {
+        "tags": ["Recursos"],
+        "summary": "Eliminar recurso por ID",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Recurso eliminado exitosamente" },
+          "404": { "description": "Recurso no encontrado" }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "RecursoCrear": {
+        "type": "object",
+        "properties": {
+          "nombre": { "type": "string", "example": "Zapatos escolares" },
+          "descripcion": { "type": "string", "example": "Zapatos escolares negros talla 40" },
+          "tipo_recurso": { "type": "string", "example": "Vestuario" }
+        },
+        "required": ["nombre", "descripcion", "tipo_recurso"]
+      },
+      "RecursoActualizar": {
+        "type": "object",
+        "properties": {
+          "nombre": { "type": "string", "example": "Zapatos escolares" },
+          "descripcion": { "type": "string", "example": "Zapatos escolares negros talla 42" },
+          "tipo_recurso": { "type": "string", "example": "Vestuario" }
+        },
+        "required": ["nombre", "descripcion", "tipo_recurso"]
+      },
+      "EntregaRecurso": {
+        "type": "object",
+        "properties": {
+          "id_estudiante": { "type": "integer", "example": 1 },
+          "id_recurso": { "type": "integer", "example": 1 },
+          "fecha_entrega": { "type": "string", "format": "date", "example": "2025-01-15" },
+          "cantidad": { "type": "integer", "example": 1 },
+          "observaciones": { "type": "string", "example": "Entrega realizada" }
+        },
+        "required": ["id_estudiante", "id_recurso", "fecha_entrega", "cantidad"]
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

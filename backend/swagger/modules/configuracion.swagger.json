@@ -1,0 +1,121 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Configuración API",
+    "version": "1.0.1"
+  },
+  "tags": [
+    {
+      "name": "Configuración",
+      "description": "Operaciones para la gestión de configuraciones institucionales, personalización y políticas."
+    }
+  ],
+  "paths": {
+    "/api/configuracion": {
+      "get": {
+        "tags": ["Configuración"],
+        "summary": "Listar todas las configuraciones",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": { "description": "Lista de configuraciones" }
+        }
+      },
+      "post": {
+        "tags": ["Configuración"],
+        "summary": "Crear nueva configuración",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Configuracion" }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Configuración creada correctamente" }
+        }
+      }
+    },
+    "/api/configuracion/tipo/{tipo}": {
+      "get": {
+        "tags": ["Configuración"],
+        "summary": "Obtener configuraciones por tipo",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "in": "path", "name": "tipo", "schema": { "type": "string", "enum": ["institucional", "personalizacion", "politicas"] }, "required": true }
+        ],
+        "responses": {
+          "200": { "description": "Configuraciones del tipo solicitado" },
+          "400": { "description": "Tipo de configuración inválido" },
+          "404": { "description": "No se encontraron configuraciones para el tipo" }
+        }
+      },
+      "put": {
+        "tags": ["Configuración"],
+        "summary": "Actualizar configuraciones por tipo (array de objetos)",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "in": "path", "name": "tipo", "schema": { "type": "string", "enum": ["institucional", "personalizacion", "politicas"] }, "required": true }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": { "$ref": "#/components/schemas/ConfiguracionUpdate" }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Configuración actualizada correctamente" },
+          "400": { "description": "El cuerpo debe ser un array de objetos" }
+        }
+      }
+    },
+    "/api/configuracion/{id}": {
+      "delete": {
+        "tags": ["Configuración"],
+        "summary": "Eliminar configuración",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "in": "path", "name": "id", "schema": { "type": "integer" }, "required": true }
+        ],
+        "responses": {
+          "200": { "description": "Configuración eliminada correctamente" }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Configuracion": {
+        "type": "object",
+        "properties": {
+          "tipo": { "type": "string", "example": "institucional" },
+          "clave": { "type": "string", "example": "nombre_institucion" },
+          "valor": { "type": "string", "example": "Liceo Caupolicán" },
+          "descripcion": { "type": "string", "example": "Nombre completo de la institución" }
+        },
+        "required": ["tipo", "clave", "valor"]
+      },
+      "ConfiguracionUpdate": {
+        "type": "object",
+        "properties": {
+          "clave": { "type": "string", "example": "nombre_institucion" },
+          "valor": { "type": "string", "example": "Nuevo valor" }
+        },
+        "required": ["clave", "valor"]
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

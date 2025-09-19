@@ -1,0 +1,121 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API de Configuración del Sistema",
+    "description": "Endpoints para gestionar la configuración del sistema.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    { "url": "http://localhost:3001/api", "description": "Servidor de desarrollo" }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": { "type": "http", "scheme": "bearer", "bearerFormat": "JWT" }
+    },
+    "schemas": {
+      "ConfiguracionSistema": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "description": "ID único" },
+          "clave": { "type": "string", "description": "Clave de configuración" },
+          "valor": { "type": "string", "description": "Valor de la configuración" },
+          "tipo": { "type": "string", "description": "Tipo de dato" },
+          "descripcion": { "type": "string", "description": "Descripción" },
+          "categoria": { "type": "string", "description": "Categoría" },
+          "editable": { "type": "boolean", "description": "¿Es editable?" },
+          "fecha_creacion": { "type": "string", "format": "date-time", "description": "Fecha de creación" },
+          "fecha_modificacion": { "type": "string", "format": "date-time", "description": "Fecha de modificación" },
+          "modificado_por": { "type": "integer", "description": "ID del usuario que modificó" }
+        },
+        "required": ["clave", "valor"]
+      },
+      "ConfiguracionSistemaResponse": {
+        "type": "object",
+        "properties": {
+          "message": { "type": "string" },
+          "configuracion": { "$ref": "#/components/schemas/ConfiguracionSistema" }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": { "error": { "type": "string" } }
+      }
+    }
+  },
+  "paths": {
+    "/configuracion-sistema": {
+      "get": {
+        "tags": ["Configuración del Sistema"],
+        "summary": "Obtener todas las configuraciones",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": { "description": "Lista de configuraciones", "content": { "application/json": { "schema": { "type": "array", "items": { "$ref": "#/components/schemas/ConfiguracionSistema" } } } } },
+          "401": { "description": "No autorizado", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "500": { "description": "Error interno", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+        }
+      },
+      "post": {
+        "tags": ["Configuración del Sistema"],
+        "summary": "Crear configuración",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ConfiguracionSistema" } } }
+        },
+        "responses": {
+          "201": { "description": "Creado", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ConfiguracionSistemaResponse" } } } },
+          "400": { "description": "Datos inválidos", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "401": { "description": "No autorizado", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+        }
+      }
+    },
+    "/configuracion-sistema/{id}": {
+      "get": {
+        "tags": ["Configuración del Sistema"],
+        "summary": "Obtener configuración por ID",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "200": { "description": "Configuración encontrada", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ConfiguracionSistema" } } } },
+          "404": { "description": "No encontrado", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "401": { "description": "No autorizado", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+        }
+      },
+      "put": {
+        "tags": ["Configuración del Sistema"],
+        "summary": "Actualizar configuración por ID",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ConfiguracionSistema" } } }
+        },
+        "responses": {
+          "200": { "description": "Actualizado", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ConfiguracionSistemaResponse" } } } },
+          "400": { "description": "Datos inválidos", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "401": { "description": "No autorizado", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+        }
+      },
+      "delete": {
+        "tags": ["Configuración del Sistema"],
+        "summary": "Eliminar configuración por ID",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "200": { "description": "Eliminado", "content": { "application/json": { "schema": { "type": "object", "properties": { "message": { "type": "string" } } } } } },
+          "404": { "description": "No encontrado", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } },
+          "401": { "description": "No autorizado", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+        }
+      }
+    }
+  },
+  "tags": [
+    { "name": "Configuración del Sistema", "description": "Operaciones sobre la configuración del sistema" }
+  ]
+} 

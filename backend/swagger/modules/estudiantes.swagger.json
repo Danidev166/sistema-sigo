@@ -1,0 +1,182 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API SIGO PRO - Estudiantes",
+    "version": "1.0.1"
+  },
+  "tags": [
+    {
+      "name": "Estudiantes",
+      "description": "Operaciones CRUD y utilitarias para la gestión de estudiantes"
+    }
+  ],
+  "paths": {
+    "/api/estudiantes": {
+      "get": {
+        "tags": ["Estudiantes"],
+        "summary": "Listar todos los estudiantes",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": { "description": "Lista de estudiantes obtenida exitosamente" }
+        }
+      },
+      "post": {
+        "tags": ["Estudiantes"],
+        "summary": "Registrar nuevo estudiante",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Estudiante" }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Estudiante registrado exitosamente" }
+        }
+      }
+    },
+    "/api/estudiantes/masivo": {
+      "post": {
+        "tags": ["Estudiantes"],
+        "summary": "Registrar estudiantes de forma masiva (JSON)",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": { "$ref": "#/components/schemas/Estudiante" }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Estudiantes registrados correctamente" },
+          "400": { "description": "Error en el formato de datos" }
+        }
+      }
+    },
+    "/api/estudiantes/activos": {
+      "get": {
+        "tags": ["Estudiantes"],
+        "summary": "Listar estudiantes activos",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": { "description": "Lista de estudiantes activos" }
+        }
+      }
+    },
+    "/api/estudiantes/buscar": {
+      "get": {
+        "tags": ["Estudiantes"],
+        "summary": "Buscar estudiante por RUT",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "rut",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "RUT del estudiante a buscar"
+          }
+        ],
+        "responses": {
+          "200": { "description": "Estudiante encontrado" },
+          "404": { "description": "Estudiante no encontrado" }
+        }
+      }
+    },
+    "/api/estudiantes/paginado": {
+      "get": {
+        "tags": ["Estudiantes"],
+        "summary": "Listar estudiantes paginados y con búsqueda",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "page", "in": "query", "schema": { "type": "integer" }, "description": "Página" },
+          { "name": "limit", "in": "query", "schema": { "type": "integer" }, "description": "Cantidad por página" },
+          { "name": "search", "in": "query", "schema": { "type": "string" }, "description": "Texto de búsqueda" }
+        ],
+        "responses": {
+          "200": { "description": "Lista paginada de estudiantes" }
+        }
+      }
+    },
+    "/api/estudiantes/{id}": {
+      "get": {
+        "tags": ["Estudiantes"],
+        "summary": "Obtener estudiante por ID",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Estudiante encontrado" },
+          "404": { "description": "Estudiante no encontrado" }
+        }
+      },
+      "put": {
+        "tags": ["Estudiantes"],
+        "summary": "Actualizar estudiante",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Estudiante" }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Estudiante actualizado exitosamente" },
+          "404": { "description": "Estudiante no encontrado" }
+        }
+      },
+      "delete": {
+        "tags": ["Estudiantes"],
+        "summary": "Eliminar estudiante por ID",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Estudiante eliminado exitosamente" },
+          "404": { "description": "Estudiante no encontrado" }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Estudiante": {
+        "type": "object",
+        "properties": {
+          "nombre": { "type": "string", "example": "Juan" },
+          "apellido": { "type": "string", "example": "Pérez" },
+          "rut": { "type": "string", "example": "12.345.678-9" },
+          "email": { "type": "string", "example": "juan.perez@ejemplo.com" },
+          "telefono": { "type": "string", "example": "+56912345678" },
+          "direccion": { "type": "string", "example": "Av. Principal 123" },
+          "fecha_nacimiento": { "type": "string", "format": "date", "example": "2005-08-20" },
+          "curso": { "type": "string", "example": "3º Medio A" },
+          "especialidad": { "type": "string", "example": "Electricidad" },
+          "situacion_economica": { "type": "string", "example": "Vulnerable" },
+          "estado": { "type": "string", "example": "Activo" }
+        },
+        "required": ["nombre", "apellido", "rut", "email", "telefono", "curso", "especialidad", "estado"]
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

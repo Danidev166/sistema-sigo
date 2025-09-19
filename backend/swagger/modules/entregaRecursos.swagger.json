@@ -1,0 +1,122 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Entrega de Recursos API",
+    "version": "1.0.1"
+  },
+  "tags": [
+    {
+      "name": "Entrega de Recursos",
+      "description": "Operaciones CRUD para la gestión de entrega de recursos a estudiantes"
+    }
+  ],
+  "paths": {
+    "/api/entrega-recursos/entregas": {
+      "get": {
+        "tags": ["Entrega de Recursos"],
+        "summary": "Listar entregas de recursos",
+        "responses": {
+          "200": { "description": "Lista de entregas de recursos obtenida exitosamente" }
+        }
+      },
+      "post": {
+        "tags": ["Entrega de Recursos"],
+        "summary": "Registrar nueva entrega de recurso",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/EntregaRecursoCrear" }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Entrega de recurso registrada exitosamente" },
+          "404": { "description": "El recurso no existe" },
+          "400": { "description": "No hay suficiente cantidad disponible del recurso" }
+        }
+      }
+    },
+    "/api/entrega-recursos/estudiante/{id}": {
+      "get": {
+        "tags": ["Entrega de Recursos"],
+        "summary": "Obtener entregas por estudiante",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Entregas del estudiante" }
+        }
+      }
+    },
+    "/api/entrega-recursos/entregas/{id}": {
+      "get": {
+        "tags": ["Entrega de Recursos"],
+        "summary": "Obtener entrega por ID",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Entrega encontrada" },
+          "404": { "description": "Entrega no encontrada" }
+        }
+      },
+      "put": {
+        "tags": ["Entrega de Recursos"],
+        "summary": "Actualizar entrega de recurso",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/EntregaRecursoActualizar" }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Entrega actualizada exitosamente" },
+          "404": { "description": "Entrega no encontrada" }
+        }
+      },
+      "delete": {
+        "tags": ["Entrega de Recursos"],
+        "summary": "Eliminar entrega por ID",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Entrega eliminada exitosamente" },
+          "404": { "description": "Entrega no encontrada" }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "EntregaRecursoCrear": {
+        "type": "object",
+        "properties": {
+          "id_estudiante": { "type": "integer", "example": 1 },
+          "id_recurso": { "type": "integer", "example": 1 },
+          "cantidad_entregada": { "type": "integer", "example": 1 },
+          "fecha_entrega": { "type": "string", "format": "date", "example": "2025-05-11" },
+          "observaciones": { "type": "string", "example": "Entregado a apoderado" }
+        },
+        "required": ["id_estudiante", "id_recurso", "cantidad_entregada"]
+      },
+      "EntregaRecursoActualizar": {
+        "type": "object",
+        "properties": {
+          "id_estudiante": { "type": "integer", "example": 1 },
+          "id_recurso": { "type": "integer", "example": 1 },
+          "cantidad_entregada": { "type": "integer", "example": 2 },
+          "fecha_entrega": { "type": "string", "format": "date", "example": "2025-05-11" },
+          "observaciones": { "type": "string", "example": "Cambio por talla incorrecta" }
+        },
+        "required": ["id_estudiante", "id_recurso", "cantidad_entregada"]
+      }
+    }
+  }
+}
