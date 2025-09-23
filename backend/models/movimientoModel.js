@@ -1,47 +1,74 @@
 // backend/models/movimientoModel.js
-const { sql, getPool } = require("../config/db");
+const { Pool } = require('pg');
+
+// Configuración de PostgreSQL para Render
+const renderConfig = {
+  user: 'sigo_user',
+  host: 'dpg-d391d4nfte5s73cff6p0-a.oregon-postgres.render.com',
+  database: 'sigo_pro',
+  password: 'qgEyTD5LiGu22qdSOoROC1UFqjGZaxIv',
+  port: 5432,
+  ssl: { rejectUnauthorized: false },
+};
+
+const pool = new Pool(renderConfig);
 
 class MovimientoModel {
   static async registrar(data) {
-    const pool = await getPool();
+    const client = await pool.connect();
     
-    // Normalizar tipo de movimiento: "Entrada" -> "Entrada", "Salida" -> "Salida"
-    const tipo = String(data.tipo_movimiento || "").trim();
-    const tipoNormalizado = tipo.charAt(0).toUpperCase() + tipo.slice(1).toLowerCase();
+    try {
+      await client.query('BEGIN');
+      
+      // Normalizar tipo de movimiento: "Entrada" -> "Entrada", "Salida" -> "Salida"
+      const tipo = String(data.tipo_movimiento || "").trim();
+      const tipoNormalizado = tipo.charAt(0).toUpperCase() + tipo.slice(1).toLowerCase();
 
-    const r = await pool.request()
-      .input("tipo_movimiento", sql.VarChar, tipoNormalizado)
-      .input("id_recurso", sql.Int, data.id_recurso)
-      .input("cantidad", sql.Int, data.cantidad)
-      .input("id_estudiante", sql.Int, data.id_estudiante || null)
-      .input("responsable", sql.VarChar, data.responsable || null)
-      .input("observaciones", sql.VarChar, data.observaciones || null)
-      .query(`
+      // Insertar movimiento
+      const insertQuery = `
         INSERT INTO movimiento_recursos (tipo_movimiento, id_recurso, cantidad, id_estudiante, responsable, observaciones, fecha)
-        VALUES (@tipo_movimiento, @id_recurso, @cantidad, @id_estudiante, @responsable, @observaciones, NOW())
+        VALUES ($1, $2, $3, $4, $5, $6, NOW())
         RETURNING *
-      `);
+      `;
+      
+      const insertValues = [
+        tipoNormalizado,
+        data.id_recurso,
+        data.cantidad,
+        data.id_estudiante || null,
+        data.responsable || null,
+        data.observaciones || null
+      ];
+      
+      const result = await client.query(insertQuery, insertValues);
+      const movimiento = result.rows[0];
 
-    // Actualizar stock del recurso
-    if (tipoNormalizado === "Entrada") {
-      await pool.request()
-        .input("id_recurso", sql.Int, data.id_recurso)
-        .input("cantidad", sql.Int, data.cantidad)
-        .query(`UPDATE recursos SET stock = stock + @cantidad WHERE id = @id_recurso`);
-    } else if (tipoNormalizado === "Salida") {
-      await pool.request()
-        .input("id_recurso", sql.Int, data.id_recurso)
-        .input("cantidad", sql.Int, data.cantidad)
-        .query(`UPDATE recursos SET stock = stock - @cantidad WHERE id = @id_recurso`);
+      // Actualizar stock del recurso
+      if (tipoNormalizado === "Entrada") {
+        await client.query(
+          'UPDATE recursos SET stock = stock + $1 WHERE id = $2',
+          [data.cantidad, data.id_recurso]
+        );
+      } else if (tipoNormalizado === "Salida") {
+        await client.query(
+          'UPDATE recursos SET stock = stock - $1 WHERE id = $2',
+          [data.cantidad, data.id_recurso]
+        );
+      }
+
+      await client.query('COMMIT');
+      return movimiento;
+      
+    } catch (error) {
+      await client.query('ROLLBACK');
+      throw error;
+    } finally {
+      client.release();
     }
-
-    return r.recordset[0];
   }
 
-  // 👇 ESTA FUNCIÓN TE FALTABA
   static async obtenerTodos() {
-    const pool = await getPool();
-    const r = await pool.request().query(`
+    const query = `
       SELECT m.id, 
              m.fecha, 
              m.tipo_movimiento, 
@@ -60,125 +87,158 @@ class MovimientoModel {
       JOIN recursos r ON m.id_recurso = r.id
       LEFT JOIN estudiantes e ON m.id_estudiante = e.id
       ORDER BY m.fecha DESC, m.id DESC
-    `);
-    return r.recordset;
+    `;
+    
+    const result = await pool.query(query);
+    return result.rows;
+  }
+
+  static async obtenerPorId(id) {
+    const query = `
+      SELECT m.*, 
+             r.nombre AS recurso,
+             r.tipo_recurso,
+             e.nombre AS estudiante_nombre,
+             e.apellido AS estudiante_apellido
+      FROM movimiento_recursos m
+      JOIN recursos r ON m.id_recurso = r.id
+      LEFT JOIN estudiantes e ON m.id_estudiante = e.id
+      WHERE m.id = $1
+    `;
+    
+    const result = await pool.query(query, [id]);
+    return result.rows[0] || null;
   }
 
   static async actualizar(id, data) {
-    const pool = await getPool();
-    const tx = pool.transaction();
+    const client = await pool.connect();
     
     try {
-      await tx.begin();
+      await client.query('BEGIN');
 
-      // Obtener el movimiento actual para revertir el stock
-      const movimientoActual = await tx.request()
-        .input('id', sql.Int, id)
-        .query(`SELECT * FROM movimiento_recursos WHERE id = @id`);
+      // Obtener el movimiento original para revertir el stock
+      const movimientoOriginal = await client.query(
+        'SELECT * FROM movimiento_recursos WHERE id = $1',
+        [id]
+      );
 
-      if (movimientoActual.recordset.length === 0) {
+      if (movimientoOriginal.rows.length === 0) {
         throw new Error('Movimiento no encontrado');
       }
 
-      const mov = movimientoActual.recordset[0];
-      const tipoAnterior = mov.tipo_movimiento;
-      const cantidadAnterior = mov.cantidad;
+      const movOriginal = movimientoOriginal.rows[0];
 
-      // Revertir el stock anterior
-      if (tipoAnterior === "Entrada") {
-        await tx.request()
-          .input("id_recurso", sql.Int, mov.id_recurso)
-          .input("cantidad", sql.Int, cantidadAnterior)
-          .query(`UPDATE recursos SET stock = stock - @cantidad WHERE id = @id_recurso`);
-      } else if (tipoAnterior === "Salida") {
-        await tx.request()
-          .input("id_recurso", sql.Int, mov.id_recurso)
-          .input("cantidad", sql.Int, cantidadAnterior)
-          .query(`UPDATE recursos SET stock = stock + @cantidad WHERE id = @id_recurso`);
+      // Revertir el stock del movimiento original
+      if (movOriginal.tipo_movimiento === "Entrada") {
+        await client.query(
+          'UPDATE recursos SET stock = stock - $1 WHERE id = $2',
+          [movOriginal.cantidad, movOriginal.id_recurso]
+        );
+      } else if (movOriginal.tipo_movimiento === "Salida") {
+        await client.query(
+          'UPDATE recursos SET stock = stock + $1 WHERE id = $2',
+          [movOriginal.cantidad, movOriginal.id_recurso]
+        );
       }
+
+      // Normalizar tipo de movimiento
+      const tipo = String(data.tipo_movimiento || "").trim();
+      const tipoNormalizado = tipo.charAt(0).toUpperCase() + tipo.slice(1).toLowerCase();
 
       // Actualizar el movimiento
-      const r = await tx.request()
-        .input('id', sql.Int, id)
-        .input('tipo_movimiento', sql.VarChar(30), data.tipo_movimiento)
-        .input('cantidad', sql.Int, data.cantidad)
-        .input('observaciones', sql.Text, data.observaciones || null)
-        .input('id_estudiante', sql.Int, data.id_estudiante || null)
-        .input('responsable', sql.VarChar(100), data.responsable || null)
-        .query(`
-          UPDATE movimiento_recursos 
-          SET tipo_movimiento = @tipo_movimiento,
-              cantidad = @cantidad,
-              observaciones = @observaciones,
-              id_estudiante = @id_estudiante,
-              responsable = @responsable
-          WHERE id = @id
-          RETURNING *
-        `);
+      const updateQuery = `
+        UPDATE movimiento_recursos 
+        SET tipo_movimiento = $1,
+            id_recurso = $2,
+            cantidad = $3,
+            id_estudiante = $4,
+            responsable = $5,
+            observaciones = $6
+        WHERE id = $7
+        RETURNING *
+      `;
+      
+      const updateValues = [
+        tipoNormalizado,
+        data.id_recurso,
+        data.cantidad,
+        data.id_estudiante || null,
+        data.responsable || null,
+        data.observaciones || null,
+        id
+      ];
+      
+      const result = await client.query(updateQuery, updateValues);
 
       // Aplicar el nuevo stock
-      const tipoNormalizado = data.tipo_movimiento.charAt(0).toUpperCase() + data.tipo_movimiento.slice(1).toLowerCase();
       if (tipoNormalizado === "Entrada") {
-        await tx.request()
-          .input("id_recurso", sql.Int, mov.id_recurso)
-          .input("cantidad", sql.Int, data.cantidad)
-          .query(`UPDATE recursos SET stock = stock + @cantidad WHERE id = @id_recurso`);
+        await client.query(
+          'UPDATE recursos SET stock = stock + $1 WHERE id = $2',
+          [data.cantidad, data.id_recurso]
+        );
       } else if (tipoNormalizado === "Salida") {
-        await tx.request()
-          .input("id_recurso", sql.Int, mov.id_recurso)
-          .input("cantidad", sql.Int, data.cantidad)
-          .query(`UPDATE recursos SET stock = stock - @cantidad WHERE id = @id_recurso`);
+        await client.query(
+          'UPDATE recursos SET stock = stock - $1 WHERE id = $2',
+          [data.cantidad, data.id_recurso]
+        );
       }
 
-      await tx.commit();
-      return r.recordset[0];
+      await client.query('COMMIT');
+      return result.rows[0];
+      
     } catch (error) {
-      await tx.rollback();
+      await client.query('ROLLBACK');
       throw error;
+    } finally {
+      client.release();
     }
   }
 
   static async eliminar(id) {
-    const pool = await getPool();
-    const tx = pool.transaction();
+    const client = await pool.connect();
     
     try {
-      await tx.begin();
+      await client.query('BEGIN');
 
       // Obtener el movimiento para revertir el stock
-      const movimiento = await tx.request()
-        .input('id', sql.Int, id)
-        .query(`SELECT * FROM movimiento_recursos WHERE id = @id`);
+      const movimiento = await client.query(
+        'SELECT * FROM movimiento_recursos WHERE id = $1',
+        [id]
+      );
 
-      if (movimiento.recordset.length === 0) {
+      if (movimiento.rows.length === 0) {
         throw new Error('Movimiento no encontrado');
       }
 
-      const mov = movimiento.recordset[0];
+      const mov = movimiento.rows[0];
 
       // Revertir el stock
       if (mov.tipo_movimiento === "Entrada") {
-        await tx.request()
-          .input("id_recurso", sql.Int, mov.id_recurso)
-          .input("cantidad", sql.Int, mov.cantidad)
-          .query(`UPDATE recursos SET stock = stock - @cantidad WHERE id = @id_recurso`);
+        await client.query(
+          'UPDATE recursos SET stock = stock - $1 WHERE id = $2',
+          [mov.cantidad, mov.id_recurso]
+        );
       } else if (mov.tipo_movimiento === "Salida") {
-        await tx.request()
-          .input("id_recurso", sql.Int, mov.id_recurso)
-          .input("cantidad", sql.Int, mov.cantidad)
-          .query(`UPDATE recursos SET stock = stock + @cantidad WHERE id = @id_recurso`);
+        await client.query(
+          'UPDATE recursos SET stock = stock + $1 WHERE id = $2',
+          [mov.cantidad, mov.id_recurso]
+        );
       }
 
       // Eliminar el movimiento
-      await tx.request()
-        .input('id', sql.Int, id)
-        .query(`DELETE FROM movimiento_recursos WHERE id = @id`);
+      await client.query(
+        'DELETE FROM movimiento_recursos WHERE id = $1',
+        [id]
+      );
 
-      await tx.commit();
+      await client.query('COMMIT');
       return mov;
+      
     } catch (error) {
-      await tx.rollback();
+      await client.query('ROLLBACK');
       throw error;
+    } finally {
+      client.release();
     }
   }
 }

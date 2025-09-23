@@ -1,14 +1,55 @@
 // backend/controller/reportesMejoradoController.js
-const { getPool } = require("../config/db");
+const { Pool } = require('pg');
 const logger = require("../utils/logger");
 
+// Configuración de PostgreSQL para Render
+const renderConfig = {
+  user: 'sigo_user',
+  host: 'dpg-d391d4nfte5s73cff6p0-a.oregon-postgres.render.com',
+  database: 'sigo_pro',
+  password: 'qgEyTD5LiGu22qdSOoROC1UFqjGZaxIv',
+  port: 5432,
+  ssl: { rejectUnauthorized: false },
+};
+
+const pool = new Pool(renderConfig);
+
 class ReportesMejoradoController {
+  
+  // 📊 Dashboard principal
+  static async dashboard(req, res, next) {
+    try {
+      // Obtener estadísticas generales
+      const estudiantesQuery = 'SELECT COUNT(*) as total FROM estudiantes';
+      const entrevistasQuery = 'SELECT COUNT(*) as total FROM entrevistas';
+      const evaluacionesQuery = 'SELECT COUNT(*) as total FROM evaluaciones_vocacionales';
+      const recursosQuery = 'SELECT COUNT(*) as total FROM recursos';
+      
+      const [estudiantes, entrevistas, evaluaciones, recursos] = await Promise.all([
+        pool.query(estudiantesQuery),
+        pool.query(entrevistasQuery),
+        pool.query(evaluacionesQuery),
+        pool.query(recursosQuery)
+      ]);
+      
+      res.json({
+        estudiantes: estudiantes.rows[0].total,
+        entrevistas: entrevistas.rows[0].total,
+        evaluaciones: evaluaciones.rows[0].total,
+        recursos: recursos.rows[0].total,
+        timestamp: new Date().toISOString()
+      });
+      
+    } catch (error) {
+      logger.error("❌ Error en dashboard:", error);
+      next(error);
+    }
+  }
   
   // 📊 Reporte de Estudiantes por Curso
   static async estudiantesPorCurso(req, res, next) {
     try {
       const { curso, estado, fecha_desde, fecha_hasta } = req.query;
-      const pool = await getPool();
       
       let sql = `
         SELECT 
@@ -51,15 +92,34 @@ class ReportesMejoradoController {
         WHERE 1=1
       `;
       
-      if (curso) sql += ` AND e.curso = '${curso}'`;
-      if (estado) sql += ` AND e.estado = '${estado}'`;
-      if (fecha_desde) sql += ` AND e.fecha_registro >= '${fecha_desde}'`;
-      if (fecha_hasta) sql += ` AND e.fecha_registro <= '${fecha_hasta}'`;
+      const params = [];
+      let paramCount = 0;
       
-      sql += ` ORDER BY e.curso, e.nombre, e.apellido`;
+      if (curso) {
+        paramCount++;
+        sql += ` AND e.curso = $${paramCount}`;
+        params.push(curso);
+      }
+      if (estado) {
+        paramCount++;
+        sql += ` AND e.estado = $${paramCount}`;
+        params.push(estado);
+      }
+      if (fecha_desde) {
+        paramCount++;
+        sql += ` AND e.fecha_registro >= $${paramCount}`;
+        params.push(fecha_desde);
+      }
+      if (fecha_hasta) {
+        paramCount++;
+        sql += ` AND e.fecha_registro <= $${paramCount}`;
+        params.push(fecha_hasta);
+      }
       
-      const result = await pool.request().query(sql);
-      res.json(result.recordset);
+      sql += ` ORDER BY e.curso, asistencia_porcentaje DESC`;
+      
+      const result = await pool.query(sql, params);
+      res.json(result.rows);
       
     } catch (error) {
       logger.error("❌ Error en estudiantesPorCurso:", error);
@@ -67,55 +127,30 @@ class ReportesMejoradoController {
     }
   }
 
-  // 📈 Reporte Institucional por Curso
+  // 📊 Reporte Institucional
   static async reporteInstitucional(req, res, next) {
     try {
       const pool = await getPool();
       
       const sql = `
         SELECT 
-          e.curso,
-          COUNT(*) as total_estudiantes,
-          COUNT(CASE WHEN e.estado = 'activo' THEN 1 END) as estudiantes_activos,
-          COUNT(CASE WHEN e.estado = 'inactivo' THEN 1 END) as estudiantes_inactivos,
-          COUNT(CASE WHEN e.estado = 'egresado' THEN 1 END) as estudiantes_egresados,
-          -- Calcular promedio de asistencia real
-          COALESCE(
-            (SELECT ROUND(AVG(porcentaje_asistencia)::numeric, 2)
-            FROM (
-              SELECT 
-                (COUNT(CASE WHEN a.tipo = 'Presente' THEN 1 END)::float / 
-                 NULLIF(COUNT(*), 0)) * 100 as porcentaje_asistencia
-              FROM asistencia a 
-              INNER JOIN estudiantes est ON a.id_estudiante = est.id
-              WHERE est.curso = e.curso 
-              AND EXTRACT(YEAR FROM a.fecha) = EXTRACT(YEAR FROM CURRENT_DATE)
-              GROUP BY a.id_estudiante
-            ) as asistencia_por_estudiante
-            ), 0
-          ) as promedio_asistencia,
-          ROUND(AVG(COALESCE(ha.promedio_general, 0))::numeric, 2) as promedio_academico,
-          COUNT(CASE WHEN e.situacion_economica = 'baja' THEN 1 END) as situacion_economica_baja,
-          COUNT(CASE WHEN e.situacion_economica = 'media' THEN 1 END) as situacion_economica_media,
-          COUNT(CASE WHEN e.situacion_economica = 'alta' THEN 1 END) as situacion_economica_alta,
-          -- Conteos de actividades
-          (SELECT COUNT(*) FROM entrevistas ent 
-           INNER JOIN estudiantes est ON ent.id_estudiante = est.id 
-           WHERE est.curso = e.curso) as entrevistas_realizadas,
-          (SELECT COUNT(*) FROM intervenciones i 
-           INNER JOIN estudiantes est ON i.id_estudiante = est.id 
-           WHERE est.curso = e.curso) as intervenciones_activas,
-          (SELECT COUNT(*) FROM entrega_recursos er 
-           INNER JOIN estudiantes est ON er.id_estudiante = est.id 
-           WHERE est.curso = e.curso) as recursos_entregados
+          COUNT(DISTINCT e.id) as total_estudiantes,
+          COUNT(DISTINCT CASE WHEN e.estado = 'Activo' THEN e.id END) as estudiantes_activos,
+          COUNT(DISTINCT ent.id) as total_entrevistas,
+          COUNT(DISTINCT ev.id) as total_evaluaciones,
+          COUNT(DISTINCT r.id) as total_recursos,
+          ROUND(AVG(ha.promedio_general)::numeric, 2) as promedio_general,
+          COUNT(DISTINCT a.id) as total_asistencias
         FROM estudiantes e
+        LEFT JOIN entrevistas ent ON e.id = ent.id_estudiante
+        LEFT JOIN evaluaciones_vocacionales ev ON e.id = ev.id_estudiante
+        LEFT JOIN recursos r ON 1=1
         LEFT JOIN historial_academico ha ON e.id = ha.id_estudiante
-        GROUP BY e.curso
-        ORDER BY e.curso
+        LEFT JOIN asistencia a ON e.id = a.id_estudiante
       `;
       
-      const result = await pool.request().query(sql);
-      res.json(result.recordset);
+      const result = await pool.query(sql);
+      res.json(result.rows[0]);
       
     } catch (error) {
       logger.error("❌ Error en reporteInstitucional:", error);
@@ -127,7 +162,6 @@ class ReportesMejoradoController {
   static async reporteAsistencia(req, res, next) {
     try {
       const { curso, fecha_desde, fecha_hasta } = req.query;
-      const pool = await getPool();
       
       let sql = `
         SELECT 
@@ -166,14 +200,29 @@ class ReportesMejoradoController {
         WHERE 1=1
       `;
       
-      if (curso) sql += ` AND e.curso = '${curso}'`;
-      if (fecha_desde) sql += ` AND e.fecha_registro >= '${fecha_desde}'`;
-      if (fecha_hasta) sql += ` AND e.fecha_registro <= '${fecha_hasta}'`;
+      const params = [];
+      let paramCount = 0;
+      
+      if (curso) {
+        paramCount++;
+        sql += ` AND e.curso = $${paramCount}`;
+        params.push(curso);
+      }
+      if (fecha_desde) {
+        paramCount++;
+        sql += ` AND e.fecha_registro >= $${paramCount}`;
+        params.push(fecha_desde);
+      }
+      if (fecha_hasta) {
+        paramCount++;
+        sql += ` AND e.fecha_registro <= $${paramCount}`;
+        params.push(fecha_hasta);
+      }
       
       sql += ` ORDER BY e.curso, asistencia_porcentaje DESC`;
       
-      const result = await pool.request().query(sql);
-      res.json(result.recordset);
+      const result = await pool.query(sql, params);
+      res.json(result.rows);
       
     } catch (error) {
       logger.error("❌ Error en reporteAsistencia:", error);
@@ -181,79 +230,25 @@ class ReportesMejoradoController {
     }
   }
 
-  // 📊 Dashboard con KPIs
-  static async dashboardKPIs(req, res, next) {
-    try {
-      const pool = await getPool();
-      
-      const queries = {
-        totalEstudiantes: "SELECT COUNT(*) as total FROM estudiantes",
-        estudiantesActivos: "SELECT COUNT(*) as total FROM estudiantes WHERE estado = 'activo'",
-        entrevistasMes: `
-          SELECT COUNT(*) as total 
-          FROM entrevistas 
-          WHERE EXTRACT(MONTH FROM fecha_entrevista) = EXTRACT(MONTH FROM CURRENT_DATE)
-          AND EXTRACT(YEAR FROM fecha_entrevista) = EXTRACT(YEAR FROM CURRENT_DATE)
-        `,
-        intervencionesMes: `
-          SELECT COUNT(*) as total 
-          FROM intervenciones 
-          WHERE EXTRACT(MONTH FROM fecha) = EXTRACT(MONTH FROM CURRENT_DATE)
-          AND EXTRACT(YEAR FROM fecha) = EXTRACT(YEAR FROM CURRENT_DATE)
-        `,
-        recursosEntregados: "SELECT COUNT(*) as total FROM entrega_recursos",
-        promedioAsistencia: `
-          SELECT COALESCE(ROUND(AVG(porcentaje_asistencia)::numeric, 2), 0) as promedio
-          FROM (
-            SELECT 
-              id_estudiante,
-              (COUNT(CASE WHEN tipo = 'Presente' THEN 1 END)::float / 
-               NULLIF(COUNT(*), 0)) * 100 as porcentaje_asistencia
-            FROM asistencia 
-            WHERE EXTRACT(YEAR FROM fecha) = EXTRACT(YEAR FROM CURRENT_DATE)
-            GROUP BY id_estudiante
-          ) as asistencia_por_estudiante
-        `
-      };
-      
-      const results = {};
-      for (const [key, query] of Object.entries(queries)) {
-        const result = await pool.request().query(query);
-        results[key] = result.recordset[0].total || result.recordset[0].promedio || 0;
-      }
-      
-      res.json(results);
-      
-    } catch (error) {
-      logger.error("❌ Error en dashboardKPIs:", error);
-      next(error);
-    }
-  }
-
-  // 📈 Gráfico de Asistencia por Mes
+  // 📈 Gráfico de Asistencia Mensual
   static async graficoAsistenciaMensual(req, res, next) {
     try {
-      const pool = await getPool();
-      
       const sql = `
         SELECT 
           EXTRACT(MONTH FROM fecha) as mes,
           EXTRACT(YEAR FROM fecha) as año,
-          COUNT(*) as total_registros,
           COUNT(CASE WHEN tipo = 'Presente' THEN 1 END) as presentes,
-          COUNT(CASE WHEN tipo IN ('Ausente', 'Justificada') THEN 1 END) as ausentes,
-          ROUND(
-            ((COUNT(CASE WHEN tipo = 'Presente' THEN 1 END)::float / COUNT(*)) * 100)::numeric, 
-            2
-          ) as porcentaje_asistencia
+          COUNT(CASE WHEN tipo = 'Ausente' THEN 1 END) as ausentes,
+          COUNT(CASE WHEN tipo = 'Justificada' THEN 1 END) as justificadas,
+          COUNT(*) as total
         FROM asistencia
         WHERE EXTRACT(YEAR FROM fecha) = EXTRACT(YEAR FROM CURRENT_DATE)
         GROUP BY EXTRACT(MONTH FROM fecha), EXTRACT(YEAR FROM fecha)
         ORDER BY mes
       `;
       
-      const result = await pool.request().query(sql);
-      res.json(result.recordset);
+      const result = await pool.query(sql);
+      res.json(result.rows);
       
     } catch (error) {
       logger.error("❌ Error en graficoAsistenciaMensual:", error);
@@ -264,20 +259,18 @@ class ReportesMejoradoController {
   // 📊 Gráfico de Motivos de Entrevistas
   static async graficoMotivosEntrevistas(req, res, next) {
     try {
-      const pool = await getPool();
-      
       const sql = `
         SELECT 
           motivo,
-          COUNT(*) as cantidad,
-          ROUND(((COUNT(*)::float / (SELECT COUNT(*) FROM entrevistas)) * 100)::numeric, 2) as porcentaje
+          COUNT(*) as cantidad
         FROM entrevistas
+        WHERE motivo IS NOT NULL
         GROUP BY motivo
         ORDER BY cantidad DESC
       `;
       
-      const result = await pool.request().query(sql);
-      res.json(result.recordset);
+      const result = await pool.query(sql);
+      res.json(result.rows);
       
     } catch (error) {
       logger.error("❌ Error en graficoMotivosEntrevistas:", error);

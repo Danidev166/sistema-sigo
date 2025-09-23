@@ -12,7 +12,7 @@ router.get("/institucional", ReportesMejoradoController.reporteInstitucional);
 router.get("/asistencia", ReportesMejoradoController.reporteAsistencia);
 
 // 📈 Dashboard y KPIs
-router.get("/dashboard", ReportesMejoradoController.dashboardKPIs);
+router.get("/dashboard", ReportesMejoradoController.dashboard);
 
 // 📊 Gráficos
 router.get("/graficos/asistencia-mensual", ReportesMejoradoController.graficoAsistenciaMensual);

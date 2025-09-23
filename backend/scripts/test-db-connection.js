@@ -1,57 +1,66 @@
-// Script para probar la conexión a la base de datos
 const { Pool } = require('pg');
 
-// Cargar variables de entorno
-require('dotenv').config({ path: '.env.production' });
-
-// Si no se cargan desde .env, usar las variables del sistema
-const config = {
-  host: process.env.PGHOST || 'dpg-d391d4nfte5s73cff6p0-a',
-  port: process.env.PGPORT || 5432,
-  user: process.env.PGUSER || 'sigo_user',
-  password: process.env.PGPASSWORD || 'z5blhb00',
-  database: process.env.PGDATABASE || 'sigo_pro',
-  ssl: false // Desactivar SSL para Render
+// Configuración de PostgreSQL para Render
+const renderConfig = {
+  user: 'sigo_user',
+  host: 'dpg-d391d4nfte5s73cff6p0-a.oregon-postgres.render.com',
+  database: 'sigo_pro',
+  password: 'qgEyTD5LiGu22qdSOoROC1UFqjGZaxIv',
+  port: 5432,
+  ssl: { rejectUnauthorized: false },
 };
 
-const pool = new Pool(config);
-
-async function testConnection() {
+async function testDbConnection() {
+  let pool;
+  
   try {
-    console.log('🔍 Probando conexión a la base de datos...');
-    console.log('Host:', config.host);
-    console.log('Port:', config.port);
-    console.log('User:', config.user);
-    console.log('Database:', config.database);
+    console.log('🔌 Probando conexión a PostgreSQL de Render...');
     
-    const client = await pool.connect();
-    console.log('✅ Conexión exitosa a PostgreSQL');
+    pool = new Pool(renderConfig);
+    await pool.query('SELECT NOW()');
+    console.log('✅ Conectado a PostgreSQL de Render');
     
-    // Probar una consulta simple
-    const result = await client.query('SELECT NOW() as current_time');
-    console.log('✅ Consulta exitosa:', result.rows[0]);
+    // Probar consulta a seguimiento_psicosocial
+    console.log('📊 Probando consulta a seguimiento_psicosocial...');
+    const result = await pool.query('SELECT COUNT(*) as total FROM seguimiento_psicosocial');
+    console.log(`✅ Tabla seguimiento_psicosocial: ${result.rows[0].total} registros`);
     
-    // Verificar si existen las tablas principales
-    const tablesResult = await client.query(`
-      SELECT table_name 
-      FROM information_schema.tables 
-      WHERE table_schema = 'public' 
-      ORDER BY table_name
+    // Probar consulta con JOIN
+    console.log('📊 Probando consulta con JOIN...');
+    const joinResult = await pool.query(`
+      SELECT s.*, e.nombre, e.apellido
+      FROM seguimiento_psicosocial s
+      LEFT JOIN estudiantes e ON s.id_estudiante = e.id
+      ORDER BY s.fecha_seguimiento DESC, s.id DESC
     `);
+    console.log(`✅ Consulta con JOIN: ${joinResult.rows.length} registros`);
     
-    console.log('📋 Tablas disponibles:');
-    tablesResult.rows.forEach(row => {
-      console.log(`  - ${row.table_name}`);
-    });
-    
-    client.release();
-    await pool.end();
+    if (joinResult.rows.length > 0) {
+      console.log('📋 Primer registro:', joinResult.rows[0]);
+    }
     
   } catch (error) {
-    console.error('❌ Error de conexión:', error.message);
-    console.error('Detalles:', error);
-    process.exit(1);
+    console.error('❌ Error en conexión:', error.message);
+    throw error;
+  } finally {
+    if (pool) {
+      await pool.end();
+      console.log('🔌 Conexión cerrada');
+    }
   }
 }
 
-testConnection();
+// Ejecutar si se llama directamente
+if (require.main === module) {
+  testDbConnection()
+    .then(() => {
+      console.log('✅ Prueba completada');
+      process.exit(0);
+    })
+    .catch((error) => {
+      console.error('❌ Error:', error);
+      process.exit(1);
+    });
+}
+
+module.exports = { testDbConnection };

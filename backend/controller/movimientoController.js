@@ -55,6 +55,22 @@ class MovimientoController {
     }
   }
 
+  static async obtenerPorId(req, res) {
+    try {
+      const { id } = req.params;
+      const movimiento = await MovimientoModel.obtenerPorId(id);
+
+      if (!movimiento) {
+        return res.status(404).json({ error: "Movimiento no encontrado" });
+      }
+
+      res.json(movimiento);
+    } catch (error) {
+      logger.error("Error al obtener movimiento:", error);
+      res.status(500).json({ error: "Error al obtener el movimiento" });
+    }
+  }
+
   static async actualizar(req, res) {
     try {
       const { id } = req.params;
@@ -70,7 +86,7 @@ class MovimientoController {
         accion: 'Actualizar',
         tabla_afectada: 'movimientos',
         id_registro: id,
-        datos_anteriores: null, // Podrías obtener los datos anteriores si es necesario
+        datos_anteriores: null, // Se podría obtener el estado anterior
         datos_nuevos: JSON.stringify(movimientoActualizado),
         ip_address: req.ip,
         user_agent: req.headers['user-agent']
