@@ -1,32 +1,29 @@
-# Dockerfile para SIGO Frontend
-FROM node:18-alpine as builder
+# Dockerfile para el frontend
+FROM node:18-alpine
 
-# Crear directorio de trabajo
+# Establecer directorio de trabajo
 WORKDIR /app
 
 # Copiar package.json y package-lock.json
 COPY package*.json ./
 
 # Instalar dependencias
-RUN npm ci
+RUN npm install
 
-# Copiar código fuente
+# Copiar el código fuente
 COPY . .
 
-# Build para producción
+# Construir la aplicación
 RUN npm run build
 
-# Servidor web para servir archivos estáticos
+# Usar nginx para servir la aplicación
 FROM nginx:alpine
 
-# Copiar archivos build
-COPY --from=builder /app/dist /usr/share/nginx/html
+# Copiar los archivos construidos
+COPY --from=0 /app/dist /usr/share/nginx/html
 
-# Copiar configuración de nginx
-COPY nginx.conf /etc/nginx/nginx.conf
-
-# Exponer puerto
+# Exponer puerto 80
 EXPOSE 80
 
-# Comando de inicio
+# Comando para iniciar nginx
 CMD ["nginx", "-g", "daemon off;"]
