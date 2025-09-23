@@ -42,6 +42,8 @@
     "axios": "^1.6.2",
     "date-fns": "^4.1.0",
     "framer-motion": "^12.12.1",
+    "jspdf": "^3.0.3",
+    "jspdf-autotable": "^5.0.2",
     "lucide-react": "^0.511.0",
     "papaparse": "^5.5.3",
     "pdfkit": "^0.17.1",
