@@ -25,7 +25,7 @@ async function testWithAuth() {
     // 2. Probar endpoints específicos
     const endpoints = [
       { name: 'Reportes Dashboard', url: '/reportes-mejorado/dashboard' },
-      { name: 'Reportes Generales', url: '/reportes' },
+      { name: 'Reportes Generales', url: '/reportes/general' },
       { name: 'Seguimiento Psicosocial', url: '/seguimiento-psicosocial' },
       { name: 'Seguimiento Académico', url: '/seguimiento-academico' },
       { name: 'Asistencia', url: '/asistencia' },

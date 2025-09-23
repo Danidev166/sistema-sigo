@@ -1,85 +1,118 @@
 // backend/models/seguimientoModel.js
-const { sql, getPool } = require('../config/db');
+const { Pool } = require('pg');
 
-// "YYYY-MM-DD" -> Date (evita desfases de zona horaria)
-function toSqlDate(input) {
-  if (input instanceof Date) return input;
-  if (typeof input === 'string') {
-    const [y, m, d] = input.split('-').map(Number);
-    return new Date(Date.UTC(y, (m || 1) - 1, d || 1));
-  }
-  return new Date(input);
-}
+// Configuración de PostgreSQL para Render
+const renderConfig = {
+  user: 'sigo_user',
+  host: 'dpg-d391d4nfte5s73cff6p0-a.oregon-postgres.render.com',
+  database: 'sigo_pro',
+  password: 'qgEyTD5LiGu22qdSOoROC1UFqjGZaxIv',
+  port: 5432,
+  ssl: { rejectUnauthorized: false },
+};
+
+const pool = new Pool(renderConfig);
 
 const SeguimientoModel = {
   async crear(data) {
-    const pool = await getPool();
-    const result = await pool.request()
-      .input('id_estudiante', sql.Int,            data.id_estudiante)
-      .input('fecha',         sql.Date,           toSqlDate(data.fecha))
-      .input('tipo',          sql.NVarChar(50),   data.tipo)
-      .input('descripcion',   sql.NVarChar,       data.descripcion || '')
-      .input('profesional',   sql.NVarChar(100),  data.profesional || null)
-      .input('subtipo',       sql.NVarChar(100),  data.subtipo || null)
-      .input('archivo',       sql.NVarChar(500),  data.archivo || null)
-      .input('urgencias',     sql.NVarChar(100),  data.urgencias || null)
-      .query(`
-        INSERT INTO seguimiento
-          (id_estudiante, fecha, tipo, descripcion, profesional, subtipo, archivo, urgencias)
-        VALUES
-          (@id_estudiante, @fecha, @tipo, @descripcion, @profesional, @subtipo, @archivo, @urgencias)
-        RETURNING *
-      `);
-    return result.recordset[0];
+    const query = `
+      INSERT INTO seguimiento
+        (id_estudiante, fecha, tipo, descripcion, profesional, subtipo, archivo, urgencias)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+      RETURNING *
+    `;
+    
+    const values = [
+      data.id_estudiante,
+      data.fecha || new Date(),
+      data.tipo,
+      data.descripcion || '',
+      data.profesional || null,
+      data.subtipo || null,
+      data.archivo || null,
+      data.urgencias || null
+    ];
+    
+    const result = await pool.query(query, values);
+    return result.rows[0];
   },
 
   async listar() {
-    const pool = await getPool();
-    const result = await pool.request().query(`
-      SELECT *
-      FROM seguimiento
-      ORDER BY fecha DESC, id DESC
-    `);
-    return result.recordset;
+    const query = `
+      SELECT s.*, e.nombre, e.apellido, e.rut
+      FROM seguimiento s
+      LEFT JOIN estudiantes e ON s.id_estudiante = e.id
+      ORDER BY s.fecha DESC, s.id DESC
+    `;
+    
+    const result = await pool.query(query);
+    return result.rows;
+  },
+
+  async obtenerTodos() {
+    return await this.listar();
   },
 
   async obtenerPorId(id) {
-    const pool = await getPool();
-    const result = await pool.request()
-      .input('id', sql.Int, id)
-      .query(`SELECT * FROM seguimiento WHERE id = @id`);
-    return result.recordset[0] || null;
+    const query = `
+      SELECT s.*, e.nombre, e.apellido, e.rut
+      FROM seguimiento s
+      LEFT JOIN estudiantes e ON s.id_estudiante = e.id
+      WHERE s.id = $1
+    `;
+    
+    const result = await pool.query(query, [id]);
+    return result.rows[0] || null;
+  },
+
+  async obtenerPorEstudiante(idEstudiante) {
+    const query = `
+      SELECT s.*, e.nombre, e.apellido, e.rut
+      FROM seguimiento s
+      LEFT JOIN estudiantes e ON s.id_estudiante = e.id
+      WHERE s.id_estudiante = $1
+      ORDER BY s.fecha DESC, s.id DESC
+    `;
+    
+    const result = await pool.query(query, [idEstudiante]);
+    return result.rows;
   },
 
   async actualizar(id, data) {
-    const pool = await getPool();
-    await pool.request()
-      .input('id',          sql.Int,           id)
-      .input('fecha',       sql.Date,          toSqlDate(data.fecha))
-      .input('tipo',        sql.NVarChar(50),  data.tipo)
-      .input('descripcion', sql.NVarChar,      data.descripcion || '')
-      .input('profesional', sql.NVarChar(100), data.profesional || null)
-      .input('subtipo',     sql.NVarChar(100), data.subtipo || null)
-      .input('archivo',     sql.NVarChar(500), data.archivo || null)
-      .input('urgencias',   sql.NVarChar(100), data.urgencias || null)
-      .query(`
-        UPDATE seguimiento
-           SET fecha       = @fecha,
-               tipo        = @tipo,
-               descripcion = @descripcion,
-               profesional = @profesional,
-               subtipo     = @subtipo,
-               archivo     = @archivo,
-               urgencias   = @urgencias
-         WHERE id = @id
-      `);
+    const query = `
+      UPDATE seguimiento
+      SET id_estudiante = $1,
+          fecha = $2,
+          tipo = $3,
+          descripcion = $4,
+          profesional = $5,
+          subtipo = $6,
+          archivo = $7,
+          urgencias = $8
+      WHERE id = $9
+      RETURNING *
+    `;
+    
+    const values = [
+      data.id_estudiante,
+      data.fecha || new Date(),
+      data.tipo,
+      data.descripcion || '',
+      data.profesional || null,
+      data.subtipo || null,
+      data.archivo || null,
+      data.urgencias || null,
+      id
+    ];
+    
+    const result = await pool.query(query, values);
+    return result.rows[0];
   },
 
   async eliminar(id) {
-    const pool = await getPool();
-    await pool.request()
-      .input('id', sql.Int, id)
-      .query(`DELETE FROM seguimiento WHERE id = @id`);
+    const query = `DELETE FROM seguimiento WHERE id = $1 RETURNING *`;
+    const result = await pool.query(query, [id]);
+    return result.rows[0];
   }
 };
 

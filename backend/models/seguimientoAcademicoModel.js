@@ -1,109 +1,128 @@
 // backend/models/seguimientoAcademicoModel.js
-const { sql, getPool } = require('../config/db');
+const { Pool } = require('pg');
 
-// "YYYY-MM-DD" -> Date (evita desfases de zona horaria)
-function toSqlDate(input) {
-  if (input instanceof Date) return input;
-  if (typeof input === 'string') {
-    const [y, m, d] = input.split('-').map(Number);
-    return new Date(Date.UTC(y, (m || 1) - 1, d || 1));
-  }
-  return new Date(input);
-}
+// Configuración de PostgreSQL para Render
+const renderConfig = {
+  user: 'sigo_user',
+  host: 'dpg-d391d4nfte5s73cff6p0-a.oregon-postgres.render.com',
+  database: 'sigo_pro',
+  password: 'qgEyTD5LiGu22qdSOoROC1UFqjGZaxIv',
+  port: 5432,
+  ssl: { rejectUnauthorized: false },
+};
+
+const pool = new Pool(renderConfig);
 
 const SeguimientoAcademicoModel = {
   async crear(data) {
-    const pool = await getPool();
-    const result = await pool.request()
-      .input('id_estudiante',  sql.Int,   data.id_estudiante)
-      .input('asignatura',     sql.NVarChar, data.asignatura)
-      .input('nota',                        data.nota)            // numérico
-      .input('promedio_curso',              data.promedio_curso)  // numérico
-      .input('fecha',          toSqlDate(data.fecha))
-      .query(`
-        INSERT INTO seguimiento_academico
-          (id_estudiante, asignatura, nota, promedio_curso, fecha)
-        VALUES
-          (@id_estudiante, @asignatura, @nota, @promedio_curso, @fecha)
-        RETURNING *
-      `);
-    return result.recordset[0];
+    const query = `
+      INSERT INTO seguimiento_academico
+        (id_estudiante, asignatura, nota, promedio_curso, fecha, observaciones)
+      VALUES ($1, $2, $3, $4, $5, $6)
+      RETURNING *
+    `;
+    
+    const values = [
+      data.id_estudiante,
+      data.asignatura,
+      data.nota,
+      data.promedio_curso || null,
+      data.fecha || new Date(),
+      data.observaciones || ''
+    ];
+    
+    const result = await pool.query(query, values);
+    return result.rows[0];
   },
 
   async obtenerTodos() {
-    const pool = await getPool();
-    const result = await pool.request().query(`
-      SELECT *
-      FROM seguimiento_academico
-      ORDER BY fecha DESC, id DESC
-    `);
-    return result.recordset;
-  },
-
-  async obtenerPorEstudiante(id_estudiante, anio = null) {
-    const pool = await getPool();
-    const req = pool.request().input('id_estudiante', sql.Int, id_estudiante);
-    const filtroAnio = anio ? ' AND EXTRACT(YEAR FROM fecha) = @anio' : '';
-    if (anio) req.input('anio', sql.Int, anio);
-
-    const result = await req.query(`
-      SELECT *
-      FROM seguimiento_academico
-      WHERE id_estudiante = @id_estudiante
-      ${filtroAnio}
-      ORDER BY fecha DESC, id DESC
-    `);
-    return result.recordset;
-  },
-
-  async obtenerNotasPorEstudiante(id_estudiante, anio) {
-    const pool = await getPool();
-    const result = await pool.request()
-      .input('id_estudiante', sql.Int, id_estudiante)
-      .input('anio',          sql.Int, anio)
-      .query(`
-        SELECT nota
-        FROM seguimiento_academico
-        WHERE id_estudiante = @id_estudiante
-          AND EXTRACT(YEAR FROM fecha) = @anio
-        ORDER BY fecha DESC, id DESC
-      `);
-    return result.recordset;
+    const query = `
+      SELECT sa.*, e.nombre, e.apellido, e.rut
+      FROM seguimiento_academico sa
+      LEFT JOIN estudiantes e ON sa.id_estudiante = e.id
+      ORDER BY sa.fecha DESC, sa.id DESC
+    `;
+    
+    const result = await pool.query(query);
+    return result.rows;
   },
 
   async obtenerPorId(id) {
-    const pool = await getPool();
-    const result = await pool.request()
-      .input('id', sql.Int, id)
-      .query('SELECT * FROM seguimiento_academico WHERE id = @id');
-    return result.recordset[0] || null;
+    const query = `
+      SELECT sa.*, e.nombre, e.apellido, e.rut
+      FROM seguimiento_academico sa
+      LEFT JOIN estudiantes e ON sa.id_estudiante = e.id
+      WHERE sa.id = $1
+    `;
+    
+    const result = await pool.query(query, [id]);
+    return result.rows[0] || null;
+  },
+
+  async obtenerPorEstudiante(id_estudiante, anio = null) {
+    let query = `
+      SELECT sa.*, e.nombre, e.apellido, e.rut
+      FROM seguimiento_academico sa
+      LEFT JOIN estudiantes e ON sa.id_estudiante = e.id
+      WHERE sa.id_estudiante = $1
+    `;
+    
+    const params = [id_estudiante];
+    
+    if (anio) {
+      query += ` AND EXTRACT(YEAR FROM sa.fecha) = $2`;
+      params.push(anio);
+    }
+    
+    query += ` ORDER BY sa.fecha DESC, sa.id DESC`;
+    
+    const result = await pool.query(query, params);
+    return result.rows;
+  },
+
+  async obtenerNotasPorEstudiante(id_estudiante, anio) {
+    const query = `
+      SELECT asignatura, nota, promedio_curso, fecha
+      FROM seguimiento_academico
+      WHERE id_estudiante = $1 AND EXTRACT(YEAR FROM fecha) = $2
+      ORDER BY fecha DESC
+    `;
+    
+    const result = await pool.query(query, [id_estudiante, anio]);
+    return result.rows;
   },
 
   async actualizar(id, data) {
-    const pool = await getPool();
-    await pool.request()
-      .input('id',             sql.Int,     id)
-      .input('id_estudiante',  sql.Int,     data.id_estudiante)
-      .input('asignatura',     sql.NVarChar,data.asignatura)
-      .input('nota',                        data.nota)
-      .input('promedio_curso',              data.promedio_curso)
-      .input('fecha',          toSqlDate(data.fecha))
-      .query(`
-        UPDATE seguimiento_academico
-           SET id_estudiante  = @id_estudiante,
-               asignatura     = @asignatura,
-               nota           = @nota,
-               promedio_curso = @promedio_curso,
-               fecha          = @fecha
-         WHERE id = @id
-      `);
+    const query = `
+      UPDATE seguimiento_academico
+      SET id_estudiante = $1,
+          asignatura = $2,
+          nota = $3,
+          promedio_curso = $4,
+          fecha = $5,
+          observaciones = $6
+      WHERE id = $7
+      RETURNING *
+    `;
+    
+    const values = [
+      data.id_estudiante,
+      data.asignatura,
+      data.nota,
+      data.promedio_curso || null,
+      data.fecha || new Date(),
+      data.observaciones || '',
+      id
+    ];
+    
+    const result = await pool.query(query, values);
+    return result.rows[0];
   },
 
   async eliminar(id) {
-    const pool = await getPool();
-    await pool.request()
-      .input('id', sql.Int, id)
-      .query('DELETE FROM seguimiento_academico WHERE id = @id');
+    const query = `DELETE FROM seguimiento_academico WHERE id = $1 RETURNING *`;
+    const result = await pool.query(query, [id]);
+    return result.rows[0];
   }
 };
 
