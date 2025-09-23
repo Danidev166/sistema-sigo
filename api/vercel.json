@@ -1,0 +1,26 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "backend/index.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/backend/index.js"
+    }
+  ],
+  "env": {
+    "NODE_ENV": "production",
+    "PGHOST": "@pghost",
+    "PGPORT": "@pgport", 
+    "PGUSER": "@pguser",
+    "PGPASSWORD": "@pgpassword",
+    "PGDATABASE": "@pgdatabase",
+    "JWT_SECRET": "@jwt_secret",
+    "JWT_EXPIRES_IN": "24h",
+    "FRONTEND_URL": "@frontend_url"
+  }
+}
