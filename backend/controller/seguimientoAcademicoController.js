@@ -1,5 +1,5 @@
 const SeguimientoAcademicoModel = require("../models/seguimientoAcademicoModel");
-const logger = require("../utils/logger"); // ✅ Importar correctamente
+const logger = require("../utils/logger");
 const LogsActividadModel = require('../models/logsActividadModel');
 
 const SeguimientoAcademicoController = {
@@ -40,16 +40,11 @@ const SeguimientoAcademicoController = {
     try {
       const { id } = req.params;
       const { anio } = req.query;
-      const datos = await SeguimientoAcademicoModel.obtenerPorEstudiante(
-        parseInt(id),
-        anio ? parseInt(anio) : null
-      );
-
+      const datos = await SeguimientoAcademicoModel.obtenerPorEstudiante(id, anio);
       res.json(datos);
     } catch (err) {
       logger.error(
-        "❌ Error al obtener seguimientos académicos por estudiante: " +
-          err.message
+        "❌ Error al obtener seguimientos académicos del estudiante: " + err.message
       );
       next(err);
     }
@@ -57,17 +52,15 @@ const SeguimientoAcademicoController = {
 
   async obtenerPorId(req, res, next) {
     try {
-      const dato = await SeguimientoAcademicoModel.obtenerPorId(req.params.id);
-      if (!dato) {
-        logger.warn(
-          "⚠️ Seguimiento académico no encontrado con ID: " + req.params.id
-        );
-        return res.status(404).json({ error: "No encontrado" });
+      const { id } = req.params;
+      const datos = await SeguimientoAcademicoModel.obtenerPorId(id);
+      if (!datos) {
+        return res.status(404).json({ error: "Seguimiento académico no encontrado" });
       }
-      res.json(dato);
+      res.json(datos);
     } catch (err) {
       logger.error(
-        "❌ Error al obtener seguimiento académico por ID: " + err.message
+        "❌ Error al obtener seguimiento académico: " + err.message
       );
       next(err);
     }
@@ -75,17 +68,17 @@ const SeguimientoAcademicoController = {
 
   async actualizar(req, res, next) {
     try {
-      // Obtener datos anteriores
-      const prev = await SeguimientoAcademicoModel.obtenerPorId(req.params.id);
-      await SeguimientoAcademicoModel.actualizar(req.params.id, req.body);
-      res.json({ message: "Seguimiento actualizado ✅" });
+      const { id } = req.params;
+      const result = await SeguimientoAcademicoModel.actualizar(id, req.body);
+      res.json({ message: "Seguimiento académico actualizado ✅", data: result });
+      
       // Auditoría
       await LogsActividadModel.crear({
         id_usuario: req.user?.id || null,
         accion: 'Actualizar',
         tabla_afectada: 'seguimiento_academico',
-        id_registro: req.params.id,
-        datos_anteriores: JSON.stringify(prev),
+        id_registro: id,
+        datos_anteriores: null,
         datos_nuevos: JSON.stringify(req.body),
         ip_address: req.ip,
         user_agent: req.headers['user-agent']
@@ -100,17 +93,17 @@ const SeguimientoAcademicoController = {
 
   async eliminar(req, res, next) {
     try {
-      // Obtener datos anteriores
-      const prev = await SeguimientoAcademicoModel.obtenerPorId(req.params.id);
-      await SeguimientoAcademicoModel.eliminar(req.params.id);
-      res.json({ message: "Seguimiento eliminado ❌" });
+      const { id } = req.params;
+      await SeguimientoAcademicoModel.eliminar(id);
+      res.json({ message: "Seguimiento académico eliminado ✅" });
+      
       // Auditoría
       await LogsActividadModel.crear({
         id_usuario: req.user?.id || null,
         accion: 'Eliminar',
         tabla_afectada: 'seguimiento_academico',
-        id_registro: req.params.id,
-        datos_anteriores: JSON.stringify(prev),
+        id_registro: id,
+        datos_anteriores: null,
         datos_nuevos: null,
         ip_address: req.ip,
         user_agent: req.headers['user-agent']
@@ -121,7 +114,7 @@ const SeguimientoAcademicoController = {
       );
       next(err);
     }
-  },
+  }
 };
 
 module.exports = SeguimientoAcademicoController;

@@ -1,5 +1,5 @@
 const SeguimientoModel = require("../models/seguimientoModel");
-const logger = require("../utils/logger"); // ✅ Ruta corregida
+const logger = require("../utils/logger");
 
 const SeguimientoController = {
   async crear(req, res, next) {
@@ -14,32 +14,43 @@ const SeguimientoController = {
 
   async listar(req, res, next) {
     try {
-      const lista = await SeguimientoModel.listar();
-      res.json(lista);
+      const datos = await SeguimientoModel.listar();
+      res.json(datos);
     } catch (error) {
       logger.error("❌ Error al listar seguimientos: " + error.message);
       next(error);
     }
   },
 
+  async obtenerTodos(req, res, next) {
+    try {
+      const datos = await SeguimientoModel.obtenerTodos();
+      res.json(datos);
+    } catch (error) {
+      logger.error("❌ Error al obtener todos los seguimientos: " + error.message);
+      next(error);
+    }
+  },
+
   async obtenerPorId(req, res, next) {
     try {
-      const seguimiento = await SeguimientoModel.obtenerPorId(req.params.id);
-      if (!seguimiento) {
-        logger.warn("⚠️ Seguimiento no encontrado con ID: " + req.params.id);
+      const { id } = req.params;
+      const datos = await SeguimientoModel.obtenerPorId(id);
+      if (!datos) {
         return res.status(404).json({ error: "Seguimiento no encontrado" });
       }
-      res.json(seguimiento);
+      res.json(datos);
     } catch (error) {
-      logger.error("❌ Error al obtener seguimiento por ID: " + error.message);
+      logger.error("❌ Error al obtener seguimiento: " + error.message);
       next(error);
     }
   },
 
   async obtenerPorEstudiante(req, res, next) {
     try {
-      const seguimientos = await SeguimientoModel.obtenerPorEstudiante(req.params.id);
-      res.json(seguimientos);
+      const { id } = req.params;
+      const datos = await SeguimientoModel.obtenerPorEstudiante(id);
+      res.json(datos);
     } catch (error) {
       logger.error("❌ Error al obtener seguimientos del estudiante: " + error.message);
       next(error);
@@ -48,8 +59,9 @@ const SeguimientoController = {
 
   async actualizar(req, res, next) {
     try {
-      await SeguimientoModel.actualizar(req.params.id, req.body);
-      res.json({ message: "✅ Seguimiento actualizado" });
+      const { id } = req.params;
+      const result = await SeguimientoModel.actualizar(id, req.body);
+      res.json({ message: "Seguimiento actualizado ✅", data: result });
     } catch (error) {
       logger.error("❌ Error al actualizar seguimiento: " + error.message);
       next(error);
@@ -58,8 +70,9 @@ const SeguimientoController = {
 
   async eliminar(req, res, next) {
     try {
-      await SeguimientoModel.eliminar(req.params.id);
-      res.json({ message: "✅ Seguimiento eliminado" });
+      const { id } = req.params;
+      await SeguimientoModel.eliminar(id);
+      res.json({ message: "Seguimiento eliminado ✅" });
     } catch (error) {
       logger.error("❌ Error al eliminar seguimiento: " + error.message);
       next(error);
