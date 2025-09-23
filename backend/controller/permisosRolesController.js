@@ -1,7 +1,7 @@
 const PermisosRolesModel = require('../models/permisosRolesModel');
 
 class PermisosRolesController {
-  async obtenerTodos(req, res) {
+  async obtenerTodos(_req, res) {
     try {
       const data = await PermisosRolesModel.obtenerTodos();
       res.json(data);
@@ -20,8 +20,8 @@ class PermisosRolesController {
   }
   async crear(req, res) {
     try {
-      const result = await PermisosRolesModel.crear(req.body);
-      res.status(201).json({ message: 'Creado correctamente', id: result.insertId });
+      const creado = await PermisosRolesModel.crear(req.body); // retorna { id, ... }
+      res.status(201).json({ message: 'Creado correctamente', id: creado?.id || null, data: creado });
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
@@ -44,4 +44,4 @@ class PermisosRolesController {
   }
 }
 
-module.exports = new PermisosRolesController(); 
+module.exports = new PermisosRolesController();

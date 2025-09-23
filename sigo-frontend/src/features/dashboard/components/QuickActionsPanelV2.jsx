@@ -9,6 +9,7 @@ import {
   Loader2,
   AlertCircle,
 } from "lucide-react";
+import SkeletonLoader from "../../../components/ui/SkeletonLoader";
 
 export default function QuickActionsPanelV2({ 
   loading = false, 
@@ -18,22 +19,26 @@ export default function QuickActionsPanelV2({
   // Si hay error, mostrar mensaje de error
   if (error) {
     return (
-      <div className="bg-white dark:bg-slate-800 rounded-lg sm:rounded-xl shadow p-4 sm:p-6">
+      <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg p-6 animate-fade-in">
         <div className="flex items-center space-x-3 text-red-600 dark:text-red-400">
-          <AlertCircle className="h-5 w-5" />
+          <AlertCircle className="h-5 w-5 animate-pulse" />
           <span className="text-sm font-medium">{error}</span>
         </div>
       </div>
     );
   }
 
-  // Si está cargando, mostrar estado de carga
+  // Si está cargando, mostrar skeleton loading
   if (loading) {
     return (
-      <div className="bg-white dark:bg-slate-800 rounded-lg sm:rounded-xl shadow p-4 sm:p-6">
-        <div className="flex items-center space-x-3 text-blue-600 dark:text-blue-400">
-          <Loader2 className="h-5 w-5 animate-spin" />
-          <span className="text-sm font-medium">Cargando...</span>
+      <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg p-6 animate-fade-in">
+        <div className="space-y-4">
+          <SkeletonLoader variant="text" lines={1} className="h-6 w-32" />
+          <div className="space-y-3">
+            {Array.from({ length: 4 }).map((_, index) => (
+              <SkeletonLoader key={index} variant="button" className="h-12 w-full" />
+            ))}
+          </div>
         </div>
       </div>
     );
@@ -102,21 +107,33 @@ export default function QuickActionsPanelV2({
   }
 
   return (
-    <div className="bg-white dark:bg-slate-800 rounded-lg sm:rounded-xl shadow p-4 sm:p-6">
-      <h2 className="text-base sm:text-lg font-semibold text-gray-800 dark:text-white mb-3 sm:mb-4">
+    <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg p-6 animate-fade-in">
+      <h2 className="section-title">
         Acciones rápidas
       </h2>
-      <div className="space-y-2 sm:space-y-3">
+      <div className="space-y-3">
         {actions.map((action, index) => (
           <Link
             key={index}
             to={action.to}
             role={action.role}
             aria-label={action["aria-label"]}
-            className="flex items-center gap-2 sm:gap-3 bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 p-2.5 sm:p-3 rounded-md transition text-gray-800 dark:text-white text-sm sm:text-base font-medium"
+            className="
+              flex items-center gap-3 bg-gray-100 dark:bg-slate-700 
+              hover:bg-gray-200 dark:hover:bg-slate-600 
+              p-3 rounded-lg transition-all duration-200 ease-in-out
+              text-gray-800 dark:text-white text-sm font-medium
+              hover:scale-105 hover:shadow-md group
+              focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50
+            "
+            style={{
+              animationDelay: `${index * 50}ms`,
+            }}
           >
-            {action.icon}
-            {action.text}
+            <span className="transition-transform duration-200 group-hover:scale-110 group-hover:rotate-3">
+              {action.icon}
+            </span>
+            <span className="flex-1">{action.text}</span>
           </Link>
         ))}
       </div>

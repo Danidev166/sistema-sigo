@@ -6,7 +6,8 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  ResponsiveContainer
+  ResponsiveContainer,
+  Legend
 } from 'recharts';
 import { formatearCurso } from '../../../features/estudiantes/constants/cursos';
 
@@ -34,9 +35,9 @@ const TestBarChart = memo(({ data }) => {
     
     return datosValidos.map(item => ({
       especialidad: formatearCurso(item.especialidad),
-      Kuder: Number(item.Kuder) || 0,
-      Holland: Number(item.Holland) || 0,
-      Aptitudes: Number(item.Aptitudes) || 0,
+      'Test Kuder': Number(item.Kuder) || 0,
+      'Test Holland': Number(item.Holland) || 0,
+      'Test Aptitudes': Number(item.Aptitudes) || 0,
       total: Number(item.total) || 0
     }));
   }, [data]);
@@ -50,28 +51,67 @@ const TestBarChart = memo(({ data }) => {
   }
 
   return (
-    <div className="bg-white dark:bg-slate-800 rounded-xl shadow p-6">
-      <h2 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">
-        Test aplicados por especialidad
-      </h2>
+    <div className="bg-white dark:bg-slate-800 rounded-xl shadow p-4 sm:p-6">
+      <div className="mb-4">
+        <h2 className="text-base sm:text-lg font-semibold text-gray-800 dark:text-white mb-1 sm:mb-2">
+          Evaluaciones Vocacionales por Especialidad
+        </h2>
+        <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+          Distribución de tests aplicados según tipo de evaluación
+        </p>
+      </div>
       <ResponsiveContainer width="100%" height={250}>
         <BarChart
           data={processedData}
-          margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+          margin={{ top: 10, right: 20, left: 10, bottom: 50 }}
         >
           <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-          <XAxis dataKey="especialidad" stroke="#64748b" />
-          <YAxis stroke="#64748b" />
+          <XAxis 
+            dataKey="especialidad" 
+            stroke="#64748b"
+            angle={-45}
+            textAnchor="end"
+            height={80}
+            fontSize={12}
+          />
+          <YAxis 
+            stroke="#64748b"
+            label={{ value: 'Cantidad de Tests', angle: -90, position: 'insideLeft' }}
+          />
           <Tooltip
             contentStyle={{
               backgroundColor: "#ffffff",
               border: "1px solid #e5e7eb",
+              borderRadius: "8px",
               fontSize: "0.875rem",
+              boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)"
             }}
+            formatter={(value, name) => [value, name]}
+            labelFormatter={(label) => `Especialidad: ${label}`}
           />
-          <Bar dataKey="Kuder" fill="#3b82f6" />
-          <Bar dataKey="Holland" fill="#8b5cf6" />
-          <Bar dataKey="Aptitudes" fill="#10b981" />
+          <Legend 
+            verticalAlign="top" 
+            height={36}
+            wrapperStyle={{ paddingBottom: '10px' }}
+          />
+          <Bar 
+            dataKey="Test Kuder" 
+            fill="#2563eb" 
+            name="Test Kuder"
+            radius={[2, 2, 0, 0]}
+          />
+          <Bar 
+            dataKey="Test Holland" 
+            fill="#7c3aed" 
+            name="Test Holland"
+            radius={[2, 2, 0, 0]}
+          />
+          <Bar 
+            dataKey="Test Aptitudes" 
+            fill="#059669" 
+            name="Test Aptitudes"
+            radius={[2, 2, 0, 0]}
+          />
         </BarChart>
       </ResponsiveContainer>
     </div>

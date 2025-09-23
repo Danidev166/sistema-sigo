@@ -3,6 +3,10 @@ const router = express.Router();
 const controller = require("../controller/seguimientoPsicosocialController");
 const validateBody = require("../middleware/validateBody");
 const schema = require("../validators/seguimientoPsicosocialValidator");
+const verifyToken = require("../middleware/verifyToken");
+
+// 🔐 proteger todo
+router.use(verifyToken);
 
 // CRUD
 router.post("/", validateBody(schema), controller.crear);

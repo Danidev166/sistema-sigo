@@ -3,9 +3,8 @@ const LogsActividadModel = require('../models/logsActividadModel');
 class LogsActividadController {
   async obtenerTodos(req, res) {
     try {
-      // Extraer filtros de query params
       const filtros = {
-        usuario: req.query.usuario || null, // nombre o id
+        usuario: req.query.usuario || null,
         accion: req.query.accion || null,
         tabla: req.query.tabla || null,
         fecha_desde: req.query.fecha_desde || null,
@@ -13,7 +12,7 @@ class LogsActividadController {
         ip: req.query.ip || null,
       };
       const data = await LogsActividadModel.obtenerTodos(filtros);
-      res.json(data.recordset || data);
+      res.json(Array.isArray(data) ? data : (data.recordset || data));
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
@@ -29,8 +28,8 @@ class LogsActividadController {
   }
   async crear(req, res) {
     try {
-      const result = await LogsActividadModel.crear(req.body);
-      res.status(201).json({ message: 'Creado correctamente', id: result.insertId });
+      const creado = await LogsActividadModel.crear(req.body); // retorna registro con id
+      res.status(201).json({ message: 'Creado correctamente', id: creado?.id || null, data: creado });
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
@@ -45,4 +44,4 @@ class LogsActividadController {
   }
 }
 
-module.exports = new LogsActividadController(); 
+module.exports = new LogsActividadController();

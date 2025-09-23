@@ -92,7 +92,7 @@ const estudianteService = {
 
  // Recursos entregados
 getRecursosEntregados: (idEstudiante) =>
-  api.get(`/entregas/estudiante/${idEstudiante}`),
+  api.get(`/recursos/entregas/estudiante/${idEstudiante}`),
 
 };
 

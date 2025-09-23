@@ -2,11 +2,15 @@ const express = require("express");
 const router = express.Router();
 const MovimientoController = require("../controller/movimientoController");
 const validateBody = require("../middleware/validateBody");
-
 const movimientoSchema = require("../validators/movimientoValidator");
-const { authMiddleware: verifyToken } = require("../middleware/authMiddleware");
+const verifyToken = require("../middleware/verifyToken");
 
-router.post("/", verifyToken, validateBody(movimientoSchema), MovimientoController.registrar);
-router.get("/", verifyToken, MovimientoController.listar);
+// Protege todo el módulo
+router.use(verifyToken);
+
+router.post("/", validateBody(movimientoSchema), MovimientoController.registrar);
+router.get("/", MovimientoController.listar);
+router.put("/:id", validateBody(movimientoSchema), MovimientoController.actualizar);
+router.delete("/:id", MovimientoController.eliminar);
 
 module.exports = router;

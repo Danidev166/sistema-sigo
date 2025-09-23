@@ -1,1650 +1,223 @@
-[2025-05-12 01:50:45] INFO: 📥 Login recibido:
-[2025-05-12 01:50:46] INFO: ✅ Login exitoso
-[2025-05-12 09:45:56] INFO: 📥 Login recibido:
-[2025-05-12 09:45:56] INFO: ✅ Login exitoso
-[2025-05-12 09:49:47] INFO: 📥 Login recibido:
-[2025-05-12 09:49:47] INFO: ✅ Login exitoso
-[2025-05-12 09:56:59] INFO: 📥 Login recibido:
-[2025-05-12 09:56:59] INFO: ✅ Login exitoso
-[2025-05-12 10:05:50] INFO: 📥 Login recibido:
-[2025-05-12 10:05:50] INFO: ✅ Login exitoso
-[2025-05-12 10:06:13] INFO: 📥 Login recibido:
-[2025-05-12 10:06:13] INFO: ✅ Login exitoso
-[2025-05-12 11:03:04] INFO: 📥 Login recibido:
-[2025-05-12 11:03:04] INFO: ✅ Login exitoso
-[2025-05-12 11:03:40] INFO: 📥 Login recibido:
-[2025-05-12 11:03:40] INFO: ✅ Login exitoso
-[2025-05-12 11:37:27] INFO: 📥 Login recibido:
-[2025-05-12 11:37:27] INFO: ✅ Login exitoso
-[2025-05-12 11:57:57] INFO: 📥 Login recibido:
-[2025-05-12 11:57:58] INFO: ✅ Login exitoso
-[2025-05-12 12:07:04] INFO: 📥 Login recibido:
-[2025-05-12 12:07:05] WARN: ❌ Contraseña incorrecta
-[2025-05-12 12:07:11] INFO: 📥 Login recibido:
-[2025-05-12 12:07:11] INFO: ✅ Login exitoso
-[2025-05-12 12:33:59] INFO: 📥 Login recibido:
-[2025-05-12 12:33:59] INFO: ✅ Login exitoso
-[2025-05-12 12:48:07] INFO: 📥 Login recibido:
-[2025-05-12 12:48:08] INFO: ✅ Login exitoso
-[2025-05-12 12:53:45] INFO: 📥 Login recibido:
-[2025-05-12 12:53:45] INFO: ✅ Login exitoso
-[2025-05-12 13:23:04] INFO: 📥 Login recibido:
-[2025-05-12 13:23:04] INFO: ✅ Login exitoso
-[2025-05-12 13:24:21] INFO: 📥 Login recibido:
-[2025-05-12 13:24:21] INFO: ✅ Login exitoso
-[2025-05-12 13:44:34] INFO: 📥 Login recibido:
-[2025-05-12 13:44:35] INFO: ✅ Login exitoso
-[2025-05-12 13:44:39] ERROR: Error al obtener estudiante por ID Validation failed for parameter 'id'. Invalid number.
-[2025-05-12 13:44:39] ERROR: ❌ Error en el servidor: Validation failed for parameter 'id'. Invalid number.
-[2025-05-12 13:44:39] ERROR: Error al obtener estudiante por ID Validation failed for parameter 'id'. Invalid number.
-[2025-05-12 13:44:39] ERROR: ❌ Error en el servidor: Validation failed for parameter 'id'. Invalid number.
-[2025-05-12 14:04:50] ERROR: Error al obtener estudiante por ID Validation failed for parameter 'id'. Invalid number.
-[2025-05-12 14:04:50] ERROR: ❌ Error en el servidor: Validation failed for parameter 'id'. Invalid number.
-[2025-05-12 14:04:50] ERROR: Error al obtener estudiante por ID Validation failed for parameter 'id'. Invalid number.
-[2025-05-12 14:04:50] ERROR: ❌ Error en el servidor: Validation failed for parameter 'id'. Invalid number.
-[2025-05-12 14:35:00] ERROR: Error al obtener estudiante por ID Validation failed for parameter 'id'. Invalid number.
-[2025-05-12 14:35:00] ERROR: ❌ Error en el servidor: Validation failed for parameter 'id'. Invalid number.
-[2025-05-12 14:35:00] ERROR: Error al obtener estudiante por ID Validation failed for parameter 'id'. Invalid number.
-[2025-05-12 14:35:00] ERROR: ❌ Error en el servidor: Validation failed for parameter 'id'. Invalid number.
-[2025-05-12 14:35:05] ERROR: Error al obtener estudiante por ID Validation failed for parameter 'id'. Invalid number.
-[2025-05-12 14:35:05] ERROR: ❌ Error en el servidor: Validation failed for parameter 'id'. Invalid number.
-[2025-05-12 14:35:05] ERROR: Error al obtener estudiante por ID Validation failed for parameter 'id'. Invalid number.
-[2025-05-12 14:35:05] ERROR: ❌ Error en el servidor: Validation failed for parameter 'id'. Invalid number.
-[2025-05-12 17:25:02] ERROR: Error al obtener estudiante por ID Validation failed for parameter 'id'. Invalid number.
-[2025-05-12 17:25:02] ERROR: ❌ Error en el servidor: Validation failed for parameter 'id'. Invalid number.
-[2025-05-12 17:25:03] ERROR: Error al obtener estudiante por ID Validation failed for parameter 'id'. Invalid number.
-[2025-05-12 17:25:03] ERROR: ❌ Error en el servidor: Validation failed for parameter 'id'. Invalid number.
-[2025-05-12 19:55:12] INFO: 📥 Login recibido:
-[2025-05-12 19:55:12] INFO: ✅ Login exitoso
-[2025-05-12 19:55:15] ERROR: Error al obtener estudiante por ID Validation failed for parameter 'id'. Invalid number.
-[2025-05-12 19:55:15] ERROR: ❌ Error en el servidor: Validation failed for parameter 'id'. Invalid number.
-[2025-05-12 19:55:15] ERROR: Error al obtener estudiante por ID Validation failed for parameter 'id'. Invalid number.
-[2025-05-12 19:55:15] ERROR: ❌ Error en el servidor: Validation failed for parameter 'id'. Invalid number.
-[2025-05-12 20:06:28] INFO: 📥 Login recibido:
-[2025-05-12 20:06:28] INFO: ✅ Login exitoso
-[2025-05-12 20:13:06] INFO: 📥 Login recibido:
-[2025-05-12 20:13:06] INFO: ✅ Login exitoso
-[2025-05-12 20:51:42] INFO: 📥 Login recibido:
-[2025-05-12 20:51:43] INFO: ✅ Login exitoso
-[2025-05-12 21:05:00] INFO: 📥 Login recibido:
-[2025-05-12 21:05:00] INFO: ✅ Login exitoso
-[2025-05-12 21:24:44] INFO: 📥 Login recibido:
-[2025-05-12 21:24:44] INFO: ✅ Login exitoso
-[2025-05-12 21:37:52] INFO: 📥 Login recibido:
-[2025-05-12 21:37:52] INFO: ✅ Login exitoso
-[2025-05-12 22:18:14] INFO: 📥 Login recibido:
-[2025-05-12 22:18:14] INFO: ✅ Login exitoso
-[2025-05-12 22:48:55] INFO: 📥 Login recibido:
-[2025-05-12 22:48:55] INFO: ✅ Login exitoso
-[2025-05-12 22:58:35] INFO: 📥 Login recibido:
-[2025-05-12 22:58:35] INFO: ✅ Login exitoso
-[2025-05-12 23:33:58] INFO: 📥 Login recibido:
-[2025-05-12 23:33:58] INFO: ✅ Login exitoso
-[2025-05-13 10:40:56] INFO: 📥 Login recibido:
-[2025-05-13 10:40:56] INFO: ✅ Login exitoso
-[2025-05-13 10:42:14] INFO: 📥 Login recibido:
-[2025-05-13 10:42:15] INFO: ✅ Login exitoso
-[2025-05-13 10:44:36] INFO: 📥 Login recibido:
-[2025-05-13 10:44:36] INFO: ✅ Login exitoso
-[2025-05-13 10:45:23] INFO: 📥 Login recibido:
-[2025-05-13 10:45:23] INFO: ✅ Login exitoso
-[2025-05-13 10:47:26] INFO: 📥 Login recibido:
-[2025-05-13 10:47:26] INFO: ✅ Login exitoso
-[2025-05-13 10:47:54] INFO: 📥 Login recibido:
-[2025-05-13 10:47:54] INFO: ✅ Login exitoso
-[2025-05-13 10:50:55] INFO: 📥 Login recibido:
-[2025-05-13 10:50:55] INFO: ✅ Login exitoso
-[2025-05-13 10:55:40] INFO: 📥 Login recibido:
-[2025-05-13 10:55:40] INFO: ✅ Login exitoso
-[2025-05-13 19:34:27] INFO: 📥 Login recibido:
-[2025-05-13 19:34:27] INFO: ✅ Login exitoso
-[2025-05-13 19:38:21] INFO: 📥 Login recibido:
-[2025-05-13 19:38:22] INFO: ✅ Login exitoso
-[2025-05-13 19:56:06] INFO: 📥 Login recibido:
-[2025-05-13 19:56:06] INFO: ✅ Login exitoso
-[2025-05-13 20:55:08] INFO: 📥 Login recibido:
-[2025-05-13 20:55:09] WARN: ❌ Contraseña incorrecta
-[2025-05-13 20:55:18] INFO: 📥 Login recibido:
-[2025-05-13 20:55:19] WARN: ❌ Contraseña incorrecta
-[2025-05-13 20:55:20] INFO: 📥 Login recibido:
-[2025-05-13 20:55:20] WARN: ❌ Contraseña incorrecta
-[2025-05-13 20:55:27] INFO: 📥 Login recibido:
-[2025-05-13 20:55:27] INFO: ✅ Login exitoso
-[2025-05-13 23:10:30] INFO: 📥 Login recibido:
-[2025-05-13 23:10:30] INFO: ✅ Login exitoso
-[2025-05-13 23:10:48] INFO: 📥 Login recibido:
-[2025-05-13 23:10:48] INFO: ✅ Login exitoso
-[2025-05-13 23:27:10] INFO: 📥 Login recibido:
-[2025-05-13 23:27:10] INFO: ✅ Login exitoso
-[2025-05-13 23:30:19] INFO: 📥 Login recibido:
-[2025-05-13 23:30:19] INFO: ✅ Login exitoso
-[2025-05-13 23:34:12] INFO: 📥 Login recibido:
-[2025-05-13 23:34:13] INFO: ✅ Login exitoso
-[2025-05-13 23:46:14] INFO: 📥 Login recibido:
-[2025-05-13 23:46:14] INFO: ✅ Login exitoso
-[2025-05-14 22:47:26] INFO: 📥 Login recibido:
-[2025-05-14 22:47:27] INFO: ✅ Login exitoso
-[2025-05-14 23:00:49] INFO: 📥 Login recibido:
-[2025-05-14 23:00:50] INFO: ✅ Login exitoso
-[2025-05-14 23:01:58] INFO: 📥 Login recibido:
-[2025-05-14 23:01:59] INFO: ✅ Login exitoso
-[2025-05-14 23:03:17] INFO: 📥 Login recibido:
-[2025-05-14 23:03:17] INFO: ✅ Login exitoso
-[2025-05-15 00:09:42] INFO: 📥 Login recibido:
-[2025-05-15 00:09:42] INFO: ✅ Login exitoso
-[2025-05-15 00:41:47] INFO: 📥 Login recibido:
-[2025-05-15 00:41:47] WARN: ❌ Contraseña incorrecta
-[2025-05-15 00:41:55] INFO: 📥 Login recibido:
-[2025-05-15 00:41:55] INFO: ✅ Login exitoso
-[2025-05-15 01:44:47] INFO: 📥 Login recibido:
-[2025-05-15 01:44:47] INFO: ✅ Login exitoso
-[2025-05-15 01:49:01] INFO: 📥 Login recibido:
-[2025-05-15 01:49:02] INFO: ✅ Login exitoso
-[2025-05-15 01:52:47] INFO: 📥 Login recibido:
-[2025-05-15 01:52:48] INFO: ✅ Login exitoso
-[2025-05-15 13:39:12] INFO: 📥 Login recibido:
-[2025-05-15 13:39:12] INFO: ✅ Login exitoso
-[2025-05-15 19:55:31] INFO: 📥 Login recibido:
-[2025-05-15 19:55:32] INFO: ✅ Login exitoso
-[2025-05-15 20:13:40] INFO: 📥 Login recibido:
-[2025-05-15 20:13:40] INFO: ✅ Login exitoso
-[2025-05-16 14:15:12] INFO: 📥 Login recibido:
-[2025-05-16 14:15:13] INFO: ✅ Login exitoso
-[2025-05-16 21:54:56] INFO: 📥 Login recibido:
-[2025-05-16 21:54:56] INFO: ✅ Login exitoso
-[2025-05-16 22:08:04] INFO: 📥 Login recibido:
-[2025-05-16 22:08:04] INFO: ✅ Login exitoso
-[2025-05-16 22:46:33] INFO: 📥 Login recibido:
-[2025-05-16 22:46:33] INFO: ✅ Login exitoso
-[2025-05-16 22:48:17] INFO: 📥 Login recibido:
-[2025-05-16 22:48:18] INFO: ✅ Login exitoso
-[2025-05-16 22:59:02] INFO: 📥 Login recibido:
-[2025-05-16 22:59:02] WARN: ❌ Usuario no encontrado
-[2025-05-16 22:59:10] INFO: 📥 Login recibido:
-[2025-05-16 22:59:10] WARN: ❌ Usuario no encontrado
-[2025-05-16 22:59:11] INFO: 📥 Login recibido:
-[2025-05-16 22:59:11] WARN: ❌ Usuario no encontrado
-[2025-05-16 22:59:12] INFO: 📥 Login recibido:
-[2025-05-16 22:59:12] WARN: ❌ Usuario no encontrado
-[2025-05-16 22:59:21] INFO: 📥 Login recibido:
-[2025-05-16 22:59:21] INFO: ✅ Login exitoso
-[2025-05-16 23:18:03] INFO: 📥 Login recibido:
-[2025-05-16 23:18:03] INFO: ✅ Login exitoso
-[2025-05-17 11:11:40] INFO: 📥 Login recibido:
-[2025-05-17 11:11:40] INFO: ✅ Login exitoso
-[2025-05-17 11:11:45] ERROR: ❌ Error al obtener configuración: pool.request is not a function
-[2025-05-17 11:11:45] ERROR: ❌ Error en el servidor: pool.request is not a function
-[2025-05-17 11:11:45] ERROR: ❌ Error al obtener configuración: pool.request is not a function
-[2025-05-17 11:11:45] ERROR: ❌ Error en el servidor: pool.request is not a function
-[2025-05-17 11:37:52] INFO: 📥 Login recibido:
-[2025-05-17 11:37:53] WARN: ❌ Contraseña incorrecta
-[2025-05-17 11:38:12] INFO: 📥 Login recibido:
-[2025-05-17 11:38:12] INFO: ✅ Login exitoso
-[2025-05-17 11:42:54] ERROR: Error al obtener estudiante por ID Validation failed for parameter 'id'. Invalid number.
-[2025-05-17 11:42:54] ERROR: ❌ Error en el servidor: Validation failed for parameter 'id'. Invalid number.
-[2025-05-17 11:42:54] ERROR: Error al obtener estudiante por ID Validation failed for parameter 'id'. Invalid number.
-[2025-05-17 11:42:54] ERROR: ❌ Error en el servidor: Validation failed for parameter 'id'. Invalid number.
-[2025-05-17 11:44:00] INFO: 📥 Login recibido:
-[2025-05-17 11:44:00] INFO: ✅ Login exitoso
-[2025-05-17 11:48:07] INFO: 📥 Login recibido:
-[2025-05-17 11:48:07] INFO: ✅ Login exitoso
-[2025-05-17 11:59:21] INFO: 📥 Login recibido:
-[2025-05-17 11:59:21] INFO: ✅ Login exitoso
-[2025-05-17 12:26:59] ERROR: ❌ Error al obtener entrevistas: Invalid column name 'fecha'.
-[2025-05-17 12:26:59] ERROR: ❌ Error en el servidor: Invalid column name 'fecha'.
-[2025-05-17 12:26:59] ERROR: ❌ Error al obtener entrevistas: Invalid column name 'fecha'.
-[2025-05-17 12:26:59] ERROR: ❌ Error en el servidor: Invalid column name 'fecha'.
-[2025-05-17 12:34:35] INFO: 📥 Login recibido:
-[2025-05-17 12:34:35] INFO: ✅ Login exitoso
-[2025-05-17 12:39:57] INFO: 📥 Login recibido:
-[2025-05-17 12:39:57] INFO: ✅ Login exitoso
-[2025-05-17 12:44:29] INFO: 📥 Login recibido:
-[2025-05-17 12:44:29] INFO: ✅ Login exitoso
-[2025-05-17 12:49:11] INFO: 📥 Login recibido:
-[2025-05-17 12:49:12] INFO: ✅ Login exitoso
-[2025-05-17 12:50:21] INFO: 📥 Login recibido:
-[2025-05-17 12:50:21] INFO: ✅ Login exitoso
-[2025-05-17 12:54:26] INFO: 📥 Login recibido:
-[2025-05-17 12:54:26] INFO: ✅ Login exitoso
-[2025-05-17 21:26:51] INFO: 📥 Login recibido:
-[2025-05-17 21:26:51] INFO: ✅ Login exitoso
-[2025-05-17 21:26:59] INFO: 📥 Login recibido:
-[2025-05-17 21:27:00] INFO: ✅ Login exitoso
-[2025-05-17 21:27:53] INFO: 📥 Login recibido:
-[2025-05-17 21:27:53] INFO: ✅ Login exitoso
-[2025-05-17 21:48:06] INFO: 📥 Login recibido:
-[2025-05-17 21:48:06] INFO: ✅ Login exitoso
-[2025-05-17 21:49:03] INFO: 📥 Login recibido:
-[2025-05-17 21:49:03] INFO: ✅ Login exitoso
-[2025-05-17 21:49:30] INFO: 📥 Login recibido:
-[2025-05-17 21:49:30] INFO: ✅ Login exitoso
-[2025-05-17 21:50:28] INFO: 📥 Login recibido:
-[2025-05-17 21:50:28] INFO: ✅ Login exitoso
-[2025-05-17 21:51:07] INFO: 📥 Login recibido:
-[2025-05-17 21:51:07] INFO: ✅ Login exitoso
-[2025-05-17 21:56:49] INFO: 📥 Login recibido:
-[2025-05-17 21:56:49] INFO: ✅ Login exitoso
-[2025-05-17 22:02:45] INFO: 📥 Login recibido:
-[2025-05-17 22:02:45] INFO: ✅ Login exitoso
-[2025-05-17 22:03:51] INFO: 📥 Login recibido:
-[2025-05-17 22:03:51] INFO: ✅ Login exitoso
-[2025-05-17 22:04:32] INFO: 📥 Login recibido:
-[2025-05-17 22:04:33] INFO: ✅ Login exitoso
-[2025-05-17 22:15:35] INFO: 📥 Login recibido:
-[2025-05-17 22:15:35] INFO: ✅ Login exitoso
-[2025-05-17 22:18:48] INFO: 📥 Login recibido:
-[2025-05-17 22:18:48] INFO: ✅ Login exitoso
-[2025-05-17 22:19:08] INFO: 📥 Login recibido:
-[2025-05-17 22:19:08] INFO: ✅ Login exitoso
-[2025-05-17 22:25:11] INFO: 📥 Login recibido:
-[2025-05-17 22:25:12] INFO: ✅ Login exitoso
-[2025-05-18 18:01:35] INFO: 📥 Login recibido:
-[2025-05-18 18:01:35] INFO: ✅ Login exitoso
-[2025-05-18 18:21:33] INFO: 📥 Login recibido:
-[2025-05-18 18:21:34] INFO: ✅ Login exitoso
-[2025-05-18 18:22:20] INFO: 📥 Login recibido:
-[2025-05-18 18:22:21] INFO: ✅ Login exitoso
-[2025-05-18 18:26:41] INFO: 📥 Login recibido:
-[2025-05-18 18:26:42] INFO: ✅ Login exitoso
-[2025-05-18 18:33:45] INFO: 📥 Login recibido:
-[2025-05-18 18:33:45] INFO: ✅ Login exitoso
-[2025-05-18 19:21:52] INFO: 📥 Login recibido:
-[2025-05-18 19:21:53] INFO: ✅ Login exitoso
-[2025-05-18 19:28:51] INFO: 📥 Login recibido:
-[2025-05-18 19:28:51] WARN: ❌ Contraseña incorrecta
-[2025-05-18 19:29:11] INFO: 📥 Login recibido:
-[2025-05-18 19:29:11] INFO: ✅ Login exitoso
-[2025-05-19 00:18:02] INFO: 📥 Login recibido:
-[2025-05-19 00:18:02] INFO: ✅ Login exitoso
-[2025-05-19 09:38:19] INFO: 📥 Login recibido:
-[2025-05-19 09:38:19] INFO: ✅ Login exitoso
-[2025-05-19 09:38:45] INFO: 📥 Login recibido:
-[2025-05-19 09:38:46] INFO: ✅ Login exitoso
-[2025-05-19 10:17:13] INFO: 📥 Login recibido:
-[2025-05-19 10:17:13] INFO: ✅ Login exitoso
-[2025-05-19 10:17:36] INFO: 📥 Login recibido:
-[2025-05-19 10:17:36] INFO: ✅ Login exitoso
-[2025-05-19 10:31:00] INFO: 📥 Login recibido:
-[2025-05-19 10:31:00] INFO: ✅ Login exitoso
-[2025-05-19 10:31:09] INFO: 📥 Login recibido:
-[2025-05-19 10:31:09] INFO: ✅ Login exitoso
-[2025-05-19 10:31:15] INFO: 📥 Login recibido:
-[2025-05-19 10:31:15] INFO: ✅ Login exitoso
-[2025-05-19 10:45:42] INFO: 📥 Login recibido:
-[2025-05-19 10:45:42] INFO: ✅ Login exitoso
-[2025-05-19 10:48:08] INFO: 📥 Login recibido:
-[2025-05-19 10:48:08] INFO: ✅ Login exitoso
-[2025-05-19 10:53:47] INFO: 📥 Login recibido:
-[2025-05-19 10:53:47] INFO: ✅ Login exitoso
-[2025-05-19 11:17:13] INFO: 📥 Login recibido:
-[2025-05-19 11:17:13] INFO: ✅ Login exitoso
-[2025-05-19 11:30:05] INFO: 📥 Login recibido:
-[2025-05-19 11:30:05] INFO: ✅ Login exitoso
-[2025-05-19 11:30:27] INFO: 📥 Login recibido:
-[2025-05-19 11:30:27] INFO: ✅ Login exitoso
-[2025-05-19 11:37:09] INFO: 📥 Login recibido:
-[2025-05-19 11:37:09] INFO: ✅ Login exitoso
-[2025-05-19 11:38:14] INFO: 📥 Login recibido:
-[2025-05-19 11:38:14] INFO: ✅ Login exitoso
-[2025-05-19 11:47:55] INFO: 📥 Login recibido:
-[2025-05-19 11:47:55] INFO: ✅ Login exitoso
-[2025-05-19 11:49:32] INFO: 📥 Login recibido:
-[2025-05-19 11:49:33] INFO: ✅ Login exitoso
-[2025-05-19 11:55:38] INFO: 📥 Login recibido:
-[2025-05-19 11:55:39] INFO: ✅ Login exitoso
-[2025-05-19 11:59:06] INFO: 📥 Login recibido:
-[2025-05-19 11:59:06] INFO: ✅ Login exitoso
-[2025-05-19 12:00:02] INFO: 📥 Login recibido:
-[2025-05-19 12:00:02] WARN: ❌ Contraseña incorrecta
-[2025-05-19 12:00:08] INFO: 📥 Login recibido:
-[2025-05-19 12:00:08] INFO: ✅ Login exitoso
-[2025-05-19 12:01:51] INFO: 📥 Login recibido:
-[2025-05-19 12:01:51] INFO: ✅ Login exitoso
-[2025-05-19 12:46:21] INFO: 📥 Login recibido:
-[2025-05-19 12:46:21] INFO: ✅ Login exitoso
-[2025-05-19 13:21:59] INFO: 📥 Login recibido:
-[2025-05-19 13:21:59] INFO: ✅ Login exitoso
-[2025-05-19 14:26:14] INFO: 📥 Login recibido:
-[2025-05-19 14:26:14] INFO: ✅ Login exitoso
-[2025-05-19 14:38:43] INFO: 📥 Login recibido:
-[2025-05-19 14:38:43] INFO: ✅ Login exitoso
-[2025-05-19 14:41:52] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'validate')
-[2025-05-19 14:41:52] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'validate')
-[2025-05-19 14:53:49] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'validate')
-[2025-05-19 14:53:51] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'validate')
-[2025-05-19 14:59:09] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'validate')
-[2025-05-19 14:59:10] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'validate')
-[2025-05-19 15:00:49] INFO: 📥 Login recibido:
-[2025-05-19 15:00:49] INFO: ✅ Login exitoso
-[2025-05-19 15:01:27] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'validate')
-[2025-05-19 15:06:29] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'validate')
-[2025-05-19 20:57:45] INFO: 📥 Login recibido:
-[2025-05-19 20:57:45] INFO: ✅ Login exitoso
-[2025-05-19 20:58:21] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'validate')
-[2025-05-19 21:06:59] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'validate')
-[2025-05-19 21:07:00] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'validate')
-[2025-05-19 21:07:00] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'validate')
-[2025-05-19 21:07:01] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'validate')
-[2025-05-19 21:07:01] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'validate')
-[2025-05-19 21:08:15] INFO: 📥 Login recibido:
-[2025-05-19 21:08:15] INFO: ✅ Login exitoso
-[2025-05-19 21:08:53] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'validate')
-[2025-05-19 21:11:41] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'validate')
-[2025-05-19 21:11:42] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'validate')
-[2025-05-19 21:16:27] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'validate')
-[2025-05-19 21:18:00] INFO: 📥 Login recibido:
-[2025-05-19 21:18:00] INFO: ✅ Login exitoso
-[2025-05-19 21:18:31] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'validate')
-[2025-05-19 21:25:14] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'validate')
-[2025-05-19 21:32:51] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'validate')
-[2025-05-19 21:56:50] INFO: 📥 Login recibido:
-[2025-05-19 21:56:51] INFO: ✅ Login exitoso
-[2025-05-19 22:23:30] INFO: 📥 Login recibido:
-[2025-05-19 22:23:30] INFO: ✅ Login exitoso
-[2025-05-19 22:23:45] INFO: 📥 Login recibido:
-[2025-05-19 22:23:45] INFO: ✅ Login exitoso
-[2025-05-19 22:30:31] INFO: 📥 Login recibido:
-[2025-05-19 22:30:31] INFO: ✅ Login exitoso
-[2025-05-20 15:09:44] INFO: 📥 Login recibido:
-[2025-05-20 15:09:45] INFO: ✅ Login exitoso
-[2025-05-20 20:27:02] INFO: 📥 Login recibido:
-[2025-05-20 20:27:02] INFO: ✅ Login exitoso
-[2025-05-20 23:58:08] ERROR: Error de autenticación: jwt expired
-[2025-05-20 23:58:08] ERROR: Error de autenticación: jwt expired
-[2025-05-21 00:08:17] ERROR: Error de autenticación: jwt expired
-[2025-05-21 00:08:17] ERROR: Error de autenticación: jwt expired
-[2025-05-21 00:15:17] ERROR: Error de autenticación: jwt expired
-[2025-05-21 00:15:17] ERROR: Error de autenticación: jwt expired
-[2025-05-21 00:29:28] INFO: 📥 Login recibido:
-[2025-05-21 00:29:29] INFO: ✅ Login exitoso
-[2025-05-21 15:32:32] ERROR: Error de autenticación: jwt expired
-[2025-05-21 15:32:32] ERROR: Error de autenticación: jwt expired
-[2025-05-21 15:32:42] ERROR: Error de autenticación: jwt expired
-[2025-05-21 15:32:42] ERROR: Error de autenticación: jwt expired
-[2025-05-21 15:33:19] INFO: 📥 Login recibido:
-[2025-05-21 15:33:19] INFO: ✅ Login exitoso
-[2025-05-21 15:53:05] INFO: 📥 Login recibido:
-[2025-05-21 15:53:05] INFO: ✅ Login exitoso
-[2025-05-21 16:55:05] INFO: 📥 Login recibido:
-[2025-05-21 16:55:05] INFO: ✅ Login exitoso
-[2025-05-21 16:59:21] INFO: 📥 Login recibido:
-[2025-05-21 16:59:21] INFO: ✅ Login exitoso
-[2025-05-21 17:14:33] INFO: 📥 Login recibido:
-[2025-05-21 17:14:33] INFO: ✅ Login exitoso
-[2025-05-21 21:02:01] INFO: 📥 Login recibido:
-[2025-05-21 21:02:01] INFO: ✅ Login exitoso
-[2025-05-21 21:03:19] INFO: 📥 Login recibido:
-[2025-05-21 21:03:19] INFO: ✅ Login exitoso
-[2025-05-21 21:12:34] INFO: 📥 Login recibido:
-[2025-05-21 21:12:34] INFO: ✅ Login exitoso
-[2025-05-21 22:00:15] INFO: 📥 Login recibido:
-[2025-05-21 22:00:15] INFO: ✅ Login exitoso
-[2025-05-21 23:23:05] ERROR: Error de autenticación: jwt expired
-[2025-05-21 23:23:50] ERROR: Error de autenticación: jwt expired
-[2025-05-21 23:24:15] ERROR: Error de autenticación: jwt expired
-[2025-05-21 23:24:15] ERROR: Error de autenticación: jwt expired
-[2025-05-21 23:24:51] INFO: 📥 Login recibido:
-[2025-05-21 23:24:51] INFO: ✅ Login exitoso
-[2025-05-21 23:58:54] INFO: 📥 Login recibido:
-[2025-05-21 23:58:54] INFO: ✅ Login exitoso
-[2025-05-22 00:07:49] INFO: 📥 Login recibido:
-[2025-05-22 00:07:49] INFO: ✅ Login exitoso
-[2025-05-22 00:59:36] INFO: 📥 Login recibido:
-[2025-05-22 00:59:37] INFO: ✅ Login exitoso
-[2025-05-22 09:33:30] INFO: 📥 Login recibido:
-[2025-05-22 09:33:31] INFO: ✅ Login exitoso
-[2025-05-22 10:34:39] ERROR: Error de autenticación: jwt expired
-[2025-05-22 10:34:39] ERROR: Error de autenticación: jwt expired
-[2025-05-22 10:35:02] ERROR: Error de autenticación: jwt expired
-[2025-05-22 10:35:02] ERROR: Error de autenticación: jwt expired
-[2025-05-22 11:39:15] ERROR: Error de autenticación: jwt expired
-[2025-05-22 11:39:15] ERROR: Error de autenticación: jwt expired
-[2025-05-22 11:42:04] ERROR: Error de autenticación: jwt expired
-[2025-05-22 11:42:04] ERROR: Error de autenticación: jwt expired
-[2025-05-22 11:56:50] INFO: 📥 Login recibido:
-[2025-05-22 11:56:50] INFO: ✅ Login exitoso
-[2025-05-22 13:17:11] ERROR: Error de autenticación: jwt expired
-[2025-05-22 13:17:11] ERROR: Error de autenticación: jwt expired
-[2025-05-22 13:17:58] INFO: 📥 Login recibido:
-[2025-05-22 13:17:58] WARN: ❌ Contraseña incorrecta
-[2025-05-22 13:18:07] INFO: 📥 Login recibido:
-[2025-05-22 13:18:07] INFO: ✅ Login exitoso
-[2025-05-22 14:24:30] ERROR: Error de autenticación: jwt expired
-[2025-05-22 14:24:30] ERROR: Error de autenticación: jwt expired
-[2025-05-22 14:28:03] ERROR: Error de autenticación: jwt expired
-[2025-05-22 14:28:03] ERROR: Error de autenticación: jwt expired
-[2025-05-22 14:29:13] ERROR: Error de autenticación: jwt expired
-[2025-05-22 14:29:13] ERROR: Error de autenticación: jwt expired
-[2025-05-22 14:33:20] ERROR: Error de autenticación: jwt expired
-[2025-05-22 14:33:20] ERROR: Error de autenticación: jwt expired
-[2025-05-22 14:34:05] INFO: 📥 Login recibido:
-[2025-05-22 14:34:05] INFO: ✅ Login exitoso
-[2025-05-22 14:34:31] INFO: 📥 Login recibido:
-[2025-05-22 14:34:31] INFO: ✅ Login exitoso
-[2025-05-22 14:47:45] INFO: 📥 Login recibido:
-[2025-05-22 14:47:45] INFO: ✅ Login exitoso
-[2025-05-22 19:59:04] INFO: 📥 Login recibido:
-[2025-05-22 19:59:04] WARN: ❌ Contraseña incorrecta
-[2025-05-22 19:59:13] INFO: 📥 Login recibido:
-[2025-05-22 19:59:13] WARN: ❌ Contraseña incorrecta
-[2025-05-22 20:01:10] INFO: 📥 Login recibido:
-[2025-05-22 20:01:11] INFO: ✅ Login exitoso
-[2025-05-22 20:07:18] INFO: 📥 Login recibido:
-[2025-05-22 20:07:18] INFO: ✅ Login exitoso
-[2025-05-22 20:11:01] INFO: 📥 Login recibido:
-[2025-05-22 20:11:01] INFO: ✅ Login exitoso
-[2025-05-22 20:50:37] ERROR: Error al obtener historial por estudiante: HistorialModel.obtenerPorEstudiante is not a function
-[2025-05-22 20:50:37] ERROR: ❌ Error en el servidor: HistorialModel.obtenerPorEstudiante is not a function
-[2025-05-22 20:50:37] ERROR: Error al obtener historial por estudiante: HistorialModel.obtenerPorEstudiante is not a function
-[2025-05-22 20:50:37] ERROR: ❌ Error en el servidor: HistorialModel.obtenerPorEstudiante is not a function
-[2025-05-22 20:52:20] ERROR: Error al obtener historial por estudiante: HistorialModel.obtenerPorEstudiante is not a function
-[2025-05-22 20:52:20] ERROR: ❌ Error en el servidor: HistorialModel.obtenerPorEstudiante is not a function
-[2025-05-22 20:52:20] ERROR: Error al obtener historial por estudiante: HistorialModel.obtenerPorEstudiante is not a function
-[2025-05-22 20:52:20] ERROR: ❌ Error en el servidor: HistorialModel.obtenerPorEstudiante is not a function
-[2025-05-22 21:14:09] ERROR: Error de autenticación: jwt expired
-[2025-05-22 21:14:20] INFO: 📥 Login recibido:
-[2025-05-22 21:14:21] INFO: ✅ Login exitoso
-[2025-05-22 22:33:24] INFO: 📥 Login recibido:
-[2025-05-22 22:33:24] INFO: ✅ Login exitoso
-[2025-05-22 23:25:13] ERROR: ❌ Error al crear agenda: Validation failed for parameter 'hora'. Invalid time.
-[2025-05-22 23:25:13] ERROR: ❌ Error en el servidor: Validation failed for parameter 'hora'. Invalid time.
-[2025-05-22 23:31:52] ERROR: ❌ Error al crear agenda: Validation failed for parameter 'hora'. Invalid time.
-[2025-05-22 23:31:52] ERROR: ❌ Error en el servidor: Validation failed for parameter 'hora'. Invalid time.
-[2025-05-22 23:34:51] INFO: 📥 Login recibido:
-[2025-05-22 23:34:51] WARN: ❌ Contraseña incorrecta
-[2025-05-22 23:35:10] INFO: 📥 Login recibido:
-[2025-05-22 23:35:11] INFO: ✅ Login exitoso
-[2025-05-22 23:35:40] ERROR: ❌ Error al crear agenda: Missing credentials for "PLAIN"
-[2025-05-22 23:35:40] ERROR: ❌ Error en el servidor: Missing credentials for "PLAIN"
-[2025-05-22 23:44:58] INFO: ✉️ Correo enviado a: isita@mailer.cl, pamefern@gmail.com
-[2025-05-22 23:48:36] INFO: 📅 Entrevista agendada por usuario desconocido para estudiante ID 5
-[2025-05-22 23:48:36] INFO: ✉️ Simulación de correo enviada a: isita@mailer.cl (copiado: pamefern5@gmail.com)
-[2025-05-23 11:29:48] INFO: 📥 Login recibido:
-[2025-05-23 11:29:48] INFO: ✅ Login exitoso
-[2025-05-23 12:51:23] ERROR: Error de autenticación: jwt expired
-[2025-05-23 12:51:23] ERROR: Error de autenticación: jwt expired
-[2025-05-23 12:51:35] INFO: 📥 Login recibido:
-[2025-05-23 12:51:36] WARN: ❌ Contraseña incorrecta
-[2025-05-23 12:51:44] INFO: 📥 Login recibido:
-[2025-05-23 12:51:45] INFO: ✅ Login exitoso
-[2025-05-23 22:39:10] INFO: 📥 Login recibido:
-[2025-05-23 22:39:11] INFO: ✅ Login exitoso
-[2025-05-23 22:46:31] INFO: 📥 Login recibido:
-[2025-05-23 22:46:31] WARN: ❌ Contraseña incorrecta
-[2025-05-23 22:46:37] INFO: 📥 Login recibido:
-[2025-05-23 22:46:37] INFO: ✅ Login exitoso
-[2025-05-25 13:22:29] INFO: 📥 Login recibido:
-[2025-05-25 13:22:29] INFO: ✅ Login exitoso
-[2025-05-25 14:24:11] ERROR: Error de autenticación: jwt expired
-[2025-05-25 14:24:12] ERROR: Error de autenticación: jwt expired
-[2025-05-25 14:24:24] INFO: 📥 Login recibido:
-[2025-05-25 14:24:24] INFO: ✅ Login exitoso
-[2025-05-25 16:11:52] INFO: 📥 Login recibido:
-[2025-05-25 16:11:53] INFO: ✅ Login exitoso
-[2025-05-25 16:27:04] INFO: 📥 Login recibido:
-[2025-05-25 16:27:04] INFO: ✅ Login exitoso
-[2025-05-25 16:27:52] INFO: 📥 Login recibido:
-[2025-05-25 16:27:52] INFO: ✅ Login exitoso
-[2025-05-25 16:36:48] INFO: 📥 Login recibido:
-[2025-05-25 16:36:48] INFO: ✅ Login exitoso
-[2025-05-25 16:48:21] INFO: 📥 Login recibido:
-[2025-05-25 16:48:22] INFO: ✅ Login exitoso
-[2025-05-25 16:50:05] INFO: 📥 Login recibido:
-[2025-05-25 16:50:05] INFO: ✅ Login exitoso
-[2025-05-25 17:57:24] INFO: 📥 Login recibido:
-[2025-05-25 17:57:24] INFO: ✅ Login exitoso
-[2025-05-25 19:47:52] INFO: 📥 Login recibido:
-[2025-05-25 19:47:52] INFO: ✅ Login exitoso
-[2025-05-25 21:50:52] ERROR: Error de autenticación: jwt expired
-[2025-05-25 21:50:52] ERROR: Error de autenticación: jwt expired
-[2025-05-25 21:50:58] INFO: 📥 Login recibido:
-[2025-05-25 21:50:58] INFO: ✅ Login exitoso
-[2025-05-25 22:04:45] INFO: 📥 Login recibido:
-[2025-05-25 22:04:45] INFO: ✅ Login exitoso
-[2025-05-25 23:05:58] ERROR: Error de autenticación: jwt expired
-[2025-05-25 23:05:58] ERROR: Error de autenticación: jwt expired
-[2025-05-25 23:29:14] INFO: 📥 Login recibido:
-[2025-05-25 23:29:14] INFO: ✅ Login exitoso
-[2025-05-26 21:28:32] INFO: 📥 Login recibido:
-[2025-05-26 21:28:32] INFO: ✅ Login exitoso
-[2025-05-27 11:28:01] INFO: 📥 Login recibido:
-[2025-05-27 11:28:01] INFO: ✅ Login exitoso
-[2025-05-27 12:25:50] INFO: 📥 Login recibido:
-[2025-05-27 12:25:51] WARN: ❌ Contraseña incorrecta
-[2025-05-27 12:26:01] INFO: 📥 Login recibido:
-[2025-05-27 12:26:01] INFO: ✅ Login exitoso
-[2025-05-27 12:26:05] ERROR: Error al obtener configuraciones por tipo: No connection is specified for that request.
-[2025-05-27 12:26:05] ERROR: Error al obtener configuraciones por tipo: No connection is specified for that request.
-[2025-05-27 12:26:05] ERROR: Error al obtener configuraciones por tipo: No connection is specified for that request.
-[2025-05-27 12:26:05] ERROR: Error al obtener configuraciones por tipo: No connection is specified for that request.
-[2025-05-27 12:26:05] ERROR: Error al obtener configuraciones por tipo: No connection is specified for that request.
-[2025-05-27 12:26:05] ERROR: Error al obtener configuraciones por tipo: No connection is specified for that request.
-[2025-05-27 12:29:47] ERROR: Error al obtener configuraciones por tipo: No connection is specified for that request.
-[2025-05-27 12:29:47] ERROR: Error al obtener configuraciones por tipo: No connection is specified for that request.
-[2025-05-27 12:29:47] ERROR: Error al obtener configuraciones por tipo: No connection is specified for that request.
-[2025-05-27 12:29:47] ERROR: Error al obtener configuraciones por tipo: No connection is specified for that request.
-[2025-05-27 12:29:47] ERROR: Error al obtener configuraciones por tipo: No connection is specified for that request.
-[2025-05-27 12:29:48] ERROR: Error al obtener configuraciones por tipo: No connection is specified for that request.
-[2025-05-27 12:30:00] ERROR: Error al obtener configuraciones por tipo: No connection is specified for that request.
-[2025-05-27 12:30:00] ERROR: Error al obtener configuraciones por tipo: No connection is specified for that request.
-[2025-05-27 12:30:00] ERROR: Error al obtener configuraciones por tipo: No connection is specified for that request.
-[2025-05-27 12:30:00] ERROR: Error al obtener configuraciones por tipo: No connection is specified for that request.
-[2025-05-27 12:30:00] ERROR: Error al obtener configuraciones por tipo: No connection is specified for that request.
-[2025-05-27 12:30:00] ERROR: Error al obtener configuraciones por tipo: No connection is specified for that request.
-[2025-05-27 12:42:25] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'validate')
-[2025-05-27 12:46:29] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'validate')
-[2025-05-27 13:31:20] INFO: 📥 Login recibido:
-[2025-05-27 13:31:20] INFO: ✅ Login exitoso
-[2025-05-27 14:44:54] ERROR: Error de autenticación: jwt expired
-[2025-05-27 14:44:54] ERROR: Error de autenticación: jwt expired
-[2025-05-27 14:45:02] INFO: 📥 Login recibido:
-[2025-05-27 14:45:02] INFO: ✅ Login exitoso
-[2025-05-27 14:48:49] INFO: 📥 Login recibido:
-[2025-05-27 14:48:49] INFO: ✅ Login exitoso
-[2025-05-27 18:43:19] INFO: 📥 Login recibido:
-[2025-05-27 18:43:20] INFO: ✅ Login exitoso
-[2025-05-27 20:35:50] ERROR: Error de autenticación: jwt expired
-[2025-05-27 20:35:50] ERROR: Error de autenticación: jwt expired
-[2025-05-27 20:35:51] ERROR: Error de autenticación: jwt expired
-[2025-05-27 20:35:51] ERROR: Error de autenticación: jwt expired
-[2025-05-27 20:35:51] ERROR: Error de autenticación: jwt expired
-[2025-05-27 20:35:52] ERROR: Error de autenticación: jwt expired
-[2025-05-27 20:55:57] INFO: 📥 Login recibido:
-[2025-05-27 20:55:58] INFO: ✅ Login exitoso
-[2025-05-27 21:59:29] ERROR: Error de autenticación: jwt expired
-[2025-05-27 21:59:29] ERROR: Error de autenticación: jwt expired
-[2025-05-27 21:59:38] INFO: 📥 Login recibido:
-[2025-05-27 21:59:39] INFO: ✅ Login exitoso
-[2025-05-27 22:12:06] ERROR: ❌ Error al obtener entregas por estudiante: Invalid column name 'tipo'.
-[2025-05-27 22:12:06] ERROR: ❌ Error en el servidor: Invalid column name 'tipo'.
-[2025-05-27 22:12:06] ERROR: ❌ Error al obtener entregas por estudiante: Invalid column name 'tipo'.
-[2025-05-27 22:12:06] ERROR: ❌ Error en el servidor: Invalid column name 'tipo'.
-[2025-05-27 22:12:17] ERROR: ❌ Error al obtener entregas por estudiante: Invalid column name 'tipo'.
-[2025-05-27 22:12:17] ERROR: ❌ Error en el servidor: Invalid column name 'tipo'.
-[2025-05-27 22:12:17] ERROR: ❌ Error al obtener entregas por estudiante: Invalid column name 'tipo'.
-[2025-05-27 22:12:17] ERROR: ❌ Error en el servidor: Invalid column name 'tipo'.
-[2025-05-27 22:13:50] ERROR: ❌ Error al obtener entregas por estudiante: Invalid column name 'tipo'.
-[2025-05-27 22:13:50] ERROR: ❌ Error en el servidor: Invalid column name 'tipo'.
-[2025-05-27 22:13:50] ERROR: ❌ Error al obtener entregas por estudiante: Invalid column name 'tipo'.
-[2025-05-27 22:13:50] ERROR: ❌ Error en el servidor: Invalid column name 'tipo'.
-[2025-05-28 14:16:02] INFO: 📥 Login recibido:
-[2025-05-28 14:16:02] INFO: ✅ Login exitoso
-[2025-05-28 14:42:26] INFO: 📥 Login recibido:
-[2025-05-28 14:42:26] INFO: ✅ Login exitoso
-[2025-05-28 20:02:42] INFO: 📥 Login recibido:
-[2025-05-28 20:02:42] WARN: ❌ Contraseña incorrecta
-[2025-05-28 20:03:01] INFO: 📥 Login recibido:
-[2025-05-28 20:03:01] INFO: ✅ Login exitoso
-[2025-05-28 20:04:02] INFO: 📥 Login recibido:
-[2025-05-28 20:04:02] INFO: ✅ Login exitoso
-[2025-05-28 21:06:24] INFO: 📥 Login recibido:
-[2025-05-28 21:06:24] INFO: ✅ Login exitoso
-[2025-05-28 22:07:01] ERROR: Error de autenticación: jwt expired
-[2025-05-28 22:07:08] INFO: 📥 Login recibido:
-[2025-05-28 22:07:08] INFO: ✅ Login exitoso
-[2025-05-30 14:13:31] INFO: 📥 Login recibido:
-[2025-05-30 14:13:33] INFO: ✅ Login exitoso
-[2025-05-30 14:14:20] INFO: 📥 Login recibido:
-[2025-05-30 14:14:21] WARN: ❌ Contraseña incorrecta
-[2025-05-30 14:14:34] INFO: 📥 Login recibido:
-[2025-05-30 14:14:34] INFO: ✅ Login exitoso
-[2025-05-30 22:46:02] INFO: 📥 Login recibido:
-[2025-05-30 22:46:02] WARN: ❌ Contraseña incorrecta
-[2025-05-30 22:46:10] INFO: 📥 Login recibido:
-[2025-05-30 22:46:11] WARN: ❌ Contraseña incorrecta
-[2025-05-30 22:47:18] INFO: 📥 Login recibido:
-[2025-05-30 22:47:18] INFO: ✅ Login exitoso
-[2025-05-30 22:48:07] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'validate')
-[2025-05-30 23:00:53] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'validate')
-[2025-05-30 23:57:13] ERROR: Error de autenticación: jwt expired
-[2025-05-30 23:57:13] ERROR: Error de autenticación: jwt expired
-[2025-05-30 23:57:19] INFO: 📥 Login recibido:
-[2025-05-30 23:57:19] INFO: ✅ Login exitoso
-[2025-05-31 16:33:02] INFO: 📥 Login recibido:
-[2025-05-31 16:33:02] INFO: ✅ Login exitoso
-[2025-05-31 18:08:41] INFO: 📥 Login recibido:
-[2025-05-31 18:08:41] INFO: ✅ Login exitoso
-[2025-05-31 18:44:43] INFO: 📥 Login recibido:
-[2025-05-31 18:44:43] INFO: ✅ Login exitoso
-[2025-05-31 18:54:52] INFO: 📥 Login recibido:
-[2025-05-31 18:54:52] INFO: ✅ Login exitoso
-[2025-05-31 21:49:21] INFO: 📥 Login recibido:
-[2025-05-31 21:49:21] INFO: ✅ Login exitoso
-[2025-06-01 19:02:42] INFO: 📥 Login recibido:
-[2025-06-01 19:02:43] INFO: ✅ Login exitoso
-[2025-06-01 20:34:02] ERROR: Error de autenticación: jwt expired
-[2025-06-01 20:34:02] ERROR: Error de autenticación: jwt expired
-[2025-06-01 20:34:09] INFO: 📥 Login recibido:
-[2025-06-01 20:34:09] WARN: ❌ Contraseña incorrecta
-[2025-06-01 20:34:19] INFO: 📥 Login recibido:
-[2025-06-01 20:34:19] WARN: ❌ Contraseña incorrecta
-[2025-06-01 20:34:42] INFO: 📥 Login recibido:
-[2025-06-01 20:34:42] INFO: ✅ Login exitoso
-[2025-06-01 21:41:13] ERROR: Error de autenticación: jwt expired
-[2025-06-01 21:41:13] ERROR: Error de autenticación: jwt expired
-[2025-06-03 14:14:19] INFO: 📥 Login recibido:
-[2025-06-03 14:14:20] WARN: ❌ Contraseña incorrecta
-[2025-06-03 14:14:36] INFO: 📥 Login recibido:
-[2025-06-03 14:14:36] INFO: ✅ Login exitoso
-[2025-06-03 21:12:21] ERROR: Error de autenticación: jwt expired
-[2025-06-03 21:12:21] ERROR: Error de autenticación: jwt expired
-[2025-06-03 21:12:29] INFO: 📥 Login recibido:
-[2025-06-03 21:12:29] INFO: ✅ Login exitoso
-[2025-06-03 21:21:29] INFO: 📥 Login recibido:
-[2025-06-03 21:21:29] INFO: ✅ Login exitoso
-[2025-06-04 20:59:24] ERROR: Error de autenticación: jwt expired
-[2025-06-04 20:59:24] ERROR: Error de autenticación: jwt expired
-[2025-06-04 20:59:24] ERROR: Error de autenticación: jwt expired
-[2025-06-04 20:59:25] ERROR: Error de autenticación: jwt expired
-[2025-06-04 20:59:25] ERROR: Error de autenticación: jwt expired
-[2025-06-04 20:59:25] ERROR: Error de autenticación: jwt expired
-[2025-06-04 20:59:34] INFO: 📥 Login recibido:
-[2025-06-04 20:59:35] INFO: ✅ Login exitoso
-[2025-06-04 21:33:11] INFO: 📥 Login recibido:
-[2025-06-04 21:33:11] INFO: ✅ Login exitoso
-[2025-06-04 22:21:42] INFO: 📥 Login recibido:
-[2025-06-04 22:21:42] INFO: ✅ Login exitoso
-[2025-06-04 22:48:12] ERROR: ❌ Error al obtener entrevistas: Validation failed for parameter 'id_estudiante'. Invalid number.
-[2025-06-04 22:48:12] ERROR: ❌ Error en el servidor: Validation failed for parameter 'id_estudiante'. Invalid number.
-[2025-06-04 22:48:12] ERROR: ❌ Error al obtener entrevistas: Validation failed for parameter 'id_estudiante'. Invalid number.
-[2025-06-04 22:48:12] ERROR: ❌ Error en el servidor: Validation failed for parameter 'id_estudiante'. Invalid number.
-[2025-06-04 22:48:37] ERROR: ❌ Error al obtener entrevistas: Validation failed for parameter 'id_estudiante'. Invalid number.
-[2025-06-04 22:48:37] ERROR: ❌ Error en el servidor: Validation failed for parameter 'id_estudiante'. Invalid number.
-[2025-06-04 22:48:37] ERROR: ❌ Error al obtener entrevistas: Validation failed for parameter 'id_estudiante'. Invalid number.
-[2025-06-04 22:48:37] ERROR: ❌ Error en el servidor: Validation failed for parameter 'id_estudiante'. Invalid number.
-[2025-06-05 20:09:28] INFO: 📥 Login recibido:
-[2025-06-05 20:09:28] WARN: ❌ Contraseña incorrecta
-[2025-06-05 20:09:41] INFO: 📥 Login recibido:
-[2025-06-05 20:09:41] INFO: ✅ Login exitoso
-[2025-06-05 21:12:06] ERROR: Error de autenticación: jwt expired
-[2025-06-05 21:12:06] ERROR: Error de autenticación: jwt expired
-[2025-06-05 21:12:22] INFO: 📥 Login recibido:
-[2025-06-05 21:12:22] INFO: ✅ Login exitoso
-[2025-06-05 21:45:17] INFO: [Conducta] ID recibido: 4
-[2025-06-05 21:45:17] INFO: [Conducta] Resultado de la consulta: []
-[2025-06-05 21:45:17] INFO: [Conducta] ID recibido: 4
-[2025-06-05 21:45:17] INFO: [Conducta] Resultado de la consulta: []
-[2025-06-05 21:45:38] INFO: [Conducta] ID recibido: 4
-[2025-06-05 21:45:38] INFO: [Conducta] Resultado de la consulta: []
-[2025-06-05 21:45:38] INFO: [Conducta] ID recibido: 4
-[2025-06-05 21:45:38] INFO: [Conducta] Resultado de la consulta: []
-[2025-06-05 22:36:21] INFO: 📥 Login recibido:
-[2025-06-05 22:36:21] INFO: ✅ Login exitoso
-[2025-06-05 22:51:56] INFO: 📥 Login recibido:
-[2025-06-05 22:51:56] INFO: ✅ Login exitoso
-[2025-06-05 23:05:56] INFO: 📥 Login recibido:
-[2025-06-05 23:05:56] INFO: ✅ Login exitoso
-[2025-06-05 23:07:58] INFO: 📥 Login recibido:
-[2025-06-05 23:07:58] INFO: ✅ Login exitoso
-[2025-06-05 23:19:46] INFO: 📥 Login recibido:
-[2025-06-05 23:19:46] INFO: ✅ Login exitoso
-[2025-06-06 11:39:22] INFO: 📥 Login recibido:
-[2025-06-06 11:39:23] INFO: ✅ Login exitoso
-[2025-06-06 11:41:59] INFO: [Conducta] ID recibido: 4
-[2025-06-06 11:42:00] INFO: [Conducta] Resultado de la consulta: []
-[2025-06-06 11:42:00] INFO: [Conducta] ID recibido: 4
-[2025-06-06 11:42:00] INFO: [Conducta] Resultado de la consulta: []
-[2025-06-06 12:40:04] INFO: 📥 Login recibido:
-[2025-06-06 12:40:04] INFO: ✅ Login exitoso
-[2025-06-08 11:49:24] INFO: 📥 Login recibido:
-[2025-06-08 11:49:25] INFO: ✅ Login exitoso
-[2025-06-08 11:50:04] INFO: [Conducta] ID recibido: 4
-[2025-06-08 11:50:04] INFO: [Conducta] Resultado de la consulta: []
-[2025-06-08 11:50:04] INFO: [Conducta] ID recibido: 4
-[2025-06-08 11:50:04] INFO: [Conducta] Resultado de la consulta: []
-[2025-06-08 12:46:16] ERROR: ❌ Error al registrar entrevista desde Agenda: Cannot destructure property 'observaciones' of 'req.body' as it is undefined.
-[2025-06-08 12:46:16] ERROR: ❌ Error en el servidor: Cannot destructure property 'observaciones' of 'req.body' as it is undefined.
-[2025-06-08 12:48:49] ERROR: ❌ Error al registrar entrevista desde Agenda: Cannot destructure property 'observaciones' of 'req.body' as it is undefined.
-[2025-06-08 12:48:49] ERROR: ❌ Error en el servidor: Cannot destructure property 'observaciones' of 'req.body' as it is undefined.
-[2025-06-08 12:49:41] INFO: 📥 Login recibido:
-[2025-06-08 12:49:42] INFO: ✅ Login exitoso
-[2025-06-08 12:49:44] ERROR: ❌ Error al registrar entrevista desde Agenda: Cannot destructure property 'observaciones' of 'req.body' as it is undefined.
-[2025-06-08 12:49:44] ERROR: ❌ Error en el servidor: Cannot destructure property 'observaciones' of 'req.body' as it is undefined.
-[2025-06-08 12:51:35] INFO: 🗑️ Agenda ID 2 eliminada por usuario desconocido
-[2025-06-08 12:52:02] ERROR: ❌ Error al registrar entrevista desde Agenda: Validation failed for parameter 'fecha_entrevista'. Invalid date.
-[2025-06-08 12:52:02] ERROR: ❌ Error en el servidor: Validation failed for parameter 'fecha_entrevista'. Invalid date.
-[2025-06-08 12:53:41] ERROR: ❌ Error al registrar entrevista desde Agenda: Fecha inválida: Thu May 29 2025 20:00:00 GMT-0400 (hora estándar de Chile)TThu J
-[2025-06-08 12:53:41] ERROR: ❌ Error en el servidor: Fecha inválida: Thu May 29 2025 20:00:00 GMT-0400 (hora estándar de Chile)TThu J
-[2025-06-08 12:53:43] ERROR: ❌ Error al registrar entrevista desde Agenda: Fecha inválida: Thu May 29 2025 20:00:00 GMT-0400 (hora estándar de Chile)TThu J
-[2025-06-08 12:53:43] ERROR: ❌ Error en el servidor: Fecha inválida: Thu May 29 2025 20:00:00 GMT-0400 (hora estándar de Chile)TThu J
-[2025-06-08 12:54:15] ERROR: ❌ Error al registrar entrevista desde Agenda: Fecha inválida: Thu May 29 2025 20:00:00 GMT-0400 (hora estándar de Chile)TThu J
-[2025-06-08 12:54:15] ERROR: ❌ Error en el servidor: Fecha inválida: Thu May 29 2025 20:00:00 GMT-0400 (hora estándar de Chile)TThu J
-[2025-06-08 12:55:33] ERROR: ❌ Error al registrar entrevista desde Agenda: Fecha inválida: 2025-05-30TThu J
-[2025-06-08 12:55:33] ERROR: ❌ Error en el servidor: Fecha inválida: 2025-05-30TThu J
-[2025-06-08 12:59:32] ERROR: ❌ Error al registrar entrevista desde Agenda: Cannot insert the value NULL into column 'id_orientador', table 'sistema_educacional.dbo.Entrevistas'; column does not allow nulls. INSERT fails.
-[2025-06-08 12:59:32] ERROR: ❌ Error en el servidor: Cannot insert the value NULL into column 'id_orientador', table 'sistema_educacional.dbo.Entrevistas'; column does not allow nulls. INSERT fails.
-[2025-06-08 13:03:07] ERROR: ❌ Error al registrar entrevista desde Agenda: Cannot insert the value NULL into column 'id_orientador', table 'sistema_educacional.dbo.Entrevistas'; column does not allow nulls. INSERT fails.
-[2025-06-08 13:03:07] ERROR: ❌ Error en el servidor: Cannot insert the value NULL into column 'id_orientador', table 'sistema_educacional.dbo.Entrevistas'; column does not allow nulls. INSERT fails.
-[2025-06-08 13:57:25] INFO: 📥 Login recibido:
-[2025-06-08 13:57:25] INFO: ✅ Login exitoso
-[2025-06-08 13:57:30] INFO: 🔍 req.user:
-[2025-06-08 13:57:30] ERROR: ❌ Error al registrar entrevista desde Agenda: Cannot insert the value NULL into column 'id_orientador', table 'sistema_educacional.dbo.Entrevistas'; column does not allow nulls. INSERT fails.
-[2025-06-08 13:57:30] ERROR: ❌ Error en el servidor: Cannot insert the value NULL into column 'id_orientador', table 'sistema_educacional.dbo.Entrevistas'; column does not allow nulls. INSERT fails.
-[2025-06-08 14:13:08] INFO: 🔍 req.user:
-[2025-06-08 14:13:08] ERROR: ❌ Error al registrar entrevista desde Agenda: Cannot insert the value NULL into column 'id_orientador', table 'sistema_educacional.dbo.Entrevistas'; column does not allow nulls. INSERT fails.
-[2025-06-08 14:13:08] ERROR: ❌ Error en el servidor: Cannot insert the value NULL into column 'id_orientador', table 'sistema_educacional.dbo.Entrevistas'; column does not allow nulls. INSERT fails.
-[2025-06-08 14:15:27] INFO: 🔍 req.user:
-[2025-06-08 14:15:27] ERROR: ❌ Error al registrar entrevista desde Agenda: Cannot insert the value NULL into column 'id_orientador', table 'sistema_educacional.dbo.Entrevistas'; column does not allow nulls. INSERT fails.
-[2025-06-08 14:15:27] ERROR: ❌ Error en el servidor: Cannot insert the value NULL into column 'id_orientador', table 'sistema_educacional.dbo.Entrevistas'; column does not allow nulls. INSERT fails.
-[2025-06-08 14:15:48] INFO: 📥 Login recibido:
-[2025-06-08 14:15:48] INFO: ✅ Login exitoso
-[2025-06-08 14:16:08] INFO: 🔍 req.user:
-[2025-06-08 14:16:08] ERROR: ❌ Error al registrar entrevista desde Agenda: Cannot insert the value NULL into column 'id_orientador', table 'sistema_educacional.dbo.Entrevistas'; column does not allow nulls. INSERT fails.
-[2025-06-08 14:16:08] ERROR: ❌ Error en el servidor: Cannot insert the value NULL into column 'id_orientador', table 'sistema_educacional.dbo.Entrevistas'; column does not allow nulls. INSERT fails.
-[2025-06-08 14:16:30] INFO: [Conducta] ID recibido: 4
-[2025-06-08 14:16:30] INFO: [Conducta] Resultado de la consulta: []
-[2025-06-08 14:16:30] INFO: [Conducta] ID recibido: 4
-[2025-06-08 14:16:30] INFO: [Conducta] Resultado de la consulta: []
-[2025-06-08 14:19:53] INFO: 🗑️ Agenda ID 3 eliminada por usuario desconocido
-[2025-06-08 14:19:55] INFO: 🗑️ Agenda ID 5 eliminada por usuario desconocido
-[2025-06-08 14:19:57] INFO: 🗑️ Agenda ID 4 eliminada por usuario desconocido
-[2025-06-08 14:20:35] INFO: 📅 Entrevista agendada por usuario desconocido para estudiante ID 5
-[2025-06-08 14:20:35] INFO: ✉️ Simulación de correo enviada a: isita@mailer.cl (copiado: pamefren5@gmail.com)
-[2025-06-08 14:28:57] INFO: ✏️ Agenda ID 6 actualizada por usuario desconocido
-[2025-06-08 14:30:36] INFO: [Conducta] ID recibido: 5
-[2025-06-08 14:30:36] INFO: [Conducta] Resultado de la consulta: []
-[2025-06-08 14:30:36] INFO: [Conducta] ID recibido: 5
-[2025-06-08 14:30:36] INFO: [Conducta] Resultado de la consulta: []
-[2025-06-08 15:39:49] INFO: 📥 Login recibido:
-[2025-06-08 15:39:50] INFO: ✅ Login exitoso
-[2025-06-08 15:40:15] INFO: 🔍 req.user:
-[2025-06-08 15:40:15] ERROR: ❌ Error al registrar entrevista desde Agenda: Cannot insert the value NULL into column 'id_orientador', table 'sistema_educacional.dbo.Entrevistas'; column does not allow nulls. INSERT fails.
-[2025-06-08 15:40:15] ERROR: ❌ Error en el servidor: Cannot insert the value NULL into column 'id_orientador', table 'sistema_educacional.dbo.Entrevistas'; column does not allow nulls. INSERT fails.
-[2025-06-08 15:43:02] INFO: 🔍 req.user:
-[2025-06-08 15:43:02] ERROR: ❌ Error al registrar entrevista desde Agenda: Cannot insert the value NULL into column 'id_orientador', table 'sistema_educacional.dbo.Entrevistas'; column does not allow nulls. INSERT fails.
-[2025-06-08 15:43:02] ERROR: ❌ Error en el servidor: Cannot insert the value NULL into column 'id_orientador', table 'sistema_educacional.dbo.Entrevistas'; column does not allow nulls. INSERT fails.
-[2025-06-08 15:58:29] INFO: 🔍 req.user:
-[2025-06-08 16:00:12] INFO: 📅 Entrevista agendada por pamefern5@gmail.com para estudiante ID 5
-[2025-06-08 16:00:12] INFO: ✉️ Simulación de correo enviada a: isita@mailer.cl (copiado: daniel1822@gmail.com)
-[2025-06-08 16:34:10] INFO: [Conducta] ID recibido: 5
-[2025-06-08 16:34:10] INFO: [Conducta] Resultado de la consulta: []
-[2025-06-08 16:34:10] INFO: [Conducta] ID recibido: 5
-[2025-06-08 16:34:10] INFO: [Conducta] Resultado de la consulta: []
-[2025-06-08 18:29:46] INFO: 📥 Login recibido:
-[2025-06-08 18:29:47] INFO: ✅ Login exitoso
-[2025-06-08 18:38:06] INFO: 🔍 req.user:
-[2025-06-08 18:38:06] INFO: 🔍 QUERY RESULT obtenerAgendaPorId:
-[2025-06-08 19:36:31] INFO: 📥 Login recibido:
-[2025-06-08 19:36:31] INFO: ✅ Login exitoso
-[2025-06-08 19:37:03] INFO: 📥 Login recibido:
-[2025-06-08 19:37:03] INFO: ✅ Login exitoso
-[2025-06-08 19:40:59] INFO: 📥 Login recibido:
-[2025-06-08 19:40:59] INFO: ✅ Login exitoso
-[2025-06-08 20:11:17] INFO: 📥 Login recibido:
-[2025-06-08 20:11:17] INFO: ✅ Login exitoso
-[2025-06-08 20:25:13] INFO: 📥 Login recibido:
-[2025-06-08 20:25:13] INFO: ✅ Login exitoso
-[2025-06-08 20:26:36] INFO: 📥 Login recibido:
-[2025-06-08 20:26:36] INFO: ✅ Login exitoso
-[2025-06-08 20:50:57] INFO: 📥 Login recibido:
-[2025-06-08 20:50:57] INFO: ✅ Login exitoso
-[2025-06-08 21:51:55] INFO: 📥 Login recibido:
-[2025-06-08 21:51:55] INFO: ✅ Login exitoso
-[2025-06-08 22:47:05] INFO: 📥 Login recibido:
-[2025-06-08 22:47:05] INFO: ✅ Login exitoso
-[2025-06-08 23:39:04] INFO: [Conducta] ID recibido: 5
-[2025-06-08 23:39:04] INFO: [Conducta] Resultado de la consulta: []
-[2025-06-08 23:39:04] INFO: [Conducta] ID recibido: 5
-[2025-06-08 23:39:05] INFO: [Conducta] Resultado de la consulta: []
-[2025-06-09 09:21:09] INFO: 📥 Login recibido:
-[2025-06-09 09:21:09] INFO: ✅ Login exitoso
-[2025-06-09 09:21:24] INFO: 📥 Login recibido:
-[2025-06-09 09:21:24] INFO: ✅ Login exitoso
-[2025-06-09 09:21:48] INFO: 📥 Login recibido:
-[2025-06-09 09:21:48] INFO: ✅ Login exitoso
-[2025-06-09 10:41:50] INFO: 📥 Login recibido:
-[2025-06-09 10:41:50] INFO: ✅ Login exitoso
-[2025-06-09 10:41:53] ERROR: ❌ Error al listar alertas: Invalid column name 'fecha'.
-[2025-06-09 10:41:53] ERROR: ❌ Error en el servidor: Invalid column name 'fecha'.
-[2025-06-09 10:41:53] ERROR: ❌ Error al listar alertas: Invalid column name 'fecha'.
-[2025-06-09 10:41:53] ERROR: ❌ Error en el servidor: Invalid column name 'fecha'.
-[2025-06-09 10:47:02] ERROR: ❌ Error al generar alertas: Invalid column name 'fecha'.
-[2025-06-09 10:47:02] ERROR: ❌ Error en el servidor: Invalid column name 'fecha'.
-[2025-06-09 11:23:26] INFO: 📥 Login recibido:
-[2025-06-09 11:23:26] INFO: ✅ Login exitoso
-[2025-06-09 12:36:12] INFO: 📥 Login recibido:
-[2025-06-09 12:36:12] WARN: ❌ Contraseña incorrecta
-[2025-06-09 12:36:19] INFO: 📥 Login recibido:
-[2025-06-09 12:36:19] WARN: ❌ Contraseña incorrecta
-[2025-06-09 12:36:26] INFO: 📥 Login recibido:
-[2025-06-09 12:36:26] INFO: ✅ Login exitoso
-[2025-06-09 19:44:21] ERROR: Error de autenticación: jwt expired
-[2025-06-09 19:44:21] ERROR: Error de autenticación: jwt expired
-[2025-06-09 19:44:35] INFO: 📥 Login recibido:
-[2025-06-09 19:44:36] INFO: ✅ Login exitoso
-[2025-06-09 19:48:07] INFO: 📥 Login recibido:
-[2025-06-09 19:48:07] INFO: ✅ Login exitoso
-[2025-06-09 20:54:14] INFO: 📥 Login recibido:
-[2025-06-09 20:54:14] INFO: ✅ Login exitoso
-[2025-06-09 20:59:38] INFO: 📥 Login recibido:
-[2025-06-09 20:59:38] INFO: ✅ Login exitoso
-[2025-06-10 21:20:14] INFO: 📥 Login recibido:
-[2025-06-10 21:20:14] INFO: ✅ Login exitoso
-[2025-06-14 15:30:18] ERROR: Error de autenticación: jwt expired
-[2025-06-14 15:30:18] ERROR: Error de autenticación: jwt expired
-[2025-06-14 21:43:01] INFO: 📥 Login recibido:
-[2025-06-14 21:43:01] WARN: ❌ Contraseña incorrecta
-[2025-06-14 21:43:16] INFO: 📥 Login recibido:
-[2025-06-14 21:43:17] INFO: ✅ Login exitoso
-[2025-06-15 14:50:58] INFO: 📥 Login recibido:
-[2025-06-15 14:50:58] INFO: ✅ Login exitoso
-[2025-06-15 14:54:44] INFO: [Conducta] ID recibido: 11
-[2025-06-15 14:54:44] INFO: [Conducta] Resultado de la consulta: []
-[2025-06-15 14:54:44] INFO: [Conducta] ID recibido: 11
-[2025-06-15 14:54:44] INFO: [Conducta] Resultado de la consulta: []
-[2025-06-15 14:55:03] INFO: [Conducta] ID recibido: 11
-[2025-06-15 14:55:03] INFO: [Conducta] Resultado de la consulta: []
-[2025-06-15 14:55:03] INFO: [Conducta] ID recibido: 11
-[2025-06-15 14:55:03] INFO: [Conducta] Resultado de la consulta: []
-[2025-06-15 14:55:13] INFO: [Conducta] ID recibido: 12
-[2025-06-15 14:55:13] INFO: [Conducta] Resultado de la consulta: []
-[2025-06-15 14:55:13] INFO: [Conducta] ID recibido: 12
-[2025-06-15 14:55:13] INFO: [Conducta] Resultado de la consulta: []
-[2025-06-15 15:01:07] INFO: 📥 Login recibido:
-[2025-06-15 15:01:08] INFO: ✅ Login exitoso
-[2025-06-15 15:24:41] ERROR: Error al obtener estudiante por ID Validation failed for parameter 'id'. Invalid number.
-[2025-06-15 15:24:41] ERROR: ❌ Error en el servidor: Validation failed for parameter 'id'. Invalid number.
-[2025-06-15 15:24:41] ERROR: Error al obtener estudiante por ID Validation failed for parameter 'id'. Invalid number.
-[2025-06-15 15:24:41] ERROR: ❌ Error en el servidor: Validation failed for parameter 'id'. Invalid number.
-[2025-06-15 15:57:44] ERROR: Error de autenticación: jwt expired
-[2025-06-15 15:57:44] ERROR: Error de autenticación: jwt expired
-[2025-06-15 15:57:51] INFO: 📥 Login recibido:
-[2025-06-15 15:57:51] INFO: ✅ Login exitoso
-[2025-06-15 17:16:55] INFO: 📥 Login recibido:
-[2025-06-15 17:16:55] INFO: ✅ Login exitoso
-[2025-06-15 18:28:10] INFO: 📥 Login recibido:
-[2025-06-15 18:28:11] INFO: ✅ Login exitoso
-[2025-06-15 18:30:04] INFO: 📥 Login recibido:
-[2025-06-15 18:30:04] INFO: ✅ Login exitoso
-[2025-06-15 18:34:10] INFO: 📥 Login recibido:
-[2025-06-15 18:34:10] INFO: ✅ Login exitoso
-[2025-06-15 18:34:34] INFO: 📥 Login recibido:
-[2025-06-15 18:34:34] INFO: ✅ Login exitoso
-[2025-06-15 18:35:29] INFO: 📥 Login recibido:
-[2025-06-15 18:35:29] INFO: ✅ Login exitoso
-[2025-06-15 19:43:33] INFO: 📥 Login recibido:
-[2025-06-15 19:43:33] INFO: ✅ Login exitoso
-[2025-06-15 20:54:49] INFO: 📥 Login recibido:
-[2025-06-15 20:54:50] INFO: ✅ Login exitoso
-[2025-06-15 21:02:16] INFO: 📥 Login recibido:
-[2025-06-15 21:02:16] INFO: ✅ Login exitoso
-[2025-06-15 21:15:26] INFO: 📥 Login recibido:
-[2025-06-15 21:15:26] INFO: ✅ Login exitoso
-[2025-06-15 21:16:07] INFO: 📥 Login recibido:
-[2025-06-15 21:16:07] INFO: ✅ Login exitoso
-[2025-06-15 21:20:29] INFO: 📥 Login recibido:
-[2025-06-15 21:20:29] INFO: ✅ Login exitoso
-[2025-06-15 21:49:23] INFO: 📥 Login recibido:
-[2025-06-15 21:49:23] INFO: ✅ Login exitoso
-[2025-06-15 21:52:31] INFO: 📅 Entrevista agendada por pamefern5@gmail.com para estudiante ID 13
-[2025-06-15 21:52:31] INFO: ✉️ Simulación de correo enviada a: martin@mailito.cl (copiado: pamefern5@gmail.com)
-[2025-06-15 21:53:30] INFO: [Conducta] ID recibido: 13
-[2025-06-15 21:53:30] INFO: [Conducta] Resultado de la consulta: []
-[2025-06-15 21:53:30] INFO: [Conducta] ID recibido: 13
-[2025-06-15 21:53:30] INFO: [Conducta] Resultado de la consulta: []
-[2025-06-15 21:55:46] INFO: 🔍 req.user:
-[2025-06-15 21:55:46] INFO: 🔍 QUERY RESULT obtenerAgendaPorId:
-[2025-06-15 22:00:21] INFO: 📥 Login recibido:
-[2025-06-15 22:00:21] INFO: ✅ Login exitoso
-[2025-06-16 21:01:22] INFO: 📥 Login recibido:
-[2025-06-16 21:01:22] INFO: ✅ Login exitoso
-[2025-06-16 21:21:06] INFO: 📥 Login recibido:
-[2025-06-16 21:21:06] INFO: ✅ Login exitoso
-[2025-06-16 21:23:19] INFO: 📥 Login recibido:
-[2025-06-16 21:23:20] INFO: ✅ Login exitoso
-[2025-06-16 21:37:58] INFO: 📥 Login recibido:
-[2025-06-16 21:37:58] INFO: ✅ Login exitoso
-[2025-06-16 21:43:40] INFO: 📥 Login recibido:
-[2025-06-16 21:43:41] INFO: ✅ Login exitoso
-[2025-06-16 21:45:09] INFO: 📥 Login recibido:
-[2025-06-16 21:45:09] INFO: ✅ Login exitoso
-[2025-06-16 23:14:47] ERROR: Error de autenticación: jwt expired
-[2025-06-16 23:14:47] ERROR: Error de autenticación: jwt expired
-[2025-06-16 23:14:53] INFO: 📥 Login recibido:
-[2025-06-16 23:14:53] INFO: ✅ Login exitoso
-[2025-06-17 00:46:02] INFO: 📥 Login recibido:
-[2025-06-17 00:46:02] INFO: ✅ Login exitoso
-[2025-06-17 00:47:05] INFO: 📥 Login recibido:
-[2025-06-17 00:47:05] INFO: ✅ Login exitoso
-[2025-06-17 10:32:22] ERROR: Error de autenticación: jwt expired
-[2025-06-17 10:32:22] ERROR: Error de autenticación: jwt expired
-[2025-06-17 10:32:31] INFO: 📥 Login recibido:
-[2025-06-17 10:32:33] INFO: ✅ Login exitoso
-[2025-06-17 11:38:05] ERROR: Error de autenticación: jwt expired
-[2025-06-17 11:38:05] ERROR: Error de autenticación: jwt expired
-[2025-06-17 11:38:05] ERROR: Error de autenticación: jwt expired
-[2025-06-17 11:38:05] ERROR: Error de autenticación: jwt expired
-[2025-06-17 12:02:12] INFO: 📥 Login recibido:
-[2025-06-17 12:02:13] INFO: ✅ Login exitoso
-[2025-06-17 12:02:28] INFO: 📥 Login recibido:
-[2025-06-17 12:02:28] INFO: ✅ Login exitoso
-[2025-06-17 13:19:33] ERROR: Error de autenticación: jwt expired
-[2025-06-17 13:19:33] ERROR: Error de autenticación: jwt expired
-[2025-06-17 21:04:20] INFO: 📥 Login recibido:
-[2025-06-17 21:04:20] WARN: ❌ Contraseña incorrecta
-[2025-06-17 21:04:31] INFO: 📥 Login recibido:
-[2025-06-17 21:04:31] INFO: ✅ Login exitoso
-[2025-06-17 21:06:45] ERROR: Error al obtener recurso entregas: Validation failed for parameter 'id'. Invalid number.
-[2025-06-17 21:40:00] ERROR: Error al obtener recurso entregas: Validation failed for parameter 'id'. Invalid number.
-[2025-06-17 21:40:16] ERROR: Error al obtener recurso entregas: Validation failed for parameter 'id'. Invalid number.
-[2025-06-17 21:40:16] ERROR: Error al obtener recurso entregas: Validation failed for parameter 'id'. Invalid number.
-[2025-06-17 21:44:48] ERROR: Error al obtener recurso entregas: Validation failed for parameter 'id'. Invalid number.
-[2025-06-17 21:44:48] ERROR: Error al obtener recurso entregas: Validation failed for parameter 'id'. Invalid number.
-[2025-06-17 21:45:01] ERROR: Error al obtener recurso entregas: Validation failed for parameter 'id'. Invalid number.
-[2025-06-17 21:45:01] ERROR: Error al obtener recurso entregas: Validation failed for parameter 'id'. Invalid number.
-[2025-06-17 21:48:19] ERROR: Error al obtener recurso entregas: Validation failed for parameter 'id'. Invalid number.
-[2025-06-17 21:48:19] ERROR: Error al obtener recurso entregas: Validation failed for parameter 'id'. Invalid number.
-[2025-06-17 21:51:01] ERROR: Error al obtener recurso entregas: Validation failed for parameter 'id'. Invalid number.
-[2025-06-17 21:51:01] ERROR: Error al obtener recurso entregas: Validation failed for parameter 'id'. Invalid number.
-[2025-06-17 21:57:26] ERROR: Error al obtener recurso entregas: Validation failed for parameter 'id'. Invalid number.
-[2025-06-17 21:57:27] ERROR: Error al obtener recurso entregas: Validation failed for parameter 'id'. Invalid number.
-[2025-06-17 22:02:48] ERROR: Error al obtener recurso entregas: Validation failed for parameter 'id'. Invalid number.
-[2025-06-17 22:02:48] ERROR: Error al obtener recurso entregas: Validation failed for parameter 'id'. Invalid number.
-[2025-06-17 22:03:47] ERROR: Error al obtener recurso entregas: Validation failed for parameter 'id'. Invalid number.
-[2025-06-17 22:03:47] ERROR: Error al obtener recurso entregas: Validation failed for parameter 'id'. Invalid number.
-[2025-06-17 22:03:53] ERROR: Error al obtener recurso entregas: Validation failed for parameter 'id'. Invalid number.
-[2025-06-17 22:03:53] ERROR: Error al obtener recurso entregas: Validation failed for parameter 'id'. Invalid number.
-[2025-06-17 22:06:17] ERROR: Error de autenticación: jwt expired
-[2025-06-17 22:06:17] ERROR: Error de autenticación: jwt expired
-[2025-06-17 22:06:28] INFO: 📥 Login recibido:
-[2025-06-17 22:06:29] INFO: ✅ Login exitoso
-[2025-06-17 22:06:36] ERROR: Error al obtener recurso entregas: Validation failed for parameter 'id'. Invalid number.
-[2025-06-17 22:06:36] ERROR: Error al obtener recurso entregas: Validation failed for parameter 'id'. Invalid number.
-[2025-06-17 22:25:29] INFO: 🎁 Entrega registrada desde movimiento: recurso 1 → estudiante 6
-[2025-06-17 22:54:45] INFO: [Conducta] ID recibido: 6
-[2025-06-17 22:54:45] INFO: [Conducta] Resultado de la consulta: []
-[2025-06-17 22:54:45] INFO: [Conducta] ID recibido: 6
-[2025-06-17 22:54:45] INFO: [Conducta] Resultado de la consulta: []
-[2025-06-18 20:57:05] ERROR: Error de autenticación: jwt expired
-[2025-06-18 20:57:05] ERROR: Error de autenticación: jwt expired
-[2025-06-22 17:48:22] INFO: 📥 Login recibido:
-[2025-06-22 17:48:22] INFO: ✅ Login exitoso
-[2025-06-22 20:47:42] INFO: 📥 Login recibido:
-[2025-06-22 20:47:43] INFO: ✅ Login exitoso
-[2025-06-22 20:54:21] INFO: 📥 Login recibido:
-[2025-06-22 20:54:21] INFO: ✅ Login exitoso
-[2025-06-24 12:38:20] INFO: 📥 Login recibido:
-[2025-06-24 12:38:20] INFO: ✅ Login exitoso
-[2025-06-24 13:06:43] INFO: 📥 Login recibido:
-[2025-06-24 13:06:44] INFO: ✅ Login exitoso
-[2025-06-24 13:18:51] INFO: 🔑 Código de recuperación enviado a pamefern5@gmail.com: 551098
-[2025-06-24 13:23:32] INFO: 📥 Login recibido:
-[2025-06-24 13:23:32] INFO: ✅ Login exitoso
-[2025-06-24 20:02:36] ERROR: Error de autenticación: jwt expired
-[2025-06-24 20:02:36] ERROR: Error de autenticación: jwt expired
-[2025-06-24 20:02:44] INFO: 📥 Login recibido:
-[2025-06-24 20:02:44] INFO: ✅ Login exitoso
-[2025-06-29 21:06:08] INFO: 📥 Login recibido:
-[2025-06-29 21:06:09] INFO: ✅ Login exitoso
-[2025-06-29 21:51:36] INFO: 📥 Login recibido:
-[2025-06-29 21:51:37] WARN: ❌ Contraseña incorrecta
-[2025-06-29 21:51:49] INFO: 📥 Login recibido:
-[2025-06-29 21:51:49] INFO: ✅ Login exitoso
-[2025-06-29 22:05:20] INFO: 📥 Login recibido:
-[2025-06-29 22:05:21] INFO: ✅ Login exitoso
-[2025-06-29 22:06:30] INFO: 📥 Login recibido:
-[2025-06-29 22:06:30] INFO: ✅ Login exitoso
-[2025-06-29 22:10:01] INFO: 📥 Login recibido:
-[2025-06-29 22:10:01] INFO: ✅ Login exitoso
-[2025-07-01 21:49:31] INFO: 📥 Login recibido:
-[2025-07-01 21:49:31] INFO: ✅ Login exitoso
-[2025-07-01 21:55:36] ERROR: ❌ Error al generar asistencia mensual: Cannot read properties of undefined (reading 'request')
-[2025-07-01 21:55:36] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-01 21:55:36] ERROR: ❌ Error al generar asistencia mensual: Cannot read properties of undefined (reading 'request')
-[2025-07-01 21:55:36] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-01 22:19:27] INFO: 📥 Login recibido:
-[2025-07-01 22:19:27] INFO: ✅ Login exitoso
-[2025-07-01 22:38:32] INFO: 📥 Login recibido:
-[2025-07-01 22:38:32] INFO: ✅ Login exitoso
-[2025-07-01 22:40:36] INFO: [Conducta] ID recibido: 4
-[2025-07-01 22:40:36] INFO: [Conducta] Resultado de la consulta: []
-[2025-07-01 22:40:36] INFO: [Conducta] ID recibido: 4
-[2025-07-01 22:40:36] INFO: [Conducta] Resultado de la consulta: []
-[2025-07-01 22:43:12] INFO: 📥 Login recibido:
-[2025-07-01 22:43:12] INFO: ✅ Login exitoso
-[2025-07-01 23:07:28] INFO: 📥 Login recibido:
-[2025-07-01 23:07:28] INFO: ✅ Login exitoso
-[2025-07-02 12:14:17] INFO: 📥 Login recibido:
-[2025-07-02 12:14:17] INFO: ✅ Login exitoso
-[2025-07-02 12:51:55] INFO: 📥 Login recibido:
-[2025-07-02 12:51:57] INFO: ✅ Login exitoso
-[2025-07-06 22:35:34] ERROR: Error al obtener estudiantes Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:34] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:34] ERROR: Error al obtener estudiantes Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:34] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:34] ERROR: Error al obtener estudiantes Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:34] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:34] ERROR: Error al obtener estudiante por ID Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:34] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:34] ERROR: Error al obtener estudiante por ID Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:34] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:35] ERROR: Error al eliminar estudiante Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:35] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:35] ERROR: Error al eliminar estudiante Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:35] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:45] INFO: 📥 Login recibido:
-[2025-07-06 22:35:45] ERROR: ❌ Error en login: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:45] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:45] INFO: 📥 Login recibido:
-[2025-07-06 22:35:46] ERROR: ❌ Error en login: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:46] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:46] INFO: 📥 Login recibido:
-[2025-07-06 22:35:46] ERROR: ❌ Error en login: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:46] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:46] INFO: 📥 Registro recibido:
-[2025-07-06 22:35:46] ERROR: ❌ Error en registro: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:46] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:46] INFO: 📥 Registro recibido:
-[2025-07-06 22:35:46] ERROR: ❌ Error en registro: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:46] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:46] ERROR: ❌ Error en verificación de token: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:46] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:55] ERROR: Error al obtener estudiantes Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:55] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:55] ERROR: Error al obtener estudiantes Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:55] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:55] ERROR: Error al obtener estudiantes Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:55] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:55] ERROR: Error al obtener estudiante por ID Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:55] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:55] ERROR: Error al obtener estudiante por ID Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:55] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:55] ERROR: Error al eliminar estudiante Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:55] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:55] ERROR: Error al eliminar estudiante Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:55] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:56] INFO: 📥 Login recibido:
-[2025-07-06 22:35:56] ERROR: ❌ Error en login: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:56] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:56] INFO: 📥 Login recibido:
-[2025-07-06 22:35:56] ERROR: ❌ Error en login: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:56] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:56] INFO: 📥 Login recibido:
-[2025-07-06 22:35:56] ERROR: ❌ Error en login: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:56] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:56] INFO: 📥 Registro recibido:
-[2025-07-06 22:35:56] ERROR: ❌ Error en registro: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:56] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:56] INFO: 📥 Registro recibido:
-[2025-07-06 22:35:56] ERROR: ❌ Error en registro: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:56] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:56] ERROR: ❌ Error en verificación de token: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:56] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:38:33] ERROR: Error al obtener estudiantes Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:38:33] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:38:33] ERROR: Error al obtener estudiantes Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:38:33] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:38:34] ERROR: Error al obtener estudiantes Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:38:34] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:38:34] ERROR: Error al obtener estudiante por ID Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:38:34] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:38:34] ERROR: Error al obtener estudiante por ID Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:38:34] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:38:34] INFO: 📥 Login recibido:
-[2025-07-06 22:38:34] ERROR: Error al eliminar estudiante Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:38:34] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:38:34] ERROR: Error al eliminar estudiante Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:38:34] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:38:34] INFO: ✅ Login exitoso
-[2025-07-06 22:38:34] INFO: 📥 Login recibido:
-[2025-07-06 22:38:34] WARN: ❌ Usuario no encontrado
-[2025-07-06 22:38:34] INFO: 📥 Login recibido:
-[2025-07-06 22:38:35] WARN: ❌ Contraseña incorrecta
-[2025-07-06 22:38:35] INFO: 📥 Registro recibido:
-[2025-07-06 22:38:35] ERROR: ❌ Error en registro: Cannot read properties of undefined (reading '0')
-[2025-07-06 22:38:35] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading '0')
-[2025-07-06 22:38:35] INFO: 📥 Registro recibido:
-[2025-07-06 22:38:35] WARN: ❌ Email ya registrado
-[2025-07-06 22:48:47] ERROR: Error al obtener estudiantes Cannot read properties of undefined (reading 'query')
-[2025-07-06 22:48:47] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'query')
-[2025-07-06 22:48:47] INFO: 📥 Login recibido:
-[2025-07-06 22:48:47] ERROR: Error al obtener estudiantes Cannot read properties of undefined (reading 'query')
-[2025-07-06 22:48:47] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'query')
-[2025-07-06 22:48:47] ERROR: Error al obtener estudiantes Cannot read properties of undefined (reading 'query')
-[2025-07-06 22:48:47] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'query')
-[2025-07-06 22:48:47] ERROR: ❌ Error en login: Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:48:47] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:48:47] ERROR: Error al obtener estudiante por ID Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:48:47] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:48:47] ERROR: Error al obtener estudiante por ID Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:48:47] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:48:47] INFO: 📥 Login recibido:
-[2025-07-06 22:48:47] ERROR: ❌ Error en login: Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:48:47] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:48:47] ERROR: ❌ Error en enviarCodigoRecuperacion: Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:48:47] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:48:47] ERROR: ❌ Error en verificarCodigoYActualizarPassword: Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:48:47] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:48:47] ERROR: Error al eliminar estudiante Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:48:47] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:48:47] ERROR: Error al eliminar estudiante Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:48:47] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:50:32] ERROR: Error al obtener estudiantes Cannot read properties of undefined (reading 'query')
-[2025-07-06 22:50:32] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'query')
-[2025-07-06 22:50:32] ERROR: Error al obtener estudiantes Cannot read properties of undefined (reading 'query')
-[2025-07-06 22:50:32] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'query')
-[2025-07-06 22:50:32] ERROR: Error al obtener estudiantes Cannot read properties of undefined (reading 'query')
-[2025-07-06 22:50:32] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'query')
-[2025-07-06 22:50:32] ERROR: Error al obtener estudiante por ID Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:50:32] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:50:32] ERROR: Error al obtener estudiante por ID Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:50:32] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:50:32] ERROR: Error al eliminar estudiante Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:50:32] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:50:32] INFO: 📥 Login recibido:
-[2025-07-06 22:50:32] ERROR: Error al eliminar estudiante Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:50:32] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:50:32] ERROR: ❌ Error en login: Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:50:32] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:50:32] INFO: 📥 Login recibido:
-[2025-07-06 22:50:32] ERROR: ❌ Error en login: Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:50:32] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:50:32] ERROR: ❌ Error en enviarCodigoRecuperacion: Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:50:32] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:50:32] ERROR: ❌ Error en verificarCodigoYActualizarPassword: Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:50:32] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'input')
-[2025-07-06 23:59:58] INFO: 📥 Login recibido:
-[2025-07-06 23:59:58] INFO: ✅ Login exitoso
-[2025-07-07 00:52:15] INFO: 📥 Login recibido:
-[2025-07-07 00:52:16] INFO: ✅ Login exitoso
-[2025-07-07 00:52:57] INFO: 📥 Login recibido:
-[2025-07-07 00:52:57] INFO: ✅ Login exitoso
-[2025-07-07 00:54:05] INFO: 📥 Login recibido:
-[2025-07-07 00:54:06] INFO: ✅ Login exitoso
-[2025-07-07 00:55:14] INFO: 📥 Login recibido:
-[2025-07-07 00:55:14] INFO: ✅ Login exitoso
-[2025-07-07 00:57:59] INFO: 📥 Login recibido:
-[2025-07-07 00:57:59] INFO: ✅ Login exitoso
-[2025-07-07 00:58:19] INFO: 📥 Login recibido:
-[2025-07-07 00:58:19] INFO: ✅ Login exitoso
-[2025-07-07 20:13:50] INFO: 📥 Login recibido:
-[2025-07-07 20:13:50] INFO: ✅ Login exitoso
-[2025-07-07 21:03:40] INFO: 📥 Login recibido:
-[2025-07-07 21:03:43] INFO: ✅ Login exitoso
-[2025-07-08 20:01:58] INFO: 📥 Login recibido:
-[2025-07-08 20:01:59] INFO: ✅ Login exitoso
-[2025-07-08 20:59:17] INFO: 📥 Login recibido:
-[2025-07-08 20:59:17] INFO: ✅ Login exitoso
-[2025-07-08 21:45:19] INFO: 📥 Login recibido:
-[2025-07-08 21:45:19] INFO: ✅ Login exitoso
-[2025-07-08 22:06:48] ERROR: Error al obtener estudiantes Cannot read properties of undefined (reading 'request')
-[2025-07-08 22:06:48] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-08 22:06:48] ERROR: Error al obtener estudiantes Cannot read properties of undefined (reading 'request')
-[2025-07-08 22:06:48] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-08 22:13:00] INFO: 📥 Login recibido:
-[2025-07-08 22:13:00] INFO: ✅ Login exitoso
-[2025-07-08 22:23:25] INFO: 📥 Login recibido:
-[2025-07-08 22:23:25] INFO: ✅ Login exitoso
-[2025-07-08 22:35:07] INFO: 📥 Login recibido:
-[2025-07-08 22:35:08] INFO: ✅ Login exitoso
-[2025-07-08 23:25:19] INFO: 📥 Login recibido:
-[2025-07-08 23:25:19] INFO: ✅ Login exitoso
-[2025-07-09 00:17:09] INFO: 📥 Login recibido:
-[2025-07-09 00:17:09] INFO: ✅ Login exitoso
-[2025-07-09 00:27:42] INFO: 📥 Login recibido:
-[2025-07-09 00:27:42] INFO: ✅ Login exitoso
-[2025-07-09 00:28:29] ERROR: Error al eliminar estudiante The DELETE statement conflicted with the REFERENCE constraint "FK__Agenda__id_estud__67DE6983". The conflict occurred in database "sistema_educacional", table "dbo.Agenda", column 'id_estudiante'.
-[2025-07-09 00:28:29] ERROR: ❌ Error en el servidor: The DELETE statement conflicted with the REFERENCE constraint "FK__Agenda__id_estud__67DE6983". The conflict occurred in database "sistema_educacional", table "dbo.Agenda", column 'id_estudiante'.
-[2025-07-09 00:28:36] ERROR: Error al eliminar estudiante The DELETE statement conflicted with the REFERENCE constraint "FK__Agenda__id_estud__67DE6983". The conflict occurred in database "sistema_educacional", table "dbo.Agenda", column 'id_estudiante'.
-[2025-07-09 00:28:36] ERROR: ❌ Error en el servidor: The DELETE statement conflicted with the REFERENCE constraint "FK__Agenda__id_estud__67DE6983". The conflict occurred in database "sistema_educacional", table "dbo.Agenda", column 'id_estudiante'.
-[2025-07-09 00:40:01] ERROR: Error al eliminar estudiante The DELETE statement conflicted with the REFERENCE constraint "FK__Agenda__id_estud__67DE6983". The conflict occurred in database "sistema_educacional", table "dbo.Agenda", column 'id_estudiante'.
-[2025-07-09 00:40:01] ERROR: ❌ Error en el servidor: The DELETE statement conflicted with the REFERENCE constraint "FK__Agenda__id_estud__67DE6983". The conflict occurred in database "sistema_educacional", table "dbo.Agenda", column 'id_estudiante'.
-[2025-07-09 00:40:05] ERROR: Error al eliminar estudiante The DELETE statement conflicted with the REFERENCE constraint "FK__Seguimien__id_es__361203C5". The conflict occurred in database "sistema_educacional", table "dbo.SeguimientoAcademico", column 'id_estudiante'.
-[2025-07-09 00:40:05] ERROR: ❌ Error en el servidor: The DELETE statement conflicted with the REFERENCE constraint "FK__Seguimien__id_es__361203C5". The conflict occurred in database "sistema_educacional", table "dbo.SeguimientoAcademico", column 'id_estudiante'.
-[2025-07-09 00:40:28] ERROR: Error al eliminar estudiante The DELETE statement conflicted with the REFERENCE constraint "FK__Seguimien__id_es__361203C5". The conflict occurred in database "sistema_educacional", table "dbo.SeguimientoAcademico", column 'id_estudiante'.
-[2025-07-09 00:40:28] ERROR: ❌ Error en el servidor: The DELETE statement conflicted with the REFERENCE constraint "FK__Seguimien__id_es__361203C5". The conflict occurred in database "sistema_educacional", table "dbo.SeguimientoAcademico", column 'id_estudiante'.
-[2025-07-09 01:29:49] INFO: 📥 Login recibido:
-[2025-07-09 01:29:49] INFO: ✅ Login exitoso
-[2025-07-09 01:50:28] ERROR: Error al obtener estudiantes Cannot read properties of undefined (reading 'request')
-[2025-07-09 01:50:28] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-09 01:50:28] ERROR: Error al obtener estudiantes Cannot read properties of undefined (reading 'request')
-[2025-07-09 01:50:28] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-09 01:50:30] ERROR: Error al obtener estudiantes Cannot read properties of undefined (reading 'request')
-[2025-07-09 01:50:30] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-09 09:48:38] ERROR: Error de autenticación: jwt expired
-[2025-07-09 09:48:39] ERROR: Error de autenticación: jwt expired
-[2025-07-09 09:48:39] ERROR: Error de autenticación: jwt expired
-[2025-07-09 09:48:39] ERROR: Error de autenticación: jwt expired
-[2025-07-09 09:48:39] ERROR: Error de autenticación: jwt expired
-[2025-07-09 10:40:37] INFO: 📥 Login recibido:
-[2025-07-09 10:40:37] INFO: ✅ Login exitoso
-[2025-07-09 10:43:49] INFO: 📥 Login recibido:
-[2025-07-09 10:43:50] WARN: ❌ Contraseña incorrecta
-[2025-07-09 10:43:59] INFO: 📥 Login recibido:
-[2025-07-09 10:43:59] INFO: ✅ Login exitoso
-[2025-07-09 10:46:44] INFO: 📥 Login recibido:
-[2025-07-09 10:46:44] INFO: ✅ Login exitoso
-[2025-07-09 11:33:35] ERROR: ❌ Error al obtener estudiantes atendidos: Invalid column name 'fecha'.
-[2025-07-09 11:33:35] ERROR: ❌ Error en el servidor: Invalid column name 'fecha'.
-[2025-07-09 11:33:35] ERROR: ❌ Error al obtener estudiantes atendidos: Invalid column name 'fecha'.
-[2025-07-09 11:33:35] ERROR: ❌ Error en el servidor: Invalid column name 'fecha'.
-[2025-07-09 11:38:06] ERROR: ❌ Error al obtener estudiantes atendidos: Invalid column name 'id_profesional'.
-[2025-07-09 11:38:06] ERROR: ❌ Error en el servidor: Invalid column name 'id_profesional'.
-[2025-07-09 11:38:06] ERROR: ❌ Error al obtener estudiantes atendidos: Invalid column name 'id_profesional'.
-[2025-07-09 11:38:06] ERROR: ❌ Error en el servidor: Invalid column name 'id_profesional'.
-[2025-07-09 11:40:17] ERROR: ❌ Error al obtener estudiantes atendidos: Invalid column name 'id_profesional'.
-[2025-07-09 11:40:17] ERROR: ❌ Error en el servidor: Invalid column name 'id_profesional'.
-[2025-07-09 11:40:18] ERROR: ❌ Error al obtener estudiantes atendidos: Invalid column name 'id_profesional'.
-[2025-07-09 11:40:18] ERROR: ❌ Error en el servidor: Invalid column name 'id_profesional'.
-[2025-07-09 11:40:32] ERROR: ❌ Error al obtener estudiantes atendidos: Invalid column name 'id_profesional'.
-[2025-07-09 11:40:32] ERROR: ❌ Error en el servidor: Invalid column name 'id_profesional'.
-[2025-07-09 11:40:33] ERROR: ❌ Error al obtener estudiantes atendidos: Invalid column name 'id_profesional'.
-[2025-07-09 11:40:33] ERROR: ❌ Error en el servidor: Invalid column name 'id_profesional'.
-[2025-07-09 11:40:36] ERROR: ❌ Error al obtener estudiantes atendidos: Invalid column name 'id_profesional'.
-[2025-07-09 11:40:36] ERROR: ❌ Error en el servidor: Invalid column name 'id_profesional'.
-[2025-07-09 11:40:36] ERROR: ❌ Error al obtener estudiantes atendidos: Invalid column name 'id_profesional'.
-[2025-07-09 11:40:36] ERROR: ❌ Error en el servidor: Invalid column name 'id_profesional'.
-[2025-07-09 12:03:41] INFO: 📥 Login recibido:
-[2025-07-09 12:03:42] INFO: ✅ Login exitoso
-[2025-07-09 12:03:47] ERROR: ❌ Error al obtener reporte de derivaciones: Invalid column name 'observaciones'.
-[2025-07-09 12:03:47] ERROR: ❌ Error en el servidor: Invalid column name 'observaciones'.
-[2025-07-09 12:03:47] ERROR: ❌ Error al obtener reporte de derivaciones: Invalid column name 'observaciones'.
-[2025-07-09 12:03:47] ERROR: ❌ Error en el servidor: Invalid column name 'observaciones'.
-[2025-07-09 12:08:36] ERROR: ❌ Error al obtener reporte de derivaciones: Invalid column name 'estado'.
-[2025-07-09 12:08:36] ERROR: ❌ Error en el servidor: Invalid column name 'estado'.
-[2025-07-09 12:08:37] ERROR: ❌ Error al obtener reporte de derivaciones: Invalid column name 'estado'.
-[2025-07-09 12:08:37] ERROR: ❌ Error en el servidor: Invalid column name 'estado'.
-[2025-07-09 12:08:59] ERROR: ❌ Error al obtener reporte de derivaciones: Invalid column name 'estado'.
-[2025-07-09 12:08:59] ERROR: ❌ Error en el servidor: Invalid column name 'estado'.
-[2025-07-09 12:08:59] ERROR: ❌ Error al obtener reporte de derivaciones: Invalid column name 'estado'.
-[2025-07-09 12:08:59] ERROR: ❌ Error en el servidor: Invalid column name 'estado'.
-[2025-07-09 12:12:27] ERROR: ❌ Error al obtener reporte de derivaciones: Invalid column name 'profesional_asignado'.
-[2025-07-09 12:12:27] ERROR: ❌ Error en el servidor: Invalid column name 'profesional_asignado'.
-[2025-07-09 12:12:27] ERROR: ❌ Error al obtener reporte de derivaciones: Invalid column name 'profesional_asignado'.
-[2025-07-09 12:12:27] ERROR: ❌ Error en el servidor: Invalid column name 'profesional_asignado'.
-[2025-07-09 12:17:41] ERROR: ❌ Error al obtener reporte de derivaciones: Invalid column name 'motivo'.
-[2025-07-09 12:17:41] ERROR: ❌ Error en el servidor: Invalid column name 'motivo'.
-[2025-07-09 12:17:41] ERROR: ❌ Error al obtener reporte de derivaciones: Invalid column name 'motivo'.
-[2025-07-09 12:17:41] ERROR: ❌ Error en el servidor: Invalid column name 'motivo'.
-[2025-07-09 12:23:16] ERROR: ❌ Error al obtener reporte de derivaciones: Invalid column name 'motivo'.
-[2025-07-09 12:23:16] ERROR: ❌ Error en el servidor: Invalid column name 'motivo'.
-[2025-07-09 12:23:16] ERROR: ❌ Error al obtener reporte de derivaciones: Invalid column name 'motivo'.
-[2025-07-09 12:23:16] ERROR: ❌ Error en el servidor: Invalid column name 'motivo'.
-[2025-07-09 12:23:23] ERROR: ❌ Error al obtener reporte de derivaciones: Invalid column name 'motivo'.
-[2025-07-09 12:23:23] ERROR: ❌ Error en el servidor: Invalid column name 'motivo'.
-[2025-07-09 12:23:23] ERROR: ❌ Error al obtener reporte de derivaciones: Invalid column name 'motivo'.
-[2025-07-09 12:23:23] ERROR: ❌ Error en el servidor: Invalid column name 'motivo'.
-[2025-07-09 12:23:56] ERROR: ❌ Error al obtener reporte de derivaciones: Invalid column name 'motivo'.
-[2025-07-09 12:23:56] ERROR: ❌ Error en el servidor: Invalid column name 'motivo'.
-[2025-07-09 12:23:56] ERROR: ❌ Error al obtener reporte de derivaciones: Invalid column name 'motivo'.
-[2025-07-09 12:23:56] ERROR: ❌ Error en el servidor: Invalid column name 'motivo'.
-[2025-07-09 12:31:17] ERROR: ❌ Error al obtener reporte de derivaciones: Invalid column name 'plan_intervencion'.
-[2025-07-09 12:31:17] ERROR: ❌ Error en el servidor: Invalid column name 'plan_intervencion'.
-[2025-07-09 12:31:17] ERROR: ❌ Error al obtener reporte de derivaciones: Invalid column name 'plan_intervencion'.
-[2025-07-09 12:31:18] ERROR: ❌ Error en el servidor: Invalid column name 'plan_intervencion'.
-[2025-07-09 12:31:25] ERROR: ❌ Error al obtener reporte de derivaciones: Invalid column name 'plan_intervencion'.
-[2025-07-09 12:31:25] ERROR: ❌ Error en el servidor: Invalid column name 'plan_intervencion'.
-[2025-07-09 12:31:25] ERROR: ❌ Error al obtener reporte de derivaciones: Invalid column name 'plan_intervencion'.
-[2025-07-09 12:31:25] ERROR: ❌ Error en el servidor: Invalid column name 'plan_intervencion'.
-[2025-07-09 12:43:36] ERROR: ❌ Error al obtener reporte de derivaciones: Invalid column name 'observaciones'.
-[2025-07-09 12:43:36] ERROR: ❌ Error en el servidor: Invalid column name 'observaciones'.
-[2025-07-09 12:43:55] ERROR: ❌ Error al obtener reporte de derivaciones: Invalid column name 'observaciones'.
-[2025-07-09 12:43:55] ERROR: ❌ Error en el servidor: Invalid column name 'observaciones'.
-[2025-07-09 12:43:56] ERROR: ❌ Error al obtener reporte de derivaciones: Invalid column name 'observaciones'.
-[2025-07-09 12:43:56] ERROR: ❌ Error en el servidor: Invalid column name 'observaciones'.
-[2025-07-09 13:53:44] INFO: 📥 Login recibido:
-[2025-07-09 13:53:46] INFO: ✅ Login exitoso
-[2025-07-09 13:54:06] INFO: [Conducta] ID recibido: 4
-[2025-07-09 13:54:06] INFO: [Conducta] Resultado de la consulta: []
-[2025-07-09 13:54:06] INFO: [Conducta] ID recibido: 4
-[2025-07-09 13:54:06] INFO: [Conducta] Resultado de la consulta: []
-[2025-07-09 13:54:15] INFO: [Conducta] ID recibido: 4
-[2025-07-09 13:54:15] INFO: [Conducta] Resultado de la consulta: []
-[2025-07-09 13:54:15] INFO: [Conducta] ID recibido: 4
-[2025-07-09 13:54:15] INFO: [Conducta] Resultado de la consulta: []
-[2025-07-09 14:37:57] INFO: 📥 Login recibido:
-[2025-07-09 14:38:06] INFO: ✅ Login exitoso
-[2025-07-09 15:00:56] INFO: 📥 Login recibido:
-[2025-07-09 15:00:56] INFO: ✅ Login exitoso
-[2025-07-09 15:15:14] INFO: 📥 Login recibido:
-[2025-07-09 15:15:15] INFO: ✅ Login exitoso
-[2025-07-09 15:16:06] INFO: 📥 Login recibido:
-[2025-07-09 15:16:06] INFO: ✅ Login exitoso
-[2025-07-09 15:33:34] ERROR: Error en carga masiva de estudiantes EstudianteModel is not defined
-[2025-07-09 15:33:34] ERROR: ❌ Error en el servidor: EstudianteModel is not defined
-[2025-07-09 18:12:44] INFO: 📥 Login recibido:
-[2025-07-09 18:12:46] INFO: ✅ Login exitoso
-[2025-07-09 19:16:04] ERROR: Error de autenticación: jwt expired
-[2025-07-09 19:16:04] ERROR: Error de autenticación: jwt expired
-[2025-07-09 19:16:11] INFO: 📥 Login recibido:
-[2025-07-09 19:16:11] WARN: ❌ Contraseña incorrecta
-[2025-07-09 19:16:18] INFO: 📥 Login recibido:
-[2025-07-09 19:16:19] INFO: ✅ Login exitoso
-[2025-07-09 19:18:41] INFO: [Conducta] ID recibido: 4
-[2025-07-09 19:18:41] INFO: [Conducta] Resultado de la consulta: []
-[2025-07-09 19:18:41] INFO: [Conducta] ID recibido: 4
-[2025-07-09 19:18:41] INFO: [Conducta] Resultado de la consulta: []
-[2025-07-09 19:24:11] INFO: [Conducta] ID recibido: 4
-[2025-07-09 19:24:11] INFO: [Conducta] Resultado de la consulta: []
-[2025-07-09 19:24:11] INFO: [Conducta] ID recibido: 4
-[2025-07-09 19:24:11] INFO: [Conducta] Resultado de la consulta: []
-[2025-07-09 19:24:17] INFO: [Conducta] ID recibido: 4
-[2025-07-09 19:24:18] INFO: [Conducta] Resultado de la consulta: []
-[2025-07-09 19:24:18] INFO: [Conducta] ID recibido: 4
-[2025-07-09 19:24:18] INFO: [Conducta] Resultado de la consulta: []
-[2025-07-09 19:27:02] INFO: [Conducta] ID recibido: 4
-[2025-07-09 19:27:03] INFO: [Conducta] Resultado de la consulta: []
-[2025-07-09 19:27:03] INFO: [Conducta] ID recibido: 4
-[2025-07-09 19:27:03] INFO: [Conducta] Resultado de la consulta: []
-[2025-07-09 19:38:13] INFO: [Conducta] ID recibido: 4
-[2025-07-09 19:38:14] INFO: [Conducta] Resultado de la consulta: []
-[2025-07-09 19:38:14] INFO: [Conducta] ID recibido: 4
-[2025-07-09 19:38:14] INFO: [Conducta] Resultado de la consulta: []
-[2025-07-09 19:56:11] INFO: 📥 Login recibido:
-[2025-07-09 19:56:11] INFO: ✅ Login exitoso
-[2025-07-09 20:31:58] INFO: 📥 Login recibido:
-[2025-07-09 20:31:58] INFO: ✅ Login exitoso
-[2025-07-09 20:32:01] INFO: 📥 Login recibido:
-[2025-07-09 20:32:02] INFO: ✅ Login exitoso
-[2025-07-09 20:33:02] INFO: [Conducta] ID recibido: 4
-[2025-07-09 20:33:02] INFO: [Conducta] Resultado de la consulta: []
-[2025-07-09 20:33:02] INFO: [Conducta] ID recibido: 4
-[2025-07-09 20:33:02] INFO: [Conducta] Resultado de la consulta: []
-[2025-07-09 20:33:56] INFO: [Conducta] ID recibido: 4
-[2025-07-09 20:33:56] INFO: [Conducta] Resultado de la consulta: []
-[2025-07-09 20:33:56] INFO: [Conducta] ID recibido: 4
-[2025-07-09 20:33:57] INFO: [Conducta] Resultado de la consulta: []
-[2025-09-05 09:32:42] INFO: 📥 Login recibido:
-[2025-09-05 09:32:42] ERROR: ❌ Error en login: Cannot read properties of undefined (reading 'request')
-[2025-09-05 09:32:42] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-09-05 10:12:11] INFO: 📥 Login recibido:
-[2025-09-05 10:12:11] WARN: ❌ Contraseña incorrecta
-[2025-09-05 10:12:38] INFO: 📥 Login recibido:
-[2025-09-05 10:12:39] INFO: ✅ Login exitoso
-[2025-09-05 10:12:42] INFO: 📥 Login recibido:
-[2025-09-05 10:12:43] INFO: ✅ Login exitoso
-[2025-09-06 11:48:21] INFO: 📥 Login recibido:
-[2025-09-06 11:48:22] INFO: ✅ Login exitoso
-[2025-09-06 11:48:43] INFO: 📥 Login recibido:
-[2025-09-06 11:48:43] INFO: ✅ Login exitoso
-[2025-09-06 11:49:06] INFO: 📥 Login recibido:
-[2025-09-06 11:49:06] INFO: ✅ Login exitoso
-[2025-09-06 11:51:18] INFO: 📥 Login recibido:
-[2025-09-06 11:51:19] WARN: ❌ Usuario no encontrado
-[2025-09-06 11:52:11] INFO: 📥 Login recibido:
-[2025-09-06 11:52:11] WARN: ❌ Usuario no encontrado
-[2025-09-06 11:59:16] INFO: 📥 Login recibido:
-[2025-09-06 11:59:17] INFO: ✅ Login exitoso
-[2025-09-06 12:04:50] INFO: 📥 Login recibido:
-[2025-09-06 12:04:50] INFO: ✅ Login exitoso
-[2025-09-06 12:06:42] INFO: 📥 Login recibido:
-[2025-09-06 12:06:42] INFO: ✅ Login exitoso
-[2025-09-06 12:12:22] INFO: 📥 Login recibido:
-[2025-09-06 12:12:22] INFO: ✅ Login exitoso
-[2025-09-06 12:12:49] INFO: [Conducta] ID recibido: 4
-[2025-09-06 12:12:49] INFO: [Conducta] Resultado de la consulta: []
-[2025-09-06 12:12:49] INFO: [Conducta] ID recibido: 4
-[2025-09-06 12:12:49] INFO: [Conducta] Resultado de la consulta: []
-[2025-09-06 12:29:30] INFO: 📥 Login recibido:
-[2025-09-06 12:29:30] INFO: ✅ Login exitoso
-[2025-09-06 12:29:31] ERROR: Error al obtener estudiantes No connection is specified for that request.
-[2025-09-06 12:29:31] ERROR: ❌ Error en el servidor: No connection is specified for that request.
-[2025-09-06 12:29:31] ERROR: Error al obtener estudiantes No connection is specified for that request.
-[2025-09-06 12:29:31] ERROR: ❌ Error en el servidor: No connection is specified for that request.
-[2025-09-06 12:29:36] ERROR: Error al obtener estudiantes No connection is specified for that request.
-[2025-09-06 12:29:36] ERROR: ❌ Error en el servidor: No connection is specified for that request.
-[2025-09-06 12:29:36] ERROR: Error al obtener estudiantes No connection is specified for that request.
-[2025-09-06 12:29:36] ERROR: ❌ Error en el servidor: No connection is specified for that request.
-[2025-09-06 12:29:38] ERROR: Error al obtener estudiantes No connection is specified for that request.
-[2025-09-06 12:29:38] ERROR: ❌ Error en el servidor: No connection is specified for that request.
-[2025-09-06 12:29:39] ERROR: Error al obtener estudiantes No connection is specified for that request.
-[2025-09-06 12:29:39] ERROR: ❌ Error en el servidor: No connection is specified for that request.
-[2025-09-06 12:32:05] ERROR: Error al obtener estudiantes No connection is specified for that request.
-[2025-09-06 12:32:05] ERROR: ❌ Error en el servidor: No connection is specified for that request.
-[2025-09-06 12:32:09] ERROR: Error al obtener estudiantes No connection is specified for that request.
-[2025-09-06 12:32:09] ERROR: ❌ Error en el servidor: No connection is specified for that request.
-[2025-09-06 12:32:09] ERROR: Error al obtener estudiantes No connection is specified for that request.
-[2025-09-06 12:32:09] ERROR: ❌ Error en el servidor: No connection is specified for that request.
-[2025-09-06 12:32:58] INFO: 📥 Login recibido:
-[2025-09-06 12:32:58] INFO: ✅ Login exitoso
-[2025-09-06 12:43:10] INFO: [Conducta] ID recibido: 4
-[2025-09-06 12:43:10] INFO: [Conducta] Resultado de la consulta: []
-[2025-09-06 12:43:10] INFO: [Conducta] ID recibido: 4
-[2025-09-06 12:43:10] INFO: [Conducta] Resultado de la consulta: []
-[2025-09-06 12:59:03] INFO: 📥 Login recibido:
-[2025-09-06 12:59:04] INFO: ✅ Login exitoso
-[2025-09-06 13:01:42] INFO: 📥 Login recibido:
-[2025-09-06 13:01:42] WARN: ❌ Usuario no encontrado
-[2025-09-06 13:01:48] INFO: 📥 Login recibido:
-[2025-09-06 13:01:48] WARN: ❌ Contraseña incorrecta
-[2025-09-06 13:03:45] INFO: 📥 Login recibido:
-[2025-09-06 13:03:45] INFO: ✅ Login exitoso
-[2025-09-06 13:53:01] INFO: 📥 Login recibido:
-[2025-09-06 13:53:01] INFO: ✅ Login exitoso
-[2025-09-06 13:57:36] INFO: 📥 Login recibido:
-[2025-09-06 13:57:36] INFO: ✅ Login exitoso
-[2025-09-06 14:07:52] INFO: 📥 Login recibido:
-[2025-09-06 14:07:53] INFO: ✅ Login exitoso
-[2025-09-07 12:49:12] ERROR: Error de autenticación: jwt expired
-[2025-09-07 12:49:21] INFO: 📥 Login recibido:
-[2025-09-07 12:49:22] INFO: ✅ Login exitoso
-[2025-09-07 13:12:21] INFO: 📥 Login recibido:
-[2025-09-07 13:12:22] INFO: ✅ Login exitoso
-[2025-09-07 13:16:25] INFO: 📥 Login recibido:
-[2025-09-07 13:16:25] INFO: ✅ Login exitoso
-[2025-09-07 22:29:37] INFO: 📥 Login recibido:
-[2025-09-07 22:29:38] INFO: ✅ Login exitoso
-[2025-09-07 22:30:19] INFO: 📥 Login recibido:
-[2025-09-07 22:30:19] INFO: ✅ Login exitoso
-[2025-09-07 22:56:18] INFO: 📥 Login recibido:
-[2025-09-07 22:56:19] INFO: ✅ Login exitoso
-[2025-09-07 23:05:01] INFO: 📥 Login recibido:
-[2025-09-07 23:05:01] INFO: ✅ Login exitoso
-[2025-09-07 23:06:52] INFO: 📥 Login recibido:
-[2025-09-07 23:06:52] WARN: ❌ Usuario no encontrado
-[2025-09-07 23:08:55] INFO: 📥 Login recibido:
-[2025-09-07 23:08:56] WARN: ❌ Contraseña incorrecta
-[2025-09-07 23:08:56] INFO: 📥 Login recibido:
-[2025-09-07 23:08:56] WARN: ❌ Contraseña incorrecta
-[2025-09-07 23:12:15] INFO: 📥 Login recibido:
-[2025-09-07 23:12:16] WARN: ❌ Usuario inactivo intentando hacer login
-[2025-09-07 23:12:27] INFO: 📥 Login recibido:
-[2025-09-07 23:12:27] INFO: ✅ Login exitoso
-[2025-09-08 00:22:54] INFO: 📥 Login recibido:
-[2025-09-08 00:22:55] INFO: ✅ Login exitoso
-[2025-09-08 21:56:05] INFO: 📥 Login recibido:
-[2025-09-08 21:56:06] INFO: ✅ Login exitoso
-[2025-09-08 21:57:55] INFO: [Conducta] ID recibido: 9
-[2025-09-08 21:57:55] INFO: [Conducta] Resultado de la consulta: [{"id":1,"id_estudiante":9,"fecha":"2025-04-20T00:00:00.000Z","observacion":"alunma agresiva con sus companeros","categoria":"agresividad"},{"id":2,"id_estudiante":9,"fecha":"2025-04-20T00:00:00.000Z","observacion":"alumna agresiva","categoria":"agresividad"}]
-[2025-09-08 21:57:55] INFO: [Conducta] ID recibido: 9
-[2025-09-08 21:57:55] INFO: [Conducta] Resultado de la consulta: [{"id":1,"id_estudiante":9,"fecha":"2025-04-20T00:00:00.000Z","observacion":"alunma agresiva con sus companeros","categoria":"agresividad"},{"id":2,"id_estudiante":9,"fecha":"2025-04-20T00:00:00.000Z","observacion":"alumna agresiva","categoria":"agresividad"}]
-[2025-09-08 21:58:00] INFO: [Conducta] ID recibido: 9
-[2025-09-08 21:58:00] INFO: [Conducta] Resultado de la consulta: [{"id":1,"id_estudiante":9,"fecha":"2025-04-20T00:00:00.000Z","observacion":"alunma agresiva con sus companeros","categoria":"agresividad"},{"id":2,"id_estudiante":9,"fecha":"2025-04-20T00:00:00.000Z","observacion":"alumna agresiva","categoria":"agresividad"}]
-[2025-09-08 21:58:00] INFO: [Conducta] ID recibido: 9
-[2025-09-08 21:58:00] INFO: [Conducta] Resultado de la consulta: [{"id":1,"id_estudiante":9,"fecha":"2025-04-20T00:00:00.000Z","observacion":"alunma agresiva con sus companeros","categoria":"agresividad"},{"id":2,"id_estudiante":9,"fecha":"2025-04-20T00:00:00.000Z","observacion":"alumna agresiva","categoria":"agresividad"}]
-[2025-09-08 22:08:01] INFO: 📥 Login recibido:
-[2025-09-08 22:08:02] INFO: ✅ Login exitoso
-[2025-09-09 11:33:26] INFO: 📥 Login recibido:
-[2025-09-09 11:33:26] INFO: ✅ Login exitoso
-[2025-09-09 12:13:02] INFO: 🔑 Código de recuperación enviado a daniel1822@gmail.com: 400753
-[2025-09-09 12:39:21] INFO: 🔑 Código de recuperación enviado a daniel1822@gmail.com: 412824
-[2025-09-09 12:43:02] INFO: 🔑 Código de recuperación enviado a daniel1822@gmail.com: 632889
-[2025-09-09 12:45:11] INFO: 🔑 Código de recuperación enviado a daniel1822@gmail.com: 285996
-[2025-09-09 12:46:52] INFO: 🔑 Código de recuperación enviado a daniel1822@gmail.com: 127787
-[2025-09-09 12:47:15] INFO: 🔍 Verificando código:
-[2025-09-09 12:47:15] INFO: 👤 Usuario encontrado:
-[2025-09-09 12:47:16] INFO: ✅ Contraseña actualizada para usuario id 20
-[2025-09-09 19:36:51] INFO: 🔑 Código de recuperación enviado a daniel1822@gmail.com: 446865
-[2025-09-09 19:47:51] INFO: 🔑 Código de recuperación enviado a daniel1822@gmail.com: 677594
-[2025-09-09 19:51:46] INFO: 🔑 Código de recuperación enviado a daniel1822@gmail.com: 204200
-[2025-09-09 19:53:31] ERROR: ❌ Error en enviarCodigoRecuperacion: D8310000:error:0A00010B:SSL routines:ssl3_get_record:wrong version number:c:\ws\deps\openssl\openssl\ssl\record\ssl3_record.c:355:
-
-[2025-09-09 19:53:31] ERROR: ❌ Error en el servidor: D8310000:error:0A00010B:SSL routines:ssl3_get_record:wrong version number:c:\ws\deps\openssl\openssl\ssl\record\ssl3_record.c:355:
-
-[2025-09-09 20:04:08] ERROR: ❌ Error en enviarCodigoRecuperacion: 206A0000:error:0A00010B:SSL routines:ssl3_get_record:wrong version number:c:\ws\deps\openssl\openssl\ssl\record\ssl3_record.c:355:
-
-[2025-09-09 20:04:08] ERROR: ❌ Error en el servidor: 206A0000:error:0A00010B:SSL routines:ssl3_get_record:wrong version number:c:\ws\deps\openssl\openssl\ssl\record\ssl3_record.c:355:
-
-[2025-09-09 20:06:50] ERROR: ❌ Error en enviarCodigoRecuperacion: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
-535 5.7.8  https://support.google.com/mail/?p=BadCredentials 46e09a7af769-74875cb91fasm4022864a34.10 - gsmtp
-[2025-09-09 20:06:50] ERROR: ❌ Error en el servidor: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
-535 5.7.8  https://support.google.com/mail/?p=BadCredentials 46e09a7af769-74875cb91fasm4022864a34.10 - gsmtp
-[2025-09-09 20:08:51] ERROR: ❌ Error en enviarCodigoRecuperacion: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
-535 5.7.8  https://support.google.com/mail/?p=BadCredentials 006d021491bc7-6213604a9desm2485705eaf.24 - gsmtp
-[2025-09-09 20:08:51] ERROR: ❌ Error en el servidor: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
-535 5.7.8  https://support.google.com/mail/?p=BadCredentials 006d021491bc7-6213604a9desm2485705eaf.24 - gsmtp
-[2025-09-09 20:10:57] INFO: 🔑 Código de recuperación enviado a daniel1822@gmail.com: 833623
-[2025-09-09 20:31:00] INFO: 📥 Login recibido:
-[2025-09-09 20:31:00] INFO: ✅ Login exitoso
-[2025-09-09 20:31:35] INFO: 📧 Enviando test vocacional por email:
-[2025-09-09 20:31:35] ERROR: ❌ Error en enviarTestPorEmail: nodemailer.createTransporter is not a function
-[2025-09-09 20:31:35] ERROR: ❌ Error en el servidor: nodemailer.createTransporter is not a function
-[2025-09-09 20:32:48] INFO: 📧 Enviando test vocacional por email:
-[2025-09-09 20:39:20] INFO: 📧 Enviando test vocacional por email:
-[2025-09-09 21:36:55] INFO: 📥 Login recibido:
-[2025-09-09 21:36:55] INFO: ✅ Login exitoso
-[2025-09-09 22:17:01] INFO: [Conducta] ID recibido: 16
-[2025-09-09 22:17:01] INFO: [Conducta] Resultado de la consulta: []
-[2025-09-09 22:17:01] INFO: [Conducta] ID recibido: 16
-[2025-09-09 22:17:01] INFO: [Conducta] Resultado de la consulta: []
-[2025-09-09 22:18:04] INFO: [Conducta] ID recibido: 16
-[2025-09-09 22:18:04] INFO: [Conducta] Resultado de la consulta: []
-[2025-09-09 22:18:05] INFO: [Conducta] ID recibido: 16
-[2025-09-09 22:18:05] INFO: [Conducta] Resultado de la consulta: []
-[2025-09-09 22:23:17] INFO: [Conducta] ID recibido: 9
-[2025-09-09 22:23:17] INFO: [Conducta] Resultado de la consulta: [{"id":1,"id_estudiante":9,"fecha":"2025-04-20T00:00:00.000Z","observacion":"alunma agresiva con sus companeros","categoria":"agresividad"},{"id":2,"id_estudiante":9,"fecha":"2025-04-20T00:00:00.000Z","observacion":"alumna agresiva","categoria":"agresividad"}]
-[2025-09-09 22:23:17] INFO: [Conducta] ID recibido: 9
-[2025-09-09 22:23:17] INFO: [Conducta] Resultado de la consulta: [{"id":1,"id_estudiante":9,"fecha":"2025-04-20T00:00:00.000Z","observacion":"alunma agresiva con sus companeros","categoria":"agresividad"},{"id":2,"id_estudiante":9,"fecha":"2025-04-20T00:00:00.000Z","observacion":"alumna agresiva","categoria":"agresividad"}]
-[2025-09-09 22:25:16] INFO: [Conducta] ID recibido: 9
-[2025-09-09 22:25:16] INFO: [Conducta] Resultado de la consulta: [{"id":1,"id_estudiante":9,"fecha":"2025-04-20T00:00:00.000Z","observacion":"alunma agresiva con sus companeros","categoria":"agresividad"},{"id":2,"id_estudiante":9,"fecha":"2025-04-20T00:00:00.000Z","observacion":"alumna agresiva","categoria":"agresividad"}]
-[2025-09-09 22:26:41] INFO: 📥 Login recibido:
-[2025-09-09 22:26:41] INFO: ✅ Login exitoso
-[2025-09-09 22:40:05] ERROR: Error de autenticación: jwt malformed
-[2025-09-09 22:42:10] INFO: 📊 Obteniendo estadísticas reales del sistema...
-[2025-09-09 22:42:10] INFO: ✅ Estadísticas obtenidas:
-[2025-09-09 22:42:18] INFO: 📊 Obteniendo estadísticas reales del sistema...
-[2025-09-09 22:42:18] INFO: ✅ Estadísticas obtenidas:
-[2025-09-09 22:42:48] INFO: 📊 Obteniendo estadísticas reales del sistema...
-[2025-09-09 22:42:48] INFO: ✅ Conexión a la base de datos establecida
-[2025-09-09 22:42:53] INFO: 📊 Obteniendo estadísticas reales del sistema...
-[2025-09-09 22:42:53] INFO: ✅ Conexión a la base de datos establecida
-[2025-09-09 22:42:53] WARN: ⚠️ Error al contar evaluaciones:
-[2025-09-09 22:42:53] INFO: ✅ Estadísticas obtenidas:
-[2025-09-09 22:44:08] ERROR: Error al actualizar configuración: Validation failed for parameter 'id_registro'. Invalid number.
-[2025-09-09 22:44:08] ERROR: ❌ Error en el servidor: Cannot set headers after they are sent to the client
-[2025-09-09 22:44:44] INFO: 📊 Obteniendo estadísticas reales del sistema...
-[2025-09-09 22:44:44] INFO: ✅ Conexión a la base de datos establecida
-[2025-09-09 22:44:44] WARN: ⚠️ Error al contar evaluaciones:
-[2025-09-09 22:44:44] INFO: ✅ Estadísticas obtenidas:
-[2025-09-09 22:44:44] INFO: 📊 Obteniendo estadísticas reales del sistema...
-[2025-09-09 22:44:44] INFO: ✅ Conexión a la base de datos establecida
-[2025-09-09 22:44:44] WARN: ⚠️ Error al contar evaluaciones:
-[2025-09-09 22:44:44] INFO: ✅ Estadísticas obtenidas:
-[2025-09-09 22:52:19] INFO: 📊 Obteniendo estadísticas reales del sistema...
-[2025-09-09 22:52:19] INFO: ✅ Conexión a la base de datos establecida
-[2025-09-09 22:52:24] WARN: ⚠️ Error al contar evaluaciones:
-[2025-09-09 22:52:24] INFO: ✅ Estadísticas obtenidas:
-[2025-09-09 22:52:37] INFO: 📊 Obteniendo estadísticas reales del sistema...
-[2025-09-09 22:52:37] INFO: ✅ Conexión a la base de datos establecida
-[2025-09-09 22:52:37] WARN: ⚠️ Error al contar evaluaciones:
-[2025-09-09 22:52:37] INFO: ✅ Estadísticas obtenidas:
-[2025-09-09 22:52:37] INFO: 📊 Obteniendo estadísticas reales del sistema...
-[2025-09-09 22:52:37] INFO: ✅ Conexión a la base de datos establecida
-[2025-09-09 22:52:37] WARN: ⚠️ Error al contar evaluaciones:
-[2025-09-09 22:52:37] INFO: ✅ Estadísticas obtenidas:
-[2025-09-09 22:54:57] INFO: 📊 Obteniendo estadísticas reales del sistema...
-[2025-09-09 22:54:57] INFO: ✅ Conexión a la base de datos establecida
-[2025-09-09 22:55:00] WARN: ⚠️ Error al contar evaluaciones:
-[2025-09-09 22:55:01] INFO: ✅ Estadísticas obtenidas:
-[2025-09-09 22:58:09] INFO: 📊 Obteniendo estadísticas reales del sistema...
-[2025-09-09 22:58:09] INFO: ✅ Conexión a la base de datos establecida
-[2025-09-09 22:58:10] WARN: ⚠️ Error al contar evaluaciones:
-[2025-09-09 22:58:10] INFO: ✅ Estadísticas obtenidas:
-[2025-09-09 22:58:10] INFO: 📊 Obteniendo estadísticas reales del sistema...
-[2025-09-09 22:58:10] INFO: ✅ Conexión a la base de datos establecida
-[2025-09-09 22:58:10] WARN: ⚠️ Error al contar evaluaciones:
-[2025-09-09 22:58:10] INFO: ✅ Estadísticas obtenidas:
-[2025-09-09 22:58:23] INFO: 📊 Obteniendo estadísticas reales del sistema...
-[2025-09-09 22:58:23] INFO: ✅ Conexión a la base de datos establecida
-[2025-09-09 22:58:23] WARN: ⚠️ Error al contar evaluaciones:
-[2025-09-09 22:58:23] INFO: ✅ Estadísticas obtenidas:
-[2025-09-09 22:58:23] INFO: 📊 Obteniendo estadísticas reales del sistema...
-[2025-09-09 22:58:23] INFO: ✅ Conexión a la base de datos establecida
-[2025-09-09 22:58:23] WARN: ⚠️ Error al contar evaluaciones:
-[2025-09-09 22:58:23] INFO: ✅ Estadísticas obtenidas:
-[2025-09-09 22:58:24] INFO: 📊 Obteniendo estadísticas reales del sistema...
-[2025-09-09 22:58:24] INFO: ✅ Conexión a la base de datos establecida
-[2025-09-09 22:58:24] WARN: ⚠️ Error al contar evaluaciones:
-[2025-09-09 22:58:24] INFO: ✅ Estadísticas obtenidas:
-[2025-09-09 22:58:24] INFO: 📊 Obteniendo estadísticas reales del sistema...
-[2025-09-09 22:58:24] INFO: ✅ Conexión a la base de datos establecida
-[2025-09-09 22:58:24] WARN: ⚠️ Error al contar evaluaciones:
-[2025-09-09 22:58:24] INFO: ✅ Estadísticas obtenidas:
-[2025-09-09 23:03:06] INFO: 📊 Obteniendo estadísticas reales del sistema...
-[2025-09-09 23:03:06] INFO: ✅ Conexión a la base de datos establecida
-[2025-09-09 23:03:07] WARN: ⚠️ Error al contar evaluaciones:
-[2025-09-09 23:03:07] INFO: ✅ Estadísticas obtenidas:
-[2025-09-09 23:03:07] INFO: 📊 Obteniendo estadísticas reales del sistema...
-[2025-09-09 23:03:07] INFO: ✅ Conexión a la base de datos establecida
-[2025-09-09 23:03:07] WARN: ⚠️ Error al contar evaluaciones:
-[2025-09-09 23:03:07] INFO: ✅ Estadísticas obtenidas:
-[2025-09-09 23:06:02] INFO: 📊 Obteniendo estadísticas reales del sistema...
-[2025-09-09 23:06:02] INFO: ✅ Conexión a la base de datos establecida
-[2025-09-09 23:06:02] WARN: ⚠️ Error al contar evaluaciones:
-[2025-09-09 23:06:02] INFO: ✅ Estadísticas obtenidas:
-[2025-09-09 23:06:03] INFO: 📊 Obteniendo estadísticas reales del sistema...
-[2025-09-09 23:06:03] INFO: ✅ Conexión a la base de datos establecida
-[2025-09-09 23:06:03] WARN: ⚠️ Error al contar evaluaciones:
-[2025-09-09 23:06:03] INFO: ✅ Estadísticas obtenidas:
-[2025-09-09 23:08:40] INFO: 📊 Obteniendo estadísticas reales del sistema...
-[2025-09-09 23:08:40] INFO: ✅ Conexión a la base de datos establecida
-[2025-09-09 23:08:40] INFO: ✅ Estadísticas obtenidas:
-[2025-09-09 23:08:40] INFO: 📊 Obteniendo estadísticas reales del sistema...
-[2025-09-09 23:08:40] INFO: ✅ Conexión a la base de datos establecida
-[2025-09-09 23:08:40] INFO: ✅ Estadísticas obtenidas:
-[2025-09-09 23:08:47] ERROR: Error al actualizar configuración: Validation failed for parameter 'id_registro'. Invalid number.
-[2025-09-09 23:08:47] ERROR: ❌ Error en el servidor: Cannot set headers after they are sent to the client
-[2025-09-09 23:12:12] INFO: 📊 Obteniendo estadísticas reales del sistema...
-[2025-09-09 23:12:12] INFO: ✅ Conexión a la base de datos establecida
-[2025-09-09 23:12:13] INFO: ✅ Estadísticas obtenidas:
-[2025-09-09 23:12:13] INFO: 📊 Obteniendo estadísticas reales del sistema...
-[2025-09-09 23:12:13] INFO: ✅ Conexión a la base de datos establecida
-[2025-09-09 23:12:14] INFO: ✅ Estadísticas obtenidas:
-[2025-09-09 23:16:03] INFO: 📥 Login recibido:
-[2025-09-09 23:16:04] INFO: ✅ Login exitoso
-[2025-09-09 23:20:53] INFO: 📥 Login recibido:
-[2025-09-09 23:20:53] INFO: ✅ Login exitoso
-[2025-09-09 23:25:33] INFO: 📊 Obteniendo estadísticas reales del sistema...
-[2025-09-09 23:25:33] INFO: ✅ Conexión a la base de datos establecida
-[2025-09-09 23:25:33] INFO: ✅ Estadísticas obtenidas:
-[2025-09-09 23:25:33] INFO: 📊 Obteniendo estadísticas reales del sistema...
-[2025-09-09 23:25:33] INFO: ✅ Conexión a la base de datos establecida
-[2025-09-09 23:25:33] INFO: ✅ Estadísticas obtenidas:
-[2025-09-09 23:45:12] ERROR: Error al crear estudiante Cannot insert the value NULL into column 'fecha_nacimiento', table 'sistema_educacional.dbo.Estudiantes'; column does not allow nulls. INSERT fails.
-[2025-09-09 23:45:12] ERROR: ❌ Error en el servidor: Cannot insert the value NULL into column 'fecha_nacimiento', table 'sistema_educacional.dbo.Estudiantes'; column does not allow nulls. INSERT fails.
-[2025-09-09 23:45:52] ERROR: Error al crear estudiante Cannot insert the value NULL into column 'fecha_nacimiento', table 'sistema_educacional.dbo.Estudiantes'; column does not allow nulls. INSERT fails.
-[2025-09-09 23:45:52] ERROR: ❌ Error en el servidor: Cannot insert the value NULL into column 'fecha_nacimiento', table 'sistema_educacional.dbo.Estudiantes'; column does not allow nulls. INSERT fails.
-[2025-09-09 23:47:32] ERROR: Error al crear estudiante Cannot insert the value NULL into column 'fecha_nacimiento', table 'sistema_educacional.dbo.Estudiantes'; column does not allow nulls. INSERT fails.
-[2025-09-09 23:47:32] ERROR: ❌ Error en el servidor: Cannot insert the value NULL into column 'fecha_nacimiento', table 'sistema_educacional.dbo.Estudiantes'; column does not allow nulls. INSERT fails.
-[2025-09-09 23:48:54] ERROR: Error al crear estudiante Cannot insert the value NULL into column 'fecha_nacimiento', table 'sistema_educacional.dbo.Estudiantes'; column does not allow nulls. INSERT fails.
-[2025-09-09 23:48:54] ERROR: ❌ Error en el servidor: Cannot insert the value NULL into column 'fecha_nacimiento', table 'sistema_educacional.dbo.Estudiantes'; column does not allow nulls. INSERT fails.
-[2025-09-09 23:51:18] ERROR: Error al crear estudiante Cannot insert the value NULL into column 'fecha_nacimiento', table 'sistema_educacional.dbo.Estudiantes'; column does not allow nulls. INSERT fails.
-[2025-09-09 23:51:18] ERROR: ❌ Error en el servidor: Cannot insert the value NULL into column 'fecha_nacimiento', table 'sistema_educacional.dbo.Estudiantes'; column does not allow nulls. INSERT fails.
-[2025-09-09 23:55:11] ERROR: Error al crear estudiante Violation of UNIQUE KEY constraint 'UQ__Estudian__C2B74E76B8782068'. Cannot insert duplicate key in object 'dbo.Estudiantes'. The duplicate key value is (22.486.972-k).
-[2025-09-09 23:55:11] ERROR: ❌ Error en el servidor: Violation of UNIQUE KEY constraint 'UQ__Estudian__C2B74E76B8782068'. Cannot insert duplicate key in object 'dbo.Estudiantes'. The duplicate key value is (22.486.972-k).
-[2025-09-14 11:41:12] INFO: 📥 Login recibido:
-[2025-09-14 11:41:12] INFO: ✅ Login exitoso
-[2025-09-14 11:58:15] INFO: [Conducta] ID recibido: 9
-[2025-09-14 11:58:15] INFO: [Conducta] Resultado de la consulta: [{"id":1,"id_estudiante":9,"fecha":"2025-04-20T00:00:00.000Z","observacion":"alunma agresiva con sus companeros","categoria":"agresividad"},{"id":2,"id_estudiante":9,"fecha":"2025-04-20T00:00:00.000Z","observacion":"alumna agresiva","categoria":"agresividad"}]
-[2025-09-14 11:58:15] INFO: [Conducta] ID recibido: 9
-[2025-09-14 11:58:15] INFO: [Conducta] Resultado de la consulta: [{"id":1,"id_estudiante":9,"fecha":"2025-04-20T00:00:00.000Z","observacion":"alunma agresiva con sus companeros","categoria":"agresividad"},{"id":2,"id_estudiante":9,"fecha":"2025-04-20T00:00:00.000Z","observacion":"alumna agresiva","categoria":"agresividad"}]
-[2025-09-14 12:20:07] INFO: [Conducta] ID recibido: 9
-[2025-09-14 12:20:07] INFO: [Conducta] Resultado de la consulta: [{"id":1,"id_estudiante":9,"fecha":"2025-04-20T00:00:00.000Z","observacion":"alunma agresiva con sus companeros","categoria":"agresividad"},{"id":2,"id_estudiante":9,"fecha":"2025-04-20T00:00:00.000Z","observacion":"alumna agresiva","categoria":"agresividad"}]
-[2025-09-14 12:20:07] INFO: [Conducta] ID recibido: 9
-[2025-09-14 12:20:07] INFO: [Conducta] Resultado de la consulta: [{"id":1,"id_estudiante":9,"fecha":"2025-04-20T00:00:00.000Z","observacion":"alunma agresiva con sus companeros","categoria":"agresividad"},{"id":2,"id_estudiante":9,"fecha":"2025-04-20T00:00:00.000Z","observacion":"alumna agresiva","categoria":"agresividad"}]
-[2025-09-14 13:27:52] INFO: 📥 Login recibido:
-[2025-09-14 13:27:53] INFO: ✅ Login exitoso
-[2025-09-14 14:32:47] INFO: 📥 Login recibido:
-[2025-09-14 14:32:47] INFO: ✅ Login exitoso
-[2025-09-14 15:33:52] INFO: 📥 Login recibido:
-[2025-09-14 15:33:52] WARN: ❌ Contraseña incorrecta
-[2025-09-14 15:34:08] INFO: 📥 Login recibido:
-[2025-09-14 15:34:08] INFO: ✅ Login exitoso
-[2025-09-14 17:53:51] INFO: 📥 Login recibido:
-[2025-09-14 17:53:51] INFO: ✅ Login exitoso
-[2025-09-14 18:53:24] INFO: 📥 Login recibido:
-[2025-09-14 18:53:25] INFO: ✅ Login exitoso
-[2025-09-14 19:01:36] INFO: 📥 Login recibido:
-[2025-09-14 19:01:37] INFO: ✅ Login exitoso
-[2025-09-14 19:03:28] INFO: 📥 Login recibido:
-[2025-09-14 19:03:28] INFO: ✅ Login exitoso
+[2025-09-22 21:13:15] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:13:15] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:13:15] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:13:15] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:13:17] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:13:17] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:13:17] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:13:17] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:13:18] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:13:18] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:13:18] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:13:18] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:13:55] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:13:55] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:13:55] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:13:55] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:13:55] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:13:55] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:13:56] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:13:56] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:13:56] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:13:56] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:14:03] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:14:03] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:14:03] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:14:03] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:14:03] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:14:03] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:14:03] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:14:03] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:14:04] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:14:04] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:14:04] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:14:04] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:14:28] ERROR: ❌ Error en estudiantesPorCurso: no existe la columna e.nombre_apoderado
+[2025-09-22 21:14:28] ERROR: ❌ Error en el servidor: no existe la columna e.nombre_apoderado
+[2025-09-22 21:14:28] ERROR: ❌ Error en estudiantesPorCurso: no existe la columna e.nombre_apoderado
+[2025-09-22 21:14:28] ERROR: ❌ Error en el servidor: no existe la columna e.nombre_apoderado
+[2025-09-22 21:14:29] ERROR: ❌ Error en estudiantesPorCurso: no existe la columna e.nombre_apoderado
+[2025-09-22 21:14:29] ERROR: ❌ Error en el servidor: no existe la columna e.nombre_apoderado
+[2025-09-22 21:14:38] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:14:38] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:14:38] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:14:38] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:14:38] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:14:38] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:14:38] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:14:38] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:14:39] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:14:39] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:14:39] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:14:39] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:16:19] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:16:19] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:16:19] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:16:19] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:16:20] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:16:20] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:16:20] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:16:20] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:16:21] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:16:21] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:16:21] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:16:21] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:16:29] ERROR: ❌ Error en reporteAsistencia: no existe la columna ha.asistencia_porcentaje
+[2025-09-22 21:16:29] ERROR: ❌ Error en el servidor: no existe la columna ha.asistencia_porcentaje
+[2025-09-22 21:16:30] ERROR: ❌ Error en reporteAsistencia: no existe la columna ha.asistencia_porcentaje
+[2025-09-22 21:16:30] ERROR: ❌ Error en el servidor: no existe la columna ha.asistencia_porcentaje
+[2025-09-22 21:16:30] ERROR: ❌ Error en reporteAsistencia: no existe la columna ha.asistencia_porcentaje
+[2025-09-22 21:16:30] ERROR: ❌ Error en el servidor: no existe la columna ha.asistencia_porcentaje
+[2025-09-22 21:23:11] ERROR: ❌ Error en estudiantesPorCurso: no existe la columna e.nombre_apoderado
+[2025-09-22 21:23:11] ERROR: ❌ Error en el servidor: no existe la columna e.nombre_apoderado
+[2025-09-22 21:23:11] ERROR: ❌ Error en estudiantesPorCurso: no existe la columna e.nombre_apoderado
+[2025-09-22 21:23:11] ERROR: ❌ Error en el servidor: no existe la columna e.nombre_apoderado
+[2025-09-22 21:23:12] ERROR: ❌ Error en estudiantesPorCurso: no existe la columna e.nombre_apoderado
+[2025-09-22 21:23:12] ERROR: ❌ Error en el servidor: no existe la columna e.nombre_apoderado
+[2025-09-22 21:26:20] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:26:20] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:26:20] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:26:20] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:26:20] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:26:20] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:26:20] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:26:20] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:26:21] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:26:21] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:26:21] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:26:21] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:26:33] ERROR: ❌ Error en reporteAsistencia: no existe la función round(double precision, integer)
+[2025-09-22 21:26:33] ERROR: ❌ Error en el servidor: no existe la función round(double precision, integer)
+[2025-09-22 21:26:34] ERROR: ❌ Error en reporteAsistencia: no existe la función round(double precision, integer)
+[2025-09-22 21:26:34] ERROR: ❌ Error en el servidor: no existe la función round(double precision, integer)
+[2025-09-22 21:26:35] ERROR: ❌ Error en reporteAsistencia: no existe la función round(double precision, integer)
+[2025-09-22 21:26:35] ERROR: ❌ Error en el servidor: no existe la función round(double precision, integer)
+[2025-09-22 21:26:38] ERROR: ❌ Error en reporteInstitucional: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:26:38] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:26:38] ERROR: ❌ Error en reporteInstitucional: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:26:38] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:26:39] ERROR: ❌ Error en reporteInstitucional: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:26:39] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:26:42] ERROR: ❌ Error en estudiantesPorCurso: no existe la columna e.nombre_apoderado
+[2025-09-22 21:26:42] ERROR: ❌ Error en el servidor: no existe la columna e.nombre_apoderado
+[2025-09-22 21:26:42] ERROR: ❌ Error en estudiantesPorCurso: no existe la columna e.nombre_apoderado
+[2025-09-22 21:26:42] ERROR: ❌ Error en el servidor: no existe la columna e.nombre_apoderado
+[2025-09-22 21:26:43] ERROR: ❌ Error en estudiantesPorCurso: no existe la columna e.nombre_apoderado
+[2025-09-22 21:26:43] ERROR: ❌ Error en el servidor: no existe la columna e.nombre_apoderado
+[2025-09-22 21:41:45] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:41:45] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:41:46] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:41:46] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:41:46] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:41:46] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:41:46] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:41:46] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:41:46] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:41:46] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:41:47] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:41:47] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:41:48] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:41:48] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:41:53] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:41:53] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:41:53] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:41:53] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:41:54] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:41:54] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:42:16] ERROR: ❌ Error en estudiantesPorCurso: no existe la columna e.nombre_apoderado
+[2025-09-22 21:42:16] ERROR: ❌ Error en el servidor: no existe la columna e.nombre_apoderado
+[2025-09-22 21:42:17] ERROR: ❌ Error en estudiantesPorCurso: no existe la columna e.nombre_apoderado
+[2025-09-22 21:42:17] ERROR: ❌ Error en el servidor: no existe la columna e.nombre_apoderado
+[2025-09-22 21:42:17] ERROR: ❌ Error en estudiantesPorCurso: no existe la columna e.nombre_apoderado
+[2025-09-22 21:42:17] ERROR: ❌ Error en el servidor: no existe la columna e.nombre_apoderado
+[2025-09-22 21:42:40] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:42:40] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:42:40] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:42:40] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:42:41] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:42:41] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:42:41] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:42:41] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:42:41] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:42:41] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:42:42] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:42:42] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:42:48] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:42:48] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:42:48] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:42:48] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:42:48] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:42:48] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:42:48] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:42:48] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:42:49] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:42:49] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:42:49] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:42:49] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:42:53] ERROR: ❌ Error en estudiantesPorCurso: no existe la columna e.nombre_apoderado
+[2025-09-22 21:42:53] ERROR: ❌ Error en el servidor: no existe la columna e.nombre_apoderado
+[2025-09-22 21:42:53] ERROR: ❌ Error en estudiantesPorCurso: no existe la columna e.nombre_apoderado
+[2025-09-22 21:42:53] ERROR: ❌ Error en el servidor: no existe la columna e.nombre_apoderado
+[2025-09-22 21:42:54] ERROR: ❌ Error en estudiantesPorCurso: no existe la columna e.nombre_apoderado
+[2025-09-22 21:42:54] ERROR: ❌ Error en el servidor: no existe la columna e.nombre_apoderado
+[2025-09-22 21:53:32] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://192.168.18.10:5174
+[2025-09-22 21:53:32] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://192.168.18.10:5174
+[2025-09-22 21:53:33] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://192.168.18.10:5174
+[2025-09-22 21:53:39] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://192.168.18.10:5174
+[2025-09-22 21:53:39] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://192.168.18.10:5174
+[2025-09-22 21:53:39] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://192.168.18.10:5174
+[2025-09-22 21:53:39] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://192.168.18.10:5174
+[2025-09-22 21:53:39] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://192.168.18.10:5174
+[2025-09-22 21:53:40] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://192.168.18.10:5174
+[2025-09-22 21:53:40] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://192.168.18.10:5174
+[2025-09-22 21:53:40] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://192.168.18.10:5174
+[2025-09-22 21:53:40] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://192.168.18.10:5174
+[2025-09-22 21:53:40] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://192.168.18.10:5174
+[2025-09-22 21:53:40] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://192.168.18.10:5174
+[2025-09-22 21:53:40] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://192.168.18.10:5174
+[2025-09-22 21:54:31] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://192.168.18.10:5174
+[2025-09-22 21:54:31] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://192.168.18.10:5174
+[2025-09-22 21:54:32] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://192.168.18.10:5174
+[2025-09-22 21:54:32] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://192.168.18.10:5174
+[2025-09-22 21:54:32] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://192.168.18.10:5174
+[2025-09-22 21:54:32] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://192.168.18.10:5174
+[2025-09-22 21:54:36] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://192.168.18.10:5174
+[2025-09-22 21:54:36] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://192.168.18.10:5174
+[2025-09-22 21:54:37] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://192.168.18.10:5174
+[2025-09-22 21:54:37] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://192.168.18.10:5174
+[2025-09-22 21:54:37] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://192.168.18.10:5174
+[2025-09-22 21:54:37] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://192.168.18.10:5174
+[2025-09-22 21:55:00] ERROR: ❌ Error en dashboardKPIs: pool.query is not a function
+[2025-09-22 21:55:00] ERROR: ❌ Error en el servidor: pool.query is not a function
+[2025-09-22 21:55:00] ERROR: ❌ Error en dashboardKPIs: pool.query is not a function
+[2025-09-22 21:55:00] ERROR: ❌ Error en el servidor: pool.query is not a function
+[2025-09-22 21:55:00] ERROR: ❌ Error en dashboardKPIs: pool.query is not a function
+[2025-09-22 21:55:00] ERROR: ❌ Error en el servidor: pool.query is not a function
+[2025-09-22 21:55:00] ERROR: ❌ Error en dashboardKPIs: pool.query is not a function
+[2025-09-22 21:55:00] ERROR: ❌ Error en el servidor: pool.query is not a function
+[2025-09-22 21:55:01] ERROR: ❌ Error en dashboardKPIs: pool.query is not a function
+[2025-09-22 21:55:01] ERROR: ❌ Error en el servidor: pool.query is not a function
+[2025-09-22 21:55:01] ERROR: ❌ Error en dashboardKPIs: pool.query is not a function
+[2025-09-22 21:55:01] ERROR: ❌ Error en el servidor: pool.query is not a function
+[2025-09-22 21:56:29] ERROR: ❌ Error en dashboardKPIs: no existe la función round(double precision, integer)
+[2025-09-22 21:56:29] ERROR: ❌ Error en el servidor: no existe la función round(double precision, integer)
+[2025-09-22 21:56:29] ERROR: ❌ Error en dashboardKPIs: no existe la función round(double precision, integer)
+[2025-09-22 21:56:29] ERROR: ❌ Error en el servidor: no existe la función round(double precision, integer)
+[2025-09-22 21:58:40] INFO: 📥 Login recibido:
+[2025-09-22 21:58:40] INFO: ✅ Login exitoso
+[2025-09-22 21:59:35] ERROR: Error al obtener estudiante por ID la sintaxis de entrada no es válida para tipo bigint: «nuevo»
+[2025-09-22 21:59:35] ERROR: ❌ Error en el servidor: la sintaxis de entrada no es válida para tipo bigint: «nuevo»
+[2025-09-22 21:59:35] ERROR: Error al obtener estudiante por ID la sintaxis de entrada no es válida para tipo bigint: «nuevo»
+[2025-09-22 21:59:35] ERROR: ❌ Error en el servidor: la sintaxis de entrada no es válida para tipo bigint: «nuevo»
+[2025-09-22 21:59:35] ERROR: Error al obtener estudiante por ID la sintaxis de entrada no es válida para tipo bigint: «nuevo»
+[2025-09-22 21:59:35] ERROR: ❌ Error en el servidor: la sintaxis de entrada no es válida para tipo bigint: «nuevo»
+[2025-09-22 21:59:35] ERROR: Error al obtener estudiante por ID la sintaxis de entrada no es válida para tipo bigint: «nuevo»
+[2025-09-22 21:59:35] ERROR: ❌ Error en el servidor: la sintaxis de entrada no es válida para tipo bigint: «nuevo»
+[2025-09-22 21:59:36] ERROR: Error al obtener estudiante por ID la sintaxis de entrada no es válida para tipo bigint: «nuevo»
+[2025-09-22 21:59:36] ERROR: ❌ Error en el servidor: la sintaxis de entrada no es válida para tipo bigint: «nuevo»
+[2025-09-22 21:59:36] ERROR: Error al obtener estudiante por ID la sintaxis de entrada no es válida para tipo bigint: «nuevo»
+[2025-09-22 21:59:36] ERROR: ❌ Error en el servidor: la sintaxis de entrada no es válida para tipo bigint: «nuevo»
+[2025-09-22 22:31:08] INFO: 📥 Login recibido:
+[2025-09-22 22:31:09] INFO: ✅ Login exitoso
+[2025-09-22 22:41:37] INFO: 📥 Login recibido:
+[2025-09-22 22:41:37] INFO: ✅ Login exitoso

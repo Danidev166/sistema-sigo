@@ -1,95 +1,100 @@
-const { sql, poolPromise } = require("../config/db");
+// backend/models/agendaModel.js
+const { sql, getPool } = require('../config/db');
 
-class AgendaModel {
-  // backend/models/agendaModel.js
-static async obtenerTodos() {
-  const pool = await poolPromise;
-  const result = await pool.request().query(`
-    SELECT 
-      a.id,
-      a.id_estudiante,
-      e.nombre + ' ' + e.apellido AS nombre_estudiante,
-      CONVERT(varchar(5), a.hora, 108) AS hora,
-      FORMAT(a.fecha, 'yyyy-MM-dd') AS fecha,
-      a.motivo,
-      a.profesional,
-      a.creado_en,
-      a.email_orientador
-    FROM Agenda a
-    LEFT JOIN Estudiantes e ON e.id = a.id_estudiante
-    ORDER BY a.fecha DESC
-  `);
-  return result.recordset;
+// normaliza "HH:mm" -> "HH:mm:ss"
+function normalizeTimeStr(v) {
+  if (v == null) return null;
+  if (typeof v !== 'string') return v;
+  return v.length === 5 ? `${v}:00` : v;
 }
 
+// helper "YYYY-MM-DD" seguro (date)
+function toPgDate(input) {
+  if (!input) return null;
+  if (input instanceof Date) return input;
+  if (typeof input === 'string') return input; // PG acepta 'YYYY-MM-DD'
+  return new Date(input);
+}
 
-
-
+class AgendaModel {
+  static async obtenerTodos() {
+    const pool = await getPool();
+    const result = await pool.request().query(`
+      SELECT 
+        a.id,
+        a.id_estudiante,
+        (e.nombre || ' ' || e.apellido) AS nombre_estudiante,
+        TO_CHAR(a.hora,  'HH24:MI')     AS hora,
+        TO_CHAR(a.fecha, 'YYYY-MM-DD')  AS fecha,
+        a.motivo,
+        a.profesional,
+        a.creado_en,
+        a.email_orientador
+      FROM agenda a
+      LEFT JOIN estudiantes e ON e.id = a.id_estudiante
+      ORDER BY a.fecha DESC
+    `);
+    return result.recordset;
+  }
 
   static async obtenerPorId(id) {
-    const pool = await poolPromise;
+    const pool = await getPool();
     const result = await pool.request()
-      .input("id", sql.Int, id)
-      .query("SELECT * FROM Agenda WHERE id = @id");
-    return result.recordset[0];
+      .input('id', sql.Int, id)
+      .query('SELECT * FROM agenda WHERE id = @id');
+    return result.recordset[0] || null;
   }
 
   static async crear(data) {
-    const pool = await poolPromise;
-
-    // Convertir "HH:mm" a objeto Date si es necesario
-    const hora = typeof data.hora === "string"
-      ? new Date(`1970-01-01T${data.hora}:00Z`)
-      : data.hora;
+    const pool = await getPool();
+    const horaStr = normalizeTimeStr(data.hora);
 
     const result = await pool.request()
-      .input("id_estudiante", sql.Int, data.id_estudiante)
-      .input("fecha", sql.Date, data.fecha)
-      .input("hora", sql.Time, hora)
-      .input("motivo", sql.NVarChar(255), data.motivo)
-      .input("profesional", sql.NVarChar(100), data.profesional)
-      .input("email_orientador", sql.NVarChar(255), data.email_orientador || null)
-      .input("creado_en", sql.DateTime, new Date())
+      .input('id_estudiante',   sql.Int,             data.id_estudiante)
+      .input('fecha',           sql.Date,            toPgDate(data.fecha))
+      .input('hora',            sql.VarChar,         horaStr) // TIME desde string
+      .input('motivo',          sql.NVarChar(255),   data.motivo)
+      .input('profesional',     sql.NVarChar(100),   data.profesional)
+      .input('email_orientador',sql.NVarChar(255),   data.email_orientador || null)
+      .input('creado_en',       sql.DateTime,        new Date())
       .query(`
-        INSERT INTO Agenda (id_estudiante, fecha, hora, motivo, profesional, email_orientador, creado_en)
-        OUTPUT INSERTED.*
-        VALUES (@id_estudiante, @fecha, @hora, @motivo, @profesional, @email_orientador, @creado_en)
+        INSERT INTO agenda (id_estudiante, fecha, hora, motivo, profesional, email_orientador, creado_en)
+        VALUES (@id_estudiante, @fecha, @hora::time, @motivo, @profesional, @email_orientador, @creado_en)
+        RETURNING *
       `);
 
     return result.recordset[0];
   }
 
   static async actualizar(id, data) {
-    const pool = await poolPromise;
-
-    const hora = typeof data.hora === "string"
-      ? new Date(`1970-01-01T${data.hora}:00Z`)
-      : data.hora;
+    const pool = await getPool();
+    const horaStr = normalizeTimeStr(data.hora);
 
     await pool.request()
-      .input("id", sql.Int, id)
-      .input("id_estudiante", sql.Int, data.id_estudiante)
-      .input("fecha", sql.Date, data.fecha)
-      .input("hora", sql.Time, hora)
-      .input("motivo", sql.NVarChar(255), data.motivo)
-      .input("profesional", sql.NVarChar(100), data.profesional)
-      .input("email_orientador", sql.NVarChar(255), data.email_orientador || null)
+      .input('id',              sql.Int,            id)
+      .input('id_estudiante',   sql.Int,            data.id_estudiante)
+      .input('fecha',           sql.Date,           toPgDate(data.fecha))
+      .input('hora',            sql.VarChar,        horaStr)
+      .input('motivo',          sql.NVarChar(255),  data.motivo)
+      .input('profesional',     sql.NVarChar(100),  data.profesional)
+      .input('email_orientador',sql.NVarChar(255),  data.email_orientador || null)
       .query(`
-        UPDATE Agenda
-        SET id_estudiante = @id_estudiante,
-            fecha = @fecha,
-            hora = @hora,
-            motivo = @motivo,
-            profesional = @profesional,
-            email_orientador = @email_orientador
-        WHERE id = @id
+        UPDATE agenda
+           SET id_estudiante   = @id_estudiante,
+               fecha           = @fecha,
+               hora            = @hora::time,
+               motivo          = @motivo,
+               profesional     = @profesional,
+               email_orientador= @email_orientador
+         WHERE id = @id
       `);
   }
 
   static async eliminar(id) {
-    const pool = await poolPromise;
-    await pool.request().input("id", sql.Int, id)
-      .query("DELETE FROM Agenda WHERE id = @id");
+    const pool = await getPool();
+    await pool.request()
+      .input('id', sql.Int, id)
+      .query('DELETE FROM agenda WHERE id = @id');
   }
 }
 

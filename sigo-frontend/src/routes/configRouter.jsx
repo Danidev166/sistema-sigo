@@ -28,7 +28,6 @@ const RecuperarPasswordPage = lazy(() => import("../features/auth/pages/Recupera
 const VerificarCodigoPage = lazy(() => import("../features/auth/pages/VerificarCodigoPage"));
 const DashboardAsistenteSocialPage = lazy(() => import("../features/dashboard/pages/DashboardAsistenteSocialPage"));
 const LogsPage = lazy(() => import("../features/logs/pages/LogsPage"));
-const PlantillasReportesPage = lazy(() => import("../features/reportes/pages/PlantillasReportesPage"));
 
 // 🔓 Rutas públicas
 export const publicRoutes = [
@@ -49,7 +48,6 @@ export const privateRoutes = [
   { path: "/estudiantes/:id", element: <EstudianteDetalle />, roles: ["Admin", "Orientador"] },
   { path: "/agenda", element: <AgendaPage />, roles: ["Admin", "Orientador"] },
   { path: "/reportes", element: <ReportesPage />, roles: ["Admin", "Orientador"] },
-  { path: "/reportes/plantillas", element: <PlantillasReportesPage />, roles: ["Admin", "Orientador"] },
   { path: "/evaluaciones", element: <EvaluacionesPage />, roles: ["Admin", "Orientador"] },
   { path: "/evaluaciones/kuder", element: <KuderTest />, roles: ["Admin", "Orientador"] },
   { path: "/evaluaciones/holland", element: <HollandTest />, roles: ["Admin", "Orientador"] },

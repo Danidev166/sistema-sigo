@@ -1,534 +1,217 @@
-[2025-05-12 13:44:39] ERROR: Error al obtener estudiante por ID Validation failed for parameter 'id'. Invalid number.
-[2025-05-12 13:44:39] ERROR: ❌ Error en el servidor: Validation failed for parameter 'id'. Invalid number.
-[2025-05-12 13:44:39] ERROR: Error al obtener estudiante por ID Validation failed for parameter 'id'. Invalid number.
-[2025-05-12 13:44:39] ERROR: ❌ Error en el servidor: Validation failed for parameter 'id'. Invalid number.
-[2025-05-12 14:04:50] ERROR: Error al obtener estudiante por ID Validation failed for parameter 'id'. Invalid number.
-[2025-05-12 14:04:50] ERROR: ❌ Error en el servidor: Validation failed for parameter 'id'. Invalid number.
-[2025-05-12 14:04:50] ERROR: Error al obtener estudiante por ID Validation failed for parameter 'id'. Invalid number.
-[2025-05-12 14:04:50] ERROR: ❌ Error en el servidor: Validation failed for parameter 'id'. Invalid number.
-[2025-05-12 14:35:00] ERROR: Error al obtener estudiante por ID Validation failed for parameter 'id'. Invalid number.
-[2025-05-12 14:35:00] ERROR: ❌ Error en el servidor: Validation failed for parameter 'id'. Invalid number.
-[2025-05-12 14:35:00] ERROR: Error al obtener estudiante por ID Validation failed for parameter 'id'. Invalid number.
-[2025-05-12 14:35:00] ERROR: ❌ Error en el servidor: Validation failed for parameter 'id'. Invalid number.
-[2025-05-12 14:35:05] ERROR: Error al obtener estudiante por ID Validation failed for parameter 'id'. Invalid number.
-[2025-05-12 14:35:05] ERROR: ❌ Error en el servidor: Validation failed for parameter 'id'. Invalid number.
-[2025-05-12 14:35:05] ERROR: Error al obtener estudiante por ID Validation failed for parameter 'id'. Invalid number.
-[2025-05-12 14:35:05] ERROR: ❌ Error en el servidor: Validation failed for parameter 'id'. Invalid number.
-[2025-05-12 17:25:02] ERROR: Error al obtener estudiante por ID Validation failed for parameter 'id'. Invalid number.
-[2025-05-12 17:25:02] ERROR: ❌ Error en el servidor: Validation failed for parameter 'id'. Invalid number.
-[2025-05-12 17:25:03] ERROR: Error al obtener estudiante por ID Validation failed for parameter 'id'. Invalid number.
-[2025-05-12 17:25:03] ERROR: ❌ Error en el servidor: Validation failed for parameter 'id'. Invalid number.
-[2025-05-12 19:55:15] ERROR: Error al obtener estudiante por ID Validation failed for parameter 'id'. Invalid number.
-[2025-05-12 19:55:15] ERROR: ❌ Error en el servidor: Validation failed for parameter 'id'. Invalid number.
-[2025-05-12 19:55:15] ERROR: Error al obtener estudiante por ID Validation failed for parameter 'id'. Invalid number.
-[2025-05-12 19:55:15] ERROR: ❌ Error en el servidor: Validation failed for parameter 'id'. Invalid number.
-[2025-05-17 11:11:45] ERROR: ❌ Error al obtener configuración: pool.request is not a function
-[2025-05-17 11:11:45] ERROR: ❌ Error en el servidor: pool.request is not a function
-[2025-05-17 11:11:45] ERROR: ❌ Error al obtener configuración: pool.request is not a function
-[2025-05-17 11:11:45] ERROR: ❌ Error en el servidor: pool.request is not a function
-[2025-05-17 11:42:54] ERROR: Error al obtener estudiante por ID Validation failed for parameter 'id'. Invalid number.
-[2025-05-17 11:42:54] ERROR: ❌ Error en el servidor: Validation failed for parameter 'id'. Invalid number.
-[2025-05-17 11:42:54] ERROR: Error al obtener estudiante por ID Validation failed for parameter 'id'. Invalid number.
-[2025-05-17 11:42:54] ERROR: ❌ Error en el servidor: Validation failed for parameter 'id'. Invalid number.
-[2025-05-17 12:26:59] ERROR: ❌ Error al obtener entrevistas: Invalid column name 'fecha'.
-[2025-05-17 12:26:59] ERROR: ❌ Error en el servidor: Invalid column name 'fecha'.
-[2025-05-17 12:26:59] ERROR: ❌ Error al obtener entrevistas: Invalid column name 'fecha'.
-[2025-05-17 12:26:59] ERROR: ❌ Error en el servidor: Invalid column name 'fecha'.
-[2025-05-19 14:41:52] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'validate')
-[2025-05-19 14:41:52] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'validate')
-[2025-05-19 14:53:49] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'validate')
-[2025-05-19 14:53:51] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'validate')
-[2025-05-19 14:59:09] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'validate')
-[2025-05-19 14:59:10] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'validate')
-[2025-05-19 15:01:27] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'validate')
-[2025-05-19 15:06:29] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'validate')
-[2025-05-19 20:58:21] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'validate')
-[2025-05-19 21:06:59] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'validate')
-[2025-05-19 21:07:00] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'validate')
-[2025-05-19 21:07:00] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'validate')
-[2025-05-19 21:07:01] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'validate')
-[2025-05-19 21:07:01] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'validate')
-[2025-05-19 21:08:53] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'validate')
-[2025-05-19 21:11:41] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'validate')
-[2025-05-19 21:11:42] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'validate')
-[2025-05-19 21:16:27] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'validate')
-[2025-05-19 21:18:31] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'validate')
-[2025-05-19 21:25:14] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'validate')
-[2025-05-19 21:32:51] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'validate')
-[2025-05-20 23:58:08] ERROR: Error de autenticación: jwt expired
-[2025-05-20 23:58:08] ERROR: Error de autenticación: jwt expired
-[2025-05-21 00:08:17] ERROR: Error de autenticación: jwt expired
-[2025-05-21 00:08:17] ERROR: Error de autenticación: jwt expired
-[2025-05-21 00:15:17] ERROR: Error de autenticación: jwt expired
-[2025-05-21 00:15:17] ERROR: Error de autenticación: jwt expired
-[2025-05-21 15:32:32] ERROR: Error de autenticación: jwt expired
-[2025-05-21 15:32:32] ERROR: Error de autenticación: jwt expired
-[2025-05-21 15:32:42] ERROR: Error de autenticación: jwt expired
-[2025-05-21 15:32:42] ERROR: Error de autenticación: jwt expired
-[2025-05-21 23:23:05] ERROR: Error de autenticación: jwt expired
-[2025-05-21 23:23:50] ERROR: Error de autenticación: jwt expired
-[2025-05-21 23:24:15] ERROR: Error de autenticación: jwt expired
-[2025-05-21 23:24:15] ERROR: Error de autenticación: jwt expired
-[2025-05-22 10:34:39] ERROR: Error de autenticación: jwt expired
-[2025-05-22 10:34:39] ERROR: Error de autenticación: jwt expired
-[2025-05-22 10:35:02] ERROR: Error de autenticación: jwt expired
-[2025-05-22 10:35:02] ERROR: Error de autenticación: jwt expired
-[2025-05-22 11:39:15] ERROR: Error de autenticación: jwt expired
-[2025-05-22 11:39:15] ERROR: Error de autenticación: jwt expired
-[2025-05-22 11:42:04] ERROR: Error de autenticación: jwt expired
-[2025-05-22 11:42:04] ERROR: Error de autenticación: jwt expired
-[2025-05-22 13:17:11] ERROR: Error de autenticación: jwt expired
-[2025-05-22 13:17:11] ERROR: Error de autenticación: jwt expired
-[2025-05-22 14:24:30] ERROR: Error de autenticación: jwt expired
-[2025-05-22 14:24:30] ERROR: Error de autenticación: jwt expired
-[2025-05-22 14:28:03] ERROR: Error de autenticación: jwt expired
-[2025-05-22 14:28:03] ERROR: Error de autenticación: jwt expired
-[2025-05-22 14:29:13] ERROR: Error de autenticación: jwt expired
-[2025-05-22 14:29:13] ERROR: Error de autenticación: jwt expired
-[2025-05-22 14:33:20] ERROR: Error de autenticación: jwt expired
-[2025-05-22 14:33:20] ERROR: Error de autenticación: jwt expired
-[2025-05-22 20:50:37] ERROR: Error al obtener historial por estudiante: HistorialModel.obtenerPorEstudiante is not a function
-[2025-05-22 20:50:37] ERROR: ❌ Error en el servidor: HistorialModel.obtenerPorEstudiante is not a function
-[2025-05-22 20:50:37] ERROR: Error al obtener historial por estudiante: HistorialModel.obtenerPorEstudiante is not a function
-[2025-05-22 20:50:37] ERROR: ❌ Error en el servidor: HistorialModel.obtenerPorEstudiante is not a function
-[2025-05-22 20:52:20] ERROR: Error al obtener historial por estudiante: HistorialModel.obtenerPorEstudiante is not a function
-[2025-05-22 20:52:20] ERROR: ❌ Error en el servidor: HistorialModel.obtenerPorEstudiante is not a function
-[2025-05-22 20:52:20] ERROR: Error al obtener historial por estudiante: HistorialModel.obtenerPorEstudiante is not a function
-[2025-05-22 20:52:20] ERROR: ❌ Error en el servidor: HistorialModel.obtenerPorEstudiante is not a function
-[2025-05-22 21:14:09] ERROR: Error de autenticación: jwt expired
-[2025-05-22 23:25:13] ERROR: ❌ Error al crear agenda: Validation failed for parameter 'hora'. Invalid time.
-[2025-05-22 23:25:13] ERROR: ❌ Error en el servidor: Validation failed for parameter 'hora'. Invalid time.
-[2025-05-22 23:31:52] ERROR: ❌ Error al crear agenda: Validation failed for parameter 'hora'. Invalid time.
-[2025-05-22 23:31:52] ERROR: ❌ Error en el servidor: Validation failed for parameter 'hora'. Invalid time.
-[2025-05-22 23:35:40] ERROR: ❌ Error al crear agenda: Missing credentials for "PLAIN"
-[2025-05-22 23:35:40] ERROR: ❌ Error en el servidor: Missing credentials for "PLAIN"
-[2025-05-23 12:51:23] ERROR: Error de autenticación: jwt expired
-[2025-05-23 12:51:23] ERROR: Error de autenticación: jwt expired
-[2025-05-25 14:24:11] ERROR: Error de autenticación: jwt expired
-[2025-05-25 14:24:12] ERROR: Error de autenticación: jwt expired
-[2025-05-25 21:50:52] ERROR: Error de autenticación: jwt expired
-[2025-05-25 21:50:52] ERROR: Error de autenticación: jwt expired
-[2025-05-25 23:05:58] ERROR: Error de autenticación: jwt expired
-[2025-05-25 23:05:58] ERROR: Error de autenticación: jwt expired
-[2025-05-27 12:26:05] ERROR: Error al obtener configuraciones por tipo: No connection is specified for that request.
-[2025-05-27 12:26:05] ERROR: Error al obtener configuraciones por tipo: No connection is specified for that request.
-[2025-05-27 12:26:05] ERROR: Error al obtener configuraciones por tipo: No connection is specified for that request.
-[2025-05-27 12:26:05] ERROR: Error al obtener configuraciones por tipo: No connection is specified for that request.
-[2025-05-27 12:26:05] ERROR: Error al obtener configuraciones por tipo: No connection is specified for that request.
-[2025-05-27 12:26:05] ERROR: Error al obtener configuraciones por tipo: No connection is specified for that request.
-[2025-05-27 12:29:47] ERROR: Error al obtener configuraciones por tipo: No connection is specified for that request.
-[2025-05-27 12:29:47] ERROR: Error al obtener configuraciones por tipo: No connection is specified for that request.
-[2025-05-27 12:29:47] ERROR: Error al obtener configuraciones por tipo: No connection is specified for that request.
-[2025-05-27 12:29:47] ERROR: Error al obtener configuraciones por tipo: No connection is specified for that request.
-[2025-05-27 12:29:47] ERROR: Error al obtener configuraciones por tipo: No connection is specified for that request.
-[2025-05-27 12:29:48] ERROR: Error al obtener configuraciones por tipo: No connection is specified for that request.
-[2025-05-27 12:30:00] ERROR: Error al obtener configuraciones por tipo: No connection is specified for that request.
-[2025-05-27 12:30:00] ERROR: Error al obtener configuraciones por tipo: No connection is specified for that request.
-[2025-05-27 12:30:00] ERROR: Error al obtener configuraciones por tipo: No connection is specified for that request.
-[2025-05-27 12:30:00] ERROR: Error al obtener configuraciones por tipo: No connection is specified for that request.
-[2025-05-27 12:30:00] ERROR: Error al obtener configuraciones por tipo: No connection is specified for that request.
-[2025-05-27 12:30:00] ERROR: Error al obtener configuraciones por tipo: No connection is specified for that request.
-[2025-05-27 12:42:25] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'validate')
-[2025-05-27 12:46:29] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'validate')
-[2025-05-27 14:44:54] ERROR: Error de autenticación: jwt expired
-[2025-05-27 14:44:54] ERROR: Error de autenticación: jwt expired
-[2025-05-27 20:35:50] ERROR: Error de autenticación: jwt expired
-[2025-05-27 20:35:50] ERROR: Error de autenticación: jwt expired
-[2025-05-27 20:35:51] ERROR: Error de autenticación: jwt expired
-[2025-05-27 20:35:51] ERROR: Error de autenticación: jwt expired
-[2025-05-27 20:35:51] ERROR: Error de autenticación: jwt expired
-[2025-05-27 20:35:52] ERROR: Error de autenticación: jwt expired
-[2025-05-27 21:59:29] ERROR: Error de autenticación: jwt expired
-[2025-05-27 21:59:29] ERROR: Error de autenticación: jwt expired
-[2025-05-27 22:12:06] ERROR: ❌ Error al obtener entregas por estudiante: Invalid column name 'tipo'.
-[2025-05-27 22:12:06] ERROR: ❌ Error en el servidor: Invalid column name 'tipo'.
-[2025-05-27 22:12:06] ERROR: ❌ Error al obtener entregas por estudiante: Invalid column name 'tipo'.
-[2025-05-27 22:12:06] ERROR: ❌ Error en el servidor: Invalid column name 'tipo'.
-[2025-05-27 22:12:17] ERROR: ❌ Error al obtener entregas por estudiante: Invalid column name 'tipo'.
-[2025-05-27 22:12:17] ERROR: ❌ Error en el servidor: Invalid column name 'tipo'.
-[2025-05-27 22:12:17] ERROR: ❌ Error al obtener entregas por estudiante: Invalid column name 'tipo'.
-[2025-05-27 22:12:17] ERROR: ❌ Error en el servidor: Invalid column name 'tipo'.
-[2025-05-27 22:13:50] ERROR: ❌ Error al obtener entregas por estudiante: Invalid column name 'tipo'.
-[2025-05-27 22:13:50] ERROR: ❌ Error en el servidor: Invalid column name 'tipo'.
-[2025-05-27 22:13:50] ERROR: ❌ Error al obtener entregas por estudiante: Invalid column name 'tipo'.
-[2025-05-27 22:13:50] ERROR: ❌ Error en el servidor: Invalid column name 'tipo'.
-[2025-05-28 22:07:01] ERROR: Error de autenticación: jwt expired
-[2025-05-30 22:48:07] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'validate')
-[2025-05-30 23:00:53] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'validate')
-[2025-05-30 23:57:13] ERROR: Error de autenticación: jwt expired
-[2025-05-30 23:57:13] ERROR: Error de autenticación: jwt expired
-[2025-06-01 20:34:02] ERROR: Error de autenticación: jwt expired
-[2025-06-01 20:34:02] ERROR: Error de autenticación: jwt expired
-[2025-06-01 21:41:13] ERROR: Error de autenticación: jwt expired
-[2025-06-01 21:41:13] ERROR: Error de autenticación: jwt expired
-[2025-06-03 21:12:21] ERROR: Error de autenticación: jwt expired
-[2025-06-03 21:12:21] ERROR: Error de autenticación: jwt expired
-[2025-06-04 20:59:24] ERROR: Error de autenticación: jwt expired
-[2025-06-04 20:59:24] ERROR: Error de autenticación: jwt expired
-[2025-06-04 20:59:24] ERROR: Error de autenticación: jwt expired
-[2025-06-04 20:59:25] ERROR: Error de autenticación: jwt expired
-[2025-06-04 20:59:25] ERROR: Error de autenticación: jwt expired
-[2025-06-04 20:59:25] ERROR: Error de autenticación: jwt expired
-[2025-06-04 22:48:12] ERROR: ❌ Error al obtener entrevistas: Validation failed for parameter 'id_estudiante'. Invalid number.
-[2025-06-04 22:48:12] ERROR: ❌ Error en el servidor: Validation failed for parameter 'id_estudiante'. Invalid number.
-[2025-06-04 22:48:12] ERROR: ❌ Error al obtener entrevistas: Validation failed for parameter 'id_estudiante'. Invalid number.
-[2025-06-04 22:48:12] ERROR: ❌ Error en el servidor: Validation failed for parameter 'id_estudiante'. Invalid number.
-[2025-06-04 22:48:37] ERROR: ❌ Error al obtener entrevistas: Validation failed for parameter 'id_estudiante'. Invalid number.
-[2025-06-04 22:48:37] ERROR: ❌ Error en el servidor: Validation failed for parameter 'id_estudiante'. Invalid number.
-[2025-06-04 22:48:37] ERROR: ❌ Error al obtener entrevistas: Validation failed for parameter 'id_estudiante'. Invalid number.
-[2025-06-04 22:48:37] ERROR: ❌ Error en el servidor: Validation failed for parameter 'id_estudiante'. Invalid number.
-[2025-06-05 21:12:06] ERROR: Error de autenticación: jwt expired
-[2025-06-05 21:12:06] ERROR: Error de autenticación: jwt expired
-[2025-06-08 12:46:16] ERROR: ❌ Error al registrar entrevista desde Agenda: Cannot destructure property 'observaciones' of 'req.body' as it is undefined.
-[2025-06-08 12:46:16] ERROR: ❌ Error en el servidor: Cannot destructure property 'observaciones' of 'req.body' as it is undefined.
-[2025-06-08 12:48:49] ERROR: ❌ Error al registrar entrevista desde Agenda: Cannot destructure property 'observaciones' of 'req.body' as it is undefined.
-[2025-06-08 12:48:49] ERROR: ❌ Error en el servidor: Cannot destructure property 'observaciones' of 'req.body' as it is undefined.
-[2025-06-08 12:49:44] ERROR: ❌ Error al registrar entrevista desde Agenda: Cannot destructure property 'observaciones' of 'req.body' as it is undefined.
-[2025-06-08 12:49:44] ERROR: ❌ Error en el servidor: Cannot destructure property 'observaciones' of 'req.body' as it is undefined.
-[2025-06-08 12:52:02] ERROR: ❌ Error al registrar entrevista desde Agenda: Validation failed for parameter 'fecha_entrevista'. Invalid date.
-[2025-06-08 12:52:02] ERROR: ❌ Error en el servidor: Validation failed for parameter 'fecha_entrevista'. Invalid date.
-[2025-06-08 12:53:41] ERROR: ❌ Error al registrar entrevista desde Agenda: Fecha inválida: Thu May 29 2025 20:00:00 GMT-0400 (hora estándar de Chile)TThu J
-[2025-06-08 12:53:41] ERROR: ❌ Error en el servidor: Fecha inválida: Thu May 29 2025 20:00:00 GMT-0400 (hora estándar de Chile)TThu J
-[2025-06-08 12:53:43] ERROR: ❌ Error al registrar entrevista desde Agenda: Fecha inválida: Thu May 29 2025 20:00:00 GMT-0400 (hora estándar de Chile)TThu J
-[2025-06-08 12:53:43] ERROR: ❌ Error en el servidor: Fecha inválida: Thu May 29 2025 20:00:00 GMT-0400 (hora estándar de Chile)TThu J
-[2025-06-08 12:54:15] ERROR: ❌ Error al registrar entrevista desde Agenda: Fecha inválida: Thu May 29 2025 20:00:00 GMT-0400 (hora estándar de Chile)TThu J
-[2025-06-08 12:54:15] ERROR: ❌ Error en el servidor: Fecha inválida: Thu May 29 2025 20:00:00 GMT-0400 (hora estándar de Chile)TThu J
-[2025-06-08 12:55:33] ERROR: ❌ Error al registrar entrevista desde Agenda: Fecha inválida: 2025-05-30TThu J
-[2025-06-08 12:55:33] ERROR: ❌ Error en el servidor: Fecha inválida: 2025-05-30TThu J
-[2025-06-08 12:59:32] ERROR: ❌ Error al registrar entrevista desde Agenda: Cannot insert the value NULL into column 'id_orientador', table 'sistema_educacional.dbo.Entrevistas'; column does not allow nulls. INSERT fails.
-[2025-06-08 12:59:32] ERROR: ❌ Error en el servidor: Cannot insert the value NULL into column 'id_orientador', table 'sistema_educacional.dbo.Entrevistas'; column does not allow nulls. INSERT fails.
-[2025-06-08 13:03:07] ERROR: ❌ Error al registrar entrevista desde Agenda: Cannot insert the value NULL into column 'id_orientador', table 'sistema_educacional.dbo.Entrevistas'; column does not allow nulls. INSERT fails.
-[2025-06-08 13:03:07] ERROR: ❌ Error en el servidor: Cannot insert the value NULL into column 'id_orientador', table 'sistema_educacional.dbo.Entrevistas'; column does not allow nulls. INSERT fails.
-[2025-06-08 13:57:30] ERROR: ❌ Error al registrar entrevista desde Agenda: Cannot insert the value NULL into column 'id_orientador', table 'sistema_educacional.dbo.Entrevistas'; column does not allow nulls. INSERT fails.
-[2025-06-08 13:57:30] ERROR: ❌ Error en el servidor: Cannot insert the value NULL into column 'id_orientador', table 'sistema_educacional.dbo.Entrevistas'; column does not allow nulls. INSERT fails.
-[2025-06-08 14:13:08] ERROR: ❌ Error al registrar entrevista desde Agenda: Cannot insert the value NULL into column 'id_orientador', table 'sistema_educacional.dbo.Entrevistas'; column does not allow nulls. INSERT fails.
-[2025-06-08 14:13:08] ERROR: ❌ Error en el servidor: Cannot insert the value NULL into column 'id_orientador', table 'sistema_educacional.dbo.Entrevistas'; column does not allow nulls. INSERT fails.
-[2025-06-08 14:15:27] ERROR: ❌ Error al registrar entrevista desde Agenda: Cannot insert the value NULL into column 'id_orientador', table 'sistema_educacional.dbo.Entrevistas'; column does not allow nulls. INSERT fails.
-[2025-06-08 14:15:27] ERROR: ❌ Error en el servidor: Cannot insert the value NULL into column 'id_orientador', table 'sistema_educacional.dbo.Entrevistas'; column does not allow nulls. INSERT fails.
-[2025-06-08 14:16:08] ERROR: ❌ Error al registrar entrevista desde Agenda: Cannot insert the value NULL into column 'id_orientador', table 'sistema_educacional.dbo.Entrevistas'; column does not allow nulls. INSERT fails.
-[2025-06-08 14:16:08] ERROR: ❌ Error en el servidor: Cannot insert the value NULL into column 'id_orientador', table 'sistema_educacional.dbo.Entrevistas'; column does not allow nulls. INSERT fails.
-[2025-06-08 15:40:15] ERROR: ❌ Error al registrar entrevista desde Agenda: Cannot insert the value NULL into column 'id_orientador', table 'sistema_educacional.dbo.Entrevistas'; column does not allow nulls. INSERT fails.
-[2025-06-08 15:40:15] ERROR: ❌ Error en el servidor: Cannot insert the value NULL into column 'id_orientador', table 'sistema_educacional.dbo.Entrevistas'; column does not allow nulls. INSERT fails.
-[2025-06-08 15:43:02] ERROR: ❌ Error al registrar entrevista desde Agenda: Cannot insert the value NULL into column 'id_orientador', table 'sistema_educacional.dbo.Entrevistas'; column does not allow nulls. INSERT fails.
-[2025-06-08 15:43:02] ERROR: ❌ Error en el servidor: Cannot insert the value NULL into column 'id_orientador', table 'sistema_educacional.dbo.Entrevistas'; column does not allow nulls. INSERT fails.
-[2025-06-09 10:41:53] ERROR: ❌ Error al listar alertas: Invalid column name 'fecha'.
-[2025-06-09 10:41:53] ERROR: ❌ Error en el servidor: Invalid column name 'fecha'.
-[2025-06-09 10:41:53] ERROR: ❌ Error al listar alertas: Invalid column name 'fecha'.
-[2025-06-09 10:41:53] ERROR: ❌ Error en el servidor: Invalid column name 'fecha'.
-[2025-06-09 10:47:02] ERROR: ❌ Error al generar alertas: Invalid column name 'fecha'.
-[2025-06-09 10:47:02] ERROR: ❌ Error en el servidor: Invalid column name 'fecha'.
-[2025-06-09 19:44:21] ERROR: Error de autenticación: jwt expired
-[2025-06-09 19:44:21] ERROR: Error de autenticación: jwt expired
-[2025-06-14 15:30:18] ERROR: Error de autenticación: jwt expired
-[2025-06-14 15:30:18] ERROR: Error de autenticación: jwt expired
-[2025-06-15 15:24:41] ERROR: Error al obtener estudiante por ID Validation failed for parameter 'id'. Invalid number.
-[2025-06-15 15:24:41] ERROR: ❌ Error en el servidor: Validation failed for parameter 'id'. Invalid number.
-[2025-06-15 15:24:41] ERROR: Error al obtener estudiante por ID Validation failed for parameter 'id'. Invalid number.
-[2025-06-15 15:24:41] ERROR: ❌ Error en el servidor: Validation failed for parameter 'id'. Invalid number.
-[2025-06-15 15:57:44] ERROR: Error de autenticación: jwt expired
-[2025-06-15 15:57:44] ERROR: Error de autenticación: jwt expired
-[2025-06-16 23:14:47] ERROR: Error de autenticación: jwt expired
-[2025-06-16 23:14:47] ERROR: Error de autenticación: jwt expired
-[2025-06-17 10:32:22] ERROR: Error de autenticación: jwt expired
-[2025-06-17 10:32:22] ERROR: Error de autenticación: jwt expired
-[2025-06-17 11:38:05] ERROR: Error de autenticación: jwt expired
-[2025-06-17 11:38:05] ERROR: Error de autenticación: jwt expired
-[2025-06-17 11:38:05] ERROR: Error de autenticación: jwt expired
-[2025-06-17 11:38:05] ERROR: Error de autenticación: jwt expired
-[2025-06-17 13:19:33] ERROR: Error de autenticación: jwt expired
-[2025-06-17 13:19:33] ERROR: Error de autenticación: jwt expired
-[2025-06-17 21:06:45] ERROR: Error al obtener recurso entregas: Validation failed for parameter 'id'. Invalid number.
-[2025-06-17 21:40:00] ERROR: Error al obtener recurso entregas: Validation failed for parameter 'id'. Invalid number.
-[2025-06-17 21:40:16] ERROR: Error al obtener recurso entregas: Validation failed for parameter 'id'. Invalid number.
-[2025-06-17 21:40:16] ERROR: Error al obtener recurso entregas: Validation failed for parameter 'id'. Invalid number.
-[2025-06-17 21:44:48] ERROR: Error al obtener recurso entregas: Validation failed for parameter 'id'. Invalid number.
-[2025-06-17 21:44:48] ERROR: Error al obtener recurso entregas: Validation failed for parameter 'id'. Invalid number.
-[2025-06-17 21:45:01] ERROR: Error al obtener recurso entregas: Validation failed for parameter 'id'. Invalid number.
-[2025-06-17 21:45:01] ERROR: Error al obtener recurso entregas: Validation failed for parameter 'id'. Invalid number.
-[2025-06-17 21:48:19] ERROR: Error al obtener recurso entregas: Validation failed for parameter 'id'. Invalid number.
-[2025-06-17 21:48:19] ERROR: Error al obtener recurso entregas: Validation failed for parameter 'id'. Invalid number.
-[2025-06-17 21:51:01] ERROR: Error al obtener recurso entregas: Validation failed for parameter 'id'. Invalid number.
-[2025-06-17 21:51:01] ERROR: Error al obtener recurso entregas: Validation failed for parameter 'id'. Invalid number.
-[2025-06-17 21:57:26] ERROR: Error al obtener recurso entregas: Validation failed for parameter 'id'. Invalid number.
-[2025-06-17 21:57:27] ERROR: Error al obtener recurso entregas: Validation failed for parameter 'id'. Invalid number.
-[2025-06-17 22:02:48] ERROR: Error al obtener recurso entregas: Validation failed for parameter 'id'. Invalid number.
-[2025-06-17 22:02:48] ERROR: Error al obtener recurso entregas: Validation failed for parameter 'id'. Invalid number.
-[2025-06-17 22:03:47] ERROR: Error al obtener recurso entregas: Validation failed for parameter 'id'. Invalid number.
-[2025-06-17 22:03:47] ERROR: Error al obtener recurso entregas: Validation failed for parameter 'id'. Invalid number.
-[2025-06-17 22:03:53] ERROR: Error al obtener recurso entregas: Validation failed for parameter 'id'. Invalid number.
-[2025-06-17 22:03:53] ERROR: Error al obtener recurso entregas: Validation failed for parameter 'id'. Invalid number.
-[2025-06-17 22:06:17] ERROR: Error de autenticación: jwt expired
-[2025-06-17 22:06:17] ERROR: Error de autenticación: jwt expired
-[2025-06-17 22:06:36] ERROR: Error al obtener recurso entregas: Validation failed for parameter 'id'. Invalid number.
-[2025-06-17 22:06:36] ERROR: Error al obtener recurso entregas: Validation failed for parameter 'id'. Invalid number.
-[2025-06-18 20:57:05] ERROR: Error de autenticación: jwt expired
-[2025-06-18 20:57:05] ERROR: Error de autenticación: jwt expired
-[2025-06-24 20:02:36] ERROR: Error de autenticación: jwt expired
-[2025-06-24 20:02:36] ERROR: Error de autenticación: jwt expired
-[2025-07-01 21:55:36] ERROR: ❌ Error al generar asistencia mensual: Cannot read properties of undefined (reading 'request')
-[2025-07-01 21:55:36] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-01 21:55:36] ERROR: ❌ Error al generar asistencia mensual: Cannot read properties of undefined (reading 'request')
-[2025-07-01 21:55:36] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:34] ERROR: Error al obtener estudiantes Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:34] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:34] ERROR: Error al obtener estudiantes Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:34] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:34] ERROR: Error al obtener estudiantes Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:34] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:34] ERROR: Error al obtener estudiante por ID Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:34] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:34] ERROR: Error al obtener estudiante por ID Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:34] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:35] ERROR: Error al eliminar estudiante Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:35] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:35] ERROR: Error al eliminar estudiante Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:35] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:45] ERROR: ❌ Error en login: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:45] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:46] ERROR: ❌ Error en login: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:46] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:46] ERROR: ❌ Error en login: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:46] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:46] ERROR: ❌ Error en registro: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:46] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:46] ERROR: ❌ Error en registro: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:46] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:46] ERROR: ❌ Error en verificación de token: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:46] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:55] ERROR: Error al obtener estudiantes Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:55] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:55] ERROR: Error al obtener estudiantes Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:55] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:55] ERROR: Error al obtener estudiantes Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:55] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:55] ERROR: Error al obtener estudiante por ID Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:55] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:55] ERROR: Error al obtener estudiante por ID Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:55] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:55] ERROR: Error al eliminar estudiante Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:55] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:55] ERROR: Error al eliminar estudiante Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:55] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:56] ERROR: ❌ Error en login: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:56] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:56] ERROR: ❌ Error en login: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:56] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:56] ERROR: ❌ Error en login: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:56] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:56] ERROR: ❌ Error en registro: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:56] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:56] ERROR: ❌ Error en registro: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:56] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:56] ERROR: ❌ Error en verificación de token: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:35:56] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:38:33] ERROR: Error al obtener estudiantes Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:38:33] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:38:33] ERROR: Error al obtener estudiantes Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:38:33] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:38:34] ERROR: Error al obtener estudiantes Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:38:34] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:38:34] ERROR: Error al obtener estudiante por ID Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:38:34] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:38:34] ERROR: Error al obtener estudiante por ID Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:38:34] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:38:34] ERROR: Error al eliminar estudiante Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:38:34] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:38:34] ERROR: Error al eliminar estudiante Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:38:34] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-06 22:38:35] ERROR: ❌ Error en registro: Cannot read properties of undefined (reading '0')
-[2025-07-06 22:38:35] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading '0')
-[2025-07-06 22:48:47] ERROR: Error al obtener estudiantes Cannot read properties of undefined (reading 'query')
-[2025-07-06 22:48:47] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'query')
-[2025-07-06 22:48:47] ERROR: Error al obtener estudiantes Cannot read properties of undefined (reading 'query')
-[2025-07-06 22:48:47] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'query')
-[2025-07-06 22:48:47] ERROR: ❌ Error en login: Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:48:47] ERROR: Error al obtener estudiantes Cannot read properties of undefined (reading 'query')
-[2025-07-06 22:48:47] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'query')
-[2025-07-06 22:48:47] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:48:47] ERROR: Error al obtener estudiante por ID Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:48:47] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:48:47] ERROR: Error al obtener estudiante por ID Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:48:47] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:48:47] ERROR: ❌ Error en login: Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:48:47] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:48:47] ERROR: ❌ Error en enviarCodigoRecuperacion: Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:48:47] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:48:47] ERROR: ❌ Error en verificarCodigoYActualizarPassword: Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:48:47] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:48:47] ERROR: Error al eliminar estudiante Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:48:47] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:48:47] ERROR: Error al eliminar estudiante Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:48:47] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:50:32] ERROR: Error al obtener estudiantes Cannot read properties of undefined (reading 'query')
-[2025-07-06 22:50:32] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'query')
-[2025-07-06 22:50:32] ERROR: Error al obtener estudiantes Cannot read properties of undefined (reading 'query')
-[2025-07-06 22:50:32] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'query')
-[2025-07-06 22:50:32] ERROR: Error al obtener estudiantes Cannot read properties of undefined (reading 'query')
-[2025-07-06 22:50:32] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'query')
-[2025-07-06 22:50:32] ERROR: Error al obtener estudiante por ID Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:50:32] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:50:32] ERROR: Error al obtener estudiante por ID Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:50:32] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:50:32] ERROR: Error al eliminar estudiante Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:50:32] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:50:32] ERROR: Error al eliminar estudiante Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:50:32] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:50:32] ERROR: ❌ Error en login: Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:50:32] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:50:32] ERROR: ❌ Error en login: Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:50:32] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:50:32] ERROR: ❌ Error en enviarCodigoRecuperacion: Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:50:32] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:50:32] ERROR: ❌ Error en verificarCodigoYActualizarPassword: Cannot read properties of undefined (reading 'input')
-[2025-07-06 22:50:32] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'input')
-[2025-07-08 22:06:48] ERROR: Error al obtener estudiantes Cannot read properties of undefined (reading 'request')
-[2025-07-08 22:06:48] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-08 22:06:48] ERROR: Error al obtener estudiantes Cannot read properties of undefined (reading 'request')
-[2025-07-08 22:06:48] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-09 00:28:29] ERROR: Error al eliminar estudiante The DELETE statement conflicted with the REFERENCE constraint "FK__Agenda__id_estud__67DE6983". The conflict occurred in database "sistema_educacional", table "dbo.Agenda", column 'id_estudiante'.
-[2025-07-09 00:28:29] ERROR: ❌ Error en el servidor: The DELETE statement conflicted with the REFERENCE constraint "FK__Agenda__id_estud__67DE6983". The conflict occurred in database "sistema_educacional", table "dbo.Agenda", column 'id_estudiante'.
-[2025-07-09 00:28:36] ERROR: Error al eliminar estudiante The DELETE statement conflicted with the REFERENCE constraint "FK__Agenda__id_estud__67DE6983". The conflict occurred in database "sistema_educacional", table "dbo.Agenda", column 'id_estudiante'.
-[2025-07-09 00:28:36] ERROR: ❌ Error en el servidor: The DELETE statement conflicted with the REFERENCE constraint "FK__Agenda__id_estud__67DE6983". The conflict occurred in database "sistema_educacional", table "dbo.Agenda", column 'id_estudiante'.
-[2025-07-09 00:40:01] ERROR: Error al eliminar estudiante The DELETE statement conflicted with the REFERENCE constraint "FK__Agenda__id_estud__67DE6983". The conflict occurred in database "sistema_educacional", table "dbo.Agenda", column 'id_estudiante'.
-[2025-07-09 00:40:01] ERROR: ❌ Error en el servidor: The DELETE statement conflicted with the REFERENCE constraint "FK__Agenda__id_estud__67DE6983". The conflict occurred in database "sistema_educacional", table "dbo.Agenda", column 'id_estudiante'.
-[2025-07-09 00:40:05] ERROR: Error al eliminar estudiante The DELETE statement conflicted with the REFERENCE constraint "FK__Seguimien__id_es__361203C5". The conflict occurred in database "sistema_educacional", table "dbo.SeguimientoAcademico", column 'id_estudiante'.
-[2025-07-09 00:40:05] ERROR: ❌ Error en el servidor: The DELETE statement conflicted with the REFERENCE constraint "FK__Seguimien__id_es__361203C5". The conflict occurred in database "sistema_educacional", table "dbo.SeguimientoAcademico", column 'id_estudiante'.
-[2025-07-09 00:40:28] ERROR: Error al eliminar estudiante The DELETE statement conflicted with the REFERENCE constraint "FK__Seguimien__id_es__361203C5". The conflict occurred in database "sistema_educacional", table "dbo.SeguimientoAcademico", column 'id_estudiante'.
-[2025-07-09 00:40:28] ERROR: ❌ Error en el servidor: The DELETE statement conflicted with the REFERENCE constraint "FK__Seguimien__id_es__361203C5". The conflict occurred in database "sistema_educacional", table "dbo.SeguimientoAcademico", column 'id_estudiante'.
-[2025-07-09 01:50:28] ERROR: Error al obtener estudiantes Cannot read properties of undefined (reading 'request')
-[2025-07-09 01:50:28] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-09 01:50:28] ERROR: Error al obtener estudiantes Cannot read properties of undefined (reading 'request')
-[2025-07-09 01:50:28] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-09 01:50:30] ERROR: Error al obtener estudiantes Cannot read properties of undefined (reading 'request')
-[2025-07-09 01:50:30] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-07-09 09:48:38] ERROR: Error de autenticación: jwt expired
-[2025-07-09 09:48:39] ERROR: Error de autenticación: jwt expired
-[2025-07-09 09:48:39] ERROR: Error de autenticación: jwt expired
-[2025-07-09 09:48:39] ERROR: Error de autenticación: jwt expired
-[2025-07-09 09:48:39] ERROR: Error de autenticación: jwt expired
-[2025-07-09 11:33:35] ERROR: ❌ Error al obtener estudiantes atendidos: Invalid column name 'fecha'.
-[2025-07-09 11:33:35] ERROR: ❌ Error en el servidor: Invalid column name 'fecha'.
-[2025-07-09 11:33:35] ERROR: ❌ Error al obtener estudiantes atendidos: Invalid column name 'fecha'.
-[2025-07-09 11:33:35] ERROR: ❌ Error en el servidor: Invalid column name 'fecha'.
-[2025-07-09 11:38:06] ERROR: ❌ Error al obtener estudiantes atendidos: Invalid column name 'id_profesional'.
-[2025-07-09 11:38:06] ERROR: ❌ Error en el servidor: Invalid column name 'id_profesional'.
-[2025-07-09 11:38:06] ERROR: ❌ Error al obtener estudiantes atendidos: Invalid column name 'id_profesional'.
-[2025-07-09 11:38:06] ERROR: ❌ Error en el servidor: Invalid column name 'id_profesional'.
-[2025-07-09 11:40:17] ERROR: ❌ Error al obtener estudiantes atendidos: Invalid column name 'id_profesional'.
-[2025-07-09 11:40:17] ERROR: ❌ Error en el servidor: Invalid column name 'id_profesional'.
-[2025-07-09 11:40:18] ERROR: ❌ Error al obtener estudiantes atendidos: Invalid column name 'id_profesional'.
-[2025-07-09 11:40:18] ERROR: ❌ Error en el servidor: Invalid column name 'id_profesional'.
-[2025-07-09 11:40:32] ERROR: ❌ Error al obtener estudiantes atendidos: Invalid column name 'id_profesional'.
-[2025-07-09 11:40:32] ERROR: ❌ Error en el servidor: Invalid column name 'id_profesional'.
-[2025-07-09 11:40:33] ERROR: ❌ Error al obtener estudiantes atendidos: Invalid column name 'id_profesional'.
-[2025-07-09 11:40:33] ERROR: ❌ Error en el servidor: Invalid column name 'id_profesional'.
-[2025-07-09 11:40:36] ERROR: ❌ Error al obtener estudiantes atendidos: Invalid column name 'id_profesional'.
-[2025-07-09 11:40:36] ERROR: ❌ Error en el servidor: Invalid column name 'id_profesional'.
-[2025-07-09 11:40:36] ERROR: ❌ Error al obtener estudiantes atendidos: Invalid column name 'id_profesional'.
-[2025-07-09 11:40:36] ERROR: ❌ Error en el servidor: Invalid column name 'id_profesional'.
-[2025-07-09 12:03:47] ERROR: ❌ Error al obtener reporte de derivaciones: Invalid column name 'observaciones'.
-[2025-07-09 12:03:47] ERROR: ❌ Error en el servidor: Invalid column name 'observaciones'.
-[2025-07-09 12:03:47] ERROR: ❌ Error al obtener reporte de derivaciones: Invalid column name 'observaciones'.
-[2025-07-09 12:03:47] ERROR: ❌ Error en el servidor: Invalid column name 'observaciones'.
-[2025-07-09 12:08:36] ERROR: ❌ Error al obtener reporte de derivaciones: Invalid column name 'estado'.
-[2025-07-09 12:08:36] ERROR: ❌ Error en el servidor: Invalid column name 'estado'.
-[2025-07-09 12:08:37] ERROR: ❌ Error al obtener reporte de derivaciones: Invalid column name 'estado'.
-[2025-07-09 12:08:37] ERROR: ❌ Error en el servidor: Invalid column name 'estado'.
-[2025-07-09 12:08:59] ERROR: ❌ Error al obtener reporte de derivaciones: Invalid column name 'estado'.
-[2025-07-09 12:08:59] ERROR: ❌ Error en el servidor: Invalid column name 'estado'.
-[2025-07-09 12:08:59] ERROR: ❌ Error al obtener reporte de derivaciones: Invalid column name 'estado'.
-[2025-07-09 12:08:59] ERROR: ❌ Error en el servidor: Invalid column name 'estado'.
-[2025-07-09 12:12:27] ERROR: ❌ Error al obtener reporte de derivaciones: Invalid column name 'profesional_asignado'.
-[2025-07-09 12:12:27] ERROR: ❌ Error en el servidor: Invalid column name 'profesional_asignado'.
-[2025-07-09 12:12:27] ERROR: ❌ Error al obtener reporte de derivaciones: Invalid column name 'profesional_asignado'.
-[2025-07-09 12:12:27] ERROR: ❌ Error en el servidor: Invalid column name 'profesional_asignado'.
-[2025-07-09 12:17:41] ERROR: ❌ Error al obtener reporte de derivaciones: Invalid column name 'motivo'.
-[2025-07-09 12:17:41] ERROR: ❌ Error en el servidor: Invalid column name 'motivo'.
-[2025-07-09 12:17:41] ERROR: ❌ Error al obtener reporte de derivaciones: Invalid column name 'motivo'.
-[2025-07-09 12:17:41] ERROR: ❌ Error en el servidor: Invalid column name 'motivo'.
-[2025-07-09 12:23:16] ERROR: ❌ Error al obtener reporte de derivaciones: Invalid column name 'motivo'.
-[2025-07-09 12:23:16] ERROR: ❌ Error en el servidor: Invalid column name 'motivo'.
-[2025-07-09 12:23:16] ERROR: ❌ Error al obtener reporte de derivaciones: Invalid column name 'motivo'.
-[2025-07-09 12:23:16] ERROR: ❌ Error en el servidor: Invalid column name 'motivo'.
-[2025-07-09 12:23:23] ERROR: ❌ Error al obtener reporte de derivaciones: Invalid column name 'motivo'.
-[2025-07-09 12:23:23] ERROR: ❌ Error en el servidor: Invalid column name 'motivo'.
-[2025-07-09 12:23:23] ERROR: ❌ Error al obtener reporte de derivaciones: Invalid column name 'motivo'.
-[2025-07-09 12:23:23] ERROR: ❌ Error en el servidor: Invalid column name 'motivo'.
-[2025-07-09 12:23:56] ERROR: ❌ Error al obtener reporte de derivaciones: Invalid column name 'motivo'.
-[2025-07-09 12:23:56] ERROR: ❌ Error en el servidor: Invalid column name 'motivo'.
-[2025-07-09 12:23:56] ERROR: ❌ Error al obtener reporte de derivaciones: Invalid column name 'motivo'.
-[2025-07-09 12:23:56] ERROR: ❌ Error en el servidor: Invalid column name 'motivo'.
-[2025-07-09 12:31:17] ERROR: ❌ Error al obtener reporte de derivaciones: Invalid column name 'plan_intervencion'.
-[2025-07-09 12:31:17] ERROR: ❌ Error en el servidor: Invalid column name 'plan_intervencion'.
-[2025-07-09 12:31:17] ERROR: ❌ Error al obtener reporte de derivaciones: Invalid column name 'plan_intervencion'.
-[2025-07-09 12:31:18] ERROR: ❌ Error en el servidor: Invalid column name 'plan_intervencion'.
-[2025-07-09 12:31:25] ERROR: ❌ Error al obtener reporte de derivaciones: Invalid column name 'plan_intervencion'.
-[2025-07-09 12:31:25] ERROR: ❌ Error en el servidor: Invalid column name 'plan_intervencion'.
-[2025-07-09 12:31:25] ERROR: ❌ Error al obtener reporte de derivaciones: Invalid column name 'plan_intervencion'.
-[2025-07-09 12:31:25] ERROR: ❌ Error en el servidor: Invalid column name 'plan_intervencion'.
-[2025-07-09 12:43:36] ERROR: ❌ Error al obtener reporte de derivaciones: Invalid column name 'observaciones'.
-[2025-07-09 12:43:36] ERROR: ❌ Error en el servidor: Invalid column name 'observaciones'.
-[2025-07-09 12:43:55] ERROR: ❌ Error al obtener reporte de derivaciones: Invalid column name 'observaciones'.
-[2025-07-09 12:43:55] ERROR: ❌ Error en el servidor: Invalid column name 'observaciones'.
-[2025-07-09 12:43:56] ERROR: ❌ Error al obtener reporte de derivaciones: Invalid column name 'observaciones'.
-[2025-07-09 12:43:56] ERROR: ❌ Error en el servidor: Invalid column name 'observaciones'.
-[2025-07-09 15:33:34] ERROR: Error en carga masiva de estudiantes EstudianteModel is not defined
-[2025-07-09 15:33:34] ERROR: ❌ Error en el servidor: EstudianteModel is not defined
-[2025-07-09 19:16:04] ERROR: Error de autenticación: jwt expired
-[2025-07-09 19:16:04] ERROR: Error de autenticación: jwt expired
-[2025-09-05 09:32:42] ERROR: ❌ Error en login: Cannot read properties of undefined (reading 'request')
-[2025-09-05 09:32:42] ERROR: ❌ Error en el servidor: Cannot read properties of undefined (reading 'request')
-[2025-09-06 12:29:31] ERROR: Error al obtener estudiantes No connection is specified for that request.
-[2025-09-06 12:29:31] ERROR: ❌ Error en el servidor: No connection is specified for that request.
-[2025-09-06 12:29:31] ERROR: Error al obtener estudiantes No connection is specified for that request.
-[2025-09-06 12:29:31] ERROR: ❌ Error en el servidor: No connection is specified for that request.
-[2025-09-06 12:29:36] ERROR: Error al obtener estudiantes No connection is specified for that request.
-[2025-09-06 12:29:36] ERROR: ❌ Error en el servidor: No connection is specified for that request.
-[2025-09-06 12:29:36] ERROR: Error al obtener estudiantes No connection is specified for that request.
-[2025-09-06 12:29:36] ERROR: ❌ Error en el servidor: No connection is specified for that request.
-[2025-09-06 12:29:38] ERROR: Error al obtener estudiantes No connection is specified for that request.
-[2025-09-06 12:29:38] ERROR: ❌ Error en el servidor: No connection is specified for that request.
-[2025-09-06 12:29:39] ERROR: Error al obtener estudiantes No connection is specified for that request.
-[2025-09-06 12:29:39] ERROR: ❌ Error en el servidor: No connection is specified for that request.
-[2025-09-06 12:32:05] ERROR: Error al obtener estudiantes No connection is specified for that request.
-[2025-09-06 12:32:05] ERROR: ❌ Error en el servidor: No connection is specified for that request.
-[2025-09-06 12:32:09] ERROR: Error al obtener estudiantes No connection is specified for that request.
-[2025-09-06 12:32:09] ERROR: ❌ Error en el servidor: No connection is specified for that request.
-[2025-09-06 12:32:09] ERROR: Error al obtener estudiantes No connection is specified for that request.
-[2025-09-06 12:32:09] ERROR: ❌ Error en el servidor: No connection is specified for that request.
-[2025-09-07 12:49:12] ERROR: Error de autenticación: jwt expired
-[2025-09-09 19:53:31] ERROR: ❌ Error en enviarCodigoRecuperacion: D8310000:error:0A00010B:SSL routines:ssl3_get_record:wrong version number:c:\ws\deps\openssl\openssl\ssl\record\ssl3_record.c:355:
-
-[2025-09-09 19:53:31] ERROR: ❌ Error en el servidor: D8310000:error:0A00010B:SSL routines:ssl3_get_record:wrong version number:c:\ws\deps\openssl\openssl\ssl\record\ssl3_record.c:355:
-
-[2025-09-09 20:04:08] ERROR: ❌ Error en enviarCodigoRecuperacion: 206A0000:error:0A00010B:SSL routines:ssl3_get_record:wrong version number:c:\ws\deps\openssl\openssl\ssl\record\ssl3_record.c:355:
-
-[2025-09-09 20:04:08] ERROR: ❌ Error en el servidor: 206A0000:error:0A00010B:SSL routines:ssl3_get_record:wrong version number:c:\ws\deps\openssl\openssl\ssl\record\ssl3_record.c:355:
-
-[2025-09-09 20:06:50] ERROR: ❌ Error en enviarCodigoRecuperacion: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
-535 5.7.8  https://support.google.com/mail/?p=BadCredentials 46e09a7af769-74875cb91fasm4022864a34.10 - gsmtp
-[2025-09-09 20:06:50] ERROR: ❌ Error en el servidor: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
-535 5.7.8  https://support.google.com/mail/?p=BadCredentials 46e09a7af769-74875cb91fasm4022864a34.10 - gsmtp
-[2025-09-09 20:08:51] ERROR: ❌ Error en enviarCodigoRecuperacion: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
-535 5.7.8  https://support.google.com/mail/?p=BadCredentials 006d021491bc7-6213604a9desm2485705eaf.24 - gsmtp
-[2025-09-09 20:08:51] ERROR: ❌ Error en el servidor: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
-535 5.7.8  https://support.google.com/mail/?p=BadCredentials 006d021491bc7-6213604a9desm2485705eaf.24 - gsmtp
-[2025-09-09 20:31:35] ERROR: ❌ Error en enviarTestPorEmail: nodemailer.createTransporter is not a function
-[2025-09-09 20:31:35] ERROR: ❌ Error en el servidor: nodemailer.createTransporter is not a function
-[2025-09-09 22:40:05] ERROR: Error de autenticación: jwt malformed
-[2025-09-09 22:44:08] ERROR: Error al actualizar configuración: Validation failed for parameter 'id_registro'. Invalid number.
-[2025-09-09 22:44:08] ERROR: ❌ Error en el servidor: Cannot set headers after they are sent to the client
-[2025-09-09 23:08:47] ERROR: Error al actualizar configuración: Validation failed for parameter 'id_registro'. Invalid number.
-[2025-09-09 23:08:47] ERROR: ❌ Error en el servidor: Cannot set headers after they are sent to the client
-[2025-09-09 23:45:12] ERROR: Error al crear estudiante Cannot insert the value NULL into column 'fecha_nacimiento', table 'sistema_educacional.dbo.Estudiantes'; column does not allow nulls. INSERT fails.
-[2025-09-09 23:45:12] ERROR: ❌ Error en el servidor: Cannot insert the value NULL into column 'fecha_nacimiento', table 'sistema_educacional.dbo.Estudiantes'; column does not allow nulls. INSERT fails.
-[2025-09-09 23:45:52] ERROR: Error al crear estudiante Cannot insert the value NULL into column 'fecha_nacimiento', table 'sistema_educacional.dbo.Estudiantes'; column does not allow nulls. INSERT fails.
-[2025-09-09 23:45:52] ERROR: ❌ Error en el servidor: Cannot insert the value NULL into column 'fecha_nacimiento', table 'sistema_educacional.dbo.Estudiantes'; column does not allow nulls. INSERT fails.
-[2025-09-09 23:47:32] ERROR: Error al crear estudiante Cannot insert the value NULL into column 'fecha_nacimiento', table 'sistema_educacional.dbo.Estudiantes'; column does not allow nulls. INSERT fails.
-[2025-09-09 23:47:32] ERROR: ❌ Error en el servidor: Cannot insert the value NULL into column 'fecha_nacimiento', table 'sistema_educacional.dbo.Estudiantes'; column does not allow nulls. INSERT fails.
-[2025-09-09 23:48:54] ERROR: Error al crear estudiante Cannot insert the value NULL into column 'fecha_nacimiento', table 'sistema_educacional.dbo.Estudiantes'; column does not allow nulls. INSERT fails.
-[2025-09-09 23:48:54] ERROR: ❌ Error en el servidor: Cannot insert the value NULL into column 'fecha_nacimiento', table 'sistema_educacional.dbo.Estudiantes'; column does not allow nulls. INSERT fails.
-[2025-09-09 23:51:18] ERROR: Error al crear estudiante Cannot insert the value NULL into column 'fecha_nacimiento', table 'sistema_educacional.dbo.Estudiantes'; column does not allow nulls. INSERT fails.
-[2025-09-09 23:51:18] ERROR: ❌ Error en el servidor: Cannot insert the value NULL into column 'fecha_nacimiento', table 'sistema_educacional.dbo.Estudiantes'; column does not allow nulls. INSERT fails.
-[2025-09-09 23:55:11] ERROR: Error al crear estudiante Violation of UNIQUE KEY constraint 'UQ__Estudian__C2B74E76B8782068'. Cannot insert duplicate key in object 'dbo.Estudiantes'. The duplicate key value is (22.486.972-k).
-[2025-09-09 23:55:11] ERROR: ❌ Error en el servidor: Violation of UNIQUE KEY constraint 'UQ__Estudian__C2B74E76B8782068'. Cannot insert duplicate key in object 'dbo.Estudiantes'. The duplicate key value is (22.486.972-k).
+[2025-09-22 21:13:15] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:13:15] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:13:15] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:13:15] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:13:17] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:13:17] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:13:17] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:13:17] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:13:18] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:13:18] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:13:18] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:13:18] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:13:55] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:13:55] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:13:55] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:13:55] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:13:55] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:13:55] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:13:56] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:13:56] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:13:56] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:13:56] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:14:03] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:14:03] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:14:03] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:14:03] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:14:03] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:14:03] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:14:03] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:14:03] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:14:04] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:14:04] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:14:04] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:14:04] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:14:28] ERROR: ❌ Error en estudiantesPorCurso: no existe la columna e.nombre_apoderado
+[2025-09-22 21:14:28] ERROR: ❌ Error en el servidor: no existe la columna e.nombre_apoderado
+[2025-09-22 21:14:28] ERROR: ❌ Error en estudiantesPorCurso: no existe la columna e.nombre_apoderado
+[2025-09-22 21:14:28] ERROR: ❌ Error en el servidor: no existe la columna e.nombre_apoderado
+[2025-09-22 21:14:29] ERROR: ❌ Error en estudiantesPorCurso: no existe la columna e.nombre_apoderado
+[2025-09-22 21:14:29] ERROR: ❌ Error en el servidor: no existe la columna e.nombre_apoderado
+[2025-09-22 21:14:38] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:14:38] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:14:38] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:14:38] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:14:38] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:14:38] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:14:38] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:14:38] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:14:39] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:14:39] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:14:39] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:14:39] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:16:19] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:16:19] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:16:19] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:16:19] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:16:20] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:16:20] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:16:20] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:16:20] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:16:21] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:16:21] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:16:21] ERROR: ❌ Error en dashboardKPIs: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:16:21] ERROR: ❌ Error en el servidor: no existe la columna «asistencia_porcentaje»
+[2025-09-22 21:16:29] ERROR: ❌ Error en reporteAsistencia: no existe la columna ha.asistencia_porcentaje
+[2025-09-22 21:16:29] ERROR: ❌ Error en el servidor: no existe la columna ha.asistencia_porcentaje
+[2025-09-22 21:16:30] ERROR: ❌ Error en reporteAsistencia: no existe la columna ha.asistencia_porcentaje
+[2025-09-22 21:16:30] ERROR: ❌ Error en el servidor: no existe la columna ha.asistencia_porcentaje
+[2025-09-22 21:16:30] ERROR: ❌ Error en reporteAsistencia: no existe la columna ha.asistencia_porcentaje
+[2025-09-22 21:16:30] ERROR: ❌ Error en el servidor: no existe la columna ha.asistencia_porcentaje
+[2025-09-22 21:23:11] ERROR: ❌ Error en estudiantesPorCurso: no existe la columna e.nombre_apoderado
+[2025-09-22 21:23:11] ERROR: ❌ Error en el servidor: no existe la columna e.nombre_apoderado
+[2025-09-22 21:23:11] ERROR: ❌ Error en estudiantesPorCurso: no existe la columna e.nombre_apoderado
+[2025-09-22 21:23:11] ERROR: ❌ Error en el servidor: no existe la columna e.nombre_apoderado
+[2025-09-22 21:23:12] ERROR: ❌ Error en estudiantesPorCurso: no existe la columna e.nombre_apoderado
+[2025-09-22 21:23:12] ERROR: ❌ Error en el servidor: no existe la columna e.nombre_apoderado
+[2025-09-22 21:26:20] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:26:20] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:26:20] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:26:20] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:26:20] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:26:20] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:26:20] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:26:20] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:26:21] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:26:21] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:26:21] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:26:21] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:26:33] ERROR: ❌ Error en reporteAsistencia: no existe la función round(double precision, integer)
+[2025-09-22 21:26:33] ERROR: ❌ Error en el servidor: no existe la función round(double precision, integer)
+[2025-09-22 21:26:34] ERROR: ❌ Error en reporteAsistencia: no existe la función round(double precision, integer)
+[2025-09-22 21:26:34] ERROR: ❌ Error en el servidor: no existe la función round(double precision, integer)
+[2025-09-22 21:26:35] ERROR: ❌ Error en reporteAsistencia: no existe la función round(double precision, integer)
+[2025-09-22 21:26:35] ERROR: ❌ Error en el servidor: no existe la función round(double precision, integer)
+[2025-09-22 21:26:38] ERROR: ❌ Error en reporteInstitucional: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:26:38] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:26:38] ERROR: ❌ Error en reporteInstitucional: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:26:38] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:26:39] ERROR: ❌ Error en reporteInstitucional: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:26:39] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:26:42] ERROR: ❌ Error en estudiantesPorCurso: no existe la columna e.nombre_apoderado
+[2025-09-22 21:26:42] ERROR: ❌ Error en el servidor: no existe la columna e.nombre_apoderado
+[2025-09-22 21:26:42] ERROR: ❌ Error en estudiantesPorCurso: no existe la columna e.nombre_apoderado
+[2025-09-22 21:26:42] ERROR: ❌ Error en el servidor: no existe la columna e.nombre_apoderado
+[2025-09-22 21:26:43] ERROR: ❌ Error en estudiantesPorCurso: no existe la columna e.nombre_apoderado
+[2025-09-22 21:26:43] ERROR: ❌ Error en el servidor: no existe la columna e.nombre_apoderado
+[2025-09-22 21:41:45] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:41:45] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:41:46] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:41:46] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:41:46] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:41:46] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:41:46] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:41:46] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:41:46] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:41:46] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:41:47] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:41:47] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:41:48] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:41:48] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:41:53] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:41:53] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:41:53] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:41:53] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:41:54] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:41:54] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:42:16] ERROR: ❌ Error en estudiantesPorCurso: no existe la columna e.nombre_apoderado
+[2025-09-22 21:42:16] ERROR: ❌ Error en el servidor: no existe la columna e.nombre_apoderado
+[2025-09-22 21:42:17] ERROR: ❌ Error en estudiantesPorCurso: no existe la columna e.nombre_apoderado
+[2025-09-22 21:42:17] ERROR: ❌ Error en el servidor: no existe la columna e.nombre_apoderado
+[2025-09-22 21:42:17] ERROR: ❌ Error en estudiantesPorCurso: no existe la columna e.nombre_apoderado
+[2025-09-22 21:42:17] ERROR: ❌ Error en el servidor: no existe la columna e.nombre_apoderado
+[2025-09-22 21:42:40] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:42:40] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:42:40] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:42:40] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:42:41] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:42:41] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:42:41] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:42:41] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:42:41] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:42:41] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:42:42] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:42:42] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:42:48] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:42:48] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:42:48] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:42:48] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:42:48] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:42:48] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:42:48] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:42:48] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:42:49] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:42:49] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:42:49] ERROR: ❌ Error en dashboardKPIs: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:42:49] ERROR: ❌ Error en el servidor: no se pueden anidar llamadas a funciones de agregación
+[2025-09-22 21:42:53] ERROR: ❌ Error en estudiantesPorCurso: no existe la columna e.nombre_apoderado
+[2025-09-22 21:42:53] ERROR: ❌ Error en el servidor: no existe la columna e.nombre_apoderado
+[2025-09-22 21:42:53] ERROR: ❌ Error en estudiantesPorCurso: no existe la columna e.nombre_apoderado
+[2025-09-22 21:42:53] ERROR: ❌ Error en el servidor: no existe la columna e.nombre_apoderado
+[2025-09-22 21:42:54] ERROR: ❌ Error en estudiantesPorCurso: no existe la columna e.nombre_apoderado
+[2025-09-22 21:42:54] ERROR: ❌ Error en el servidor: no existe la columna e.nombre_apoderado
+[2025-09-22 21:53:32] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://192.168.18.10:5174
+[2025-09-22 21:53:32] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://192.168.18.10:5174
+[2025-09-22 21:53:33] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://192.168.18.10:5174
+[2025-09-22 21:53:39] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://192.168.18.10:5174
+[2025-09-22 21:53:39] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://192.168.18.10:5174
+[2025-09-22 21:53:39] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://192.168.18.10:5174
+[2025-09-22 21:53:39] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://192.168.18.10:5174
+[2025-09-22 21:53:39] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://192.168.18.10:5174
+[2025-09-22 21:53:40] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://192.168.18.10:5174
+[2025-09-22 21:53:40] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://192.168.18.10:5174
+[2025-09-22 21:53:40] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://192.168.18.10:5174
+[2025-09-22 21:53:40] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://192.168.18.10:5174
+[2025-09-22 21:53:40] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://192.168.18.10:5174
+[2025-09-22 21:53:40] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://192.168.18.10:5174
+[2025-09-22 21:53:40] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://192.168.18.10:5174
+[2025-09-22 21:54:31] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://192.168.18.10:5174
+[2025-09-22 21:54:31] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://192.168.18.10:5174
+[2025-09-22 21:54:32] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://192.168.18.10:5174
+[2025-09-22 21:54:32] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://192.168.18.10:5174
+[2025-09-22 21:54:32] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://192.168.18.10:5174
+[2025-09-22 21:54:32] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://192.168.18.10:5174
+[2025-09-22 21:54:36] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://192.168.18.10:5174
+[2025-09-22 21:54:36] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://192.168.18.10:5174
+[2025-09-22 21:54:37] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://192.168.18.10:5174
+[2025-09-22 21:54:37] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://192.168.18.10:5174
+[2025-09-22 21:54:37] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://192.168.18.10:5174
+[2025-09-22 21:54:37] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://192.168.18.10:5174
+[2025-09-22 21:55:00] ERROR: ❌ Error en dashboardKPIs: pool.query is not a function
+[2025-09-22 21:55:00] ERROR: ❌ Error en el servidor: pool.query is not a function
+[2025-09-22 21:55:00] ERROR: ❌ Error en dashboardKPIs: pool.query is not a function
+[2025-09-22 21:55:00] ERROR: ❌ Error en el servidor: pool.query is not a function
+[2025-09-22 21:55:00] ERROR: ❌ Error en dashboardKPIs: pool.query is not a function
+[2025-09-22 21:55:00] ERROR: ❌ Error en el servidor: pool.query is not a function
+[2025-09-22 21:55:00] ERROR: ❌ Error en dashboardKPIs: pool.query is not a function
+[2025-09-22 21:55:00] ERROR: ❌ Error en el servidor: pool.query is not a function
+[2025-09-22 21:55:01] ERROR: ❌ Error en dashboardKPIs: pool.query is not a function
+[2025-09-22 21:55:01] ERROR: ❌ Error en el servidor: pool.query is not a function
+[2025-09-22 21:55:01] ERROR: ❌ Error en dashboardKPIs: pool.query is not a function
+[2025-09-22 21:55:01] ERROR: ❌ Error en el servidor: pool.query is not a function
+[2025-09-22 21:56:29] ERROR: ❌ Error en dashboardKPIs: no existe la función round(double precision, integer)
+[2025-09-22 21:56:29] ERROR: ❌ Error en el servidor: no existe la función round(double precision, integer)
+[2025-09-22 21:56:29] ERROR: ❌ Error en dashboardKPIs: no existe la función round(double precision, integer)
+[2025-09-22 21:56:29] ERROR: ❌ Error en el servidor: no existe la función round(double precision, integer)
+[2025-09-22 21:59:35] ERROR: Error al obtener estudiante por ID la sintaxis de entrada no es válida para tipo bigint: «nuevo»
+[2025-09-22 21:59:35] ERROR: ❌ Error en el servidor: la sintaxis de entrada no es válida para tipo bigint: «nuevo»
+[2025-09-22 21:59:35] ERROR: Error al obtener estudiante por ID la sintaxis de entrada no es válida para tipo bigint: «nuevo»
+[2025-09-22 21:59:35] ERROR: ❌ Error en el servidor: la sintaxis de entrada no es válida para tipo bigint: «nuevo»
+[2025-09-22 21:59:35] ERROR: Error al obtener estudiante por ID la sintaxis de entrada no es válida para tipo bigint: «nuevo»
+[2025-09-22 21:59:35] ERROR: ❌ Error en el servidor: la sintaxis de entrada no es válida para tipo bigint: «nuevo»
+[2025-09-22 21:59:35] ERROR: Error al obtener estudiante por ID la sintaxis de entrada no es válida para tipo bigint: «nuevo»
+[2025-09-22 21:59:35] ERROR: ❌ Error en el servidor: la sintaxis de entrada no es válida para tipo bigint: «nuevo»
+[2025-09-22 21:59:36] ERROR: Error al obtener estudiante por ID la sintaxis de entrada no es válida para tipo bigint: «nuevo»
+[2025-09-22 21:59:36] ERROR: ❌ Error en el servidor: la sintaxis de entrada no es válida para tipo bigint: «nuevo»
+[2025-09-22 21:59:36] ERROR: Error al obtener estudiante por ID la sintaxis de entrada no es válida para tipo bigint: «nuevo»
+[2025-09-22 21:59:36] ERROR: ❌ Error en el servidor: la sintaxis de entrada no es válida para tipo bigint: «nuevo»

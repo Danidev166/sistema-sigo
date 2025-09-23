@@ -11,7 +11,7 @@
  * <Route path="/alertas" element={<AlertasPage />} />
  */
 import { useEffect, useState } from "react";
-import DashboardLayout from "../../../components/layout/DashboardLayout";
+import ImprovedDashboardLayout from "../../../components/layout/ImprovedDashboardLayout";
 import alertaService from "../services/alertaService";
 import { toast } from "react-toastify";
 import AlertaTable from "../components/AlertaTable";
@@ -60,7 +60,7 @@ export default function AlertasPage() {
   }, []);
 
   return (
-    <DashboardLayout>
+    <ImprovedDashboardLayout>
       <div className="space-y-6 px-4 sm:px-6 md:px-8 pb-8">
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-4">
           <h1 className="text-xl sm:text-2xl font-semibold text-gray-800 dark:text-white">
@@ -107,6 +107,6 @@ export default function AlertasPage() {
           onMarcarResuelta={handleMarcarResuelta}
         />
       </div>
-    </DashboardLayout>
+    </ImprovedDashboardLayout>
   );
 }

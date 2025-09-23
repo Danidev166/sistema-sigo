@@ -1,12 +1,13 @@
-const { sql, poolPromise } = require("../config/db");
-const logger = require("../utils/logger");
+// backend/models/configuracionModel.js
+const { sql, getPool } = require('../config/db');
+const logger = require('../utils/logger');
 
 const ConfiguracionModel = {
   async listar() {
     try {
-      const pool = await poolPromise;
+      const pool = await getPool();
       const result = await pool.request()
-        .query('SELECT * FROM Configuracion ORDER BY tipo, clave');
+        .query(`SELECT * FROM configuracion ORDER BY tipo, clave`);
       return result.recordset;
     } catch (error) {
       logger.error('Error en listar configuraciones:', error);
@@ -16,17 +17,13 @@ const ConfiguracionModel = {
 
   async obtenerPorTipo(tipo) {
     try {
-      const pool = await poolPromise;
+      const pool = await getPool();
       const result = await pool.request()
         .input('tipo', sql.VarChar(50), tipo)
-        .query('SELECT * FROM Configuracion WHERE tipo = @tipo');
-      
-      // Transformar los resultados en un objeto más manejable
+        .query(`SELECT * FROM configuracion WHERE tipo = @tipo`);
+
       const configuraciones = {};
-      result.recordset.forEach(item => {
-        configuraciones[item.clave] = item.valor;
-      });
-      
+      for (const row of result.recordset) configuraciones[row.clave] = row.valor;
       return configuraciones;
     } catch (error) {
       logger.error(`Error en obtenerPorTipo (${tipo}):`, error);
@@ -37,16 +34,16 @@ const ConfiguracionModel = {
   async crear(data) {
     try {
       const { tipo, clave, valor, descripcion, usuario_modificacion } = data;
-      const pool = await poolPromise;
+      const pool = await getPool();
       await pool.request()
-        .input('tipo', sql.VarChar(50), tipo)
-        .input('clave', sql.VarChar(100), clave)
-        .input('valor', sql.NVarChar(sql.MAX), valor)
-        .input('descripcion', sql.NVarChar(255), descripcion)
-        .input('usuario_modificacion', sql.VarChar(100), usuario_modificacion)
+        .input('tipo',                 sql.VarChar(50),   tipo)
+        .input('clave',                sql.VarChar(100),  clave)
+        .input('valor',                sql.NVarChar,      valor)
+        .input('descripcion',          sql.NVarChar(255), descripcion || null)
+        .input('usuario_modificacion', sql.VarChar(100),  usuario_modificacion || null)
         .query(`
-          INSERT INTO Configuracion (tipo, clave, valor, descripcion, usuario_modificacion)
-          VALUES (@tipo, @clave, @valor, @descripcion, @usuario_modificacion)
+          INSERT INTO configuracion (tipo, clave, valor, descripcion, usuario_modificacion, fecha_modificacion)
+          VALUES (@tipo, @clave, @valor, @descripcion, @usuario_modificacion, NOW())
         `);
     } catch (error) {
       logger.error('Error en crear configuración:', error);
@@ -54,25 +51,35 @@ const ConfiguracionModel = {
     }
   },
 
+  // UPSERT por cada clave usando ON CONFLICT (requiere índice único (tipo, clave))
   async actualizar(tipo, data) {
+    const pool = await getPool();
+    const tx = pool.transaction();
     try {
-      const pool = await poolPromise;
-      const { valores } = data;
-      
-      // Actualizar cada configuración del tipo especificado
+      await tx.begin();
+
+      const usuario = data.usuario_modificacion || null;
+      const valores = data.valores || {};
+
       for (const [clave, valor] of Object.entries(valores)) {
-        await pool.request()
-          .input('tipo', sql.VarChar(50), tipo)
-          .input('clave', sql.VarChar(100), clave)
-          .input('valor', sql.NVarChar(sql.MAX), valor)
+        await tx.request()
+          .input('tipo',  sql.VarChar(50),   tipo)
+          .input('clave', sql.VarChar(100),  clave)
+          .input('valor', sql.NVarChar,      valor)
+          .input('usuario_modificacion', sql.VarChar(100), usuario)
           .query(`
-            UPDATE Configuracion
-            SET valor = @valor,
-                fecha_modificacion = GETDATE()
-            WHERE tipo = @tipo AND clave = @clave
+            INSERT INTO configuracion (tipo, clave, valor, descripcion, usuario_modificacion, fecha_modificacion)
+            VALUES (@tipo, @clave, @valor, NULL, @usuario_modificacion, NOW())
+            ON CONFLICT (tipo, clave) DO UPDATE
+              SET valor = EXCLUDED.valor,
+                  usuario_modificacion = EXCLUDED.usuario_modificacion,
+                  fecha_modificacion   = NOW()
           `);
       }
+
+      await tx.commit();
     } catch (error) {
+      try { await tx.rollback(); } catch (_) {}
       logger.error(`Error en actualizar configuración (${tipo}):`, error);
       throw error;
     }
@@ -80,10 +87,10 @@ const ConfiguracionModel = {
 
   async eliminar(id) {
     try {
-      const pool = await poolPromise;
+      const pool = await getPool();
       await pool.request()
         .input('id', sql.Int, id)
-        .query('DELETE FROM Configuracion WHERE id = @id');
+        .query(`DELETE FROM configuracion WHERE id = @id`);
     } catch (error) {
       logger.error(`Error en eliminar configuración (ID: ${id}):`, error);
       throw error;
@@ -91,8 +98,16 @@ const ConfiguracionModel = {
   },
 
   async obtenerPorId(id) {
-    const result = await sql.query`SELECT * FROM Configuracion WHERE id = ${id}`;
-    return result.recordset[0];
+    try {
+      const pool = await getPool();
+      const r = await pool.request()
+        .input('id', sql.Int, id)
+        .query(`SELECT * FROM configuracion WHERE id = @id`);
+      return r.recordset[0] || null;
+    } catch (error) {
+      logger.error(`Error en obtenerPorId (${id}):`, error);
+      throw error;
+    }
   }
 };
 

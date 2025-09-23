@@ -1,52 +1,62 @@
-const { sql, poolPromise } = require("../config/db");
+// backend/models/authModel.js
+const { getPool } = require('../config/db');
 
-// Buscar usuario por email
-const buscarPorEmail = async (email) => {
-  const pool = await poolPromise;
+const normEmail = (email) => (email || '').trim().toLowerCase();
+
+async function buscarPorEmail(email) {
+  const pool = await getPool();
   const result = await pool.request()
-    .input("email", sql.NVarChar, email)
-    .query("SELECT id, nombre, apellido, email, password, rol, estado FROM Usuarios WHERE email = @email");
-  return result.recordset[0];
-};
-
-// Actualizar reset token y expiración
-const guardarResetToken = async (email, token, expiracion) => {
-  const pool = await poolPromise;
-  await pool.request()
-    .input("email", sql.NVarChar, email)
-    .input("reset_token", sql.NVarChar, token)
-    .input("reset_token_expiration", sql.DateTime, expiracion)
+    .input('email', normEmail(email))
     .query(`
-      UPDATE Usuarios
-      SET reset_token = @reset_token, reset_token_expiration = @reset_token_expiration
-      WHERE email = @email
+      SELECT id, nombre, apellido, email, password, rol, estado, reset_token, reset_token_expiration
+      FROM usuarios
+      WHERE LOWER(email) = @email
+      LIMIT 1
     `);
-};
+  return result.recordset[0] || null;
+}
 
-// Buscar usuario por reset token válido
-const buscarPorResetToken = async (token) => {
-  const pool = await poolPromise;
+async function guardarResetToken(email, token, expiracion) {
+  const pool = await getPool();
+  await pool.request()
+    .input('email', normEmail(email))
+    .input('reset_token', token)
+    .input('reset_token_expiration', expiracion)
+    .query(`
+      UPDATE usuarios
+         SET reset_token = @reset_token,
+             reset_token_expiration = @reset_token_expiration
+       WHERE LOWER(email) = @email
+    `);
+}
+
+async function buscarPorResetToken(token) {
+  const pool = await getPool();
   const result = await pool.request()
-    .input("reset_token", sql.NVarChar, token)
+    .input('reset_token', token)
     .query(`
-      SELECT * FROM Usuarios
-      WHERE reset_token = @reset_token AND reset_token_expiration > GETDATE()
+      SELECT id, nombre, apellido, email, password, rol, estado
+      FROM usuarios
+      WHERE reset_token = @reset_token
+        AND reset_token_expiration > NOW()
+      LIMIT 1
     `);
-  return result.recordset[0];
-};
+  return result.recordset[0] || null;
+}
 
-// Actualizar contraseña por token
-const actualizarPassword = async (id, hashedPassword) => {
-  const pool = await poolPromise;
+async function actualizarPassword(id, hashedPassword) {
+  const pool = await getPool();
   await pool.request()
-    .input("id", sql.Int, id)
-    .input("password", sql.NVarChar, hashedPassword)
+    .input('id', id)
+    .input('password', hashedPassword)
     .query(`
-      UPDATE Usuarios
-      SET password = @password, reset_token = NULL, reset_token_expiration = NULL
-      WHERE id = @id
+      UPDATE usuarios
+         SET password = @password,
+             reset_token = NULL,
+             reset_token_expiration = NULL
+       WHERE id = @id
     `);
-};
+}
 
 module.exports = {
   buscarPorEmail,

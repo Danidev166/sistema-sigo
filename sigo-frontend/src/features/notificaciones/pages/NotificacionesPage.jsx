@@ -3,7 +3,7 @@ import notificacionService from '../services/notificacionService';
 // Puedes importar Button y Table de tus componentes UI reutilizables
 import Button from '../../../components/ui/Button';
 import NotificacionFormModal from '../components/NotificacionFormModal';
-import DashboardLayout from '../../../components/layout/DashboardLayout';
+import ImprovedDashboardLayout from '../../../components/layout/ImprovedDashboardLayout';
 
 const NotificacionesPage = () => {
   const [notificaciones, setNotificaciones] = useState([]);
@@ -47,7 +47,7 @@ const NotificacionesPage = () => {
   };
 
   return (
-    <DashboardLayout>
+    <ImprovedDashboardLayout>
       <div className="p-6">
         <div className="flex items-center justify-between mb-6">
           <h1 className="text-2xl font-bold">Notificaciones</h1>
@@ -105,7 +105,7 @@ const NotificacionesPage = () => {
         )}
         <NotificacionFormModal open={openModal} onClose={() => setOpenModal(false)} onCreated={fetchNotificaciones} />
       </div>
-    </DashboardLayout>
+    </ImprovedDashboardLayout>
   );
 };
 

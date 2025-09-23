@@ -19,7 +19,7 @@ import { toast } from "react-hot-toast";
  */
 export default function MovimientoFormModal({ isOpen, onClose, onSubmit }) {
   const [form, setForm] = useState({
-    tipo_movimiento: "entrada",
+    tipo_movimiento: "Entrada",
     id_recurso: "",
     cantidad: "",
     observaciones: "",
@@ -89,8 +89,8 @@ export default function MovimientoFormModal({ isOpen, onClose, onSubmit }) {
                 required
                 className="w-full border rounded px-3 py-2 bg-white dark:bg-slate-700 dark:text-white text-sm"
               >
-                <option value="entrada">Entrada</option>
-                <option value="salida">Salida</option>
+                <option value="Entrada">Entrada</option>
+                <option value="Salida">Salida</option>
               </select>
             </div>
 
@@ -122,7 +122,7 @@ export default function MovimientoFormModal({ isOpen, onClose, onSubmit }) {
             </div>
 
             {/* Estudiante (solo si salida) */}
-            {form.tipo_movimiento === "salida" && (
+            {form.tipo_movimiento === "Salida" && (
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   Estudiante *

@@ -1,89 +1,118 @@
-const { poolPromise, sql } = require('../config/db');
+// backend/models/logsActividadModel.js
+const { sql, getPool } = require('../config/db');
+
+function toSqlDateTime(input, endOfDay = false) {
+  if (!input) return null;
+  if (input instanceof Date) return input;
+  const d = new Date(input);
+  if (isNaN(d)) return null;
+  if (endOfDay) d.setHours(23, 59, 59, 999);
+  return d;
+}
 
 class LogsActividadModel {
   async obtenerTodos(filtros = {}) {
-    const pool = await poolPromise;
+    const pool = await getPool();
+
     let query = `
-      SELECT l.*, u.nombre + ' ' + u.apellido AS usuario_nombre
-      FROM Logs_Actividad l
+      SELECT l.*, (u.nombre || ' ' || u.apellido) AS usuario_nombre
+      FROM logs_actividad l
       LEFT JOIN usuarios u ON l.id_usuario = u.id
       WHERE 1=1
     `;
-    const params = {};
-    // Filtro por usuario (nombre o id)
-    if (filtros.usuario) {
-      if (!isNaN(Number(filtros.usuario))) {
-        query += ' AND l.id_usuario = @usuarioId';
-        params.usuarioId = Number(filtros.usuario);
+
+    const req = pool.request();
+
+    if (filtros.usuario !== undefined && filtros.usuario !== null && `${filtros.usuario}`.trim() !== '') {
+      const asNumber = Number(filtros.usuario);
+      if (!Number.isNaN(asNumber) && Number.isInteger(asNumber)) {
+        query += ` AND l.id_usuario = @usuarioId`;
+        req.input('usuarioId', sql.Int, asNumber);
       } else {
-        query += " AND (u.nombre + ' ' + u.apellido LIKE @usuarioNombre)";
-        params.usuarioNombre = `%${filtros.usuario}%`;
+        query += ` AND (u.nombre || ' ' || u.apellido) LIKE @usuarioNombre`;
+        req.input('usuarioNombre', sql.NVarChar, `%${String(filtros.usuario).trim()}%`);
       }
     }
-    // Filtro por acción
+
     if (filtros.accion) {
-      query += ' AND l.accion LIKE @accion';
-      params.accion = `%${filtros.accion}%`;
+      query += ` AND l.accion LIKE @accion`;
+      req.input('accion', sql.NVarChar, `%${String(filtros.accion).trim()}%`);
     }
-    // Filtro por tabla
+
     if (filtros.tabla) {
-      query += ' AND l.tabla_afectada LIKE @tabla';
-      params.tabla = `%${filtros.tabla}%`;
+      query += ` AND l.tabla_afectada LIKE @tabla`;
+      req.input('tabla', sql.NVarChar, `%${String(filtros.tabla).trim()}%`);
     }
-    // Filtro por IP
+
     if (filtros.ip) {
-      query += ' AND l.ip_address LIKE @ip';
-      params.ip = `%${filtros.ip}%`;
+      query += ` AND l.ip_address LIKE @ip`;
+      req.input('ip', sql.NVarChar, `%${String(filtros.ip).trim()}%`);
     }
-    // Filtro por fecha
-    if (filtros.fecha_desde) {
-      query += ' AND l.fecha_accion >= @fecha_desde';
-      params.fecha_desde = filtros.fecha_desde;
+
+    const desde = toSqlDateTime(filtros.fecha_desde, false);
+    const hasta = toSqlDateTime(filtros.fecha_hasta, true);
+    if (desde) {
+      query += ` AND l.fecha_accion >= @fecha_desde`;
+      req.input('fecha_desde', sql.DateTime, desde);
     }
-    if (filtros.fecha_hasta) {
-      query += ' AND l.fecha_accion <= @fecha_hasta';
-      params.fecha_hasta = filtros.fecha_hasta;
+    if (hasta) {
+      query += ` AND l.fecha_accion <= @fecha_hasta`;
+      req.input('fecha_hasta', sql.DateTime, hasta);
     }
-    query += ' ORDER BY l.fecha_accion DESC';
-    let req = pool.request();
-    Object.entries(params).forEach(([key, value]) => {
-      req = req.input(key, value);
-    });
+
+    query += ` ORDER BY l.fecha_accion DESC, l.id DESC`;
+
     const result = await req.query(query);
     return result.recordset;
   }
+
   async obtenerPorId(id) {
-    const pool = await poolPromise;
+    const pool = await getPool();
     const result = await pool.request()
       .input('id', sql.Int, id)
-      .query('SELECT * FROM Logs_Actividad WHERE id = @id');
+      .query(`SELECT * FROM logs_actividad WHERE id = @id`);
+    return result.recordset[0] || null;
+  }
+
+  async crear(data) {
+    const {
+      id_usuario,
+      accion,
+      tabla_afectada,
+      id_registro,
+      datos_anteriores,
+      datos_nuevos,
+      ip_address,
+      user_agent
+    } = data;
+
+    const pool = await getPool();
+    const result = await pool.request()
+      .input('id_usuario',       sql.Int,      id_usuario)
+      .input('accion',           sql.NVarChar, accion)
+      .input('tabla_afectada',   sql.NVarChar, tabla_afectada)
+      .input('id_registro',      sql.Int,      id_registro ?? null)
+      .input('datos_anteriores', sql.NVarChar, datos_anteriores ?? null)
+      .input('datos_nuevos',     sql.NVarChar, datos_nuevos ?? null)
+      .input('ip_address',       sql.NVarChar, ip_address ?? null)
+      .input('user_agent',       sql.NVarChar, user_agent ?? null)
+      .query(`
+        INSERT INTO logs_actividad
+          (id_usuario, accion, tabla_afectada, id_registro, datos_anteriores, datos_nuevos, ip_address, user_agent, fecha_accion)
+        VALUES
+          (@id_usuario, @accion, @tabla_afectada, @id_registro, @datos_anteriores, @datos_nuevos, @ip_address, @user_agent, NOW())
+        RETURNING *
+      `);
+
     return result.recordset[0];
   }
-  async crear(data) {
-    const { id_usuario, accion, tabla_afectada, id_registro, datos_anteriores, datos_nuevos, ip_address, user_agent } = data;
-    const pool = await poolPromise;
-    const result = await pool.request()
-      .input('id_usuario', sql.Int, id_usuario)
-      .input('accion', sql.NVarChar(100), accion)
-      .input('tabla_afectada', sql.NVarChar(100), tabla_afectada)
-      .input('id_registro', sql.Int, id_registro)
-      .input('datos_anteriores', sql.NVarChar(sql.MAX), datos_anteriores)
-      .input('datos_nuevos', sql.NVarChar(sql.MAX), datos_nuevos)
-      .input('ip_address', sql.NVarChar(45), ip_address)
-      .input('user_agent', sql.NVarChar(500), user_agent)
-      .query(`INSERT INTO Logs_Actividad 
-        (id_usuario, accion, tabla_afectada, id_registro, datos_anteriores, datos_nuevos, ip_address, user_agent)
-        VALUES (@id_usuario, @accion, @tabla_afectada, @id_registro, @datos_anteriores, @datos_nuevos, @ip_address, @user_agent);
-        SELECT SCOPE_IDENTITY() AS id;`);
-    return { insertId: result.recordset[0].id };
-  }
+
   async eliminar(id) {
-    const pool = await poolPromise;
+    const pool = await getPool();
     await pool.request()
       .input('id', sql.Int, id)
-      .query('DELETE FROM Logs_Actividad WHERE id = @id');
-    return;
+      .query(`DELETE FROM logs_actividad WHERE id = @id`);
   }
 }
 
-module.exports = new LogsActividadModel(); 
+module.exports = new LogsActividadModel();

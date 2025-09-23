@@ -5,6 +5,10 @@ import { AuthProvider } from './context/AuthProvider'; // ✅ Import correcto
 import { Toaster } from 'react-hot-toast';
 import App from './App';
 import './index.css';
+import './styles/animations.css';
+import './styles/typography.css'; // Importación de tipografía moderna
+import './styles/modern-effects.css'; // Importación de efectos modernos
+import './styles/responsive.css'; // Importación de utilidades responsive
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

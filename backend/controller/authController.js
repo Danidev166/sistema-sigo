@@ -1,4 +1,4 @@
-const bcrypt = require("bcryptjs");
+const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 const {
@@ -10,47 +10,51 @@ const {
 const logger = require("../utils/logger");
 const { enviarCodigoRecuperacion } = require("../utils/emailService");
 
+const ACCESS_EXPIRES = process.env.JWT_EXPIRES_IN || "1h";
+const REFRESH_SECRET =
+  process.env.REFRESH_TOKEN_SECRET ||
+  process.env.JWT_REFRESH_SECRET ||
+  process.env.JWT_SECRET; // fallback
+const REFRESH_EXPIRES = process.env.REFRESH_TOKEN_EXPIRES_IN || "7d";
+
 class AuthController {
-  // ✅ Login completo y con logs
   static async login(req, res, next) {
     try {
       const { email, password } = req.body;
       logger.info("📥 Login recibido:", { email });
 
       if (!email || !password) {
-        logger.warn("❌ Email o contraseña faltante");
         return res.status(400).json({ error: "⚠️ Email y contraseña son obligatorios" });
       }
 
       const usuario = await buscarPorEmail(email);
-      if (!usuario) {
-        logger.warn("❌ Usuario no encontrado");
-        return res.status(401).json({ error: "❌ Usuario no encontrado" });
-      }
+      if (!usuario) return res.status(401).json({ error: "❌ Usuario no encontrado" });
 
-      // Verificar si el usuario está activo
-      if (!usuario.estado) {
-        logger.warn("❌ Usuario inactivo intentando hacer login", { email, id: usuario.id });
+      // En PG, 'estado' es 'Activo'/'Inactivo'
+      if (usuario.estado && usuario.estado !== "Activo") {
         return res.status(401).json({ error: "❌ Tu cuenta está inactiva. Contacta al administrador." });
       }
 
       const valido = await bcrypt.compare(password, usuario.password);
-      if (!valido) {
-        logger.warn("❌ Contraseña incorrecta");
-        return res.status(401).json({ error: "❌ Contraseña incorrecta" });
-      }
+      if (!valido) return res.status(401).json({ error: "❌ Contraseña incorrecta" });
 
-      const token = jwt.sign(
-        { id: usuario.id, email: usuario.email, rol: usuario.rol },
+      const accessToken = jwt.sign(
+        { id: usuario.id, email: usuario.email, rol: usuario.rol, type: "access" },
         process.env.JWT_SECRET,
-        { expiresIn: "1h" }
+        { expiresIn: ACCESS_EXPIRES }
+      );
+
+      const refreshToken = jwt.sign(
+        { id: usuario.id, email: usuario.email, type: "refresh" },
+        REFRESH_SECRET,
+        { expiresIn: REFRESH_EXPIRES }
       );
 
       logger.info("✅ Login exitoso");
-
       res.json({
         message: "✅ Autenticación exitosa",
-        token,
+        token: accessToken,
+        refreshToken,
         usuario: {
           id: usuario.id,
           nombre: usuario.nombre,
@@ -65,22 +69,18 @@ class AuthController {
     }
   }
 
-  // Forgot Password
   static async forgotPassword(req, res, next) {
     try {
       const { email } = req.body;
       if (!email) return res.status(400).json({ error: "⚠️ Email es obligatorio" });
-
       const usuario = await buscarPorEmail(email);
       if (!usuario) return res.status(404).json({ error: "❌ Usuario no encontrado" });
 
-      const token = crypto.randomBytes(32).toString('hex');
-      const expiracion = new Date(Date.now() + 3600000); // 1 hora
-
+      const token = crypto.randomBytes(32).toString("hex");
+      const expiracion = new Date(Date.now() + 3600000); // 1h
       await guardarResetToken(email, token, expiracion);
 
-      logger.info(`🔗 Token de reset generado para ${email}: ${token}`);
-
+      logger.info(`🔗 Token de reset generado para ${email}`);
       res.json({ message: "📩 Se enviaron instrucciones al correo (simulado)", resetToken: token });
     } catch (error) {
       logger.error("❌ Error en forgot password:", error);
@@ -88,13 +88,11 @@ class AuthController {
     }
   }
 
-  // Reset Password
   static async resetPassword(req, res, next) {
     try {
       const { newPassword, confirmPassword, resetToken } = req.body;
       if (!newPassword || !confirmPassword || !resetToken)
         return res.status(400).json({ error: "⚠️ Todos los campos son obligatorios" });
-
       if (newPassword !== confirmPassword)
         return res.status(400).json({ error: "⚠️ Las contraseñas no coinciden" });
 
@@ -105,7 +103,6 @@ class AuthController {
       await actualizarPassword(usuario.id, hashedPassword);
 
       logger.info(`✅ Contraseña actualizada para usuario id ${usuario.id}`);
-
       res.json({ message: "✅ Contraseña actualizada correctamente" });
     } catch (error) {
       logger.error("❌ Error en reset password:", error);
@@ -113,20 +110,17 @@ class AuthController {
     }
   }
 
-  // Enviar código de recuperación (6 dígitos)
   static async enviarCodigoRecuperacion(req, res, next) {
     try {
       const { email } = req.body;
       if (!email) return res.status(400).json({ error: "⚠️ Email es obligatorio" });
       const usuario = await buscarPorEmail(email);
       if (!usuario) return res.status(404).json({ error: "❌ Usuario no encontrado" });
-      // Generar código de 6 dígitos
       const codigo = Math.floor(100000 + Math.random() * 900000).toString();
-      const expiracion = new Date(Date.now() + 15 * 60 * 1000); // 15 minutos
+      const expiracion = new Date(Date.now() + 15 * 60 * 1000);
       await guardarResetToken(email, codigo, expiracion);
-      // Usar el servicio centralizado para enviar el código
       await enviarCodigoRecuperacion({ to: email, codigo });
-      logger.info(`🔑 Código de recuperación enviado a ${email}: ${codigo}`);
+      logger.info(`🔑 Código de recuperación enviado a ${email}`);
       res.json({ message: "📩 Código enviado al correo" });
     } catch (error) {
       logger.error("❌ Error en enviarCodigoRecuperacion:", error);
@@ -134,12 +128,12 @@ class AuthController {
     }
   }
 
-  // Verificar código y actualizar contraseña
   static async verificarCodigoYActualizarPassword(req, res, next) {
     try {
       const { email, codigo, password } = req.body;
       if (!email || !codigo || !password)
         return res.status(400).json({ error: "⚠️ Todos los campos son obligatorios" });
+
       const usuario = await buscarPorEmail(email);
       if (!usuario || !usuario.reset_token || !usuario.reset_token_expiration)
         return res.status(400).json({ error: "❌ Solicita un código primero" });
@@ -147,6 +141,7 @@ class AuthController {
         return res.status(400).json({ error: "❌ Código incorrecto" });
       if (new Date(usuario.reset_token_expiration) < new Date())
         return res.status(400).json({ error: "❌ Código expirado" });
+
       const hashedPassword = await bcrypt.hash(password, 10);
       await actualizarPassword(usuario.id, hashedPassword);
       logger.info(`✅ Contraseña actualizada para usuario id ${usuario.id}`);
@@ -157,40 +152,27 @@ class AuthController {
     }
   }
 
-  // Refresh Token
-  static async refreshToken(req, res, next) {
+  static async refreshToken(req, res) {
     try {
       const { refreshToken } = req.body;
-      
-      if (!refreshToken) {
-        return res.status(400).json({ error: "⚠️ Refresh token es requerido" });
-      }
+      if (!refreshToken) return res.status(400).json({ error: "⚠️ Refresh token es requerido" });
 
-      const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET || process.env.JWT_SECRET);
-      
-      if (decoded.type !== 'refresh') {
+      const decoded = jwt.verify(refreshToken, REFRESH_SECRET);
+      if (decoded.type && decoded.type !== "refresh") {
         return res.status(401).json({ error: "❌ Token inválido" });
       }
 
-      // Buscar usuario para verificar que aún existe
       const usuario = await buscarPorEmail(decoded.email);
-      if (!usuario) {
-        return res.status(401).json({ error: "❌ Usuario no encontrado" });
-      }
+      if (!usuario) return res.status(401).json({ error: "❌ Usuario no encontrado" });
 
-      // Generar nuevo access token
       const newAccessToken = jwt.sign(
-        { id: usuario.Id, email: usuario.CorreoElectronico, rol: usuario.Rol, type: 'access' },
+        { id: usuario.id, email: usuario.email, rol: usuario.rol, type: "access" },
         process.env.JWT_SECRET,
-        { expiresIn: "15m" }
+        { expiresIn: ACCESS_EXPIRES }
       );
 
-      logger.info(`✅ Token refrescado para usuario ${usuario.CorreoElectronico}`);
-
-      res.json({
-        message: "✅ Token refrescado exitosamente",
-        accessToken: newAccessToken
-      });
+      logger.info(`✅ Token refrescado para usuario ${usuario.email}`);
+      res.json({ message: "✅ Token refrescado exitosamente", accessToken: newAccessToken });
     } catch (error) {
       logger.error("❌ Error en refresh token:", error);
       res.status(401).json({ error: "❌ Refresh token inválido o expirado" });

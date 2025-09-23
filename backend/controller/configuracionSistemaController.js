@@ -1,7 +1,7 @@
 const ConfiguracionSistemaModel = require('../models/configuracionSistemaModel');
 
 class ConfiguracionSistemaController {
-  async obtenerTodos(req, res) {
+  async obtenerTodos(_req, res) {
     try {
       const data = await ConfiguracionSistemaModel.obtenerTodos();
       res.json(data);
@@ -20,8 +20,8 @@ class ConfiguracionSistemaController {
   }
   async crear(req, res) {
     try {
-      const result = await ConfiguracionSistemaModel.crear(req.body);
-      res.status(201).json({ message: 'Creado correctamente', id: result.insertId });
+      const creado = await ConfiguracionSistemaModel.crear(req.body); // retorna registro
+      res.status(201).json({ message: 'Creado correctamente', id: creado?.id || null, data: creado });
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
@@ -44,4 +44,4 @@ class ConfiguracionSistemaController {
   }
 }
 
-module.exports = new ConfiguracionSistemaController(); 
+module.exports = new ConfiguracionSistemaController();

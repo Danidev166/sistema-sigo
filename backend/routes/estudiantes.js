@@ -1,32 +1,41 @@
-// routes/estudiantes.js
 const express = require("express");
 const router = express.Router();
-
-const estudianteController = require("../controller/estudianteController");
-const validateBody = require("../middleware/validateBody");
+const EstudianteController = require("../controller/estudianteController");
 const verifyToken = require("../middleware/verifyToken");
-const estudianteValidator = require("../validators/estudianteValidator");
-// const { smartCache, invalidateCache } = require("../middleware/smartCache");
 
-// ✅ Rutas específicas primero (para evitar conflicto con /:id)
-router.get("/activos", estudianteController.obtenerActivos);
-router.get("/buscar", estudianteController.buscarPorRut);
-router.get("/paginado", estudianteController.obtenerPaginado);
+// Protege todo el módulo
+router.use(verifyToken);
 
-// ✅ Ruta para carga masiva
-router.post(
-  "/masivo",
-  (req, res, next) => { console.log("Llega a la ruta /masivo"); next(); },
-  verifyToken,
-  validateBody(estudianteValidator.masivo),
-  estudianteController.crearEstudiantesMasivo
-);
+// Endpoint para obtener lista simple de estudiantes (para selects)
+router.get("/lista-simple", async (req, res) => {
+  try {
+    const pool = await require("../config/db").getPool();
+    const result = await pool.request().query(`
+      SELECT id, nombre, apellido, rut, curso
+      FROM estudiantes 
+      WHERE estado = 'Activo'
+      ORDER BY nombre, apellido
+    `);
+    
+    const estudiantes = result.recordset.map(est => ({
+      id: est.id,
+      nombre_completo: `${est.nombre} ${est.apellido}`,
+      rut: est.rut,
+      curso: est.curso
+    }));
+    
+    res.json(estudiantes);
+  } catch (error) {
+    console.error("Error al obtener lista de estudiantes:", error);
+    res.status(500).json({ error: "Error al obtener estudiantes" });
+  }
+});
 
-// ✅ CRUD Estudiantes
-router.get("/", estudianteController.obtenerTodos);
-router.get("/:id", estudianteController.obtenerPorId);
-router.post("/", validateBody(estudianteValidator.unico), estudianteController.crear);
-router.put("/:id", validateBody(estudianteValidator.unico), estudianteController.actualizar);
-router.delete("/:id", verifyToken, estudianteController.eliminar);
+// Otras rutas de estudiantes...
+router.get("/", EstudianteController.obtenerTodos);
+router.get("/:id", EstudianteController.obtenerPorId);
+router.post("/", EstudianteController.crear);
+router.put("/:id", EstudianteController.actualizar);
+router.delete("/:id", EstudianteController.eliminar);
 
 module.exports = router;

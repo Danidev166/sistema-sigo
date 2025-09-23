@@ -1,19 +1,19 @@
 // ==============================
-//  SIGO API - listo para Azure
+//  SIGO API - listo para Azure / Prod
 // ==============================
 
 // 1) Cargar variables de entorno
 // - En Azure App Service usaremos App Settings (no .env)
-// - En local, sí cargamos .env/.env.production
+// - En local, sí cargamos .env/.env.production según NODE_ENV
 const isAzure = !!process.env.WEBSITE_SITE_NAME;
-const nodeEnv = process.env.NODE_ENV || (isAzure ? 'production' : 'development');
+const nodeEnv = process.env.NODE_ENV || (isAzure ? "production" : "development");
 
 if (!isAzure) {
-  const envFile = nodeEnv === 'production' ? '.env.production' : '.env';
-  require('dotenv').config({ path: envFile });
+  const envFile = nodeEnv === "production" ? ".env.production" : ".env";
+  require("dotenv").config({ path: envFile });
   console.log(`🔧 Cargando configuración desde ${envFile}`);
 } else {
-  console.log('🔧 Usando App Settings de Azure (sin .env local)');
+  console.log("🔧 Usando App Settings de Azure (sin .env local)");
 }
 
 const express = require("express");
@@ -29,77 +29,101 @@ const errorHandler = require("./middleware/errorHandler");
 
 // 2) App base
 const app = express();
-app.set('trust proxy', 1); // necesario detrás del proxy de Azure para cookies/secure
+app.set("trust proxy", 1); // necesario detrás del proxy de Azure para cookies/secure
 
-// 3) Seguridad y performance
-app.use(helmet({
-  crossOriginResourcePolicy: { policy: 'cross-origin' }, // permite servir imágenes/archivos si es necesario
-  frameguard: { action: 'deny' },
-  referrerPolicy: { policy: 'no-referrer' },
-  contentSecurityPolicy: {
-    useDefaults: true,
-    directives: {
-      defaultSrc: ["'self'"],
-      // Swagger UI y tu propio HTML pueden requerir inline styles/scripts
-      // Ajusta si tu swagger no los necesita
-      styleSrc: ["'self'", "'unsafe-inline'"],
-      scriptSrc: ["'self'", "'unsafe-inline'"],
-      imgSrc: ["'self'", "data:", "https:"],
-      connectSrc: ["'self'"],
-    },
+// 3) Prefijo API (defínelo pronto porque lo usamos para Swagger/CSP)
+const API_PREFIX = process.env.API_PREFIX || "/api";
+
+// 4) Seguridad y performance (UN solo Helmet con CSP dinámica)
+const baseHelmetDirectives = {
+  useDefaults: true,
+  directives: {
+    defaultSrc: ["'self'"],
+    styleSrc: ["'self'", "'unsafe-inline'"],
+    scriptSrc: ["'self'", "'unsafe-inline'"],
+    imgSrc: ["'self'", "data:", "https:"],
+    connectSrc: ["'self'"],
   },
-}));
+};
+
+// Desactiva CSP sólo para Swagger UI
+const swaggerCspOff = (req, res, next) => {
+  res.locals.cspDisabled = true;
+  next();
+};
+// Monta este middleware ANTES de Helmet y sólo en la ruta de Swagger
+app.use(`${API_PREFIX}/docs`, swaggerCspOff);
+
+// Wrapper que aplica helmet con CSP calculada por request
+app.use((req, res, next) => {
+  const csp = res.locals?.cspDisabled ? false : baseHelmetDirectives;
+  helmet({
+    crossOriginResourcePolicy: { policy: "cross-origin" },
+    frameguard: { action: "deny" },
+    referrerPolicy: { policy: "no-referrer" },
+    contentSecurityPolicy: csp, // false en /api/docs, objeto en el resto
+  })(req, res, next);
+});
 
 app.use(compression());
 
-// 4) CORS seguro (lista blanca + opción para Azure Static Web Apps)
-const parseCsv = (v) => (v || "").split(",").map(s => s.trim()).filter(Boolean);
+// 5) CORS seguro (lista blanca + opción para Azure Static Web Apps)
+const parseCsv = (v) => (v || "").split(",").map((s) => s.trim()).filter(Boolean);
 
 const LOCAL_ORIGINS = [
-  'http://localhost:5173',
-  'http://localhost:5174',
-  'http://localhost:4174',
-  'http://127.0.0.1:5173',
-  'http://127.0.0.1:5174',
-  'http://127.0.0.1:4174'
+  "http://localhost:5173",
+  "http://localhost:5174",
+  "http://localhost:4174",
+  "http://127.0.0.1:5173",
+  "http://127.0.0.1:5174",
+  "http://127.0.0.1:4174",
+  "http://192.168.18.10:5173",
+  "http://192.168.18.10:5174",
+  "http://192.168.18.10:4174",
 ];
 
-// FRONTEND_URLS: lista separada por comas con tus dominios de producción.
-// Ej: "https://tuapp.azurestaticapps.net,https://app.tudominio.cl"
 const FRONTEND_URLS = parseCsv(process.env.FRONTEND_URLS || process.env.FRONTEND_URL);
-
-// CORS_EXTRA_ORIGINS: otros orígenes permitidos (opcional)
 const EXTRA_ORIGINS = parseCsv(process.env.CORS_EXTRA_ORIGINS);
 
-// ¿Permitir automáticamente dominios de Azure Static Web Apps?
-// Pon CORS_ALLOW_SWA_REGEX="true" si quieres permitir *.azurestaticapps.net
-const allowSwaRegex = process.env.CORS_ALLOW_SWA_REGEX === 'true';
+const allowSwaRegex = process.env.CORS_ALLOW_SWA_REGEX === "true";
 const swaRegex = /\.azurestaticapps\.net$/i;
 
 const allowed = new Set([...LOCAL_ORIGINS, ...FRONTEND_URLS, ...EXTRA_ORIGINS]);
 
-app.use(cors({
-  origin(origin, callback) {
-    if (!origin) return callback(null, true); // curl/servicios internos
-    try {
-      const url = new URL(origin);
-      if (allowed.has(origin) || allowed.has(url.origin)) return callback(null, true);
-      if (allowSwaRegex && swaRegex.test(url.hostname)) return callback(null, true);
-      return callback(new Error(`CORS bloqueado para origen: ${origin}`));
-    } catch {
-      return callback(new Error('Origen inválido'));
-    }
-  },
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Cache-Control'],
-  optionsSuccessStatus: 200
-}));
+app.use(
+  cors({
+    origin(origin, callback) {
+      if (!origin) return callback(null, true); // curl/servicios internos
+      try {
+        const url = new URL(origin);
+        if (allowed.has(origin) || allowed.has(url.origin)) return callback(null, true);
+        if (allowSwaRegex && swaRegex.test(url.hostname)) return callback(null, true);
+        return callback(new Error(`CORS bloqueado para origen: ${origin}`));
+      } catch {
+        return callback(new Error("Origen inválido"));
+      }
+    },
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Cache-Control"],
+    optionsSuccessStatus: 200,
+  })
+);
 
-// 5) Rate limiting (configurable por env)
-const WINDOW_MS  = parseInt(process.env.RATE_LIMIT_WINDOW_MS || `${15 * 60 * 1000}`, 10); // 15 min
-const GENERAL_MAX = parseInt(process.env.RATE_LIMIT_GENERAL_MAX || (nodeEnv === 'development' ? '1000' : '100'), 10);
-const AUTH_MAX    = parseInt(process.env.RATE_LIMIT_AUTH_MAX    || (nodeEnv === 'development' ? '50'   : '5'), 10);
+// 6) Rate limiting (configurable por env)
+const WINDOW_MS = parseInt(process.env.RATE_LIMIT_WINDOW_MS || `${15 * 60 * 1000}`, 10); // 15 min
+const GENERAL_MAX = parseInt(
+  process.env.RATE_LIMIT_GENERAL_MAX ||
+    process.env.RATE_LIMIT_MAX_REQUESTS ||
+    (nodeEnv === "development" ? "1000" : "100"),
+  10
+);
+const AUTH_MAX = parseInt(
+  process.env.RATE_LIMIT_AUTH_MAX ||
+    process.env.RATE_LIMIT_AUTH_MAX_REQUESTS ||
+    (nodeEnv === "development" ? "50" : "5"),
+  10
+);
 
 const generalLimiter = rateLimit({
   windowMs: WINDOW_MS,
@@ -118,20 +142,19 @@ const authLimiter = rateLimit({
 });
 
 app.use(generalLimiter);
-app.use('/api/auth', authLimiter);
+app.use("/api/auth", authLimiter);
 
-// 6) Logging
-app.use(morgan(nodeEnv === 'development' ? "dev" : "combined"));
+// 7) Logging
+app.use(morgan(nodeEnv === "development" ? "dev" : "combined"));
 
-// 7) Parsers
-app.use(express.json({ limit: '10mb' }));
-app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+// 8) Parsers
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 
-// 8) Prefijo API y router principal
-const API_PREFIX = process.env.API_PREFIX || "/api";
+// 9) Prefijo API y router principal
 const apiRouter = express.Router();
 
-// 9) Registro dinámico de rutas
+// 10) Registro dinámico de rutas
 const routes = [
   { path: "/auth", module: "./routes/authRoutes" },
   { path: "/usuarios", module: "./routes/usuarios" },
@@ -158,7 +181,7 @@ const routes = [
   { path: "/logs-actividad", module: "./routes/logsActividad" },
   { path: "/notificaciones", module: "./routes/notificaciones" },
   { path: "/permisos-roles", module: "./routes/permisosRoles" },
-  { path: "/plantillas-reportes", module: "./routes/plantillasReportes" },
+  { path: "/reportes-mejorado", module: "./routes/reportesMejorado" },
   { path: "/seguimiento-cronologico", module: "./routes/seguimientoCronologico" },
 ];
 
@@ -183,23 +206,23 @@ routes.forEach(({ path: routePath, module }) => {
   }
 });
 
-// 10) Healthchecks
-apiRouter.get('/health', (_req, res) => {
+// 11) Healthchecks
+apiRouter.get("/health", (_req, res) => {
   res.status(200).json({
-    status: 'OK',
+    status: "OK",
     timestamp: new Date().toISOString(),
     uptime: process.uptime(),
-    environment: nodeEnv
+    environment: nodeEnv,
   });
 });
 
-// Montar router bajo prefijo
+// 12) Montar router bajo prefijo
 app.use(API_PREFIX, apiRouter);
 
-// 11) Swagger (asegúrate que sirva bajo `${API_PREFIX}/docs`)
+// 13) Swagger (sirve bajo `${API_PREFIX}/docs`)
 setupSwagger(app);
 
-// 12) Home
+// 14) Home
 app.get("/", (_req, res) => {
   res.json({
     status: "OK",
@@ -209,18 +232,18 @@ app.get("/", (_req, res) => {
   });
 });
 
-// 13) 404
+// 15) 404
 app.use((req, res) => {
   res.status(404).json({ error: "Ruta no encontrada", path: req.path });
 });
 
-// 14) Manejador global de errores
+// 16) Manejador global de errores
 app.use(errorHandler);
 
-// 15) Arranque
-if (process.env.NODE_ENV !== 'test') {
+// 17) Arranque
+if (process.env.NODE_ENV !== "test") {
   const PORT = process.env.PORT || 3001;
-  app.listen(PORT, '0.0.0.0', () => {
+  app.listen(PORT, "0.0.0.0", () => {
     console.log("\n🚀 Servidor SIGO PRO iniciado");
     console.log(`📡 Puerto: ${PORT}`);
     console.log(`📚 Swagger: http://localhost:${PORT}${API_PREFIX}/docs\n`);

@@ -1,7 +1,8 @@
+// controllers/seguimientoCronologicoController.js  ✅ PG
 const SeguimientoCronologicoModel = require('../models/seguimientoCronologicoModel');
 
 class SeguimientoCronologicoController {
-  async obtenerTodos(req, res) {
+  async obtenerTodos(_req, res) {
     try {
       const data = await SeguimientoCronologicoModel.obtenerTodos();
       res.json(data);
@@ -20,8 +21,8 @@ class SeguimientoCronologicoController {
   }
   async crear(req, res) {
     try {
-      const result = await SeguimientoCronologicoModel.crear(req.body);
-      res.status(201).json({ message: 'Creado correctamente', id: result.insertId });
+      const creado = await SeguimientoCronologicoModel.crear(req.body); // el modelo debe RETURNING *
+      res.status(201).json({ message: 'Creado correctamente', id: creado?.id || null, data: creado });
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
@@ -44,4 +45,4 @@ class SeguimientoCronologicoController {
   }
 }
 
-module.exports = new SeguimientoCronologicoController(); 
+module.exports = new SeguimientoCronologicoController();

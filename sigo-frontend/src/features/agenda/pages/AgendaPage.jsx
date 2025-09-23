@@ -14,7 +14,7 @@
 import { useEffect, useState } from "react";
 import { Plus } from "lucide-react";
 import { toast } from "react-toastify";
-import DashboardLayout from "../../../components/layout/DashboardLayout";
+import ImprovedDashboardLayout from "../../../components/layout/ImprovedDashboardLayout";
 import Button from "../../../components/ui/Button";
 
 import agendaService from "../services/AgendaService";
@@ -108,10 +108,10 @@ export default function AgendaPage() {
   };
 
   return (
-    <DashboardLayout>
-      <div className="space-y-6 px-4 sm:px-6 md:px-8 pb-8">
-        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-4">
-          <h1 className="text-xl sm:text-2xl font-semibold text-gray-800 dark:text-white">
+    <ImprovedDashboardLayout>
+      <div className="space-y-4 sm:space-y-6 px-2 sm:px-4 lg:px-6 pb-6 sm:pb-8">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
+          <h1 className="page-title text-xl sm:text-2xl lg:text-3xl">
             Agenda de Entrevistas
           </h1>
           <Button
@@ -163,6 +163,6 @@ export default function AgendaPage() {
           onSubmit={handleSubmitRegistro}
         />
       </div>
-    </DashboardLayout>
+    </ImprovedDashboardLayout>
   );
 }

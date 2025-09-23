@@ -13,4 +13,4 @@ router.post('/', validateBody(seguimientoCronologicoValidator), seguimientoCrono
 router.put('/:id', validateBody(seguimientoCronologicoValidator), seguimientoCronologicoController.actualizar);
 router.delete('/:id', seguimientoCronologicoController.eliminar);
 
-module.exports = router; 
+module.exports = router;

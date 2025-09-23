@@ -11,7 +11,7 @@
  * <Route path="/recursos" element={<RecursosPage />} />
  */
 import { useEffect, useState } from "react";
-import DashboardLayout from "../../../components/layout/DashboardLayout";
+import ImprovedDashboardLayout from "../../../components/layout/ImprovedDashboardLayout";
 import Button from "../../../components/ui/Button";
 import { Plus } from "lucide-react";
 import recursoService from "../services/recursoService";
@@ -37,23 +37,15 @@ export default function RecursosPage() {
     try {
       setLoading(true);
       setError(null);
-      const [resRecursos, resMovs] = await Promise.all([
-        recursoService.getRecursos(),
-        movimientoService.getMovimientos(),
-      ]);
+      const resRecursos = await recursoService.getRecursos();
 
       const recursosBase = resRecursos.data || [];
-      const movs = resMovs.data || [];
 
-      const recursosConStock = recursosBase.map((r) => {
-        const entradas = movs
-          .filter((m) => m.tipo_movimiento === "entrada" && m.id_recurso === r.id)
-          .reduce((acc, m) => acc + m.cantidad, 0);
-        const salidas = movs
-          .filter((m) => m.tipo_movimiento === "salida" && m.id_recurso === r.id)
-          .reduce((acc, m) => acc + m.cantidad, 0);
-        return { ...r, cantidad_disponible: entradas - salidas };
-      });
+      // Usar el campo 'disponible' que ya viene del backend
+      const recursosConStock = recursosBase.map((r) => ({
+        ...r,
+        cantidad_disponible: r.disponible || 0
+      }));
 
       setRecursos(recursosConStock);
       
@@ -105,7 +97,7 @@ export default function RecursosPage() {
     : recursos;
 
   return (
-    <DashboardLayout>
+    <ImprovedDashboardLayout>
       <div className="space-y-6">
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
           <h1 className="text-xl sm:text-2xl font-semibold text-gray-800 dark:text-white">
@@ -168,6 +160,6 @@ export default function RecursosPage() {
           title="¿Eliminar recurso del inventario?"
         />
       </div>
-    </DashboardLayout>
+    </ImprovedDashboardLayout>
   );
 }

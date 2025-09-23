@@ -50,6 +50,16 @@ class EntrevistasController {
   }
 }
 
+  static async obtenerPorMesTest(req, res, next) {
+    try {
+      const data = await EntrevistaModel.obtenerPorMes();
+      res.json(data);
+    } catch (error) {
+      logger.error("❌ Error al obtener entrevistas por mes (test):", error);
+      next(error);
+    }
+  }
+
 
   static async crear(req, res, next) {
     try {

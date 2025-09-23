@@ -7,7 +7,7 @@ import EstudianteFormModal from "../components/EstudianteFormModal";
 import CargaMasivaModal from "../components/CargaMasivaModal";
 import DeleteConfirmModal from "../../usuarios/components/DeleteConfirmModal";
 import estudianteService from "../services/estudianteService";
-import DashboardLayout from "../../../components/layout/DashboardLayout";
+import ImprovedDashboardLayout from "../../../components/layout/ImprovedDashboardLayout";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import logo from "../../../assets/logo-pages.png";
@@ -186,9 +186,9 @@ export default function EstudiantesPage() {
   }
 
   return (
-    <DashboardLayout>
-      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
-        <h1 className="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white">
+    <ImprovedDashboardLayout>
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
+        <h1 className="page-title text-xl sm:text-2xl lg:text-3xl">
           Gestión de Estudiantes
         </h1>
         <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 w-full sm:w-auto">
@@ -331,6 +331,6 @@ export default function EstudiantesPage() {
         onConfirm={handleConfirmDelete}
         message={`¿Está seguro que desea eliminar a ${estudianteToDelete?.nombre} ${estudianteToDelete?.apellido}? Esta acción no se puede deshacer.`}
       />
-    </DashboardLayout>
+    </ImprovedDashboardLayout>
   );
 }

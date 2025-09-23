@@ -13,7 +13,7 @@
 import { useCallback, useMemo, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../context/useAuth";
-import DashboardLayout from "../../../components/layout/DashboardLayout";
+import ImprovedDashboardLayout from "../../../components/layout/ImprovedDashboardLayout";
 import { useCache } from "../../../hooks/useCache";
 
 import OptimizedSummaryCard from "../components/OptimizedSummaryCard";
@@ -42,6 +42,7 @@ export default function DashboardPageFinal() {
   }, [user, navigate]);
 
   const fetchDashboardStats = useCallback(async () => {
+    try {
     const data = await dashboardService.getResumen();
     return {
       estudiantes: data.estudiantes || 0,
@@ -50,6 +51,17 @@ export default function DashboardPageFinal() {
       entrevistasPorMes: data.entrevistasPorMes || [],
       testPorEspecialidad: data.testPorEspecialidad || [],
     };
+    } catch (error) {
+      console.error("Error al cargar datos del dashboard:", error);
+      // Devolver datos por defecto en caso de error
+      return {
+        estudiantes: 0,
+        entrevistas: 0,
+        alertas: 0,
+        entrevistasPorMes: [],
+        testPorEspecialidad: [],
+      };
+    }
   }, []);
 
   const {
@@ -99,66 +111,109 @@ export default function DashboardPageFinal() {
 
   if (loadingStats) {
     return (
-      <DashboardLayout>
-        <div className="p-4 sm:p-6 text-gray-600 text-sm sm:text-base">
-          Cargando datos del dashboard...
+      <ImprovedDashboardLayout>
+        <div className="px-6 py-8 space-y-6">
+          {/* Skeleton para tarjetas de resumen */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {Array.from({ length: 3 }).map((_, index) => (
+              <div key={index} className="rounded-xl shadow-md bg-gray-200 dark:bg-gray-700 p-6 flex justify-between items-center animate-pulse">
+                <div className="space-y-3 flex-1">
+                  <div className="h-4 bg-gray-300 dark:bg-gray-600 rounded w-20"></div>
+                  <div className="h-8 bg-gray-300 dark:bg-gray-600 rounded w-16"></div>
+                </div>
+                <div className="w-12 h-12 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
+              </div>
+            ))}
+          </div>
+          
+          {/* Skeleton para gráficos */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="lg:col-span-2 space-y-6">
+              <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg p-6">
+                <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-48 mb-4 animate-pulse"></div>
+                <div className="h-64 bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></div>
+              </div>
+              <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg p-6">
+                <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-48 mb-4 animate-pulse"></div>
+                <div className="h-64 bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></div>
+              </div>
+            </div>
+            <div className="lg:col-span-1">
+              <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg p-6">
+                <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-32 mb-4 animate-pulse"></div>
+                <div className="space-y-3">
+                  {Array.from({ length: 4 }).map((_, index) => (
+                    <div key={index} className="h-12 bg-gray-200 dark:bg-gray-700 rounded-lg animate-pulse"></div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </DashboardLayout>
+      </ImprovedDashboardLayout>
     );
   }
 
   if (statsError) {
     return (
-      <DashboardLayout>
+      <ImprovedDashboardLayout>
         <div className="p-4 sm:p-6 text-red-500 text-sm sm:text-base">
           Error al cargar los datos del dashboard.
         </div>
-      </DashboardLayout>
+      </ImprovedDashboardLayout>
     );
   }
 
   return (
-    <DashboardLayout>
+    <ImprovedDashboardLayout>
       <DashboardHeader />
-      <div className="px-4 sm:px-6 md:px-8 space-y-6 pb-8">
+      <div className="px-6 py-8 space-y-8 animate-fade-in">
         {/* Tarjetas resumen */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
           <OptimizedSummaryCard
             title="Estudiantes"
             value={stats.estudiantes}
-            icon={<UsersIcon size={24} className="sm:w-7 sm:h-7" />}
+            icon={<UsersIcon size={28} className="w-7 h-7" />}
             color="blue"
+            loading={loadingStats}
           />
           <OptimizedSummaryCard
             title="Entrevistas"
             value={stats.entrevistas}
-            icon={<CalendarCheckIcon size={24} className="sm:w-7 sm:h-7" />}
+            icon={<CalendarCheckIcon size={28} className="w-7 h-7" />}
             color="green"
+            loading={loadingStats}
           />
           <OptimizedSummaryCard
             title="Alertas"
             value={stats.alertas}
-            icon={<BellIcon size={24} className="sm:w-7 sm:h-7" />}
+            icon={<BellIcon size={28} className="w-7 h-7" />}
             color="red"
+            loading={loadingStats}
           />
         </div>
 
         {/* Gráficos y panel de acciones */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
-          <div className="lg:col-span-2 space-y-4 sm:space-y-6">
-            <div className="overflow-x-auto rounded-lg sm:rounded-xl">
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 sm:gap-6">
+          <div className="xl:col-span-2 space-y-4 sm:space-y-6">
+            <div className="overflow-x-auto rounded-xl shadow-lg">
               <EntrevistasLineChart data={processedChartData.entrevistasPorMes} />
             </div>
-            <div className="overflow-x-auto rounded-lg sm:rounded-xl">
+            <div className="overflow-x-auto rounded-xl shadow-lg">
               <TestBarChart data={processedChartData.testPorEspecialidad} />
             </div>
           </div>
 
-          <div className="lg:col-span-1">
-            <QuickActionsPanelV2 onGenerarPDF={handleGenerarPDF} />
+          <div className="xl:col-span-1">
+            <QuickActionsPanelV2 
+              onGenerarPDF={handleGenerarPDF}
+              loading={loadingStats}
+              error={statsError}
+              userRole={user?.rol}
+            />
           </div>
         </div>
       </div>
-    </DashboardLayout>
+    </ImprovedDashboardLayout>
   );
 }

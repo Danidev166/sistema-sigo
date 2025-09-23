@@ -10,7 +10,7 @@ class MovimientoController {
 
       // ✅ Si es una salida y tiene estudiante, registrar en Entrega_Recursos
       if (
-        req.body.tipo_movimiento === "salida" &&
+        (req.body.tipo_movimiento === "Salida" || req.body.tipo_movimiento === "salida") &&
         req.body.id_estudiante &&
         !isNaN(parseInt(req.body.id_estudiante))
       ) {
@@ -52,6 +52,62 @@ class MovimientoController {
     } catch (error) {
       logger.error("Error al listar movimientos:", error);
       res.status(500).json({ error: "Error al obtener los movimientos" });
+    }
+  }
+
+  static async actualizar(req, res) {
+    try {
+      const { id } = req.params;
+      const movimientoActualizado = await MovimientoModel.actualizar(id, req.body);
+
+      if (!movimientoActualizado) {
+        return res.status(404).json({ error: "Movimiento no encontrado" });
+      }
+
+      // Auditoría
+      await LogsActividadModel.crear({
+        id_usuario: req.user?.id || null,
+        accion: 'Actualizar',
+        tabla_afectada: 'movimientos',
+        id_registro: id,
+        datos_anteriores: null, // Podrías obtener los datos anteriores si es necesario
+        datos_nuevos: JSON.stringify(movimientoActualizado),
+        ip_address: req.ip,
+        user_agent: req.headers['user-agent']
+      });
+
+      res.json(movimientoActualizado);
+    } catch (error) {
+      logger.error("Error al actualizar movimiento:", error);
+      res.status(500).json({ error: "Error al actualizar el movimiento" });
+    }
+  }
+
+  static async eliminar(req, res) {
+    try {
+      const { id } = req.params;
+      const movimientoEliminado = await MovimientoModel.eliminar(id);
+
+      if (!movimientoEliminado) {
+        return res.status(404).json({ error: "Movimiento no encontrado" });
+      }
+
+      // Auditoría
+      await LogsActividadModel.crear({
+        id_usuario: req.user?.id || null,
+        accion: 'Eliminar',
+        tabla_afectada: 'movimientos',
+        id_registro: id,
+        datos_anteriores: JSON.stringify(movimientoEliminado),
+        datos_nuevos: null,
+        ip_address: req.ip,
+        user_agent: req.headers['user-agent']
+      });
+
+      res.json({ mensaje: "Movimiento eliminado correctamente" });
+    } catch (error) {
+      logger.error("Error al eliminar movimiento:", error);
+      res.status(500).json({ error: "Error al eliminar el movimiento" });
     }
   }
 }

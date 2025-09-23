@@ -13,7 +13,7 @@
 // src/features/test-vocacionales/pages/EvaluacionesVocacionalesPage.jsx
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import DashboardLayout from "../../../components/layout/DashboardLayout";
+import ImprovedDashboardLayout from "../../../components/layout/ImprovedDashboardLayout";
 import Button from "../../../components/ui/Button";
 import QRGenerator from "../components/QRGenerator";
 import SimpleQRScanner from "../components/SimpleQRScanner";
@@ -45,7 +45,7 @@ export default function EvaluacionesVocacionalesPage() {
   };
 
   return (
-    <DashboardLayout>
+    <ImprovedDashboardLayout>
       <div className="space-y-8 pb-10">
         {/* Título */}
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
@@ -128,7 +128,7 @@ export default function EvaluacionesVocacionalesPage() {
           onClose={() => setShowEstudianteSelector(false)}
         />
       )}
-    </DashboardLayout>
+    </ImprovedDashboardLayout>
   );
 }
 

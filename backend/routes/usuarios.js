@@ -7,11 +7,14 @@ const {
   validarActualizacionUsuario
 } = require("../middleware/usuariosValidatorMiddleware");
 
-router.get("/", verifyToken, UsuarioController.listar);
-router.get("/:id", verifyToken, UsuarioController.obtener);
-router.post("/", verifyToken, validarCreacionUsuario, UsuarioController.crear);
-router.put("/:id", verifyToken, validarActualizacionUsuario, UsuarioController.actualizar);
-router.patch("/:id/estado", verifyToken, UsuarioController.actualizarEstado);
-router.delete("/:id", verifyToken, UsuarioController.eliminar);
+// 🔐 proteger todo
+router.use(verifyToken);
+
+router.get("/", UsuarioController.listar);
+router.get("/:id", UsuarioController.obtener);
+router.post("/", validarCreacionUsuario, UsuarioController.crear);
+router.put("/:id", validarActualizacionUsuario, UsuarioController.actualizar);
+router.patch("/:id/estado", UsuarioController.actualizarEstado);
+router.delete("/:id", UsuarioController.eliminar);
 
 module.exports = router;

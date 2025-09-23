@@ -1,0 +1,338 @@
+/* sigo-frontend/src/styles/responsive.css */
+
+/* Sistema de breakpoints consistente */
+:root {
+  /* Breakpoints personalizados */
+  --breakpoint-xs: 320px;   /* Móviles pequeños */
+  --breakpoint-sm: 640px;   /* Móviles grandes */
+  --breakpoint-md: 768px;   /* Tablets */
+  --breakpoint-lg: 1024px;  /* Laptops */
+  --breakpoint-xl: 1280px;  /* Desktops */
+  --breakpoint-2xl: 1536px; /* Pantallas grandes */
+}
+
+/* Utilidades responsive para contenedores */
+.container-responsive {
+  @apply w-full mx-auto px-2 sm:px-4 lg:px-6 xl:px-8;
+  max-width: 100%;
+}
+
+/* Utilidades para grid responsive */
+.grid-responsive {
+  @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6;
+}
+
+.grid-responsive-2 {
+  @apply grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6;
+}
+
+.grid-responsive-3 {
+  @apply grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6;
+}
+
+/* Utilidades para flex responsive */
+.flex-responsive {
+  @apply flex flex-col sm:flex-row gap-3 sm:gap-4;
+}
+
+.flex-responsive-center {
+  @apply flex flex-col sm:flex-row items-center gap-3 sm:gap-4;
+}
+
+.flex-responsive-between {
+  @apply flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4;
+}
+
+/* Utilidades para texto responsive */
+.text-responsive-xs {
+  @apply text-xs sm:text-sm;
+}
+
+.text-responsive-sm {
+  @apply text-sm sm:text-base;
+}
+
+.text-responsive-base {
+  @apply text-sm sm:text-base lg:text-lg;
+}
+
+.text-responsive-lg {
+  @apply text-base sm:text-lg lg:text-xl;
+}
+
+.text-responsive-xl {
+  @apply text-lg sm:text-xl lg:text-2xl;
+}
+
+.text-responsive-2xl {
+  @apply text-xl sm:text-2xl lg:text-3xl;
+}
+
+/* Utilidades para padding responsive */
+.p-responsive {
+  @apply p-2 sm:p-4 lg:p-6;
+}
+
+.px-responsive {
+  @apply px-2 sm:px-4 lg:px-6;
+}
+
+.py-responsive {
+  @apply py-2 sm:py-4 lg:py-6;
+}
+
+/* Utilidades para margin responsive */
+.m-responsive {
+  @apply m-2 sm:m-4 lg:m-6;
+}
+
+.mx-responsive {
+  @apply mx-2 sm:mx-4 lg:mx-6;
+}
+
+.my-responsive {
+  @apply my-2 sm:my-4 lg:my-6;
+}
+
+/* Utilidades para gap responsive */
+.gap-responsive {
+  @apply gap-2 sm:gap-4 lg:gap-6;
+}
+
+.gap-responsive-sm {
+  @apply gap-1 sm:gap-2 lg:gap-3;
+}
+
+.gap-responsive-lg {
+  @apply gap-4 sm:gap-6 lg:gap-8;
+}
+
+/* Utilidades para altura responsive */
+.h-responsive {
+  @apply h-48 sm:h-64 lg:h-80;
+}
+
+.h-responsive-sm {
+  @apply h-32 sm:h-40 lg:h-48;
+}
+
+.h-responsive-lg {
+  @apply h-64 sm:h-80 lg:h-96;
+}
+
+/* Utilidades para ancho responsive */
+.w-responsive {
+  @apply w-full sm:w-auto;
+}
+
+.w-responsive-sm {
+  @apply w-full sm:w-1/2 lg:w-1/3;
+}
+
+.w-responsive-lg {
+  @apply w-full lg:w-2/3 xl:w-3/4;
+}
+
+/* Utilidades para visibilidad responsive */
+.hidden-mobile {
+  @apply hidden sm:block;
+}
+
+.hidden-desktop {
+  @apply block sm:hidden;
+}
+
+.hidden-tablet {
+  @apply hidden lg:block;
+}
+
+/* Utilidades para tarjetas responsive */
+.card-responsive {
+  @apply bg-white dark:bg-slate-800 rounded-lg sm:rounded-xl shadow-sm sm:shadow-md p-4 sm:p-6;
+}
+
+.card-responsive-sm {
+  @apply bg-white dark:bg-slate-800 rounded-lg shadow-sm p-3 sm:p-4;
+}
+
+.card-responsive-lg {
+  @apply bg-white dark:bg-slate-800 rounded-xl shadow-lg p-6 sm:p-8;
+}
+
+/* Utilidades para botones responsive */
+.btn-responsive {
+  @apply px-3 py-2 sm:px-4 sm:py-2 text-sm sm:text-base rounded-md;
+}
+
+.btn-responsive-sm {
+  @apply px-2 py-1 sm:px-3 sm:py-2 text-xs sm:text-sm rounded;
+}
+
+.btn-responsive-lg {
+  @apply px-4 py-3 sm:px-6 sm:py-3 text-base sm:text-lg rounded-lg;
+}
+
+/* Utilidades para formularios responsive */
+.form-responsive {
+  @apply space-y-4 sm:space-y-6;
+}
+
+.form-group-responsive {
+  @apply space-y-2 sm:space-y-3;
+}
+
+.form-label-responsive {
+  @apply text-sm sm:text-base font-medium;
+}
+
+.form-input-responsive {
+  @apply w-full px-3 py-2 sm:px-4 sm:py-3 text-sm sm:text-base rounded-md;
+}
+
+/* Utilidades para tablas responsive */
+.table-responsive {
+  @apply overflow-x-auto;
+}
+
+.table-responsive-sm {
+  @apply overflow-x-auto text-sm;
+}
+
+.table-responsive-lg {
+  @apply overflow-x-auto text-base;
+}
+
+/* Utilidades para modales responsive */
+.modal-responsive {
+  @apply w-full max-w-sm sm:max-w-md lg:max-w-lg xl:max-w-xl;
+}
+
+.modal-responsive-sm {
+  @apply w-full max-w-xs sm:max-w-sm;
+}
+
+.modal-responsive-lg {
+  @apply w-full max-w-md sm:max-w-lg lg:max-w-2xl xl:max-w-4xl;
+}
+
+/* Utilidades para navegación responsive */
+.nav-responsive {
+  @apply flex flex-col sm:flex-row gap-2 sm:gap-4;
+}
+
+.nav-item-responsive {
+  @apply px-3 py-2 sm:px-4 sm:py-2 text-sm sm:text-base rounded-md;
+}
+
+/* Utilidades para sidebar responsive */
+.sidebar-responsive {
+  @apply w-64 sm:w-72 lg:w-80;
+}
+
+.sidebar-mobile {
+  @apply fixed inset-y-0 left-0 z-50 transform transition-transform duration-300;
+}
+
+.sidebar-desktop {
+  @apply static lg:translate-x-0;
+}
+
+/* Utilidades para gráficos responsive */
+.chart-responsive {
+  @apply w-full h-48 sm:h-64 lg:h-80;
+}
+
+.chart-responsive-sm {
+  @apply w-full h-32 sm:h-40 lg:h-48;
+}
+
+.chart-responsive-lg {
+  @apply w-full h-64 sm:h-80 lg:h-96;
+}
+
+/* Utilidades para espaciado responsive */
+.space-responsive {
+  @apply space-y-2 sm:space-y-4 lg:space-y-6;
+}
+
+.space-responsive-sm {
+  @apply space-y-1 sm:space-y-2 lg:space-y-3;
+}
+
+.space-responsive-lg {
+  @apply space-y-4 sm:space-y-6 lg:space-y-8;
+}
+
+/* Utilidades para bordes responsive */
+.border-responsive {
+  @apply border border-gray-200 dark:border-gray-700 rounded-lg sm:rounded-xl;
+}
+
+.border-responsive-sm {
+  @apply border border-gray-200 dark:border-gray-700 rounded;
+}
+
+.border-responsive-lg {
+  @apply border border-gray-200 dark:border-gray-700 rounded-xl;
+}
+
+/* Utilidades para sombras responsive */
+.shadow-responsive {
+  @apply shadow-sm sm:shadow-md lg:shadow-lg;
+}
+
+.shadow-responsive-sm {
+  @apply shadow-sm;
+}
+
+.shadow-responsive-lg {
+  @apply shadow-md sm:shadow-lg lg:shadow-xl;
+}
+
+/* Media queries personalizadas */
+@media (max-width: 320px) {
+  .container-responsive {
+    @apply px-1;
+  }
+  
+  .text-responsive-xs {
+    @apply text-xs;
+  }
+  
+  .btn-responsive {
+    @apply px-2 py-1 text-xs;
+  }
+}
+
+@media (min-width: 1536px) {
+  .container-responsive {
+    @apply px-12;
+  }
+  
+  .grid-responsive {
+    @apply grid-cols-5;
+  }
+  
+  .grid-responsive-3 {
+    @apply grid-cols-4;
+  }
+}
+
+/* Utilidades para impresión */
+@media print {
+  .print-hidden {
+    display: none !important;
+  }
+  
+  .print-visible {
+    display: block !important;
+  }
+  
+  .print-break {
+    page-break-before: always;
+  }
+  
+  .print-no-break {
+    page-break-inside: avoid;
+  }
+}

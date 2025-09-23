@@ -17,6 +17,7 @@ import Button from "../../../components/ui/Button";
 import { Plus } from "lucide-react";
 import movimientoService from "../services/movimientoService";
 import MovimientoFormModal from "../components/MovimientoFormModal";
+import EditarMovimientoModal from "../components/EditarMovimientoModal";
 import MovimientoTable from "../components/MovimientoTable";
 import FiltroMovimientos from "../components/FiltroMovimientos";
 import ExportarMovimientosPDF from "../components/ExportarMovimientosPDF";
@@ -26,10 +27,17 @@ export default function MovimientosPage() {
   const [movimientos, setMovimientos] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [movimientoAEditar, setMovimientoAEditar] = useState(null);
   const [filtros, setFiltros] = useState({
     tipo: "",
     fechaInicio: "",
     fechaFin: "",
+    recurso: "",
+    estudiante: "",
+    curso: "",
+    responsable: "",
+    busqueda: ""
   });
 
   const [paginaActual, setPaginaActual] = useState(1);
@@ -64,14 +72,63 @@ export default function MovimientosPage() {
     }
   };
 
+  const handleEdit = (movimiento) => {
+    setMovimientoAEditar(movimiento);
+    setIsEditModalOpen(true);
+  };
+
+  const handleEditSubmit = async (data) => {
+    try {
+      await movimientoService.actualizarMovimiento(movimientoAEditar.id, data);
+      toast.success("Movimiento actualizado correctamente");
+      setIsEditModalOpen(false);
+      setMovimientoAEditar(null);
+      fetchMovimientos();
+    } catch (err) {
+      toast.error("Error al actualizar movimiento");
+      console.error(err);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      await movimientoService.eliminarMovimiento(id);
+      toast.success("Movimiento eliminado correctamente");
+      fetchMovimientos();
+    } catch (err) {
+      toast.error("Error al eliminar movimiento");
+      console.error(err);
+    }
+  };
+
+
   const movimientosFiltrados = movimientos.filter((mov) => {
+    // Filtro por tipo de movimiento
     const cumpleTipo = !filtros.tipo || mov.tipo_movimiento === filtros.tipo;
+    
+    // Filtro por fechas
     const fecha = new Date(mov.fecha);
     const desde = filtros.fechaInicio ? new Date(filtros.fechaInicio) : null;
     const hasta = filtros.fechaFin ? new Date(filtros.fechaFin) : null;
-    const cumpleFecha =
-      (!desde || fecha >= desde) && (!hasta || fecha <= hasta);
-    return cumpleTipo && cumpleFecha;
+    const cumpleFecha = (!desde || fecha >= desde) && (!hasta || fecha <= hasta);
+    
+    // Filtro por recurso
+    const cumpleRecurso = !filtros.recurso || mov.recurso?.toLowerCase().includes(filtros.recurso.toLowerCase());
+    
+    // Filtro por estudiante
+    const cumpleEstudiante = !filtros.estudiante || mov.estudiante?.toLowerCase().includes(filtros.estudiante.toLowerCase());
+    
+    // Filtro por responsable
+    const cumpleResponsable = !filtros.responsable || mov.responsable?.toLowerCase().includes(filtros.responsable.toLowerCase());
+    
+    // Filtro por búsqueda general (observaciones y responsable)
+    const cumpleBusqueda = !filtros.busqueda || 
+      (mov.observaciones?.toLowerCase().includes(filtros.busqueda.toLowerCase()) ||
+       mov.responsable?.toLowerCase().includes(filtros.busqueda.toLowerCase()) ||
+       mov.recurso?.toLowerCase().includes(filtros.busqueda.toLowerCase()) ||
+       mov.estudiante?.toLowerCase().includes(filtros.busqueda.toLowerCase()));
+    
+    return cumpleTipo && cumpleFecha && cumpleRecurso && cumpleEstudiante && cumpleResponsable && cumpleBusqueda;
   });
 
   const totalPaginas = Math.ceil(movimientosFiltrados.length / elementosPorPagina);
@@ -113,13 +170,34 @@ export default function MovimientosPage() {
           }}
         />
 
+        {/* Contador de resultados */}
+        <div className="flex justify-between items-center text-sm text-gray-600 dark:text-gray-400">
+          <span>
+            Mostrando {movimientosPaginados.length} de {movimientosFiltrados.length} movimientos
+            {movimientosFiltrados.length !== movimientos.length && (
+              <span className="text-blue-600 dark:text-blue-400">
+                {" "}(filtrados de {movimientos.length} total)
+              </span>
+            )}
+          </span>
+          {movimientosFiltrados.length > 0 && (
+            <span className="text-gray-500">
+              Página {paginaActual} de {totalPaginas}
+            </span>
+          )}
+        </div>
+
         {isLoading ? (
           <div className="flex justify-center py-10">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
           </div>
         ) : (
           <>
-            <MovimientoTable movimientos={movimientosPaginados} />
+            <MovimientoTable 
+              movimientos={movimientosPaginados} 
+              onEdit={handleEdit}
+              onDelete={handleDelete}
+            />
 
             {totalPaginas > 1 && (
               <div className="flex items-center justify-between mt-4 text-sm text-gray-700 dark:text-gray-300">
@@ -151,6 +229,16 @@ export default function MovimientosPage() {
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
           onSubmit={handleSubmit}
+        />
+
+        <EditarMovimientoModal
+          isOpen={isEditModalOpen}
+          onClose={() => {
+            setIsEditModalOpen(false);
+            setMovimientoAEditar(null);
+          }}
+          onSubmit={handleEditSubmit}
+          movimiento={movimientoAEditar}
         />
       </div>
     </DashboardLayout>

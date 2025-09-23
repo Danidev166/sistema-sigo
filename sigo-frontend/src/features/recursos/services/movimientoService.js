@@ -27,6 +27,24 @@ const movimientoService = {
       handleError(error);
     }
   },
+
+  // Actualizar un movimiento existente
+  actualizarMovimiento: async (id, data) => {
+    try {
+      return await api.put(`/movimientos/${id}`, data);
+    } catch (error) {
+      handleError(error);
+    }
+  },
+
+  // Eliminar un movimiento
+  eliminarMovimiento: async (id) => {
+    try {
+      return await api.delete(`/movimientos/${id}`);
+    } catch (error) {
+      handleError(error);
+    }
+  },
 };
 
 export default movimientoService;

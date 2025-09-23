@@ -1,36 +1,34 @@
-// src/routes/entregaRecursoRoutes.js
-
 const express = require("express");
 const router = express.Router();
+const verifyToken = require("../middleware/verifyToken");
 const entregaRecursoController = require("../controller/entregaRecursoController");
 const validateBody = require("../middleware/validateBody");
 const entregaRecursoValidator = require("../validators/entregaRecursoValidator");
 
-// ✅ Ruta general para listar todas las entregas
-router.get("/entregas", entregaRecursoController.obtenerTodas);
+// Protege todas las rutas de este módulo
+router.use(verifyToken);
 
-// ✅ Ruta para obtener entregas por estudiante (más específica primero)
+// ✅ OJO: este router se monta en "/entregas" en index.js, así que aquí NO repitas "/entregas"
+router.get("/", entregaRecursoController.obtenerTodas);
+
+// Más específica primero para evitar conflictos
 router.get("/estudiante/:id", entregaRecursoController.obtenerPorEstudiante);
 
+// Por ID (genérica)
+router.get("/:id", entregaRecursoController.obtenerPorId);
 
-// ✅ Ruta para obtener una entrega por su ID
-router.get("/entregas/:id", entregaRecursoController.obtenerPorId);
-
-// ✅ Crear una entrega
 router.post(
-  "/entregas",
+  "/",
   validateBody(entregaRecursoValidator.crear),
   entregaRecursoController.crear
 );
 
-// ✅ Actualizar una entrega
 router.put(
-  "/entregas/:id",
+  "/:id",
   validateBody(entregaRecursoValidator.actualizar),
   entregaRecursoController.actualizar
 );
 
-// ✅ Eliminar una entrega
-router.delete("/entregas/:id", entregaRecursoController.eliminar);
+router.delete("/:id", entregaRecursoController.eliminar);
 
 module.exports = router;

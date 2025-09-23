@@ -1,14 +1,16 @@
 const express = require("express");
 const router = express.Router();
 const HistorialController = require("../controller/historialAcademicoController");
-const { authMiddleware } = require("../middleware/authMiddleware");
+const verifyToken = require("../middleware/verifyToken");
 
-// ✅ Asegúrate de no tener errores como paréntesis faltantes o uso indebido
-router.get("/", authMiddleware, HistorialController.obtenerTodos);
-router.get("/estudiante/:id", authMiddleware, HistorialController.obtenerPorEstudiante);
-router.get("/:id", authMiddleware, HistorialController.obtenerPorId);
-router.post("/", authMiddleware, HistorialController.crear);
-router.put("/:id", authMiddleware, HistorialController.actualizar);
-router.delete("/:id", authMiddleware, HistorialController.eliminar);
+// Protege todo el módulo
+router.use(verifyToken);
+
+router.get("/", HistorialController.obtenerTodos);
+router.get("/estudiante/:id", HistorialController.obtenerPorEstudiante);
+router.get("/:id", HistorialController.obtenerPorId);
+router.post("/", HistorialController.crear);
+router.put("/:id", HistorialController.actualizar);
+router.delete("/:id", HistorialController.eliminar);
 
 module.exports = router;

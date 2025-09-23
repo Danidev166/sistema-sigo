@@ -1,118 +1,163 @@
-// models/estudianteModel.js
-const { sql, poolPromise } = require("../config/db");
+// backend/models/estudianteModel.js
+const { sql, getPool } = require('../config/db');
+
+// Fecha "YYYY-MM-DD" -> Date (evita desfases por zona horaria)
+function toSqlDate(input) {
+  if (input instanceof Date) return input;
+  if (typeof input === 'string') {
+    const [y, m, d] = input.split('-').map(Number);
+    return new Date(Date.UTC(y, (m || 1) - 1, d || 1));
+  }
+  return new Date(input);
+}
 
 const EstudianteModel = {
   async crear(estudiante) {
-    const pool = await poolPromise;
-    const result = await pool.request()
-      .input("nombre", sql.NVarChar(100), estudiante.nombre)
-      .input("apellido", sql.NVarChar(100), estudiante.apellido)
-      .input("rut", sql.NVarChar(20), estudiante.rut)
-      .input("email", sql.NVarChar(100), estudiante.email)
-      .input("telefono", sql.NVarChar(20), estudiante.telefono)
-      .input("direccion", sql.NVarChar(255), estudiante.direccion)
-      .input("fecha_nacimiento", sql.Date, estudiante.fechaNacimiento) // Convertir camelCase a snake_case
-      .input("curso", sql.NVarChar(50), estudiante.curso)
-      .input("especialidad", sql.NVarChar(100), estudiante.especialidad)
-      .input("situacion_economica", sql.NVarChar(50), estudiante.situacion_economica)
-      .input("fecha_registro", sql.DateTime, new Date())
-      .input("estado", sql.VarChar(20), estudiante.estado || 'Activo')
-      .query(`INSERT INTO Estudiantes (nombre, apellido, rut, email, telefono, direccion, fecha_nacimiento, curso, especialidad, situacion_economica, fecha_registro, estado)
-              OUTPUT INSERTED.*
-              VALUES (@nombre, @apellido, @rut, @email, @telefono, @direccion, @fecha_nacimiento, @curso, @especialidad, @situacion_economica, @fecha_registro, @estado)`);
-    return result.recordset[0];
+    const pool = await getPool();
+    const r = await pool.request()
+      .input('nombre',             sql.NVarChar, estudiante.nombre)
+      .input('apellido',           sql.NVarChar, estudiante.apellido)
+      .input('rut',                sql.NVarChar, estudiante.rut)
+      .input('email',              sql.NVarChar, estudiante.email)
+      .input('telefono',           sql.NVarChar, estudiante.telefono)
+      .input('direccion',          sql.NVarChar, estudiante.direccion)
+      .input('fecha_nacimiento',   sql.DateTime, toSqlDate(estudiante.fechaNacimiento))
+      .input('curso',              sql.NVarChar, estudiante.curso)
+      .input('especialidad',       sql.NVarChar, estudiante.especialidad)
+      .input('situacion_economica',sql.NVarChar, estudiante.situacion_economica)
+      .input('fecha_registro',     sql.DateTime, new Date())
+      .input('estado',             sql.VarChar,  estudiante.estado || 'Activo')
+      .query(`
+        INSERT INTO estudiantes (
+          nombre, apellido, rut, email, telefono, direccion,
+          fecha_nacimiento, curso, especialidad, situacion_economica,
+          fecha_registro, estado
+        )
+        VALUES (
+          @nombre, @apellido, @rut, @email, @telefono, @direccion,
+          @fecha_nacimiento, @curso, @especialidad, @situacion_economica,
+          @fecha_registro, @estado
+        )
+        RETURNING *
+      `);
+    return r.recordset[0];
   },
-  async crearMasivo(estudiantes) {
-  const pool = await poolPromise;
-  const results = await Promise.allSettled(estudiantes.map(async (est) => {
-    try {
-      console.log("Insertando estudiante:", est);
-      await pool.request()
-        .input("nombre", sql.NVarChar(100), est.nombre)
-        .input("apellido", sql.NVarChar(100), est.apellido)
-        .input("rut", sql.NVarChar(20), est.rut)
-        .input("email", sql.NVarChar(100), est.email)
-        .input("telefono", sql.NVarChar(20), est.telefono)
-        .input("direccion", sql.NVarChar(255), est.direccion)
-        .input("fecha_nacimiento", sql.Date, est.fechaNacimiento)
-        .input("curso", sql.NVarChar(50), est.curso)
-        .input("especialidad", sql.NVarChar(100), est.especialidad)
-        .input("situacion_economica", sql.NVarChar(50), est.situacion_economica)
-        .input("fecha_registro", sql.DateTime, new Date())
-        .input("estado", sql.VarChar(20), est.estado || "Activo")
-        .query(`
-          INSERT INTO Estudiantes (
-            nombre, apellido, rut, email, telefono, direccion,
-            fecha_nacimiento, curso, especialidad, situacion_economica,
-            fecha_registro, estado
-          ) VALUES (
-            @nombre, @apellido, @rut, @email, @telefono, @direccion,
-            @fecha_nacimiento, @curso, @especialidad, @situacion_economica,
-            @fecha_registro, @estado
-          )
-        `);
-      return { status: "fulfilled", rut: est.rut };
-    } catch (err) {
-      console.error("Error insertando estudiante:", est.rut, err.message);
-      return { status: "rejected", rut: est.rut, error: err.message };
-    }
-  }));
-  console.log("Resultados de la carga masiva:", results);
-},
 
+  async crearMasivo(estudiantes) {
+    const pool = await getPool();
+    const results = await Promise.allSettled(
+      estudiantes.map(async (est) => {
+        try {
+          await pool.request()
+            .input('nombre',             sql.NVarChar, est.nombre)
+            .input('apellido',           sql.NVarChar, est.apellido)
+            .input('rut',                sql.NVarChar, est.rut)
+            .input('email',              sql.NVarChar, est.email)
+            .input('telefono',           sql.NVarChar, est.telefono)
+            .input('direccion',          sql.NVarChar, est.direccion)
+            .input('fecha_nacimiento',   sql.DateTime, toSqlDate(est.fechaNacimiento))
+            .input('curso',              sql.NVarChar, est.curso)
+            .input('especialidad',       sql.NVarChar, est.especialidad)
+            .input('situacion_economica',sql.NVarChar, est.situacion_economica)
+            .input('fecha_registro',     sql.DateTime, new Date())
+            .input('estado',             sql.VarChar,  est.estado || 'Activo')
+            .query(`
+              INSERT INTO estudiantes (
+                nombre, apellido, rut, email, telefono, direccion,
+                fecha_nacimiento, curso, especialidad, situacion_economica,
+                fecha_registro, estado
+              )
+              VALUES (
+                @nombre, @apellido, @rut, @email, @telefono, @direccion,
+                @fecha_nacimiento, @curso, @especialidad, @situacion_economica,
+                @fecha_registro, @estado
+              )
+            `);
+          return { status: 'fulfilled', rut: est.rut };
+        } catch (err) {
+          return { status: 'rejected', rut: est.rut, error: err.message };
+        }
+      })
+    );
+    return results;
+  },
 
   async listar() {
-    const pool = await poolPromise;
-    const result = await pool.request().query("SELECT * FROM Estudiantes");
-    return result.recordset;
+    const pool = await getPool();
+    const r = await pool.request().query(`
+      SELECT * FROM estudiantes
+      ORDER BY id DESC
+    `);
+    return r.recordset;
   },
 
   async obtenerPorId(id) {
-    const pool = await poolPromise;
-    const result = await pool.request()
-      .input("id", sql.Int, id)
-      .query("SELECT * FROM Estudiantes WHERE id = @id");
-    return result.recordset[0];
+    const pool = await getPool();
+    const r = await pool.request()
+      .input('id', sql.Int, id)
+      .query('SELECT * FROM estudiantes WHERE id = @id');
+    return r.recordset[0] || null;
   },
 
   async actualizar(id, datos) {
-    const pool = await poolPromise;
+    const pool = await getPool();
     await pool.request()
-      .input("id", sql.Int, id)
-      .input("nombre", sql.NVarChar(100), datos.nombre)
-      .input("apellido", sql.NVarChar(100), datos.apellido)
-      .input("rut", sql.NVarChar(20), datos.rut)
-      .input("email", sql.NVarChar(100), datos.email)
-      .input("telefono", sql.NVarChar(20), datos.telefono)
-      .input("direccion", sql.NVarChar(255), datos.direccion)
-      .input("fecha_nacimiento", sql.Date, datos.fechaNacimiento)
-      .input("curso", sql.NVarChar(50), datos.curso)
-      .input("especialidad", sql.NVarChar(100), datos.especialidad)
-      .input("situacion_economica", sql.NVarChar(50), datos.situacion_economica)
-      .input("estado", sql.VarChar(20), datos.estado)
-      .query(`UPDATE Estudiantes SET nombre = @nombre, apellido = @apellido, rut = @rut, email = @email, telefono = @telefono, direccion = @direccion, fecha_nacimiento = @fecha_nacimiento, curso = @curso, especialidad = @especialidad, situacion_economica = @situacion_economica, estado = @estado WHERE id = @id`);
+      .input('id',                  sql.Int,     id)
+      .input('nombre',              sql.NVarChar,datos.nombre)
+      .input('apellido',            sql.NVarChar,datos.apellido)
+      .input('rut',                 sql.NVarChar,datos.rut)
+      .input('email',               sql.NVarChar,datos.email)
+      .input('telefono',            sql.NVarChar,datos.telefono)
+      .input('direccion',           sql.NVarChar,datos.direccion)
+      .input('fecha_nacimiento',    sql.DateTime,toSqlDate(datos.fechaNacimiento))
+      .input('curso',               sql.NVarChar,datos.curso)
+      .input('especialidad',        sql.NVarChar,datos.especialidad)
+      .input('situacion_economica', sql.NVarChar,datos.situacion_economica)
+      .input('estado',              sql.VarChar, datos.estado)
+      .query(`
+        UPDATE estudiantes
+           SET nombre = @nombre,
+               apellido = @apellido,
+               rut = @rut,
+               email = @email,
+               telefono = @telefono,
+               direccion = @direccion,
+               fecha_nacimiento = @fecha_nacimiento,
+               curso = @curso,
+               especialidad = @especialidad,
+               situacion_economica = @situacion_economica,
+               estado = @estado
+         WHERE id = @id
+      `);
   },
 
   async eliminar(id) {
-    const pool = await poolPromise;
-    await pool.request().input("id", sql.Int, id).query("DELETE FROM Estudiantes WHERE id = @id");
+    const pool = await getPool();
+    await pool.request()
+      .input('id', sql.Int, id)
+      .query('DELETE FROM estudiantes WHERE id = @id');
   },
-  // models/estudianteModel.js
-async listarActivos() {
-  const pool = await poolPromise;
-  const result = await pool.request()
-    .query("SELECT * FROM Estudiantes WHERE LOWER(estado) = 'activo'");
-  return result.recordset;
-},
 
-async contar() {
-  const pool = await poolPromise;
-  const result = await pool.request().query(`
-    SELECT COUNT(*) as total FROM Estudiantes
-  `);
-  return result.recordset[0].total;
-}
+  async listarActivos() {
+    const pool = await getPool();
+    const r = await pool.request().query(`
+      SELECT * FROM estudiantes
+      WHERE LOWER(TRIM(estado)) = 'activo'
+      ORDER BY id DESC
+    `);
+    return r.recordset;
+  },
 
+  async contar() {
+    const pool = await getPool();
+    const r = await pool.request().query(`
+      SELECT COUNT(*)::int AS total FROM estudiantes
+    `);
+    return r.recordset[0]?.total || 0;
+  }
+  
 };
+
+
 
 module.exports = EstudianteModel;

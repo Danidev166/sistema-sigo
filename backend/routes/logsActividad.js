@@ -3,17 +3,14 @@ const router = express.Router();
 const logsActividadController = require('../controller/logsActividadController');
 const logsActividadValidator = require('../validators/logsActividadValidator');
 const validateBody = require('../middleware/validateBody');
+const verifyToken = require('../middleware/verifyToken');
 
-// GET todos los logs
+// Protege todo el módulo
+router.use(verifyToken);
+
 router.get('/', logsActividadController.obtenerTodos);
-
-// GET log por ID
 router.get('/:id', logsActividadController.obtenerPorId);
-
-// POST crear log
 router.post('/', validateBody(logsActividadValidator), logsActividadController.crear);
-
-// DELETE eliminar log
 router.delete('/:id', logsActividadController.eliminar);
 
-module.exports = router; 
+module.exports = router;

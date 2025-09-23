@@ -1,12 +1,12 @@
 const ComunicacionInternaModel = require('../models/comunicacionInternaModel');
 
 class ComunicacionInternaController {
-  async obtenerTodos(req, res) {
+  async obtenerTodos(_req, res) {
     try {
       const data = await ComunicacionInternaModel.obtenerTodos();
       res.json(data);
     } catch (error) {
-      console.error(error); // Esto mostrará el error real en la consola
+      console.error(error);
       res.status(500).json({ error: error.message });
     }
   }
@@ -21,8 +21,8 @@ class ComunicacionInternaController {
   }
   async crear(req, res) {
     try {
-      const result = await ComunicacionInternaModel.crear(req.body);
-      res.status(201).json({ message: 'Creado correctamente', id: result.insertId });
+      const creado = await ComunicacionInternaModel.crear(req.body); // debe retornar el registro
+      res.status(201).json({ message: 'Creado correctamente', id: creado?.id || null, data: creado });
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
@@ -45,4 +45,4 @@ class ComunicacionInternaController {
   }
 }
 
-module.exports = new ComunicacionInternaController(); 
+module.exports = new ComunicacionInternaController();

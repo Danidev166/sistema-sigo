@@ -28,11 +28,11 @@ export default function DashboardHeader() {
           className="w-12 h-12 object-contain rounded-full border border-gray-300 dark:border-slate-600 shadow overflow-hidden"
         />
         <div className="text-left">
-          <p className="text-sm text-gray-500 dark:text-gray-300">Bienvenido/a</p>
-          <h1 className="text-xl font-semibold text-gray-800 dark:text-white">
+          <p className="text-body-sm text-gray-500 dark:text-gray-300">Bienvenido/a</p>
+          <h1 className="text-h4 font-semibold text-gray-800 dark:text-white">
             {user.nombre} {user.apellido}
           </h1>
-          <span className="text-xs text-gray-500 dark:text-gray-400 font-medium">
+          <span className="text-caption text-gray-500 dark:text-gray-400 font-medium">
             {user.rol}
           </span>
         </div>
@@ -42,7 +42,7 @@ export default function DashboardHeader() {
       <NotificacionBadge />
 
       {/* Texto institucional */}
-      <div className="text-sm text-gray-400 dark:text-gray-300 font-medium text-center sm:text-right">
+      <div className="text-body-sm text-gray-400 dark:text-gray-300 font-medium text-center sm:text-right">
         SIGO PRO · Liceo Politécnico Bicentenario Caupolicán
       </div>
     </div>

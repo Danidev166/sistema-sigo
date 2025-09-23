@@ -11,7 +11,7 @@ export default function Evaluaciones({ idEstudiante }) {
     const fetchEvaluaciones = async () => {
       try {
         console.log("🔍 Buscando evaluaciones para estudiante:", idEstudiante);
-        const res = await api.get(`/evaluaciones?estudiante=${idEstudiante}`);
+        const res = await api.get(`/evaluaciones?id_estudiante=${idEstudiante}`);
         console.log("📊 Evaluaciones encontradas:", res.data);
         setEvaluaciones(res.data);
         setError(null);

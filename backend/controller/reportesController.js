@@ -1,308 +1,256 @@
-const { sql, poolPromise } = require("../config/db");
+// controllers/reportesController.js  ✅ PostgreSQL
+const { getPool } = require("../config/db");
 const logger = require("../utils/logger");
-const PDFDocument = require("pdfkit"); // 🚀 agregar pdfkit (asegúrate de instalarlo: npm install pdfkit)
+const PDFDocument = require("pdfkit");
+
+// helper mínimo para concatenar filtros seguros
+const esc = (v) => String(v).replace(/'/g, "''");
 
 class ReportesController {
   static async resumenEstudiante(req, res, next) {
     try {
-      const { id } = req.params;
-      const pool = await poolPromise;
+      const id = Number(req.params.id);
+      if (!Number.isInteger(id)) return res.status(400).json({ error: "ID inválido" });
 
-      const result = await pool.request()
-        .input("id", sql.Int, id)
-        .query(`
-          SELECT e.nombre, e.apellido, COUNT(a.id) AS total_asistencias,
-                 AVG(h.promedio_general) AS promedio,
-                 COUNT(er.id) AS entregas
-          FROM Estudiantes e
-          LEFT JOIN Asistencia a ON e.id = a.id_estudiante
-          LEFT JOIN Historial_Academico h ON e.id = h.id_estudiante
-          LEFT JOIN Entrega_Recursos er ON e.id = er.id_estudiante
-          WHERE e.id = @id
-          GROUP BY e.nombre, e.apellido
-        `);
-
-      if (!result.recordset.length) {
-        return res.status(404).json({ error: "Estudiante no encontrado o sin datos" });
-      }
-
-      res.json(result.recordset[0]);
+      const pool = await getPool();
+      const sql = `
+        SELECT e.nombre, e.apellido,
+               COUNT(a.id)::int AS total_asistencias,
+               ROUND(AVG(h.promedio_general)::numeric, 2) AS promedio,
+               COUNT(er.id)::int AS entregas
+        FROM estudiantes e
+        LEFT JOIN asistencia a          ON e.id = a.id_estudiante
+        LEFT JOIN historial_academico h ON e.id = h.id_estudiante
+        LEFT JOIN entrega_recursos er   ON e.id = er.id_estudiante
+        WHERE e.id = ${id}
+        GROUP BY e.nombre, e.apellido
+      `;
+      const r = await pool.request().query(sql);
+      if (!r.recordset.length) return res.status(404).json({ error: "Estudiante no encontrado o sin datos" });
+      res.json(r.recordset[0]);
     } catch (error) {
-      logger.error("❌ Error al generar resumen de estudiante:", error);
+      logger.error("❌ Error en resumenEstudiante:", error);
       next(error);
     }
   }
 
- static async reporteGeneral(req, res, next) {
-  try {
-    const pool = await poolPromise;
-
-    // 🚀 Query para el detalle de estudiantes (igual que tienes ahora)
-    const detalleEstudiantes = await pool.request().query(`
-      SELECT e.id, e.nombre, e.apellido,
-             COUNT(DISTINCT a.id) AS asistencias,
-             AVG(h.promedio_general) AS promedio,
-             COUNT(DISTINCT er.id) AS entregas
-      FROM Estudiantes e
-      LEFT JOIN Asistencia a ON e.id = a.id_estudiante
-      LEFT JOIN Historial_Academico h ON e.id = h.id_estudiante
-      LEFT JOIN Entrega_Recursos er ON e.id = er.id_estudiante
-      GROUP BY e.id, e.nombre, e.apellido
-    `);
-
-    // 🚀 Query para total entrevistas (correcto, igual que en PDF)
-    const resultEntrevistas = await pool.request().query(`
-      SELECT COUNT(*) AS total FROM Entrevistas
-    `);
-    const totalEntrevistas = resultEntrevistas.recordset[0].total;
-
-    // 🚀 Devolver TODO junto
-    res.json({
-      totalEntrevistas,                          // ✅ el frontend ahora puede usar esto
-      estudiantesActivos: detalleEstudiantes.recordset.length, // ✅ opcional: total estudiantes activos
-      estudiantes: detalleEstudiantes.recordset   // ✅ el array de detalle (como ya tenías)
-    });
-
-  } catch (error) {
-    logger.error("❌ Error al generar reporte general:", error);
-    next(error);
-  }
-}
-
-  static async asistenciaMensual(req, res, next) {
+  static async reporteGeneral(_req, res, next) {
     try {
-      const pool = await poolPromise;
-
-      const result = await pool.request().query(`
-        SELECT MONTH(fecha) AS mes, COUNT(*) AS cantidad
-        FROM Asistencia
-        WHERE YEAR(fecha) = YEAR(GETDATE())
-        GROUP BY MONTH(fecha)
-        ORDER BY mes
-      `);
-
-      res.json(result.recordset);
+      const pool = await getPool();
+      const detalleSql = `
+        SELECT e.id, e.nombre, e.apellido,
+               COUNT(DISTINCT a.id)::int    AS asistencias,
+               ROUND(AVG(h.promedio_general)::numeric, 2) AS promedio,
+               COUNT(DISTINCT er.id)::int   AS entregas
+        FROM estudiantes e
+        LEFT JOIN asistencia a          ON e.id = a.id_estudiante
+        LEFT JOIN historial_academico h ON e.id = h.id_estudiante
+        LEFT JOIN entrega_recursos er   ON e.id = er.id_estudiante
+        GROUP BY e.id, e.nombre, e.apellido
+      `;
+      const entrevistasSql = `SELECT COUNT(*)::int AS total FROM entrevistas`;
+      const [detalle, entrevistas] = await Promise.all([
+        pool.request().query(detalleSql),
+        pool.request().query(entrevistasSql),
+      ]);
+      res.json({
+        totalEntrevistas: entrevistas.recordset[0].total,
+        estudiantesActivos: detalle.recordset.length,
+        estudiantes: detalle.recordset,
+      });
     } catch (error) {
-      logger.error("❌ Error al generar asistencia mensual:", error);
+      logger.error("❌ Error en reporteGeneral:", error);
       next(error);
     }
   }
 
-  static async motivosEntrevistas(req, res, next) {
+  static async asistenciaMensual(_req, res, next) {
     try {
-      const pool = await poolPromise;
+      const pool = await getPool();
+      const sql = `
+        SELECT EXTRACT(MONTH FROM fecha)::int AS mes, COUNT(*)::int AS cantidad
+        FROM asistencia
+        WHERE EXTRACT(YEAR FROM fecha) = EXTRACT(YEAR FROM CURRENT_DATE)
+        GROUP BY 1
+        ORDER BY 1
+      `;
+      const r = await pool.request().query(sql);
+      res.json(r.recordset);
+    } catch (error) {
+      logger.error("❌ Error en asistenciaMensual:", error);
+      next(error);
+    }
+  }
 
-      const result = await pool.request().query(`
-        SELECT motivo, COUNT(*) AS cantidad
-        FROM Entrevistas
+  static async motivosEntrevistas(_req, res, next) {
+    try {
+      const pool = await getPool();
+      const sql = `
+        SELECT motivo, COUNT(*)::int AS cantidad
+        FROM entrevistas
         GROUP BY motivo
         ORDER BY cantidad DESC
-      `);
-
-      res.json(result.recordset);
+      `;
+      const r = await pool.request().query(sql);
+      res.json(r.recordset);
     } catch (error) {
-      logger.error("❌ Error al obtener motivos de entrevistas:", error);
+      logger.error("❌ Error en motivosEntrevistas:", error);
       next(error);
     }
   }
 
   static async estudiantesAtendidos(req, res, next) {
     try {
-      const pool = await poolPromise;
       const { curso, fecha_inicio, fecha_fin, motivo, profesional } = req.query;
-      let query = `
-        SELECT e.id, e.nombre, e.apellido, e.curso, ent.motivo, ent.fecha_entrevista, u.nombre AS profesional,
-               (SELECT COUNT(*) FROM Entrevistas ent2 WHERE ent2.id_estudiante = e.id) AS cantidad_sesiones
-        FROM Estudiantes e
-        INNER JOIN Entrevistas ent ON e.id = ent.id_estudiante
-        INNER JOIN Usuarios u ON ent.id_orientador = u.id
+      const pool = await getPool();
+      let sql = `
+        SELECT e.id, e.nombre, e.apellido, e.curso, ent.motivo, ent.fecha_entrevista,
+               (u.nombre || ' ' || u.apellido) AS profesional,
+               (SELECT COUNT(*) FROM entrevistas ent2 WHERE ent2.id_estudiante = e.id)::int AS cantidad_sesiones
+        FROM estudiantes e
+        INNER JOIN entrevistas ent ON e.id = ent.id_estudiante
+        INNER JOIN usuarios u      ON ent.id_orientador = u.id
         WHERE 1=1
       `;
-      if (curso) query += ` AND e.curso = @curso`;
-      if (fecha_inicio) query += ` AND ent.fecha_entrevista >= @fecha_inicio`;
-      if (fecha_fin) query += ` AND ent.fecha_entrevista <= @fecha_fin`;
-      if (motivo) query += ` AND ent.motivo = @motivo`;
-      if (profesional) query += ` AND u.nombre = @profesional`;
-      query += ` ORDER BY ent.fecha_entrevista DESC`;
-      const request = pool.request();
-      if (curso) request.input('curso', sql.NVarChar, curso);
-      if (fecha_inicio) request.input('fecha_inicio', sql.Date, fecha_inicio);
-      if (fecha_fin) request.input('fecha_fin', sql.Date, fecha_fin);
-      if (motivo) request.input('motivo', sql.NVarChar, motivo);
-      if (profesional) request.input('profesional', sql.NVarChar, profesional);
-      const result = await request.query(query);
-      res.json(result.recordset);
+      if (curso)        sql += ` AND e.curso = '${esc(curso)}'`;
+      if (fecha_inicio) sql += ` AND ent.fecha_entrevista >= '${esc(fecha_inicio)}'::timestamp`;
+      if (fecha_fin)    sql += ` AND ent.fecha_entrevista <= '${esc(fecha_fin)}'::timestamp`;
+      if (motivo)       sql += ` AND ent.motivo = '${esc(motivo)}'`;
+      if (profesional)  sql += ` AND (u.nombre || ' ' || u.apellido) = '${esc(profesional)}'`;
+      sql += ` ORDER BY ent.fecha_entrevista DESC`;
+
+      const r = await pool.request().query(sql);
+      res.json(r.recordset);
     } catch (error) {
-      logger.error("❌ Error al obtener estudiantes atendidos:", error);
+      logger.error("❌ Error en estudiantesAtendidos:", error);
       next(error);
     }
   }
 
   static async reporteDerivaciones(req, res, next) {
     try {
-      const pool = await poolPromise;
       const { curso, fecha_inicio, fecha_fin, motivo, profesional } = req.query;
-      let query = `
-        SELECT e.id, e.nombre, e.apellido, e.curso, i.accion AS motivo, i.fecha, (u.nombre + ' ' + u.apellido) AS profesional
-        FROM Intervenciones i
-        INNER JOIN Estudiantes e ON i.id_estudiante = e.id
-        INNER JOIN Usuarios u ON i.id_profesional = u.id
+      const pool = await getPool();
+      let sql = `
+        SELECT e.id, e.nombre, e.apellido, e.curso,
+               i.accion AS motivo, i.fecha,
+               (u.nombre || ' ' || u.apellido) AS profesional
+        FROM intervenciones i
+        INNER JOIN estudiantes e ON i.id_estudiante = e.id
+        INNER JOIN usuarios u    ON i.id_profesional = u.id
         WHERE 1=1
       `;
-      if (curso) query += ` AND e.curso = @curso`;
-      if (fecha_inicio) query += ` AND i.fecha >= @fecha_inicio`;
-      if (fecha_fin) query += ` AND i.fecha <= @fecha_fin`;
-      if (motivo) query += ` AND i.accion = @motivo`;
-      if (profesional) query += ` AND (u.nombre + ' ' + u.apellido) = @profesional`;
-      query += ` ORDER BY i.fecha DESC`;
-      const request = pool.request();
-      if (curso) request.input('curso', sql.NVarChar, curso);
-      if (fecha_inicio) request.input('fecha_inicio', sql.Date, fecha_inicio);
-      if (fecha_fin) request.input('fecha_fin', sql.Date, fecha_fin);
-      if (motivo) request.input('motivo', sql.NVarChar, motivo);
-      if (profesional) request.input('profesional', sql.NVarChar, profesional);
-      const result = await request.query(query);
-      res.json(result.recordset);
+      if (curso)        sql += ` AND e.curso = '${esc(curso)}'`;
+      if (fecha_inicio) sql += ` AND i.fecha >= '${esc(fecha_inicio)}'::date`;
+      if (fecha_fin)    sql += ` AND i.fecha <= '${esc(fecha_fin)}'::date`;
+      if (motivo)       sql += ` AND i.accion = '${esc(motivo)}'`;
+      if (profesional)  sql += ` AND (u.nombre || ' ' || u.apellido) = '${esc(profesional)}'`;
+      sql += ` ORDER BY i.fecha DESC`;
+
+      const r = await pool.request().query(sql);
+      res.json(r.recordset);
     } catch (error) {
-      logger.error("❌ Error al obtener reporte de derivaciones:", error);
+      logger.error("❌ Error en reporteDerivaciones:", error);
       next(error);
     }
   }
 
   static async reporteEntrevistasSeguimientos(req, res, next) {
     try {
-      const pool = await poolPromise;
       const { curso, fecha_inicio, fecha_fin, motivo, profesional, estado } = req.query;
-      // Consulta de Entrevistas
-      let queryEntrevistas = `
-        SELECT e.id, e.nombre, e.apellido, e.curso, ent.fecha_entrevista AS fecha, ent.motivo, (u.nombre + ' ' + u.apellido) AS profesional, ent.estado, ent.observaciones, 'Entrevista' AS tipo
-        FROM Entrevistas ent
-        INNER JOIN Estudiantes e ON ent.id_estudiante = e.id
-        INNER JOIN Usuarios u ON ent.id_orientador = u.id
+      const pool = await getPool();
+
+      let qEnt = `
+        SELECT e.id, e.nombre, e.apellido, e.curso,
+               ent.fecha_entrevista AS fecha, ent.motivo,
+               (u.nombre || ' ' || u.apellido) AS profesional,
+               ent.estado, ent.observaciones, 'Entrevista' AS tipo
+        FROM entrevistas ent
+        INNER JOIN estudiantes e ON ent.id_estudiante = e.id
+        INNER JOIN usuarios u    ON ent.id_orientador = u.id
         WHERE 1=1
       `;
-      if (curso) queryEntrevistas += ` AND e.curso = @curso`;
-      if (fecha_inicio) queryEntrevistas += ` AND ent.fecha_entrevista >= @fecha_inicio`;
-      if (fecha_fin) queryEntrevistas += ` AND ent.fecha_entrevista <= @fecha_fin`;
-      if (motivo) queryEntrevistas += ` AND ent.motivo = @motivo`;
-      if (profesional) queryEntrevistas += ` AND (u.nombre + ' ' + u.apellido) = @profesional`;
-      if (estado) queryEntrevistas += ` AND ent.estado = @estado`;
-      queryEntrevistas += ` ORDER BY ent.fecha_entrevista DESC`;
-      const requestEnt = pool.request();
-      if (curso) requestEnt.input('curso', sql.NVarChar, curso);
-      if (fecha_inicio) requestEnt.input('fecha_inicio', sql.Date, fecha_inicio);
-      if (fecha_fin) requestEnt.input('fecha_fin', sql.Date, fecha_fin);
-      if (motivo) requestEnt.input('motivo', sql.NVarChar, motivo);
-      if (profesional) requestEnt.input('profesional', sql.NVarChar, profesional);
-      if (estado) requestEnt.input('estado', sql.NVarChar, estado);
-      const entrevistas = await requestEnt.query(queryEntrevistas);
-      // Consulta de Seguimiento Psicosocial
-      let querySeg = `
-        SELECT e.id, e.nombre, e.apellido, e.curso, s.fecha, s.accion, (u.nombre + ' ' + u.apellido) AS profesional, NULL AS estado, s.compromiso, 'Seguimiento' AS tipo
-        FROM Seguimiento_Psicosocial s
-        INNER JOIN Estudiantes e ON s.id_estudiante = e.id
-        INNER JOIN Usuarios u ON s.id_profesional = u.id
+      if (curso)        qEnt += ` AND e.curso = '${esc(curso)}'`;
+      if (fecha_inicio) qEnt += ` AND ent.fecha_entrevista >= '${esc(fecha_inicio)}'::timestamp`;
+      if (fecha_fin)    qEnt += ` AND ent.fecha_entrevista <= '${esc(fecha_fin)}'::timestamp`;
+      if (motivo)       qEnt += ` AND ent.motivo = '${esc(motivo)}'`;
+      if (profesional)  qEnt += ` AND (u.nombre || ' ' || u.apellido) = '${esc(profesional)}'`;
+      if (estado)       qEnt += ` AND ent.estado = '${esc(estado)}'`;
+      qEnt += ` ORDER BY ent.fecha_entrevista DESC`;
+
+      let qSeg = `
+        SELECT e.id, e.nombre, e.apellido, e.curso,
+               s.fecha, s.accion,
+               (u.nombre || ' ' || u.apellido) AS profesional,
+               NULL::text AS estado,
+               s.compromiso,
+               'Seguimiento' AS tipo
+        FROM seguimiento_psicosocial s
+        INNER JOIN estudiantes e ON s.id_estudiante = e.id
+        INNER JOIN usuarios u    ON s.id_profesional = u.id
         WHERE 1=1
       `;
-      if (curso) querySeg += ` AND e.curso = @curso`;
-      if (fecha_inicio) querySeg += ` AND s.fecha >= @fecha_inicio`;
-      if (fecha_fin) querySeg += ` AND s.fecha <= @fecha_fin`;
-      if (motivo) querySeg += ` AND s.accion = @motivo`;
-      if (profesional) querySeg += ` AND (u.nombre + ' ' + u.apellido) = @profesional`;
-      querySeg += ` ORDER BY s.fecha DESC`;
-      const requestSeg = pool.request();
-      if (curso) requestSeg.input('curso', sql.NVarChar, curso);
-      if (fecha_inicio) requestSeg.input('fecha_inicio', sql.Date, fecha_inicio);
-      if (fecha_fin) requestSeg.input('fecha_fin', sql.Date, fecha_fin);
-      if (motivo) requestSeg.input('motivo', sql.NVarChar, motivo);
-      if (profesional) requestSeg.input('profesional', sql.NVarChar, profesional);
-      const seguimientos = await requestSeg.query(querySeg);
-      // Unir resultados
+      if (curso)        qSeg += ` AND e.curso = '${esc(curso)}'`;
+      if (fecha_inicio) qSeg += ` AND s.fecha >= '${esc(fecha_inicio)}'::date`;
+      if (fecha_fin)    qSeg += ` AND s.fecha <= '${esc(fecha_fin)}'::date`;
+      if (motivo)       qSeg += ` AND s.accion = '${esc(motivo)}'`;
+      if (profesional)  qSeg += ` AND (u.nombre || ' ' || u.apellido) = '${esc(profesional)}'`;
+      qSeg += ` ORDER BY s.fecha DESC`;
+
+      const [rEnt, rSeg] = await Promise.all([
+        pool.request().query(qEnt),
+        pool.request().query(qSeg),
+      ]);
+
       const resultado = [
-        ...entrevistas.recordset.map(e => ({
-          id: e.id,
-          nombre: e.nombre,
-          apellido: e.apellido,
-          curso: e.curso,
-          fecha: e.fecha,
-          motivo: e.motivo,
-          profesional: e.profesional,
-          estado: e.estado,
-          observaciones: e.observaciones,
-          tipo: e.tipo
+        ...rEnt.recordset.map(e => ({
+          id: e.id, nombre: e.nombre, apellido: e.apellido, curso: e.curso,
+          fecha: e.fecha, motivo: e.motivo, profesional: e.profesional,
+          estado: e.estado, observaciones: e.observaciones, tipo: e.tipo
         })),
-        ...seguimientos.recordset.map(s => ({
-          id: s.id,
-          nombre: s.nombre,
-          apellido: s.apellido,
-          curso: s.curso,
-          fecha: s.fecha,
-          motivo: s.accion,
-          profesional: s.profesional,
-          estado: s.estado,
-          observaciones: s.compromiso,
-          tipo: s.tipo
+        ...rSeg.recordset.map(s => ({
+          id: s.id, nombre: s.nombre, apellido: s.apellido, curso: s.curso,
+          fecha: s.fecha, motivo: s.accion, profesional: s.profesional,
+          estado: s.estado, observaciones: s.compromiso, tipo: s.tipo
         }))
-      ];
-      // Ordenar por fecha descendente
-      resultado.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+      ].sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+
       res.json(resultado);
     } catch (error) {
-      logger.error("❌ Error al obtener reporte de entrevistas y seguimientos:", error);
+      logger.error("❌ Error en reporteEntrevistasSeguimientos:", error);
       next(error);
     }
   }
 
-  // 🚀 NUEVO: Generar PDF del reporte
-  static async generarPDF(req, res, next) {
+  static async generarPDF(_req, res, next) {
     try {
-      const pool = await poolPromise;
+      const pool = await getPool();
+      const q = async (sql) => (await pool.request().query(sql)).recordset[0].total;
 
-      // 🚀 Obtener datos básicos
-      const resultEstudiantes = await pool.request().query("SELECT COUNT(*) AS total FROM Estudiantes");
-      const totalEstudiantes = resultEstudiantes.recordset[0].total;
+      const totalEstudiantes  = await q("SELECT COUNT(*)::int AS total FROM estudiantes");
+      const totalEntrevistas  = await q("SELECT COUNT(*)::int AS total FROM entrevistas");
+      const totalTests        = await q("SELECT COUNT(*)::int AS total FROM evaluaciones_vocacionales");
 
-      const resultEntrevistas = await pool.request().query("SELECT COUNT(*) AS total FROM Entrevistas");
-      const totalEntrevistas = resultEntrevistas.recordset[0].total;
-
-      const resultTests = await pool.request().query("SELECT COUNT(*) AS total FROM Evaluaciones_Vocacionales");
-      const totalTests = resultTests.recordset[0].total;
-
-      // 🚀 Crear PDF
       const doc = new PDFDocument();
-
-      // Set headers
       res.setHeader("Content-Type", "application/pdf");
       res.setHeader("Content-Disposition", "attachment; filename=reporte-sigo.pdf");
-
-      // Pipe PDF
       doc.pipe(res);
 
-      // 🚀 Contenido del PDF
       doc.fontSize(20).text("Reporte SIGO PRO", { align: "center" });
       doc.moveDown();
       doc.fontSize(12).text(`Fecha: ${new Date().toLocaleDateString()}`, { align: "right" });
-
       doc.moveDown().moveDown();
-
       doc.fontSize(14).text("Resumen de Datos", { underline: true });
       doc.moveDown();
-
       doc.fontSize(12).text(`- Total estudiantes: ${totalEstudiantes}`);
       doc.text(`- Total entrevistas: ${totalEntrevistas}`);
       doc.text(`- Total tests aplicados: ${totalTests}`);
-
       doc.moveDown().moveDown();
-      doc.text("Este reporte fue generado automáticamente por el sistema SIGO PRO.", { align: "left" });
-
-      // 🚀 Footer
+      doc.text("Este reporte fue generado automáticamente por el sistema SIGO PRO.");
       doc.moveDown().moveDown();
-      doc.fontSize(10).text("SIGO - Sistema Integral de Gestión de Orientación Escolar", { align: "center" });
+      doc.fontSize(10).text("SIGO - Sistema Integral de Orientación", { align: "center" });
       doc.text("© 2025 Liceo Politécnico Bicentenario Caupolicán", { align: "center" });
-
-      // 🚀 Finalizar
       doc.end();
-
     } catch (error) {
       logger.error("❌ Error al generar PDF:", error);
       next(error);
