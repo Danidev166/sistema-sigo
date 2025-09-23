@@ -80,6 +80,7 @@ const LOCAL_ORIGINS = [
   "http://192.168.18.10:5173",
   "http://192.168.18.10:5174",
   "http://192.168.18.10:4174",
+  "https://sigo-frontend-2025.onrender.com",
 ];
 
 const FRONTEND_URLS = parseCsv(process.env.FRONTEND_URLS || process.env.FRONTEND_URL);
