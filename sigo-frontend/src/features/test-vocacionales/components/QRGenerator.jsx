@@ -90,9 +90,9 @@ const QRGenerator = ({ testType, estudiante, onClose }) => {
         console.log('📱 Modo desarrollo: usando IP local para acceso móvil');
         console.log('🔍 Encuentra tu IP con: ipconfig (Windows) o ifconfig (Mac/Linux)');
       } else {
-        // En producción, usar la URL actual del frontend
-        mobileUrl = baseUrl;
-        console.log('🌐 Modo producción: usando URL actual del frontend');
+        // En producción, usar la URL de Render
+        mobileUrl = 'https://sistema-sigo-2025.onrender.com';
+        console.log('🌐 Modo producción: usando URL de Render');
       }
       
       const testUrl = `${mobileUrl}${testUrls[testType]}`;
@@ -208,8 +208,8 @@ const QRGenerator = ({ testType, estudiante, onClose }) => {
       const port = window.location.port;
       mobileUrl = `http://192.168.18.10:${port}`;
     } else {
-      // En producción, usar la URL actual del frontend
-      mobileUrl = baseUrl;
+      // En producción, usar la URL de Render
+      mobileUrl = 'https://sistema-sigo-2025.onrender.com';
     }
     
     const testUrl = `${mobileUrl}/test-mobile/${testType}`;

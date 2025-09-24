@@ -22,6 +22,9 @@ FROM nginx:alpine
 # Copiar los archivos construidos
 COPY --from=0 /app/dist /usr/share/nginx/html
 
+# Copiar configuración personalizada de nginx para SPA
+COPY nginx.conf /etc/nginx/nginx.conf
+
 # Exponer puerto 80
 EXPOSE 80
 
