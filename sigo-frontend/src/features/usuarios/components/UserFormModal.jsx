@@ -54,6 +54,8 @@ export default function UserFormModal({ isOpen, onClose, onSubmit, initialData }
   });
 
   const [rutError, setRutError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
   useEffect(() => {
     if (isEdit) {
@@ -68,7 +70,11 @@ export default function UserFormModal({ isOpen, onClose, onSubmit, initialData }
         rol: "Orientador",
       });
     }
-  }, [initialData, isEdit]);
+    // Limpiar errores al abrir/cerrar modal
+    setRutError("");
+    setSubmitError("");
+    setIsSubmitting(false);
+  }, [initialData, isEdit, isOpen]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -93,20 +99,64 @@ export default function UserFormModal({ isOpen, onClose, onSubmit, initialData }
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (rutError) return;
-    if (!validarRut(form.rut)) {
-      setRutError('RUT inválido');
+    setSubmitError("");
+    
+    // Validar campos requeridos
+    if (!form.nombre.trim()) {
+      setSubmitError("El nombre es requerido");
       return;
     }
-    // Forzar mayúsculas antes de enviar
-    const camposMayus = ['nombre', 'apellido', 'direccion'];
-    const formMayus = { ...form };
-    camposMayus.forEach((campo) => {
-      if (formMayus[campo]) formMayus[campo] = formMayus[campo].toUpperCase();
-    });
-    onSubmit(formMayus);
+    if (!form.apellido.trim()) {
+      setSubmitError("El apellido es requerido");
+      return;
+    }
+    if (!form.rut.trim()) {
+      setSubmitError("El RUT es requerido");
+      return;
+    }
+    if (!form.email.trim()) {
+      setSubmitError("El email es requerido");
+      return;
+    }
+    if (!isEdit && !form.password.trim()) {
+      setSubmitError("La contraseña es requerida");
+      return;
+    }
+    
+    // Validar RUT
+    if (rutError || !validarRut(form.rut)) {
+      setRutError('RUT inválido');
+      setSubmitError("El RUT ingresado no es válido");
+      return;
+    }
+    
+    // Validar email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(form.email)) {
+      setSubmitError("El email no tiene un formato válido");
+      return;
+    }
+    
+    setIsSubmitting(true);
+    
+    try {
+      // Forzar mayúsculas antes de enviar
+      const camposMayus = ['nombre', 'apellido'];
+      const formMayus = { ...form };
+      camposMayus.forEach((campo) => {
+        if (formMayus[campo]) formMayus[campo] = formMayus[campo].toUpperCase();
+      });
+      
+      console.log("Enviando datos del usuario:", formMayus);
+      await onSubmit(formMayus);
+    } catch (error) {
+      console.error("Error al enviar formulario:", error);
+      setSubmitError("Error al guardar el usuario. Inténtalo de nuevo.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -130,6 +180,13 @@ export default function UserFormModal({ isOpen, onClose, onSubmit, initialData }
         </Dialog.Title>
 
         <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Mensaje de error general */}
+          {submitError && (
+            <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-3">
+              <p className="text-sm text-red-600 dark:text-red-400">{submitError}</p>
+            </div>
+          )}
+          
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {["nombre", "apellido"].map((campo) => (
               <div key={campo}>
@@ -212,9 +269,21 @@ export default function UserFormModal({ isOpen, onClose, onSubmit, initialData }
             </button>
             <button
               type="submit"
-              className="w-full sm:w-auto px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition text-sm"
+              disabled={isSubmitting}
+              className={`w-full sm:w-auto px-4 py-2 rounded-lg text-white transition text-sm ${
+                isSubmitting 
+                  ? 'bg-gray-400 cursor-not-allowed' 
+                  : 'bg-blue-600 hover:bg-blue-700'
+              }`}
             >
-              {isEdit ? "Guardar" : "Crear Usuario"}
+              {isSubmitting ? (
+                <div className="flex items-center justify-center gap-2">
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                  {isEdit ? "Guardando..." : "Creando..."}
+                </div>
+              ) : (
+                isEdit ? "Guardar" : "Crear Usuario"
+              )}
             </button>
           </div>
         </form>

@@ -62,15 +62,25 @@ export default function UsuariosPage() {
   // Guardar usuario (crear o actualizar)
   const handleSubmit = async (formData) => {
     try {
+      console.log("Datos recibidos en handleSubmit:", formData);
+      
       if (selectedUsuario) {
+        console.log("Actualizando usuario:", selectedUsuario.id);
         await usuarioService.actualizarUsuario(selectedUsuario.id, formData);
       } else {
+        console.log("Creando nuevo usuario");
         await usuarioService.crearUsuario(formData);
       }
+      
+      console.log("Usuario guardado exitosamente");
       await fetchUsuarios();
       handleCloseModal();
     } catch (error) {
       console.error("Error al guardar usuario:", error);
+      console.error("Detalles del error:", error.response?.data);
+      
+      // Re-lanzar el error para que el modal lo maneje
+      throw error;
     }
   };
 
