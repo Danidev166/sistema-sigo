@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://192.168.18.10:3001/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? 'https://sistema-sigo.onrender.com/api' : 'http://localhost:3001/api');
 
 const evaluacionesService = {
   // Enviar test vocacional por email

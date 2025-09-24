@@ -4,7 +4,7 @@ import axios from 'axios';
 const resolveBaseURL = () => {
   const v = import.meta.env.VITE_API_URL && String(import.meta.env.VITE_API_URL).trim();
   if (v) return v;                 // puede ser '/api' (proxy SWA) o 'https://.../api'
-  if (import.meta.env.PROD) return '/api'; // prod sin var => usa proxy
+  if (import.meta.env.PROD) return 'https://sistema-sigo.onrender.com/api'; // prod sin var => usa backend de Render
   return 'http://localhost:3001/api';      // dev
 };
 

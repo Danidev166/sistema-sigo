@@ -41,7 +41,7 @@ export default function SeguimientoTable({ seguimientos = [], onEdit, onDelete }
             {seguimientos.map((s) => (
               <tr key={s.id} className="hover:bg-gray-50 dark:hover:bg-slate-700/50 transition">
                 <td className="px-4 py-3">
-                  {s.fecha ? format(parseISO(s.fecha), "dd/MM/yyyy") : "-"}
+                  {s.fecha_seguimiento ? format(parseISO(s.fecha_seguimiento), "dd/MM/yyyy") : "-"}
                 </td>
                 <td className="px-4 py-3">
                   {s.nombre} {s.apellido}
@@ -98,7 +98,7 @@ export default function SeguimientoTable({ seguimientos = [], onEdit, onDelete }
                   {s.nombre} {s.apellido}
                 </h3>
                 <p className="text-xs text-gray-500 dark:text-gray-400">
-                  {s.fecha ? format(parseISO(s.fecha), "dd/MM/yyyy") : "-"}
+                  {s.fecha_seguimiento ? format(parseISO(s.fecha_seguimiento), "dd/MM/yyyy") : "-"}
                 </p>
               </div>
               <span

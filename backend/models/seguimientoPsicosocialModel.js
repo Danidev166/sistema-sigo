@@ -25,10 +25,10 @@ const SeguimientoPsicosocialModel = {
     const values = [
       data.id_estudiante,
       data.fecha_seguimiento || new Date(),
-      data.tipo_seguimiento || 'General',
+      data.motivo || 'General',
       data.observaciones || '',
-      data.recomendaciones || '',
-      data.profesional_id || null,
+      data.plan_intervencion || '',
+      data.profesional_asignado || null,
       data.estado || 'Activo',
       data.proxima_cita || null
     ];
@@ -39,7 +39,7 @@ const SeguimientoPsicosocialModel = {
 
   async obtenerTodos() {
     const query = `
-      SELECT s.*, e.nombre, e.apellido, e.rut
+      SELECT s.*, s.tipo_seguimiento as motivo, e.nombre, e.apellido, e.rut
       FROM seguimiento_psicosocial s
       LEFT JOIN estudiantes e ON s.id_estudiante = e.id
       ORDER BY s.fecha_seguimiento DESC, s.id DESC
@@ -51,7 +51,7 @@ const SeguimientoPsicosocialModel = {
 
   async obtenerPorId(id) {
     const query = `
-      SELECT s.*, e.nombre, e.apellido, e.rut
+      SELECT s.*, s.tipo_seguimiento as motivo, e.nombre, e.apellido, e.rut
       FROM seguimiento_psicosocial s
       LEFT JOIN estudiantes e ON s.id_estudiante = e.id
       WHERE s.id = $1
@@ -63,7 +63,7 @@ const SeguimientoPsicosocialModel = {
 
   async obtenerPorEstudiante(idEstudiante) {
     const query = `
-      SELECT s.*, e.nombre, e.apellido, e.rut
+      SELECT s.*, s.tipo_seguimiento as motivo, e.nombre, e.apellido, e.rut
       FROM seguimiento_psicosocial s
       LEFT JOIN estudiantes e ON s.id_estudiante = e.id
       WHERE s.id_estudiante = $1
@@ -90,10 +90,10 @@ const SeguimientoPsicosocialModel = {
     
     const values = [
       data.fecha_seguimiento || new Date(),
-      data.tipo_seguimiento || 'General',
+      data.motivo || 'General',
       data.observaciones || '',
-      data.recomendaciones || '',
-      data.profesional_id || null,
+      data.plan_intervencion || '',
+      data.profesional_asignado || null,
       data.estado || 'Activo',
       data.proxima_cita || null,
       id

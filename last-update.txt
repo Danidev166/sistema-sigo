@@ -1,0 +1,14 @@
+Última actualización: 2025-09-23T22:30:00.000Z
+
+Cambios realizados:
+- Corregido seguimientoPsicosocialModel.js para usar fecha_seguimiento
+- Corregido intervencionesModel.js para usar fecha_intervencion
+- Actualizado todos los modelos para coincidir con estructura real de BD
+- Corregidos controladores de movimientos y reportes
+- Verificada estructura real de tablas en Render
+
+Estructura real verificada:
+- seguimiento_psicosocial: fecha_seguimiento (no fecha)
+- intervenciones: fecha_intervencion (no fecha)
+
+El servidor necesita reiniciarse para cargar los cambios.

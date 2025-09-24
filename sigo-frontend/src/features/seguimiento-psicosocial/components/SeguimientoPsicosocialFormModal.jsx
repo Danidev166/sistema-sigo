@@ -25,7 +25,7 @@ export default function SeguimientoPsicosocialFormModal({
 }) {
   const [form, setForm] = useState({
     id_estudiante: "",
-    fecha: "",
+    fecha_seguimiento: "",
     motivo: "",
     objetivos: "",
     plan_intervencion: "",
@@ -39,9 +39,18 @@ export default function SeguimientoPsicosocialFormModal({
       setForm({ ...initialData });
     } else {
       const hoy = new Date().toISOString().split("T")[0];
-      setForm((prev) => ({ ...prev, fecha: hoy }));
+      setForm({
+        id_estudiante: "",
+        fecha_seguimiento: hoy,
+        motivo: "",
+        objetivos: "",
+        plan_intervencion: "",
+        profesional_asignado: "",
+        estado: "Activo",
+        observaciones: "",
+      });
     }
-  }, [initialData]);
+  }, [initialData, isOpen]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -50,7 +59,7 @@ export default function SeguimientoPsicosocialFormModal({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!form.id_estudiante || !form.fecha || !form.motivo) {
+    if (!form.id_estudiante || !form.fecha_seguimiento || !form.motivo) {
       alert("⚠️ Todos los campos obligatorios deben completarse.");
       return;
     }
@@ -99,8 +108,8 @@ export default function SeguimientoPsicosocialFormModal({
             </label>
             <input
               type="date"
-              name="fecha"
-              value={form.fecha}
+              name="fecha_seguimiento"
+              value={form.fecha_seguimiento}
               onChange={handleChange}
               className="w-full px-3 py-2 border rounded-lg text-sm bg-white dark:bg-slate-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
