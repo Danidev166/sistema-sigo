@@ -115,27 +115,35 @@ class ReportesMejoradoController {
   // 📊 Reporte Institucional
   static async reporteInstitucional(req, res, next) {
     try {
-      const pool = await getPool();
-      
       const sql = `
         SELECT 
+          e.curso,
           COUNT(DISTINCT e.id) as total_estudiantes,
           COUNT(DISTINCT CASE WHEN e.estado = 'Activo' THEN e.id END) as estudiantes_activos,
-          COUNT(DISTINCT ent.id) as total_entrevistas,
-          COUNT(DISTINCT ev.id) as total_evaluaciones,
-          COUNT(DISTINCT r.id) as total_recursos,
-          ROUND(AVG(ha.promedio_general)::numeric, 2) as promedio_general,
-          COUNT(DISTINCT a.id) as total_asistencias
+          COUNT(DISTINCT CASE WHEN e.estado = 'Inactivo' THEN e.id END) as estudiantes_inactivos,
+          COUNT(DISTINCT ent.id) as entrevistas_realizadas,
+          COUNT(DISTINCT i.id) as intervenciones_activas,
+          COALESCE(
+            ROUND(AVG(
+              (SELECT ROUND(
+                ((COUNT(CASE WHEN a.tipo = 'Presente' THEN 1 END)::float / 
+                 NULLIF(COUNT(*), 0)) * 100)::numeric, 2
+              ) FROM asistencia a 
+              WHERE a.id_estudiante = e.id 
+              AND EXTRACT(YEAR FROM a.fecha) = EXTRACT(YEAR FROM CURRENT_DATE)
+              )
+            )::numeric, 2), 0
+          ) as promedio_asistencia
         FROM estudiantes e
         LEFT JOIN entrevistas ent ON e.id = ent.id_estudiante
-        LEFT JOIN evaluaciones_vocacionales ev ON e.id = ev.id_estudiante
-        LEFT JOIN recursos r ON 1=1
-        LEFT JOIN historial_academico ha ON e.id = ha.id_estudiante
+        LEFT JOIN intervenciones i ON e.id = i.id_estudiante
         LEFT JOIN asistencia a ON e.id = a.id_estudiante
+        GROUP BY e.curso
+        ORDER BY e.curso
       `;
       
       const result = await pool.query(sql);
-      res.json(result.rows[0]);
+      res.json(result.rows);
       
     } catch (error) {
       logger.error("❌ Error en reporteInstitucional:", error);
