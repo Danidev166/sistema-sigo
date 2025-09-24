@@ -11,7 +11,7 @@ const reporteService = {
 
   // 🚀 Gráfico asistencia mensual
   getGraficoAsistenciaMensual: () =>
-  api.get("/asistencia/graficos/asistencia-mensual", { headers: { 'Cache-Control': 'no-cache' } }),
+  api.get("/reportes/graficos/asistencia-mensual", { headers: { 'Cache-Control': 'no-cache' } }),
 
   // 🚀 Gráfico motivos de entrevistas
   getGraficoMotivosEntrevistas: () =>

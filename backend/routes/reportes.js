@@ -23,6 +23,7 @@ router.get("/graficos/motivos-entrevistas", ReportesController.motivosEntrevista
 router.get("/generar-pdf", ReportesController.generarPDF);
 
 // Extra
+router.get("/atendidos", ReportesController.reporteEstudiantesAtendidos);
 router.get("/derivaciones", ReportesController.reporteDerivaciones);
 router.get("/entrevistas-seguimientos", ReportesController.reporteEntrevistasSeguimientos);
 

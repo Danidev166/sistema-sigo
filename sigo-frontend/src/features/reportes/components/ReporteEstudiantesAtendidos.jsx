@@ -87,13 +87,13 @@ export default function ReporteEstudiantesAtendidos() {
               <tr><td colSpan={7} className="text-center py-8 text-gray-500">Sin resultados</td></tr>
             ) : (
               data.map((row) => (
-                <tr key={row.id + row.fecha} className="hover:bg-gray-50 dark:hover:bg-slate-700">
+                <tr key={row.id + row.fecha_entrevista} className="hover:bg-gray-50 dark:hover:bg-slate-700">
                   <td className="px-3 py-2">{row.nombre}</td>
                   <td className="px-3 py-2">{row.apellido}</td>
                   <td className="px-3 py-2">{row.curso}</td>
                   <td className="px-3 py-2">{row.motivo}</td>
-                  <td className="px-3 py-2">{row.fecha ? new Date(row.fecha).toLocaleDateString() : ''}</td>
-                  <td className="px-3 py-2">{row.profesional}</td>
+                  <td className="px-3 py-2">{row.fecha_entrevista ? new Date(row.fecha_entrevista).toLocaleDateString() : ''}</td>
+                  <td className="px-3 py-2">{row.profesional_nombre} {row.profesional_apellido}</td>
                   <td className="px-3 py-2 text-center">{row.cantidad_sesiones}</td>
                 </tr>
               ))

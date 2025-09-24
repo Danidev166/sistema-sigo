@@ -184,23 +184,93 @@ class ReportesController {
     }
   }
 
+  static async reporteEstudiantesAtendidos(req, res, next) {
+    try {
+      const { curso, fecha_inicio, fecha_fin, motivo, profesional } = req.query;
+      
+      let sql = `
+        SELECT 
+          e.id,
+          e.nombre,
+          e.apellido,
+          e.rut,
+          e.curso,
+          e.estado,
+          ent.fecha_entrevista,
+          ent.motivo,
+          ent.observaciones,
+          u.nombre as profesional_nombre,
+          u.apellido as profesional_apellido,
+          COUNT(ent.id) as cantidad_sesiones
+        FROM estudiantes e
+        INNER JOIN entrevistas ent ON e.id = ent.id_estudiante
+        LEFT JOIN usuarios u ON ent.id_orientador = u.id
+        WHERE 1=1
+      `;
+      
+      const params = [];
+      let paramCount = 0;
+      
+      if (curso) {
+        paramCount++;
+        sql += ` AND e.curso = $${paramCount}`;
+        params.push(curso);
+      }
+      if (fecha_inicio) {
+        paramCount++;
+        sql += ` AND ent.fecha_entrevista >= $${paramCount}`;
+        params.push(fecha_inicio);
+      }
+      if (fecha_fin) {
+        paramCount++;
+        sql += ` AND ent.fecha_entrevista <= $${paramCount}`;
+        params.push(fecha_fin);
+      }
+      if (motivo) {
+        paramCount++;
+        sql += ` AND ent.motivo ILIKE $${paramCount}`;
+        params.push(`%${motivo}%`);
+      }
+      if (profesional) {
+        paramCount++;
+        sql += ` AND (u.nombre ILIKE $${paramCount} OR u.apellido ILIKE $${paramCount})`;
+        params.push(`%${profesional}%`);
+        params.push(`%${profesional}%`);
+      }
+      
+      sql += ` GROUP BY e.id, e.nombre, e.apellido, e.rut, e.curso, e.estado, ent.fecha_entrevista, ent.motivo, ent.observaciones, u.nombre, u.apellido`;
+      sql += ` ORDER BY e.curso, ent.fecha_entrevista DESC`;
+      
+      const result = await pool.query(sql, params);
+      res.json(result.rows);
+    } catch (error) {
+      logger.error("❌ Error en reporteEstudiantesAtendidos:", error);
+      next(error);
+    }
+  }
+
   static async reporteEntrevistasSeguimientos(req, res, next) {
     try {
       const { fecha_desde, fecha_hasta, curso } = req.query;
       
       let sql = `
         SELECT 
+          e.id,
           e.nombre,
           e.apellido,
           e.curso,
           ent.fecha_entrevista,
           ent.motivo,
-          ent.observaciones,
-          sp.fecha_seguimiento,
-          sp.observaciones as seguimiento_obs
+          ent.observaciones as entrevista_obs,
+          sp.fecha as fecha_seguimiento,
+          sp.observaciones as seguimiento_obs,
+          sp.tipo as tipo_seguimiento,
+          u.nombre as profesional_nombre,
+          u.apellido as profesional_apellido
         FROM estudiantes e
         LEFT JOIN entrevistas ent ON e.id = ent.id_estudiante
         LEFT JOIN seguimiento_psicosocial sp ON e.id = sp.id_estudiante
+        LEFT JOIN usuarios u ON ent.id_orientador = u.id
         WHERE 1=1
       `;
       
@@ -209,12 +279,12 @@ class ReportesController {
       
       if (fecha_desde) {
         paramCount++;
-        sql += ` AND (ent.fecha_entrevista >= $${paramCount} OR sp.fecha_seguimiento >= $${paramCount})`;
+        sql += ` AND (ent.fecha_entrevista >= $${paramCount} OR sp.fecha >= $${paramCount})`;
         params.push(fecha_desde);
       }
       if (fecha_hasta) {
         paramCount++;
-        sql += ` AND (ent.fecha_entrevista <= $${paramCount} OR sp.fecha_seguimiento <= $${paramCount})`;
+        sql += ` AND (ent.fecha_entrevista <= $${paramCount} OR sp.fecha <= $${paramCount})`;
         params.push(fecha_hasta);
       }
       if (curso) {
@@ -223,7 +293,7 @@ class ReportesController {
         params.push(curso);
       }
       
-      sql += ` ORDER BY e.curso, ent.fecha_entrevista DESC, sp.fecha_seguimiento DESC`;
+      sql += ` ORDER BY e.curso, ent.fecha_entrevista DESC, sp.fecha DESC`;
       
       const result = await pool.query(sql, params);
       res.json(result.rows);
