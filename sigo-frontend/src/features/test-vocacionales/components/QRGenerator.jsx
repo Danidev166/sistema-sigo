@@ -78,23 +78,21 @@ const QRGenerator = ({ testType, estudiante, onClose }) => {
       setError(null);
 
       // Crear URL con parámetros del estudiante
-      // Usar la IP de la red local en lugar de localhost para acceso móvil
       const baseUrl = window.location.origin;
       let mobileUrl = baseUrl;
       
-      // Si estamos en localhost, reemplazar con la IP de la red
+      // Si estamos en localhost (desarrollo), usar la IP de la red local
       if (baseUrl.includes('localhost') || baseUrl.includes('127.0.0.1')) {
-        // Obtener la IP de la red local
-        const hostname = window.location.hostname;
         const port = window.location.port;
-        
-        // Usar la IP real de tu red local
+        // Usar la IP real de tu red local para desarrollo
         mobileUrl = `http://192.168.18.10:${port}`;
         
-        // Mostrar instrucciones para obtener la IP correcta
-        console.log('📱 Para acceso móvil, necesitas usar la IP de tu red local');
+        console.log('📱 Modo desarrollo: usando IP local para acceso móvil');
         console.log('🔍 Encuentra tu IP con: ipconfig (Windows) o ifconfig (Mac/Linux)');
-        console.log('📝 Reemplaza 192.168.1.100 con tu IP real en el código');
+      } else {
+        // En producción (Render), usar la URL de producción
+        mobileUrl = 'https://sigo-frontend-2025.onrender.com';
+        console.log('🌐 Modo producción: usando URL de Render');
       }
       
       const testUrl = `${mobileUrl}${testUrls[testType]}`;
@@ -205,9 +203,13 @@ const QRGenerator = ({ testType, estudiante, onClose }) => {
     const baseUrl = window.location.origin;
     let mobileUrl = baseUrl;
     
+    // Si estamos en localhost (desarrollo), usar la IP de la red local
     if (baseUrl.includes('localhost') || baseUrl.includes('127.0.0.1')) {
       const port = window.location.port;
       mobileUrl = `http://192.168.18.10:${port}`;
+    } else {
+      // En producción (Render), usar la URL de producción
+      mobileUrl = 'https://sigo-frontend-2025.onrender.com';
     }
     
     const testUrl = `${mobileUrl}/test-mobile/${testType}`;
