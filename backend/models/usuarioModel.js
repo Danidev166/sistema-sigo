@@ -1,100 +1,121 @@
 // backend/models/usuarioModel.js
-const { sql, getPool } = require('../config/db');
+const { Pool } = require('pg');
+
+// Configuración de PostgreSQL para Render
+const renderConfig = {
+  user: 'sigo_user',
+  host: 'dpg-d391d4nfte5s73cff6p0-a.oregon-postgres.render.com',
+  database: 'sigo_pro',
+  password: 'qgEyTD5LiGu22qdSOoROC1UFqjGZaxIv',
+  port: 5432,
+  ssl: { rejectUnauthorized: false },
+};
+
+const pool = new Pool(renderConfig);
 
 // Helpers
 const normEmail = (e) => (typeof e === 'string' ? e.trim().toLowerCase() : e);
 const normRut   = (r) => (typeof r === 'string' ? r.trim() : r);
 
 const obtenerUsuarios = async () => {
-  const pool = await getPool();
-  const result = await pool.request().query(`
+  const result = await pool.query(`
     SELECT id, nombre, apellido, rut, email, rol, estado
     FROM usuarios
     ORDER BY id DESC
   `);
-  return result.recordset;
+  return result.rows;
 };
 
 const obtenerUsuarioPorId = async (id) => {
-  const pool = await getPool();
-  const result = await pool.request()
-    .input('id', sql.Int, id)
-    .query(`
-      SELECT id, nombre, apellido, rut, email, rol, estado
-      FROM usuarios
-      WHERE id = @id
-    `);
-  return result.recordset[0] || null;
+  const result = await pool.query(`
+    SELECT id, nombre, apellido, rut, email, rol, estado
+    FROM usuarios
+    WHERE id = $1
+  `, [id]);
+  return result.rows[0] || null;
 };
 
 const crearUsuario = async (usuario) => {
   // Nota: se asume que usuario.password ya viene *hasheado*
-  const pool = await getPool();
-  const result = await pool.request()
-    .input('nombre',   sql.NVarChar(100), usuario.nombre)
-    .input('apellido', sql.NVarChar(100), usuario.apellido)
-    .input('rut',      sql.NVarChar(20),  normRut(usuario.rut))
-    .input('email',    sql.NVarChar(150), normEmail(usuario.email))
-    .input('password', sql.NVarChar(255), usuario.password)
-    .input('rol',      sql.NVarChar(50),  usuario.rol)
-    .input('estado',   sql.NVarChar(20),  usuario.estado || 'Activo')
-    .query(`
-      INSERT INTO usuarios (nombre, apellido, rut, email, password, rol, estado)
-      VALUES (@nombre, @apellido, @rut, @email, @password, @rol, @estado)
-      RETURNING *
-    `);
-  return result.recordset[0];
+  const result = await pool.query(`
+    INSERT INTO usuarios (nombre, apellido, rut, email, password, rol, estado)
+    VALUES ($1, $2, $3, $4, $5, $6, $7)
+    RETURNING *
+  `, [
+    usuario.nombre,
+    usuario.apellido,
+    normRut(usuario.rut),
+    normEmail(usuario.email),
+    usuario.password,
+    usuario.rol,
+    usuario.estado || 'Activo'
+  ]);
+  return result.rows[0];
 };
 
 const actualizarUsuario = async (id, usuario) => {
-  const pool = await getPool();
-  await pool.request()
-    .input('id',       sql.Int,           id)
-    .input('nombre',   sql.NVarChar(100), usuario.nombre)
-    .input('apellido', sql.NVarChar(100), usuario.apellido)
-    .input('rut',      sql.NVarChar(20),  normRut(usuario.rut))
-    .input('email',    sql.NVarChar(150), normEmail(usuario.email))
-    .input('rol',      sql.NVarChar(50),  usuario.rol)
-    .input('estado',   sql.NVarChar(20),  usuario.estado || 'Activo')
-    .query(`
-      UPDATE usuarios
-         SET nombre   = @nombre,
-             apellido = @apellido,
-             rut      = @rut,
-             email    = @email,
-             rol      = @rol,
-             estado   = @estado
-       WHERE id = @id
-    `);
+  await pool.query(`
+    UPDATE usuarios
+       SET nombre   = $1,
+           apellido = $2,
+           rut      = $3,
+           email    = $4,
+           rol      = $5,
+           estado   = $6
+     WHERE id = $7
+  `, [
+    usuario.nombre,
+    usuario.apellido,
+    normRut(usuario.rut),
+    normEmail(usuario.email),
+    usuario.rol,
+    usuario.estado || 'Activo',
+    id
+  ]);
 };
 
 const actualizarEstadoUsuario = async (id, activoBoolean) => {
   // Mapea booleano → 'Activo'/'Inactivo' (según DDL propuesto)
   const nuevoEstado = activoBoolean ? 'Activo' : 'Inactivo';
-  const pool = await getPool();
-  await pool.request()
-    .input('id',     sql.Int,        id)
-    .input('estado', sql.NVarChar(20), nuevoEstado)
-    .query(`
-      UPDATE usuarios
-         SET estado = @estado
-       WHERE id = @id
-    `);
+  await pool.query(`
+    UPDATE usuarios
+       SET estado = $1
+     WHERE id = $2
+  `, [nuevoEstado, id]);
 };
 
 const eliminarUsuario = async (id) => {
-  const pool = await getPool();
-  await pool.request()
-    .input('id', sql.Int, id)
-    .query(`DELETE FROM usuarios WHERE id = @id`);
+  await pool.query(`
+    DELETE FROM usuarios WHERE id = $1
+  `, [id]);
 };
 
-const contar = async () => {
-  const pool = await getPool();
-  const result = await pool.request().query(`
-    SELECT COUNT(*)::int AS total FROM usuarios
-  `);
-  return result.recordset[0]?.total ?? 0;
+const obtenerUsuarioPorEmail = async (email) => {
+  const result = await pool.query(`
+    SELECT id, nombre, apellido, email, password, rol, estado, reset_token, reset_token_expiration
+    FROM usuarios
+    WHERE LOWER(email) = $1
+    LIMIT 1
+  `, [normEmail(email)]);
+  return result.rows[0] || null;
+};
+
+const actualizarTokenReset = async (id, token, expiration) => {
+  await pool.query(`
+    UPDATE usuarios
+       SET reset_token = $1,
+           reset_token_expiration = $2
+     WHERE id = $3
+  `, [token, expiration, id]);
+};
+
+const limpiarTokenReset = async (id) => {
+  await pool.query(`
+    UPDATE usuarios
+       SET reset_token = NULL,
+           reset_token_expiration = NULL
+     WHERE id = $1
+  `, [id]);
 };
 
 module.exports = {
@@ -104,5 +125,7 @@ module.exports = {
   actualizarUsuario,
   actualizarEstadoUsuario,
   eliminarUsuario,
-  contar,
+  obtenerUsuarioPorEmail,
+  actualizarTokenReset,
+  limpiarTokenReset
 };

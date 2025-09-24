@@ -17,17 +17,18 @@ class SeguimientoCronologicoModel {
   static async crear(data) {
     const query = `
       INSERT INTO seguimiento_cronologico
-        (id_estudiante, fecha, titulo, descripcion, profesional)
-      VALUES ($1, $2, $3, $4, $5)
+        (id_estudiante, fecha_evento, tipo_evento, descripcion, responsable_id, observaciones)
+      VALUES ($1, $2, $3, $4, $5, $6)
       RETURNING *
     `;
     
     const values = [
       data.id_estudiante,
-      data.fecha || new Date(),
-      data.titulo || '',
+      data.fecha_evento || new Date(),
+      data.tipo_evento || '',
       data.descripcion || '',
-      data.profesional || null
+      data.responsable_id || null,
+      data.observaciones || ''
     ];
     
     const result = await pool.query(query, values);
@@ -39,7 +40,7 @@ class SeguimientoCronologicoModel {
       SELECT sc.*, e.nombre, e.apellido, e.rut
       FROM seguimiento_cronologico sc
       LEFT JOIN estudiantes e ON sc.id_estudiante = e.id
-      ORDER BY sc.fecha DESC, sc.id DESC
+      ORDER BY sc.fecha_evento DESC, sc.id DESC
     `;
     
     const result = await pool.query(query);
@@ -70,20 +71,20 @@ class SeguimientoCronologicoModel {
     let paramIndex = 2;
 
     if (filtros.fechaDesde) {
-      query += ` AND sc.fecha >= $${paramIndex}`;
+      query += ` AND sc.fecha_evento >= $${paramIndex}`;
       params.push(filtros.fechaDesde);
       paramIndex++;
     }
 
     if (filtros.fechaHasta) {
-      query += ` AND sc.fecha <= $${paramIndex}`;
+      query += ` AND sc.fecha_evento <= $${paramIndex}`;
       params.push(filtros.fechaHasta);
       paramIndex++;
     }
 
     if (filtros.profesional) {
-      query += ` AND sc.profesional ILIKE $${paramIndex}`;
-      params.push(`%${filtros.profesional}%`);
+      query += ` AND sc.responsable_id = $${paramIndex}`;
+      params.push(filtros.profesional);
       paramIndex++;
     }
 
@@ -102,20 +103,22 @@ class SeguimientoCronologicoModel {
     const query = `
       UPDATE seguimiento_cronologico
       SET id_estudiante = $1,
-          fecha = $2,
-          titulo = $3,
+          fecha_evento = $2,
+          tipo_evento = $3,
           descripcion = $4,
-          profesional = $5
-      WHERE id = $6
+          responsable_id = $5,
+          observaciones = $6
+      WHERE id = $7
       RETURNING *
     `;
     
     const values = [
       data.id_estudiante,
-      data.fecha || new Date(),
-      data.titulo || '',
+      data.fecha_evento || new Date(),
+      data.tipo_evento || '',
       data.descripcion || '',
-      data.profesional || null,
+      data.responsable_id || null,
+      data.observaciones || '',
       id
     ];
     
@@ -134,7 +137,7 @@ class SeguimientoCronologicoModel {
       SELECT 
         COUNT(*) as total_registros,
         COUNT(DISTINCT id_estudiante) as estudiantes_atendidos,
-        COUNT(CASE WHEN fecha >= CURRENT_DATE - INTERVAL '30 days' THEN 1 END) as registros_mes
+        COUNT(CASE WHEN fecha_evento >= CURRENT_DATE - INTERVAL '30 days' THEN 1 END) as registros_mes
       FROM seguimiento_cronologico
     `;
     

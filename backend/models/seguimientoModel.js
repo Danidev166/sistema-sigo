@@ -17,20 +17,20 @@ const SeguimientoModel = {
   async crear(data) {
     const query = `
       INSERT INTO seguimiento
-        (id_estudiante, fecha, tipo, descripcion, profesional, subtipo, archivo, urgencias)
+        (id_estudiante, fecha_seguimiento, tipo_seguimiento, observaciones, recomendaciones, responsable_id, estado, proxima_fecha)
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
       RETURNING *
     `;
     
     const values = [
       data.id_estudiante,
-      data.fecha || new Date(),
-      data.tipo,
-      data.descripcion || '',
-      data.profesional || null,
-      data.subtipo || null,
-      data.archivo || null,
-      data.urgencias || null
+      data.fecha_seguimiento || new Date(),
+      data.tipo_seguimiento,
+      data.observaciones || '',
+      data.recomendaciones || '',
+      data.responsable_id || null,
+      data.estado || null,
+      data.proxima_fecha || null
     ];
     
     const result = await pool.query(query, values);
@@ -42,7 +42,7 @@ const SeguimientoModel = {
       SELECT s.*, e.nombre, e.apellido, e.rut
       FROM seguimiento s
       LEFT JOIN estudiantes e ON s.id_estudiante = e.id
-      ORDER BY s.fecha DESC, s.id DESC
+      ORDER BY s.fecha_seguimiento DESC, s.id DESC
     `;
     
     const result = await pool.query(query);
@@ -71,7 +71,7 @@ const SeguimientoModel = {
       FROM seguimiento s
       LEFT JOIN estudiantes e ON s.id_estudiante = e.id
       WHERE s.id_estudiante = $1
-      ORDER BY s.fecha DESC, s.id DESC
+      ORDER BY s.fecha_seguimiento DESC, s.id DESC
     `;
     
     const result = await pool.query(query, [idEstudiante]);
@@ -82,26 +82,26 @@ const SeguimientoModel = {
     const query = `
       UPDATE seguimiento
       SET id_estudiante = $1,
-          fecha = $2,
-          tipo = $3,
-          descripcion = $4,
-          profesional = $5,
-          subtipo = $6,
-          archivo = $7,
-          urgencias = $8
+          fecha_seguimiento = $2,
+          tipo_seguimiento = $3,
+          observaciones = $4,
+          recomendaciones = $5,
+          responsable_id = $6,
+          estado = $7,
+          proxima_fecha = $8
       WHERE id = $9
       RETURNING *
     `;
     
     const values = [
       data.id_estudiante,
-      data.fecha || new Date(),
-      data.tipo,
-      data.descripcion || '',
-      data.profesional || null,
-      data.subtipo || null,
-      data.archivo || null,
-      data.urgencias || null,
+      data.fecha_seguimiento || new Date(),
+      data.tipo_seguimiento,
+      data.observaciones || '',
+      data.recomendaciones || '',
+      data.responsable_id || null,
+      data.estado || null,
+      data.proxima_fecha || null,
       id
     ];
     

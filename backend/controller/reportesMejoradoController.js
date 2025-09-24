@@ -19,26 +19,11 @@ class ReportesMejoradoController {
   // 📊 Dashboard principal
   static async dashboard(req, res, next) {
     try {
-      // Obtener estadísticas generales
-      const estudiantesQuery = 'SELECT COUNT(*) as total FROM estudiantes';
-      const entrevistasQuery = 'SELECT COUNT(*) as total FROM entrevistas';
-      const evaluacionesQuery = 'SELECT COUNT(*) as total FROM evaluaciones_vocacionales';
-      const recursosQuery = 'SELECT COUNT(*) as total FROM recursos';
+      // Usar la función de la base de datos que devuelve el formato correcto
+      const result = await pool.query('SELECT get_dashboard_final()');
+      const dashboardData = result.rows[0].get_dashboard_final;
       
-      const [estudiantes, entrevistas, evaluaciones, recursos] = await Promise.all([
-        pool.query(estudiantesQuery),
-        pool.query(entrevistasQuery),
-        pool.query(evaluacionesQuery),
-        pool.query(recursosQuery)
-      ]);
-      
-      res.json({
-        estudiantes: estudiantes.rows[0].total,
-        entrevistas: entrevistas.rows[0].total,
-        evaluaciones: evaluaciones.rows[0].total,
-        recursos: recursos.rows[0].total,
-        timestamp: new Date().toISOString()
-      });
+      res.json(dashboardData);
       
     } catch (error) {
       logger.error("❌ Error en dashboard:", error);
