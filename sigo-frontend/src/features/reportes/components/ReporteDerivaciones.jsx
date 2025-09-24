@@ -81,22 +81,32 @@ export default function ReporteDerivaciones() {
               <th className="px-3 py-2 text-xs font-semibold">Motivo</th>
               <th className="px-3 py-2 text-xs font-semibold">Fecha</th>
               <th className="px-3 py-2 text-xs font-semibold">Profesional</th>
+              <th className="px-3 py-2 text-xs font-semibold">Estado</th>
             </tr>
           </thead>
           <tbody>
             {loading ? (
-              <tr><td colSpan={6} className="text-center py-8">Cargando...</td></tr>
+              <tr><td colSpan={7} className="text-center py-8">Cargando...</td></tr>
             ) : data.length === 0 ? (
-              <tr><td colSpan={6} className="text-center py-8 text-gray-500">Sin resultados</td></tr>
+              <tr><td colSpan={7} className="text-center py-8 text-gray-500">Sin resultados</td></tr>
             ) : (
               data.map((row) => (
-                <tr key={row.id + row.fecha} className="hover:bg-gray-50 dark:hover:bg-slate-700">
+                <tr key={row.id + row.fecha_entrevista} className="hover:bg-gray-50 dark:hover:bg-slate-700">
                   <td className="px-3 py-2">{row.nombre}</td>
                   <td className="px-3 py-2">{row.apellido}</td>
                   <td className="px-3 py-2">{row.curso}</td>
                   <td className="px-3 py-2">{row.motivo}</td>
-                  <td className="px-3 py-2">{row.fecha ? new Date(row.fecha).toLocaleDateString() : ''}</td>
-                  <td className="px-3 py-2">{row.profesional}</td>
+                  <td className="px-3 py-2">{row.fecha_entrevista ? new Date(row.fecha_entrevista).toLocaleDateString() : ''}</td>
+                  <td className="px-3 py-2">{row.profesional_nombre} {row.profesional_apellido}</td>
+                  <td className="px-3 py-2">
+                    <span className={`px-2 py-1 rounded text-xs ${
+                      row.estado_entrevista === 'Pendiente' ? 'bg-yellow-100 text-yellow-800' :
+                      row.estado_entrevista === 'Completada' ? 'bg-green-100 text-green-800' :
+                      'bg-gray-100 text-gray-800'
+                    }`}>
+                      {row.estado_entrevista}
+                    </span>
+                  </td>
                 </tr>
               ))
             )}

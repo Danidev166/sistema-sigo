@@ -129,12 +129,14 @@ class ReportesController {
           e.estado as estado_estudiante,
           ent.fecha_entrevista,
           ent.motivo,
-          ent.derivacion_a,
-          ent.profesional_responsable,
-          ent.observaciones
+          ent.observaciones,
+          ent.estado as estado_entrevista,
+          u.nombre as profesional_nombre,
+          u.apellido as profesional_apellido
         FROM estudiantes e
         INNER JOIN entrevistas ent ON e.id = ent.id_estudiante
-        WHERE ent.derivacion_a IS NOT NULL AND ent.derivacion_a != ''
+        LEFT JOIN usuarios u ON ent.id_orientador = u.id
+        WHERE 1=1
       `;
       
       const params = [];
@@ -162,7 +164,8 @@ class ReportesController {
       }
       if (profesional) {
         paramCount++;
-        sql += ` AND ent.profesional_responsable ILIKE $${paramCount}`;
+        sql += ` AND (u.nombre ILIKE $${paramCount} OR u.apellido ILIKE $${paramCount})`;
+        params.push(`%${profesional}%`);
         params.push(`%${profesional}%`);
       }
       if (estado) {
