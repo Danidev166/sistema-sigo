@@ -26,5 +26,9 @@ router.get("/generar-pdf", ReportesController.generarPDF);
 router.get("/atendidos", ReportesController.reporteEstudiantesAtendidos);
 router.get("/derivaciones", ReportesController.reporteDerivaciones);
 router.get("/entrevistas-seguimientos", ReportesController.reporteEntrevistasSeguimientos);
+router.get("/situaciones-riesgo", ReportesController.reporteSituacionesRiesgo);
+router.get("/asistencia-citaciones", ReportesController.reporteAsistenciaCitaciones);
+router.get("/general-por-curso", ReportesController.reporteGeneralPorCurso);
+router.get("/estadisticas-globales", ReportesController.reporteEstadisticasGlobales);
 
 module.exports = router;

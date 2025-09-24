@@ -303,6 +303,187 @@ class ReportesController {
     }
   }
 
+  static async reporteSituacionesRiesgo(req, res, next) {
+    try {
+      const { curso, fecha_inicio, fecha_fin, tipo_riesgo } = req.query;
+      
+      let sql = `
+        SELECT 
+          e.id,
+          e.nombre,
+          e.apellido,
+          e.rut,
+          e.curso,
+          e.estado,
+          a.fecha_alerta,
+          a.tipo_alerta,
+          a.descripcion,
+          a.estado as estado_alerta,
+          u.nombre as profesional_nombre,
+          u.apellido as profesional_apellido
+        FROM estudiantes e
+        INNER JOIN alertas a ON e.id = a.id_estudiante
+        LEFT JOIN usuarios u ON a.id_profesional = u.id
+        WHERE 1=1
+      `;
+      
+      const params = [];
+      let paramCount = 0;
+      
+      if (curso) {
+        paramCount++;
+        sql += ` AND e.curso = $${paramCount}`;
+        params.push(curso);
+      }
+      if (fecha_inicio) {
+        paramCount++;
+        sql += ` AND a.fecha_alerta >= $${paramCount}`;
+        params.push(fecha_inicio);
+      }
+      if (fecha_fin) {
+        paramCount++;
+        sql += ` AND a.fecha_alerta <= $${paramCount}`;
+        params.push(fecha_fin);
+      }
+      if (tipo_riesgo) {
+        paramCount++;
+        sql += ` AND a.tipo_alerta ILIKE $${paramCount}`;
+        params.push(`%${tipo_riesgo}%`);
+      }
+      
+      sql += ` ORDER BY a.fecha_alerta DESC`;
+      
+      const result = await pool.query(sql, params);
+      res.json(result.rows);
+    } catch (error) {
+      logger.error("❌ Error en reporteSituacionesRiesgo:", error);
+      next(error);
+    }
+  }
+
+  static async reporteAsistenciaCitaciones(req, res, next) {
+    try {
+      const { curso, fecha_inicio, fecha_fin } = req.query;
+      
+      let sql = `
+        SELECT 
+          e.id,
+          e.nombre,
+          e.apellido,
+          e.rut,
+          e.curso,
+          e.estado,
+          ag.fecha,
+          ag.hora,
+          ag.motivo,
+          ag.profesional,
+          ag.email_orientador,
+          ag.creado_en
+        FROM estudiantes e
+        INNER JOIN agenda ag ON e.id = ag.id_estudiante
+        WHERE 1=1
+      `;
+      
+      const params = [];
+      let paramCount = 0;
+      
+      if (curso) {
+        paramCount++;
+        sql += ` AND e.curso = $${paramCount}`;
+        params.push(curso);
+      }
+      if (fecha_inicio) {
+        paramCount++;
+        sql += ` AND ag.fecha >= $${paramCount}`;
+        params.push(fecha_inicio);
+      }
+      if (fecha_fin) {
+        paramCount++;
+        sql += ` AND ag.fecha <= $${paramCount}`;
+        params.push(fecha_fin);
+      }
+      
+      sql += ` ORDER BY ag.fecha DESC, ag.hora DESC`;
+      
+      const result = await pool.query(sql, params);
+      res.json(result.rows);
+    } catch (error) {
+      logger.error("❌ Error en reporteAsistenciaCitaciones:", error);
+      next(error);
+    }
+  }
+
+  static async reporteGeneralPorCurso(req, res, next) {
+    try {
+      const sql = `
+        SELECT 
+          e.curso,
+          COUNT(DISTINCT e.id) as total_estudiantes,
+          COUNT(DISTINCT CASE WHEN e.estado = 'Activo' THEN e.id END) as estudiantes_activos,
+          COUNT(DISTINCT CASE WHEN e.estado = 'Inactivo' THEN e.id END) as estudiantes_inactivos,
+          COUNT(DISTINCT ent.id) as total_entrevistas,
+          COUNT(DISTINCT sp.id) as total_seguimientos,
+          COUNT(DISTINCT a.id) as total_alertas,
+          ROUND(AVG(ha.promedio_general)::numeric, 2) as promedio_general
+        FROM estudiantes e
+        LEFT JOIN entrevistas ent ON e.id = ent.id_estudiante
+        LEFT JOIN seguimiento_psicosocial sp ON e.id = sp.id_estudiante
+        LEFT JOIN alertas a ON e.id = a.id_estudiante
+        LEFT JOIN historial_academico ha ON e.id = ha.id_estudiante
+        GROUP BY e.curso
+        ORDER BY e.curso
+      `;
+      
+      const result = await pool.query(sql);
+      res.json(result.rows);
+    } catch (error) {
+      logger.error("❌ Error en reporteGeneralPorCurso:", error);
+      next(error);
+    }
+  }
+
+  static async reporteEstadisticasGlobales(req, res, next) {
+    try {
+      const sql = `
+        SELECT 
+          'estudiantes' as categoria,
+          COUNT(*) as total
+        FROM estudiantes
+        UNION ALL
+        SELECT 
+          'entrevistas' as categoria,
+          COUNT(*) as total
+        FROM entrevistas
+        UNION ALL
+        SELECT 
+          'seguimientos' as categoria,
+          COUNT(*) as total
+        FROM seguimiento_psicosocial
+        UNION ALL
+        SELECT 
+          'alertas' as categoria,
+          COUNT(*) as total
+        FROM alertas
+        UNION ALL
+        SELECT 
+          'recursos' as categoria,
+          COUNT(*) as total
+        FROM recursos
+        UNION ALL
+        SELECT 
+          'usuarios' as categoria,
+          COUNT(*) as total
+        FROM usuarios
+      `;
+      
+      const result = await pool.query(sql);
+      res.json(result.rows);
+    } catch (error) {
+      logger.error("❌ Error en reporteEstadisticasGlobales:", error);
+      next(error);
+    }
+  }
+
   static async generarPDF(_req, res, next) {
     try {
       // Implementación básica para generar PDF

@@ -28,6 +28,26 @@ const reporteService = {
     const query = new URLSearchParams(params).toString();
     return api.get(`/reportes/derivaciones${query ? `?${query}` : ''}`);
   },
+
+  // Reporte de Situaciones de Riesgo
+  getSituacionesRiesgo: (params = {}) => {
+    const query = new URLSearchParams(params).toString();
+    return api.get(`/reportes/situaciones-riesgo${query ? `?${query}` : ''}`);
+  },
+
+  // Reporte de Asistencia a Citaciones
+  getAsistenciaCitaciones: (params = {}) => {
+    const query = new URLSearchParams(params).toString();
+    return api.get(`/reportes/asistencia-citaciones${query ? `?${query}` : ''}`);
+  },
+
+  // Reporte General por Curso
+  getGeneralPorCurso: () => 
+    api.get("/reportes/general-por-curso"),
+
+  // Reporte de Estadísticas Globales
+  getEstadisticasGlobales: () => 
+    api.get("/reportes/estadisticas-globales"),
 };
 
 export default reporteService;
