@@ -84,6 +84,35 @@ const UsuarioController = {
       if (typeof estado !== "boolean") {
         return res.status(400).json({ mensaje: "El estado debe ser booleano (true o false)" });
       }
+      
+      // Obtener información del usuario para verificar si está protegido
+      const usuario = await obtenerUsuarioPorId(id);
+      
+      // Verificar si el usuario está protegido
+      const usuariosProtegidos = [
+        'patricia crespo',
+        'adminsigo',
+        'admin',
+        'administrador'
+      ];
+      
+      const nombreCompleto = `${usuario.nombre} ${usuario.apellido}`.toLowerCase();
+      const email = usuario.email?.toLowerCase() || '';
+      
+      const esProtegido = usuariosProtegidos.some(protegido => 
+        nombreCompleto.includes(protegido.toLowerCase()) ||
+        email.includes(protegido.toLowerCase()) ||
+        usuario.email === protegido
+      );
+      
+      // Si está protegido y se intenta desactivar, denegar
+      if (esProtegido && !estado) {
+        return res.status(403).json({ 
+          mensaje: "Este usuario no se puede desactivar por motivos de seguridad",
+          error: "USUARIO_PROTEGIDO"
+        });
+      }
+      
       const nuevoEstado = estado ? 'Activo' : 'Inactivo';
       await actualizarEstadoUsuario(id, nuevoEstado);
       res.json({ mensaje: "Estado actualizado correctamente" });
@@ -96,6 +125,31 @@ const UsuarioController = {
   eliminar: async (req, res) => {
     try {
       const prev = await obtenerUsuarioPorId(req.params.id);
+      
+      // Verificar si el usuario está protegido
+      const usuariosProtegidos = [
+        'patricia crespo',
+        'adminsigo',
+        'admin',
+        'administrador'
+      ];
+      
+      const nombreCompleto = `${prev.nombre} ${prev.apellido}`.toLowerCase();
+      const email = prev.email?.toLowerCase() || '';
+      
+      const esProtegido = usuariosProtegidos.some(protegido => 
+        nombreCompleto.includes(protegido.toLowerCase()) ||
+        email.includes(protegido.toLowerCase()) ||
+        prev.email === protegido
+      );
+      
+      if (esProtegido) {
+        return res.status(403).json({ 
+          mensaje: "Este usuario no se puede eliminar por motivos de seguridad",
+          error: "USUARIO_PROTEGIDO"
+        });
+      }
+      
       await eliminarUsuario(req.params.id);
       res.json({ mensaje: "Usuario eliminado correctamente" });
 

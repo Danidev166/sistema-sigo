@@ -21,6 +21,26 @@ const UserTable = memo(({ usuarios, onEdit, onDelete, onToggleEstado }) => {
   const [sortAsc, setSortAsc] = useState(true);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
+  // Usuarios protegidos que no se pueden eliminar
+  const usuariosProtegidos = [
+    'patricia crespo',
+    'adminsigo',
+    'admin',
+    'administrador'
+  ];
+
+  // Función para verificar si un usuario está protegido
+  const esUsuarioProtegido = (usuario) => {
+    const nombreCompleto = `${usuario.nombre} ${usuario.apellido}`.toLowerCase();
+    const email = usuario.email?.toLowerCase() || '';
+    
+    return usuariosProtegidos.some(protegido => 
+      nombreCompleto.includes(protegido.toLowerCase()) ||
+      email.includes(protegido.toLowerCase()) ||
+      usuario.email === protegido
+    );
+  };
+
   const usuariosFiltrados = useMemo(() => {
     let filtered = Array.isArray(usuarios) ? usuarios : [];
 
@@ -152,12 +172,18 @@ const UserTable = memo(({ usuarios, onEdit, onDelete, onToggleEstado }) => {
                 </span>
               </div>
               <div className="flex justify-between items-center pt-2 border-t border-gray-200 dark:border-slate-700">
-                <button
-                  onClick={() => onToggleEstado(user)}
-                  className="text-sm text-blue-600 hover:underline"
-                >
-                  Cambiar Estado
-                </button>
+                {esUsuarioProtegido(user) ? (
+                  <span className="text-sm text-gray-400 italic">
+                    Usuario protegido
+                  </span>
+                ) : (
+                  <button
+                    onClick={() => onToggleEstado(user)}
+                    className="text-sm text-blue-600 hover:underline"
+                  >
+                    Cambiar Estado
+                  </button>
+                )}
                 <div className="flex gap-2">
                   <button
                     onClick={() => onEdit(user)}
@@ -167,14 +193,25 @@ const UserTable = memo(({ usuarios, onEdit, onDelete, onToggleEstado }) => {
                   >
                     <PencilIcon size={16} />
                   </button>
-                  <button
-                    onClick={() => onDelete(user)}
-                    className="p-2 bg-red-100 hover:bg-red-200 text-red-700 rounded-md"
-                    title="Eliminar"
-                    aria-label={`Eliminar usuario ${user.nombre} ${user.apellido}`}
-                  >
-                    <TrashIcon size={16} />
-                  </button>
+                  {esUsuarioProtegido(user) ? (
+                    <button
+                      disabled
+                      className="p-2 bg-gray-100 text-gray-400 rounded-md cursor-not-allowed"
+                      title="Este usuario no se puede eliminar"
+                      aria-label={`Usuario ${user.nombre} ${user.apellido} protegido - no se puede eliminar`}
+                    >
+                      <TrashIcon size={16} />
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => onDelete(user)}
+                      className="p-2 bg-red-100 hover:bg-red-200 text-red-700 rounded-md"
+                      title="Eliminar"
+                      aria-label={`Eliminar usuario ${user.nombre} ${user.apellido}`}
+                    >
+                      <TrashIcon size={16} />
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
@@ -241,12 +278,18 @@ const UserTable = memo(({ usuarios, onEdit, onDelete, onToggleEstado }) => {
                       {user.estado ? "Activo" : "Inactivo"}
                     </span>
                     <div>
-                      <button
-                        onClick={() => onToggleEstado(user)}
-                        className="mt-1 text-sm text-blue-600 hover:underline"
-                      >
-                        Cambiar Estado
-                      </button>
+                      {esUsuarioProtegido(user) ? (
+                        <span className="mt-1 text-sm text-gray-400 italic">
+                          Usuario protegido
+                        </span>
+                      ) : (
+                        <button
+                          onClick={() => onToggleEstado(user)}
+                          className="mt-1 text-sm text-blue-600 hover:underline"
+                        >
+                          Cambiar Estado
+                        </button>
+                      )}
                     </div>
                   </td>
                   <td className="px-4 py-3 text-center">
@@ -259,14 +302,25 @@ const UserTable = memo(({ usuarios, onEdit, onDelete, onToggleEstado }) => {
                       >
                         <PencilIcon size={16} />
                       </button>
-                      <button
-                        onClick={() => onDelete(user)}
-                        className="p-2 bg-red-100 hover:bg-red-200 text-red-700 rounded-md"
-                        title="Eliminar"
-                        aria-label={`Eliminar usuario ${user.nombre} ${user.apellido}`}
-                      >
-                        <TrashIcon size={16} />
-                      </button>
+                      {esUsuarioProtegido(user) ? (
+                        <button
+                          disabled
+                          className="p-2 bg-gray-100 text-gray-400 rounded-md cursor-not-allowed"
+                          title="Este usuario no se puede eliminar"
+                          aria-label={`Usuario ${user.nombre} ${user.apellido} protegido - no se puede eliminar`}
+                        >
+                          <TrashIcon size={16} />
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => onDelete(user)}
+                          className="p-2 bg-red-100 hover:bg-red-200 text-red-700 rounded-md"
+                          title="Eliminar"
+                          aria-label={`Eliminar usuario ${user.nombre} ${user.apellido}`}
+                        >
+                          <TrashIcon size={16} />
+                        </button>
+                      )}
                     </div>
                   </td>
                 </tr>

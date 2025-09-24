@@ -96,8 +96,16 @@ export default function UsuariosPage() {
     try {
       await usuarioService.eliminarUsuario(usuarioAEliminar.id);
       await fetchUsuarios();
+      alert("✅ Usuario eliminado correctamente");
     } catch (error) {
       console.error("Error al eliminar usuario:", error);
+      
+      // Manejar error específico de usuario protegido
+      if (error.response?.status === 403 && error.response?.data?.error === "USUARIO_PROTEGIDO") {
+        alert("❌ Este usuario no se puede eliminar por motivos de seguridad");
+      } else {
+        alert("❌ Error al eliminar el usuario. Inténtalo de nuevo.");
+      }
     } finally {
       setIsDeleteOpen(false);
       setUsuarioAEliminar(null);
