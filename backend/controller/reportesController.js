@@ -117,33 +117,58 @@ class ReportesController {
 
   static async reporteDerivaciones(req, res, next) {
     try {
-      const { fecha_desde, fecha_hasta } = req.query;
+      const { curso, fecha_inicio, fecha_fin, motivo, profesional, estado } = req.query;
       
       let sql = `
         SELECT 
+          e.id,
           e.nombre,
           e.apellido,
+          e.rut,
           e.curso,
+          e.estado as estado_estudiante,
           ent.fecha_entrevista,
           ent.motivo,
-          ent.derivacion_a
+          ent.derivacion_a,
+          ent.profesional_responsable,
+          ent.observaciones
         FROM estudiantes e
         INNER JOIN entrevistas ent ON e.id = ent.id_estudiante
-        WHERE ent.derivacion_a IS NOT NULL
+        WHERE ent.derivacion_a IS NOT NULL AND ent.derivacion_a != ''
       `;
       
       const params = [];
       let paramCount = 0;
       
-      if (fecha_desde) {
+      if (curso) {
+        paramCount++;
+        sql += ` AND e.curso = $${paramCount}`;
+        params.push(curso);
+      }
+      if (fecha_inicio) {
         paramCount++;
         sql += ` AND ent.fecha_entrevista >= $${paramCount}`;
-        params.push(fecha_desde);
+        params.push(fecha_inicio);
       }
-      if (fecha_hasta) {
+      if (fecha_fin) {
         paramCount++;
         sql += ` AND ent.fecha_entrevista <= $${paramCount}`;
-        params.push(fecha_hasta);
+        params.push(fecha_fin);
+      }
+      if (motivo) {
+        paramCount++;
+        sql += ` AND ent.motivo ILIKE $${paramCount}`;
+        params.push(`%${motivo}%`);
+      }
+      if (profesional) {
+        paramCount++;
+        sql += ` AND ent.profesional_responsable ILIKE $${paramCount}`;
+        params.push(`%${profesional}%`);
+      }
+      if (estado) {
+        paramCount++;
+        sql += ` AND e.estado = $${paramCount}`;
+        params.push(estado);
       }
       
       sql += ` ORDER BY ent.fecha_entrevista DESC`;
