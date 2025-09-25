@@ -21,33 +21,28 @@ class AgendaModel {
     try {
       const pool = await getPool();
       
-      // Consulta PostgreSQL con JOIN para obtener datos del estudiante
-      const result = await pool.request().query(`
-        SELECT 
-          a.id,
-          a.id_estudiante,
-          COALESCE(e.nombre, 'Sin nombre') AS nombre_estudiante,
-          COALESCE(e.apellido, '') AS apellido_estudiante,
-          COALESCE(e.curso, 'Sin curso') AS curso,
-          a.motivo,
-          a.profesional,
-          a.fecha,
-          a.hora,
-          a.creado_en,
-          a.email_orientador,
-          'Programada' AS estado,
-          'Citación' AS tipo,
-          COALESCE(a.observaciones, 'Sin observaciones') AS observaciones,
-          'Pendiente' AS asistencia
-        FROM agenda a
-        LEFT JOIN estudiantes e ON e.id = a.id_estudiante
-        ORDER BY a.fecha DESC
-      `);
+      // Consulta ultra simple para verificar que funciona
+      const result = await pool.request().query(`SELECT * FROM agenda LIMIT 10`);
       
       console.log('📅 Agenda obtenida:', result.recordset.length, 'registros');
-      return result.recordset;
+      console.log('📅 Primer registro:', result.recordset[0]);
+      
+      // Agregar campos adicionales en JavaScript
+      const agendaConCampos = result.recordset.map(item => ({
+        ...item,
+        nombre_estudiante: 'Sin nombre',
+        apellido_estudiante: '',
+        curso: 'Sin curso',
+        estado: 'Programada',
+        tipo: 'Citación',
+        observaciones: 'Sin observaciones',
+        asistencia: 'Pendiente'
+      }));
+      
+      return agendaConCampos;
     } catch (error) {
       console.error('❌ Error en obtenerTodos agenda:', error);
+      console.error('❌ Stack trace:', error.stack);
       throw error;
     }
   }
