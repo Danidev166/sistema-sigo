@@ -13,9 +13,18 @@ class EntrevistaModel {
   static async obtenerTodas() {
     const pool = await getPool();
     const r = await pool.request().query(`
-      SELECT *
-      FROM entrevistas
-      ORDER BY fecha_entrevista DESC, id DESC
+      SELECT 
+        e.*,
+        est.nombre AS nombre_estudiante,
+        est.apellido AS apellido_estudiante,
+        est.curso,
+        (u.nombre || ' ' || u.apellido) AS profesional_nombre,
+        u.nombre AS profesional_nombre_solo,
+        u.apellido AS profesional_apellido
+      FROM entrevistas e
+      LEFT JOIN estudiantes est ON e.id_estudiante = est.id
+      LEFT JOIN usuarios u ON e.id_orientador = u.id
+      ORDER BY e.fecha_entrevista DESC, e.id DESC
     `);
     return r.recordset;
   }
