@@ -16,7 +16,6 @@ const KuderTest = lazy(() => import("../features/test-vocacionales/pages/KuderTe
 const HollandTest = lazy(() => import("../features/test-vocacionales/pages/HollandTest"));
 const AptitudesTest = lazy(() => import("../features/test-vocacionales/pages/AptitudesTest"));
 const TablaResultadosEvaluacion = lazy(() => import("../features/test-vocacionales/components/TablaResultadosEvaluacion"));
-const MobileTestPage = lazy(() => import("../features/test-vocacionales/pages/MobileTestPage"));
 const TestMobilePage = lazy(() => import("../features/test-vocacionales/pages/TestMobilePage"));
 const RecursosPage = lazy(() => import("../features/recursos/pages/RecursosPage"));
 const MovimientosPage = lazy(() => import("../features/recursos/pages/MovimientosPage"));
