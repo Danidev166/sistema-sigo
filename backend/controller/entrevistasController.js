@@ -188,7 +188,12 @@ static async registrarDesdeAgenda(req, res, next) {
 
     logger.info("🔍 req.user:", req.user);
 
-    const agenda = await EntrevistaModel.obtenerAgendaPorId(idAgenda);
+    // Obtener agenda directamente con PostgreSQL
+    const { getPool } = require('../config/db');
+    const pool = await getPool();
+    
+    const agendaResult = await pool.raw.query('SELECT * FROM agenda WHERE id = $1', [parseInt(idAgenda, 10)]);
+    const agenda = agendaResult.rows[0];
 
     logger.info("🔍 QUERY RESULT obtenerAgendaPorId:", agenda);
 
@@ -222,7 +227,12 @@ static async registrarDesdeAgenda(req, res, next) {
 
     const nueva = await EntrevistaModel.crear(entrevistaData);
 
-    await EntrevistaModel.marcarAgendaComoRealizada(idAgenda);
+    // Marcar agenda como realizada directamente con PostgreSQL
+    await pool.raw.query(`
+      UPDATE agenda
+         SET motivo = motivo || ' (Registrada)'
+       WHERE id = $1
+    `, [parseInt(idAgenda, 10)]);
 
     res.status(201).json({
       message: "✅ Entrevista registrada desde Agenda",
