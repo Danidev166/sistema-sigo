@@ -1,10 +1,9 @@
 services:
-  # Backend Service
   - type: web
     name: sigo-backend
     env: node
-    buildCommand: cd backend && npm install
-    startCommand: cd backend && npm start
+    buildCommand: npm install
+    startCommand: npm start
     envVars:
       - key: NODE_ENV
         value: production
@@ -34,14 +33,3 @@ services:
         value: 24h
       - key: FRONTEND_URL
         value: https://sistema-sigo-2025.onrender.com
-
-  # Frontend Service
-  - type: static
-    name: sigo-frontend
-    buildCommand: cd sigo-frontend && npm install && npm run build
-    staticPublishPath: ./sigo-frontend/dist
-    envVars:
-      - key: NODE_ENV
-        value: production
-      - key: VITE_API_URL
-        value: https://sistema-sigo.onrender.com/api
