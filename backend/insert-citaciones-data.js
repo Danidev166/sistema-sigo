@@ -1,4 +1,6 @@
 // Script para insertar datos de ejemplo en citaciones
+// Configurar entorno de producción
+process.env.NODE_ENV = 'production';
 const { getPool, sql } = require('./config/db');
 
 async function insertarDatosCitaciones() {
