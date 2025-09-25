@@ -89,11 +89,11 @@ const QRGenerator = ({ testType, estudiante, onClose }) => {
         
         console.log('📱 Modo desarrollo: usando IP local para acceso móvil');
         console.log('🔍 Encuentra tu IP con: ipconfig (Windows) o ifconfig (Mac/Linux)');
-      } else {
-        // En producción, usar la URL de Render
-        mobileUrl = 'https://sistema-sigo-2025.onrender.com';
-        console.log('🌐 Modo producción: usando URL de Render');
-      }
+            } else {
+              // En producción, usar la URL del servicio Docker
+              mobileUrl = 'https://sigo-caupolican.onrender.com';
+              console.log('🌐 Modo producción: usando URL del servicio Docker');
+            }
       
       const testUrl = `${mobileUrl}${testUrls[testType]}`;
       
@@ -207,10 +207,10 @@ const QRGenerator = ({ testType, estudiante, onClose }) => {
     if (baseUrl.includes('localhost') || baseUrl.includes('127.0.0.1')) {
       const port = window.location.port;
       mobileUrl = `http://192.168.18.10:${port}`;
-    } else {
-      // En producción, usar la URL de Render
-      mobileUrl = 'https://sistema-sigo-2025.onrender.com';
-    }
+          } else {
+            // En producción, usar la URL del servicio Docker
+            mobileUrl = 'https://sigo-caupolican.onrender.com';
+          }
     
     const testUrl = `${mobileUrl}/test-mobile/${testType}`;
     const params = new URLSearchParams({
