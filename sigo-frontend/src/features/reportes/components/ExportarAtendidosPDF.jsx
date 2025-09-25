@@ -1,9 +1,7 @@
 import { useState } from "react";
-import jsPDF from "jspdf";
-import autoTable from "jspdf-autotable";
 import { FileDown } from "lucide-react";
 import { toast } from "react-hot-toast";
-import logo from "../../../assets/logo-pages.png";
+import { createStandardPDF, addStandardTable, saveStandardPDF } from "../../../utils/pdfTemplate";
 
 export default function ExportarAtendidosPDF({ data }) {
   const [isExporting, setIsExporting] = useState(false);
@@ -15,41 +13,26 @@ export default function ExportarAtendidosPDF({ data }) {
     }
     setIsExporting(true);
     try {
-      const doc = new jsPDF();
-      const fecha = new Date().toLocaleDateString();
-      const img = new Image();
-      img.src = logo;
-      img.onload = () => {
-        doc.addImage(img, "PNG", 10, 10, 25, 25);
-        doc.setFontSize(14);
-        doc.setFont("helvetica", "bold");
-        doc.text("Liceo Bicentenario Politécnico Caupolicán", 40, 20);
-        doc.setFontSize(11);
-        doc.setFont("helvetica", "normal");
-        doc.text("Reporte de Estudiantes Atendidos", 40, 28);
-        doc.text(`Fecha: ${fecha}`, 14, 45);
-        autoTable(doc, {
-          startY: 50,
-          head: [["Nombre", "Apellido", "Curso", "Motivo", "Fecha", "Profesional", "Sesiones"]],
-          body: data.map((e) => [
-            e.nombre,
-            e.apellido,
-            e.curso,
-            e.motivo,
-            e.fecha ? new Date(e.fecha).toLocaleDateString() : "",
-            e.profesional,
-            e.cantidad_sesiones,
-          ]),
-          styles: { fontSize: 9 },
-          theme: "grid",
-          margin: { left: 14, right: 14 },
-        });
-        doc.save(`estudiantes_atendidos_${fecha.replaceAll("/", "-")}.pdf`);
-        toast.success("Reporte exportado correctamente");
-      };
-      img.onerror = () => {
-        toast.error("No se pudo cargar el logo institucional");
-      };
+      const doc = await createStandardPDF("Reporte de Estudiantes Atendidos", "Registro de Atenciones");
+      
+      const headers = ["#", "Nombre", "Apellido", "Curso", "Motivo", "Fecha", "Profesional", "Sesiones"];
+      const bodyData = data.map((e, i) => [
+        i + 1,
+        e.nombre,
+        e.apellido,
+        e.curso,
+        e.motivo,
+        e.fecha ? new Date(e.fecha).toLocaleDateString() : "",
+        e.profesional,
+        e.cantidad_sesiones,
+      ]);
+
+      addStandardTable(doc, headers, bodyData, {
+        styles: { fontSize: 9 }
+      });
+
+      saveStandardPDF(doc, "estudiantes_atendidos");
+      toast.success("Reporte exportado correctamente");
     } catch (error) {
       console.error("Error al exportar reporte:", error);
       toast.error("Error al exportar el reporte");

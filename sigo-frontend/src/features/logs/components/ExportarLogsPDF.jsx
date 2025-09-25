@@ -1,12 +1,20 @@
 import { useState } from "react";
-import jsPDF from "jspdf";
-import autoTable from "jspdf-autotable";
 import { FileDown } from "lucide-react";
-import { toast } from "react-toastify";
-import logo from "../../../assets/logo-pages.png";
+import { toast } from "react-hot-toast";
+import { createStandardPDF, addStandardTable, saveStandardPDF } from "../../../utils/pdfTemplate";
 
 export default function ExportarLogsPDF({ logs }) {
   const [isExporting, setIsExporting] = useState(false);
+
+  const resumenDetalles = (log) => {
+    if (!log.detalles) return "-";
+    try {
+      const detalles = typeof log.detalles === 'string' ? JSON.parse(log.detalles) : log.detalles;
+      return Object.keys(detalles).slice(0, 2).map(key => `${key}: ${detalles[key]}`).join(", ");
+    } catch {
+      return log.detalles.substring(0, 50) + "...";
+    }
+  };
 
   const handleExport = async () => {
     if (!logs || logs.length === 0) {
@@ -16,55 +24,26 @@ export default function ExportarLogsPDF({ logs }) {
 
     setIsExporting(true);
     try {
-      const doc = new jsPDF();
-      const fecha = new Date().toLocaleDateString();
+      const doc = await createStandardPDF("Reporte de Logs de Actividad", "Registro de Actividades del Sistema");
+      
+      const headers = ["#", "Usuario", "Acción", "Tabla", "ID Registro", "IP", "Fecha", "Detalles"];
+      const bodyData = logs.map((l, i) => [
+        i + 1,
+        l.usuario_nombre || "Sistema",
+        l.accion,
+        l.tabla_afectada,
+        l.id_registro || "-",
+        l.ip_address || "-",
+        l.fecha_accion ? new Date(l.fecha_accion).toLocaleString() : "-",
+        resumenDetalles(l)
+      ]);
 
-      const img = new Image();
-      img.src = logo;
+      addStandardTable(doc, headers, bodyData, {
+        styles: { fontSize: 8 }
+      });
 
-      img.onload = () => {
-        doc.addImage(img, "PNG", 10, 10, 25, 25);
-        doc.setFontSize(14);
-        doc.setFont("helvetica", "bold");
-        doc.text("Liceo Bicentenario Politécnico Caupolicán", 40, 20);
-        doc.setFontSize(11);
-        doc.setFont("helvetica", "normal");
-        doc.text("Reporte de Logs de Actividad", 40, 28);
-        doc.text(`Fecha: ${fecha}`, 14, 45);
-
-        autoTable(doc, {
-          startY: 50,
-          head: [[
-            "Usuario",
-            "Acción",
-            "Tabla",
-            "ID Registro",
-            "IP",
-            "Fecha",
-            "Detalles"
-          ]],
-          body: logs.map((l) => [
-            l.usuario_nombre || "Sistema",
-            l.accion,
-            l.tabla_afectada,
-            l.id_registro || "-",
-            l.ip_address || "-",
-            l.fecha_accion ? new Date(l.fecha_accion).toLocaleString() : "-",
-            // Mostrar resumen de detalles
-            resumenDetalles(l)
-          ]),
-          styles: { fontSize: 9 },
-          theme: "grid",
-          margin: { left: 14, right: 14 },
-        });
-
-        doc.save(`logs_actividad_${fecha.replaceAll("/", "-")}.pdf`);
-        toast.success("Logs exportados correctamente");
-      };
-
-      img.onerror = () => {
-        toast.error("No se pudo cargar el logo institucional");
-      };
+      saveStandardPDF(doc, "logs_actividad");
+      toast.success("Logs exportados correctamente");
     } catch (error) {
       console.error("Error al exportar logs:", error);
       toast.error("Error al exportar los logs");
@@ -111,34 +90,3 @@ export default function ExportarLogsPDF({ logs }) {
     </button>
   );
 }
-
-// Agregar función para mostrar resumen de detalles
-function resumenDetalles(log) {
-  let detalles = [];
-  if (log.datos_anteriores) {
-    try {
-      const prev = JSON.parse(log.datos_anteriores);
-      detalles.push("Antes: " + resumenObjeto(prev));
-    } catch {
-      detalles.push("Antes: " + log.datos_anteriores);
-    }
-  }
-  if (log.datos_nuevos) {
-    try {
-      const next = JSON.parse(log.datos_nuevos);
-      detalles.push("Después: " + resumenObjeto(next));
-    } catch {
-      detalles.push("Después: " + log.datos_nuevos);
-    }
-  }
-  return detalles.length > 0 ? detalles.join(" | ") : "-";
-}
-
-function resumenObjeto(obj) {
-  // Si es array, tomar el primero
-  if (Array.isArray(obj)) obj = obj[0];
-  if (!obj || typeof obj !== 'object') return String(obj);
-  // Mostrar solo los campos principales
-  const claves = Object.keys(obj).slice(0, 4); // máximo 4 campos
-  return claves.map(k => `${k}: ${obj[k]}`).join(", ");
-} 

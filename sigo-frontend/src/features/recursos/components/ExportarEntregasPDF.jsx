@@ -10,11 +10,9 @@
  */
 // src/features/recursos/components/ExportarEntregasPDF.jsx
 import { useState } from "react";
-import jsPDF from "jspdf";
-import autoTable from "jspdf-autotable";
 import { FileDown } from "lucide-react";
-import { toast } from "react-toastify";
-import logo from "../../../assets/logo-pages.png";
+import { toast } from "react-hot-toast";
+import { createStandardPDF, addStandardTable, saveStandardPDF } from "../../../utils/pdfTemplate";
 
 export default function ExportarEntregasPDF({ entregas }) {
   const [isExporting, setIsExporting] = useState(false);
@@ -27,46 +25,26 @@ export default function ExportarEntregasPDF({ entregas }) {
 
     setIsExporting(true);
     try {
-      const doc = new jsPDF();
-      const fecha = new Date().toLocaleDateString();
+      const doc = await createStandardPDF("Reporte de Entrega de Recursos", "Registro de Entregas");
+      
+      const headers = ["#", "Estudiante", "RUT", "Curso", "Recurso", "Cantidad", "Fecha", "Observaciones"];
+      const bodyData = entregas.map((e, i) => [
+        i + 1,
+        e.nombre_estudiante,
+        e.rut,
+        e.curso,
+        e.recurso,
+        e.cantidad,
+        new Date(e.fecha_entrega).toLocaleDateString(),
+        e.observaciones || "—",
+      ]);
 
-      const img = new Image();
-      img.src = logo;
+      addStandardTable(doc, headers, bodyData, {
+        styles: { fontSize: 9 }
+      });
 
-      img.onload = () => {
-        doc.addImage(img, "PNG", 10, 10, 25, 25);
-        doc.setFontSize(14);
-        doc.setFont("helvetica", "bold");
-        doc.text("Liceo Bicentenario Politécnico Caupolicán", 40, 20);
-        doc.setFontSize(11);
-        doc.setFont("helvetica", "normal");
-        doc.text("Reporte de Entrega de Recursos", 40, 28);
-        doc.text(`Fecha: ${fecha}`, 14, 45);
-
-        autoTable(doc, {
-          startY: 50,
-          head: [["Estudiante", "RUT", "Curso", "Recurso", "Cantidad", "Fecha", "Observaciones"]],
-          body: entregas.map((e) => [
-            e.nombre_estudiante,
-            e.rut,
-            e.curso,
-            e.recurso,
-            e.cantidad,
-            new Date(e.fecha_entrega).toLocaleDateString(),
-            e.observaciones || "—",
-          ]),
-          styles: { fontSize: 9 },
-          theme: "grid",
-          margin: { left: 14, right: 14 },
-        });
-
-        doc.save(`entregas_recursos_${fecha.replaceAll("/", "-")}.pdf`);
-        toast.success("Entregas exportadas correctamente");
-      };
-
-      img.onerror = () => {
-        toast.error("No se pudo cargar el logo institucional");
-      };
+      saveStandardPDF(doc, "entregas_recursos");
+      toast.success("Entregas exportadas correctamente");
     } catch (error) {
       console.error("Error al exportar entregas:", error);
       toast.error("Error al exportar las entregas");

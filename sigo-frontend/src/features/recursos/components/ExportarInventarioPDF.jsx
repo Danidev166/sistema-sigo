@@ -1,9 +1,7 @@
 import { useState } from "react";
 import { FileDown } from "lucide-react";
 import { toast } from "react-hot-toast";
-import jsPDF from "jspdf";
-import autoTable from "jspdf-autotable";
-import logo from "../../../assets/logo-pages.png";
+import { createStandardPDF, addStandardTable, saveStandardPDF } from "../../../utils/pdfTemplate";
 
 /**
  * Componente para exportar inventario a PDF.
@@ -27,43 +25,23 @@ export default function ExportarInventarioPDF({ recursos }) {
 
     setIsExporting(true);
     try {
-      const doc = new jsPDF();
-      const fecha = new Date().toLocaleDateString();
+      const doc = await createStandardPDF("Inventario de Recursos Estudiantiles", "Registro de Inventario");
+      
+      const headers = ["#", "Tipo", "Nombre", "Descripción", "Disponible"];
+      const bodyData = recursos.map((r, i) => [
+        i + 1,
+        r.tipo_recurso,
+        r.nombre,
+        r.descripcion || "-",
+        r.cantidad_disponible ?? 0,
+      ]);
 
-      const img = new Image();
-      img.src = logo;
+      addStandardTable(doc, headers, bodyData, {
+        styles: { fontSize: 10 }
+      });
 
-      img.onload = () => {
-        doc.addImage(img, "PNG", 10, 10, 25, 25);
-        doc.setFontSize(14);
-        doc.setFont("helvetica", "bold");
-        doc.text("Liceo Bicentenario Politécnico Caupolicán", 40, 20);
-        doc.setFontSize(11);
-        doc.setFont("helvetica", "normal");
-        doc.text("Inventario de Recursos Estudiantiles", 40, 28);
-        doc.text(`Fecha: ${fecha}`, 14, 45);
-
-        autoTable(doc, {
-          startY: 50,
-          head: [["Tipo", "Nombre", "Descripción", "Disponible"]],
-          body: recursos.map((r) => [
-            r.tipo_recurso,
-            r.nombre,
-            r.descripcion || "-",
-            r.cantidad_disponible ?? 0,
-          ]),
-          styles: { fontSize: 10 },
-          theme: "grid",
-          margin: { left: 14, right: 14 },
-        });
-
-        doc.save(`inventario_recursos_${fecha.replaceAll("/", "-")}.pdf`);
-        toast.success("Inventario exportado correctamente");
-      };
-
-      img.onerror = () => {
-        toast.error("⚠️ No se pudo cargar el logo institucional.");
-      };
+      saveStandardPDF(doc, "inventario_recursos");
+      toast.success("Inventario exportado correctamente");
     } catch (error) {
       console.error("Error al exportar:", error);
       toast.error("Error al exportar el inventario");
