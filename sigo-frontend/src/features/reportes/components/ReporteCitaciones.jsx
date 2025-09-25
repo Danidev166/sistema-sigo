@@ -33,6 +33,9 @@ export default function ReporteCitaciones() {
     try {
       // Intentar obtener datos de agenda/citaciones
       const response = await api.get('/agenda', { params: { ...filtros, tipo: 'citacion' } });
+      console.log('Respuesta completa del backend:', response.data);
+      
+      // El backend devuelve { success: true, data: [...], message: "..." }
       const citaciones = response.data.data || response.data || [];
       
       console.log('Datos de citaciones recibidos:', citaciones);
