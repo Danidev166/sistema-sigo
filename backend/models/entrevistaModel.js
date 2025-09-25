@@ -56,21 +56,27 @@ class EntrevistaModel {
 
   static async crear(data) {
     const pool = await getPool();
-    const r = await pool.request()
-      .input('id_estudiante',    sql.Int,        data.id_estudiante)
-      .input('id_orientador',    sql.Int,        data.id_orientador)
-      .input('fecha_entrevista', sql.DateTime,   toSqlDateTime(data.fecha_entrevista))
-      .input('motivo',           sql.NVarChar,   data.motivo || '')
-      .input('observaciones',    sql.NVarChar,   data.observaciones || '')
-      .input('estado',           sql.NVarChar,   data.estado || 'Pendiente')
-      .query(`
-        INSERT INTO entrevistas
-          (id_estudiante, id_orientador, fecha_entrevista, motivo, observaciones, estado)
-        VALUES
-          (@id_estudiante, @id_orientador, @fecha_entrevista, @motivo, @observaciones, @estado)
-        RETURNING *
-      `);
-    return r.recordset[0];
+    const query = `
+      INSERT INTO entrevistas
+        (id_estudiante, id_orientador, fecha_entrevista, motivo, observaciones, conclusiones, acciones_acordadas, estado)
+      VALUES
+        ($1, $2, $3, $4, $5, $6, $7, $8)
+      RETURNING *
+    `;
+    
+    const values = [
+      data.id_estudiante,
+      data.id_orientador,
+      toSqlDateTime(data.fecha_entrevista),
+      data.motivo || '',
+      data.observaciones || '',
+      data.conclusiones || '',
+      data.acciones_acordadas || '',
+      data.estado || 'Pendiente'
+    ];
+    
+    const result = await pool.raw.query(query, values);
+    return result.rows[0];
   }
 
   static async actualizar(id, data) {
@@ -104,10 +110,8 @@ class EntrevistaModel {
 
   static async obtenerAgendaPorId(idAgenda) {
     const pool = await getPool();
-    const r = await pool.request()
-      .input('id', sql.Int, parseInt(idAgenda, 10))
-      .query(`SELECT * FROM agenda WHERE id = @id`);
-    return r.recordset[0] || null;
+    const result = await pool.raw.query('SELECT * FROM agenda WHERE id = $1', [parseInt(idAgenda, 10)]);
+    return result.rows[0] || null;
   }
 
   // 📊 Entrevistas por mes (del año actual)
@@ -134,13 +138,11 @@ class EntrevistaModel {
 
   static async marcarAgendaComoRealizada(idAgenda) {
     const pool = await getPool();
-    await pool.request()
-      .input('id', sql.Int, parseInt(idAgenda, 10))
-      .query(`
-        UPDATE agenda
-           SET motivo = motivo || ' (Registrada)'
-         WHERE id = @id
-      `);
+    await pool.raw.query(`
+      UPDATE agenda
+         SET motivo = motivo || ' (Registrada)'
+       WHERE id = $1
+    `, [parseInt(idAgenda, 10)]);
   }
 
   // 📊 Estadísticas de entrevistas con filtros
