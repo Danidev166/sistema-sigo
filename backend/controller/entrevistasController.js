@@ -72,11 +72,36 @@ class EntrevistasController {
       if (motivo) filtros.motivo = motivo;
       if (profesional) filtros.profesional = profesional;
 
+      logger.info("📊 Obteniendo estadísticas de entrevistas con filtros:", filtros);
+
       const estadisticas = await EntrevistaModel.obtenerEstadisticas(filtros);
-      res.json(estadisticas);
+      
+      logger.info("📊 Estadísticas obtenidas:", estadisticas);
+      
+      res.json({
+        success: true,
+        data: estadisticas,
+        message: "Estadísticas obtenidas correctamente"
+      });
     } catch (error) {
       logger.error("❌ Error al obtener estadísticas de entrevistas:", error);
-      next(error);
+      
+      // Retornar estadísticas por defecto en caso de error
+      res.json({
+        success: false,
+        data: {
+          total_entrevistas: 0,
+          entrevistas_realizadas: 0,
+          entrevistas_programadas: 0,
+          entrevistas_canceladas: 0,
+          estudiantes_atendidos: 0,
+          orientadores_activos: 0,
+          porcentaje_realizacion: 0,
+          motivos_mas_comunes: [],
+          error: error.message
+        },
+        message: "Error al obtener estadísticas, retornando datos por defecto"
+      });
     }
   }
 
