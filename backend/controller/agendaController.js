@@ -17,21 +17,11 @@ class AgendaController {
       
       logger.info(`📅 Agenda obtenida: ${agenda.length} registros`);
       
-      res.json({
-        success: true,
-        data: agenda,
-        message: "Agenda obtenida correctamente"
-      });
+      // Devolver directamente el array como antes
+      res.json(agenda);
     } catch (error) {
       logger.error("❌ Error al obtener agenda:", error);
-      
-      // Retornar respuesta de error estructurada
-      res.status(500).json({
-        success: false,
-        data: [],
-        message: "Error al obtener agenda",
-        error: error.message
-      });
+      next(error);
     }
   }
 
