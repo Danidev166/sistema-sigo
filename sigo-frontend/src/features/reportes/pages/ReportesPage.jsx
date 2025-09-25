@@ -18,6 +18,9 @@ import ReporteDerivaciones from "../components/ReporteDerivaciones";
 import ReportesMejorados from "../components/ReportesMejorados";
 import ReporteEntrevistas from "../components/ReporteEntrevistas";
 import ReporteRiesgo from "../components/ReporteRiesgo";
+import ReporteCitaciones from "../components/ReporteCitaciones";
+import ReportePorCurso from "../components/ReportePorCurso";
+import ReporteEstadisticas from "../components/ReporteEstadisticas";
 
 const tabs = [
   { key: "mejorados", label: "Reportes Mejorados" },
@@ -81,116 +84,13 @@ export default function ReportesPage() {
             <ReporteRiesgo />
           )}
           {activeTab === "citaciones" && (
-            <div>
-              <h2 className="text-lg font-bold mb-4">Reporte de Asistencia a Citaciones</h2>
-              <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-6">
-                <div className="flex items-center">
-                  <div className="flex-shrink-0">
-                    <svg className="h-8 w-8 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                  </div>
-                  <div className="ml-3">
-                    <h3 className="text-sm font-medium text-yellow-800 dark:text-yellow-200">
-                      Citaciones
-                    </h3>
-                    <div className="mt-2 text-sm text-yellow-700 dark:text-yellow-300">
-                      <p>Citaciones programadas: <span className="font-semibold">0</span></p>
-                      <p>Asistencia a citaciones: <span className="font-semibold">0%</span></p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <ReporteCitaciones />
           )}
           {activeTab === "porCurso" && (
-            <div>
-              <h2 className="text-lg font-bold mb-4">Reporte General por Curso</h2>
-              <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-6">
-                <div className="flex items-center">
-                  <div className="flex-shrink-0">
-                    <svg className="h-8 w-8 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                    </svg>
-                  </div>
-                  <div className="ml-3">
-                    <h3 className="text-sm font-medium text-green-800 dark:text-green-200">
-                      Estadísticas por Curso
-                    </h3>
-                    <div className="mt-2 text-sm text-green-700 dark:text-green-300">
-                      <p>Total de cursos: <span className="font-semibold">1</span></p>
-                      <p>Estudiantes por curso: <span className="font-semibold">1</span></p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <ReportePorCurso />
           )}
           {activeTab === "estadisticas" && (
-            <div>
-              <h2 className="text-lg font-bold mb-4">Reporte de Estadísticas Globales</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div className="bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-lg p-6">
-                  <div className="flex items-center">
-                    <div className="flex-shrink-0">
-                      <svg className="h-8 w-8 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                      </svg>
-                    </div>
-                    <div className="ml-3">
-                      <h3 className="text-sm font-medium text-purple-800 dark:text-purple-200">
-                        Resumen General
-                      </h3>
-                      <div className="mt-2 text-sm text-purple-700 dark:text-purple-300">
-                        <p>Total estudiantes: <span className="font-semibold">1</span></p>
-                        <p>Total entrevistas: <span className="font-semibold">1</span></p>
-                        <p>Total recursos: <span className="font-semibold">1</span></p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-200 dark:border-indigo-800 rounded-lg p-6">
-                  <div className="flex items-center">
-                    <div className="flex-shrink-0">
-                      <svg className="h-8 w-8 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                      </svg>
-                    </div>
-                    <div className="ml-3">
-                      <h3 className="text-sm font-medium text-indigo-800 dark:text-indigo-200">
-                        Actividad del Mes
-                      </h3>
-                      <div className="mt-2 text-sm text-indigo-700 dark:text-indigo-300">
-                        <p>Entrevistas realizadas: <span className="font-semibold">1</span></p>
-                        <p>Intervenciones: <span className="font-semibold">0</span></p>
-                        <p>Recursos entregados: <span className="font-semibold">1</span></p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="bg-teal-50 dark:bg-teal-900/20 border border-teal-200 dark:border-teal-800 rounded-lg p-6">
-                  <div className="flex items-center">
-                    <div className="flex-shrink-0">
-                      <svg className="h-8 w-8 text-teal-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                    </div>
-                    <div className="ml-3">
-                      <h3 className="text-sm font-medium text-teal-800 dark:text-teal-200">
-                        Estado del Sistema
-                      </h3>
-                      <div className="mt-2 text-sm text-teal-700 dark:text-teal-300">
-                        <p>Base de datos: <span className="font-semibold text-green-600">Conectada</span></p>
-                        <p>Datos cargados: <span className="font-semibold text-green-600">Sí</span></p>
-                        <p>Última actualización: <span className="font-semibold">Hoy</span></p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <ReporteEstadisticas />
           )}
         </div>
       </div>
