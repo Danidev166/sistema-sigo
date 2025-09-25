@@ -18,31 +18,38 @@ function toPgDate(input) {
 
 class AgendaModel {
   static async obtenerTodos() {
-    const pool = await getPool();
-    const result = await pool.request().query(`
-      SELECT 
-        a.id,
-        a.id_estudiante,
-        e.nombre AS nombre_estudiante,
-        e.apellido AS apellido_estudiante,
-        (e.nombre || ' ' || e.apellido) AS nombre_completo_estudiante,
-        e.curso,
-        TO_CHAR(a.hora,  'HH24:MI')     AS hora,
-        TO_CHAR(a.fecha, 'YYYY-MM-DD')  AS fecha,
-        a.fecha AS fecha_programada,
-        a.motivo,
-        a.profesional,
-        a.creado_en,
-        a.email_orientador,
-        'Programada' AS estado,
-        'Citación' AS tipo,
-        COALESCE(a.observaciones, 'Sin observaciones') AS observaciones,
-        'Pendiente' AS asistencia
-      FROM agenda a
-      LEFT JOIN estudiantes e ON e.id = a.id_estudiante
-      ORDER BY a.fecha DESC
-    `);
-    return result.recordset;
+    try {
+      const pool = await getPool();
+      
+      // Consulta PostgreSQL con JOIN para obtener datos del estudiante
+      const result = await pool.request().query(`
+        SELECT 
+          a.id,
+          a.id_estudiante,
+          COALESCE(e.nombre, 'Sin nombre') AS nombre_estudiante,
+          COALESCE(e.apellido, '') AS apellido_estudiante,
+          COALESCE(e.curso, 'Sin curso') AS curso,
+          a.motivo,
+          a.profesional,
+          a.fecha,
+          a.hora,
+          a.creado_en,
+          a.email_orientador,
+          'Programada' AS estado,
+          'Citación' AS tipo,
+          COALESCE(a.observaciones, 'Sin observaciones') AS observaciones,
+          'Pendiente' AS asistencia
+        FROM agenda a
+        LEFT JOIN estudiantes e ON e.id = a.id_estudiante
+        ORDER BY a.fecha DESC
+      `);
+      
+      console.log('📅 Agenda obtenida:', result.recordset.length, 'registros');
+      return result.recordset;
+    } catch (error) {
+      console.error('❌ Error en obtenerTodos agenda:', error);
+      throw error;
+    }
   }
 
   static async obtenerPorId(id) {
