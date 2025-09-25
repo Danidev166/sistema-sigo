@@ -1,6 +1,8 @@
 # Dockerfile para SIGO Backend
 FROM node:18-alpine
 
+# Actualizado para Render deployment
+
 # Crear directorio de trabajo
 WORKDIR /app
 
