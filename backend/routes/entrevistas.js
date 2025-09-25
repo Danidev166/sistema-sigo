@@ -14,6 +14,7 @@ router.use(verifyToken);
 // Rutas específicas siempre antes que /:id
 router.post("/registrar-desde-agenda/:idAgenda", EntrevistasController.registrarDesdeAgenda);
 router.get("/por-mes", EntrevistasController.obtenerPorMes);
+router.get("/estadisticas", EntrevistasController.obtenerEstadisticas);
 router.get("/estudiante/:id", EntrevistasController.obtenerPorEstudiante);
 
 // CRUD

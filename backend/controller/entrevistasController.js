@@ -60,6 +60,26 @@ class EntrevistasController {
     }
   }
 
+  static async obtenerEstadisticas(req, res, next) {
+    try {
+      const { curso, fecha_inicio, fecha_fin, motivo, profesional } = req.query;
+      
+      // Construir filtros
+      const filtros = {};
+      if (curso) filtros.curso = curso;
+      if (fecha_inicio) filtros.fecha_inicio = fecha_inicio;
+      if (fecha_fin) filtros.fecha_fin = fecha_fin;
+      if (motivo) filtros.motivo = motivo;
+      if (profesional) filtros.profesional = profesional;
+
+      const estadisticas = await EntrevistaModel.obtenerEstadisticas(filtros);
+      res.json(estadisticas);
+    } catch (error) {
+      logger.error("❌ Error al obtener estadísticas de entrevistas:", error);
+      next(error);
+    }
+  }
+
 
   static async crear(req, res, next) {
     try {
