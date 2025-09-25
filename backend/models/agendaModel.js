@@ -38,7 +38,7 @@ class AgendaModel {
         LIMIT 50
       `;
       
-      const result = await pool.query(query);
+      const result = await pool.raw.query(query);
       
       console.log('📅 Agenda obtenida:', result.rows.length, 'registros');
       console.log('📅 Primer registro:', result.rows[0]);
@@ -53,7 +53,7 @@ class AgendaModel {
 
   static async obtenerPorId(id) {
     const pool = await getPool();
-    const result = await pool.query('SELECT * FROM agenda WHERE id = $1', [id]);
+    const result = await pool.raw.query('SELECT * FROM agenda WHERE id = $1', [id]);
     return result.rows[0] || null;
   }
 
@@ -77,7 +77,7 @@ class AgendaModel {
       new Date()
     ];
 
-    const result = await pool.query(query, values);
+    const result = await pool.raw.query(query, values);
     return result.rows[0];
   }
 
@@ -106,12 +106,12 @@ class AgendaModel {
       id
     ];
 
-    await pool.query(query, values);
+    await pool.raw.query(query, values);
   }
 
   static async eliminar(id) {
     const pool = await getPool();
-    await pool.query('DELETE FROM agenda WHERE id = $1', [id]);
+    await pool.raw.query('DELETE FROM agenda WHERE id = $1', [id]);
   }
 }
 
