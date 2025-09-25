@@ -16,6 +16,8 @@ import ImprovedDashboardLayout from "../../../components/layout/ImprovedDashboar
 import ReporteEstudiantesAtendidos from "../components/ReporteEstudiantesAtendidos";
 import ReporteDerivaciones from "../components/ReporteDerivaciones";
 import ReportesMejorados from "../components/ReportesMejorados";
+import ReporteEntrevistas from "../components/ReporteEntrevistas";
+import ReporteRiesgo from "../components/ReporteRiesgo";
 
 const tabs = [
   { key: "mejorados", label: "Reportes Mejorados" },
@@ -73,50 +75,10 @@ export default function ReportesPage() {
             </div>
           )}
           {activeTab === "entrevistas" && (
-            <div>
-              <h2 className="text-lg font-bold mb-4">Reporte de Entrevistas y Seguimientos</h2>
-              <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-6">
-                <div className="flex items-center">
-                  <div className="flex-shrink-0">
-                    <svg className="h-8 w-8 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                    </svg>
-                  </div>
-                  <div className="ml-3">
-                    <h3 className="text-sm font-medium text-blue-800 dark:text-blue-200">
-                      Reporte de Entrevistas
-                    </h3>
-                    <div className="mt-2 text-sm text-blue-700 dark:text-blue-300">
-                      <p>Total de entrevistas: <span className="font-semibold">1</span></p>
-                      <p>Entrevistas del mes: <span className="font-semibold">1</span></p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <ReporteEntrevistas />
           )}
           {activeTab === "riesgo" && (
-            <div>
-              <h2 className="text-lg font-bold mb-4">Reporte de Situaciones de Riesgo</h2>
-              <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-6">
-                <div className="flex items-center">
-                  <div className="flex-shrink-0">
-                    <svg className="h-8 w-8 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
-                    </svg>
-                  </div>
-                  <div className="ml-3">
-                    <h3 className="text-sm font-medium text-red-800 dark:text-red-200">
-                      Situaciones de Riesgo
-                    </h3>
-                    <div className="mt-2 text-sm text-red-700 dark:text-red-300">
-                      <p>Alertas activas: <span className="font-semibold">0</span></p>
-                      <p>Intervenciones requeridas: <span className="font-semibold">0</span></p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <ReporteRiesgo />
           )}
           {activeTab === "citaciones" && (
             <div>
