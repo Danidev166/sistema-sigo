@@ -38,7 +38,7 @@ class AgendaModel {
         LIMIT 50
       `;
       
-      const result = await pool.raw.query(query);
+      const result = await pool.raw.query(query, []);
       
       console.log('📅 Agenda obtenida:', result.rows.length, 'registros');
       console.log('📅 Primer registro:', result.rows[0]);
@@ -62,7 +62,7 @@ class AgendaModel {
     const horaStr = normalizeTimeStr(data.hora);
 
     const query = `
-      INSERT INTO agenda (estudiante_id, fecha_programada, hora, motivo, profesional, email_orientador, creado_en)
+      INSERT INTO agenda (id_estudiante, fecha, hora, motivo, profesional, email_orientador, creado_en)
       VALUES ($1, $2, $3::time, $4, $5, $6, $7)
       RETURNING *
     `;
@@ -87,8 +87,8 @@ class AgendaModel {
 
     const query = `
       UPDATE agenda
-      SET estudiante_id = $1,
-          fecha_programada = $2,
+      SET id_estudiante = $1,
+          fecha = $2,
           hora = $3::time,
           motivo = $4,
           profesional = $5,
