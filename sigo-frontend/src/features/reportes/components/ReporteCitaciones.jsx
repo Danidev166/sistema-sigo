@@ -74,15 +74,18 @@ export default function ReporteCitaciones() {
                                citacion.fecha_citacion ||
                                citacion.fecha_agenda;
         
-        const estado = citacion.estado || 
-                      citacion.estado_citacion || 
-                      citacion.estado_agenda ||
-                      'Programada';
+        // Detectar si está realizada basándose en el motivo
+        const isRealizada = citacion.motivo && citacion.motivo.includes("(Registrada)");
+        const estado = isRealizada ? 'Realizada' : 
+                      (citacion.estado || 
+                       citacion.estado_citacion || 
+                       citacion.estado_agenda ||
+                       'Pendiente');
         
         const asistencia = citacion.asistencia || 
                           citacion.asistio || 
                           citacion.asistencia_agenda ||
-                          (estado === 'Asistida' ? 'Sí' : estado === 'No Asistida' ? 'No' : '-');
+                          (isRealizada ? 'Sí' : '-');
         
         const observaciones = citacion.observaciones || 
                              citacion.descripcion || 

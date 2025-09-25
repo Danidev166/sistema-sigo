@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import AsyncSelect from "react-select/async";
 import estudianteService from "../../estudiantes/services/estudianteService";
 
@@ -16,7 +16,8 @@ import estudianteService from "../../estudiantes/services/estudianteService";
  */
 
 export default function EstudianteSelector({ value, onChange }) {
-  const [, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState("");
+  const [selectedOption, setSelectedOption] = useState(null);
 
   const isDarkMode =
     typeof window !== "undefined" &&
@@ -43,6 +44,30 @@ export default function EstudianteSelector({ value, onChange }) {
     }
   };
 
+  // Cargar el estudiante seleccionado cuando hay un value
+  const loadSelectedStudent = async (studentId) => {
+    if (!studentId) return;
+    
+    try {
+      const res = await estudianteService.getEstudiantes();
+      const student = res.data.find(e => e.id === studentId);
+      if (student) {
+        setSelectedOption(formatOption(student));
+      }
+    } catch (err) {
+      console.error("❌ Error al cargar estudiante seleccionado:", err);
+    }
+  };
+
+  // Cargar estudiante cuando cambia el value
+  React.useEffect(() => {
+    if (value) {
+      loadSelectedStudent(value);
+    } else {
+      setSelectedOption(null);
+    }
+  }, [value]);
+
   return (
     <AsyncSelect
       inputId="estudiante-selector"
@@ -50,8 +75,11 @@ export default function EstudianteSelector({ value, onChange }) {
       defaultOptions
       loadOptions={loadOptions}
       onInputChange={setInputValue}
-      value={value}
-      onChange={onChange}
+      value={selectedOption}
+      onChange={(option) => {
+        setSelectedOption(option);
+        onChange(option);
+      }}
       placeholder="Buscar estudiante por nombre, RUT o curso..."
       styles={{
         control: (base, state) => ({
