@@ -23,13 +23,21 @@ class AgendaModel {
       SELECT 
         a.id,
         a.id_estudiante,
-        (e.nombre || ' ' || e.apellido) AS nombre_estudiante,
+        e.nombre AS nombre_estudiante,
+        e.apellido AS apellido_estudiante,
+        (e.nombre || ' ' || e.apellido) AS nombre_completo_estudiante,
+        e.curso,
         TO_CHAR(a.hora,  'HH24:MI')     AS hora,
         TO_CHAR(a.fecha, 'YYYY-MM-DD')  AS fecha,
+        a.fecha AS fecha_programada,
         a.motivo,
         a.profesional,
         a.creado_en,
-        a.email_orientador
+        a.email_orientador,
+        'Programada' AS estado,
+        'Citación' AS tipo,
+        '' AS observaciones,
+        '' AS asistencia
       FROM agenda a
       LEFT JOIN estudiantes e ON e.id = a.id_estudiante
       ORDER BY a.fecha DESC
