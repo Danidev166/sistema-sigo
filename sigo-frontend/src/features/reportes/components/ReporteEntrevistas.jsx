@@ -334,26 +334,53 @@ export default function ReporteEntrevistas() {
               ) : (
                 data.map((row, i) => (
                   <tr key={row.id || i} className="hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors">
-                    <td className="px-3 py-4 text-sm text-gray-900 dark:text-white">{i + 1}</td>
+                    <td className="px-3 py-4 text-sm font-medium text-gray-900 dark:text-white text-center">{i + 1}</td>
                     <td className="px-3 py-4 text-sm text-gray-900 dark:text-white">
-                      {row.nombre_estudiante} {row.apellido_estudiante}
+                      <div className="font-medium">
+                        {row.nombre_estudiante || "-"} {row.apellido_estudiante || ""}
+                      </div>
                     </td>
-                    <td className="px-3 py-4 text-sm text-gray-900 dark:text-white">{row.curso || "-"}</td>
-                    <td className="px-3 py-4 text-sm text-gray-900 dark:text-white">{row.motivo || "-"}</td>
                     <td className="px-3 py-4 text-sm text-gray-900 dark:text-white">
-                      {row.fecha_entrevista ? new Date(row.fecha_entrevista).toLocaleDateString() : "-"}
-                    </td>
-                    <td className="px-3 py-4 text-sm text-gray-900 dark:text-white">{row.profesional_nombre || "-"}</td>
-                    <td className="px-3 py-4">
-                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                        row.estado === 'Pendiente' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-300' :
-                        row.estado === 'Completada' ? 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-300' :
-                        'bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-300'
-                      }`}>
-                        {row.estado || "-"}
+                      <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-300">
+                        {row.curso || "Sin curso"}
                       </span>
                     </td>
-                    <td className="px-3 py-4 text-sm text-gray-900 dark:text-white">{row.observaciones || "-"}</td>
+                    <td className="px-3 py-4 text-sm text-gray-900 dark:text-white">
+                      <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-900/20 dark:text-purple-300">
+                        {row.motivo || "Sin motivo"}
+                      </span>
+                    </td>
+                    <td className="px-3 py-4 text-sm text-gray-900 dark:text-white">
+                      <div className="font-mono text-xs">
+                        {row.fecha_entrevista ? 
+                          new Date(row.fecha_entrevista).toLocaleDateString('es-ES', {
+                            day: '2-digit',
+                            month: '2-digit', 
+                            year: 'numeric'
+                          }) : "-"
+                        }
+                      </div>
+                    </td>
+                    <td className="px-3 py-4 text-sm text-gray-900 dark:text-white">
+                      <div className="font-medium">
+                        {row.profesional_nombre || "Sin asignar"}
+                      </div>
+                    </td>
+                    <td className="px-3 py-4">
+                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                        row.estado === 'realizada' || row.estado === 'Realizada' ? 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-300' :
+                        row.estado === 'programada' || row.estado === 'Programada' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-300' :
+                        row.estado === 'cancelada' || row.estado === 'Cancelada' ? 'bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-300' :
+                        'bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-300'
+                      }`}>
+                        {row.estado || "Sin estado"}
+                      </span>
+                    </td>
+                    <td className="px-3 py-4 text-sm text-gray-900 dark:text-white max-w-xs">
+                      <div className="truncate" title={row.observaciones || "Sin observaciones"}>
+                        {row.observaciones || "Sin observaciones"}
+                      </div>
+                    </td>
                   </tr>
                 ))
               )}
