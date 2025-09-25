@@ -1,0 +1,46 @@
+services:
+  # Backend service
+  - type: web
+    name: sigo-backend
+    env: docker
+    dockerfilePath: ./backend/Dockerfile
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PGHOST
+        fromDatabase:
+          name: sigo-database
+          property: host
+      - key: PGPORT
+        fromDatabase:
+          name: sigo-database
+          property: port
+      - key: PGUSER
+        fromDatabase:
+          name: sigo-database
+          property: user
+      - key: PGPASSWORD
+        fromDatabase:
+          name: sigo-database
+          property: password
+      - key: PGDATABASE
+        fromDatabase:
+          name: sigo-database
+          property: database
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: 24h
+      - key: FRONTEND_URL
+        value: https://sistema-sigo-2025.onrender.com
+
+  # Frontend service
+  - type: web
+    name: sigo-frontend
+    env: docker
+    dockerfilePath: ./sigo-frontend/Dockerfile
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: VITE_API_URL
+        value: https://sistema-sigo.onrender.com/api
