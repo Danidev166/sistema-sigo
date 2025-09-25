@@ -12,7 +12,7 @@ function toSqlDateTime(input) {
 class EntrevistaModel {
   static async obtenerTodas() {
     const pool = await getPool();
-    const r = await pool.request().query(`
+    const result = await pool.raw.query(`
       SELECT 
         e.*,
         est.nombre AS nombre_estudiante,
@@ -26,32 +26,34 @@ class EntrevistaModel {
       LEFT JOIN usuarios u ON e.id_orientador = u.id
       ORDER BY e.fecha_entrevista DESC, e.id DESC
     `);
-    return r.recordset;
+    return result.rows;
   }
 
   static async obtenerPorId(id) {
     const pool = await getPool();
-    const r = await pool.request()
-      .input('id', sql.Int, id)
-      .query(`SELECT * FROM entrevistas WHERE id = @id`);
-    return r.recordset[0] || null;
+    const result = await pool.raw.query('SELECT * FROM entrevistas WHERE id = $1', [id]);
+    return result.rows[0] || null;
   }
 
   static async obtenerPorEstudiante(idEstudiante, estado = null) {
     const pool = await getPool();
-    const req = pool.request().input('id_estudiante', sql.Int, idEstudiante);
-    const whereEstado = estado ? ' AND e.estado = @estado' : '';
-    if (estado) req.input('estado', sql.NVarChar, estado);
-
-    const r = await req.query(`
+    let query = `
       SELECT e.*, (u.nombre || ' ' || u.apellido) AS nombre_orientador
       FROM entrevistas e
       LEFT JOIN usuarios u ON e.id_orientador = u.id
-      WHERE e.id_estudiante = @id_estudiante
-      ${whereEstado}
-      ORDER BY e.fecha_entrevista DESC, e.id DESC
-    `);
-    return r.recordset;
+      WHERE e.id_estudiante = $1
+    `;
+    const values = [idEstudiante];
+    
+    if (estado) {
+      query += ' AND e.estado = $2';
+      values.push(estado);
+    }
+    
+    query += ' ORDER BY e.fecha_entrevista DESC, e.id DESC';
+    
+    const result = await pool.raw.query(query, values);
+    return result.rows;
   }
 
   static async crear(data) {
