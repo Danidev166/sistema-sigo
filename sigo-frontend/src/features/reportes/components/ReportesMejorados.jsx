@@ -95,13 +95,106 @@ export default function ReportesMejorados() {
   };
 
   const exportarPDF = () => {
-    // Implementar exportación PDF
-    toast.info("Función de exportación en desarrollo");
+    if (!data[activeTab] || data[activeTab].length === 0) {
+      toast.error("No hay datos para exportar");
+      return;
+    }
+    
+    // Importar dinámicamente la función de PDF
+    import("../../../utils/pdfTemplate").then(({ createStandardPDF, addStandardTable, saveStandardPDF }) => {
+      createStandardPDF(
+        `Reporte de ${getReportTitle(activeTab)}`,
+        "Sistema SIGO - Reportes"
+      ).then(doc => {
+        const headers = getReportHeaders(activeTab);
+        const bodyData = data[activeTab].map((item, i) => getReportRowData(activeTab, item, i));
+        
+        addStandardTable(doc, headers, bodyData);
+        saveStandardPDF(doc, `reporte_${activeTab}`);
+        toast.success("PDF exportado correctamente");
+      }).catch(error => {
+        console.error("Error al exportar PDF:", error);
+        toast.error("Error al exportar PDF");
+      });
+    });
   };
 
   const exportarExcel = () => {
-    // Implementar exportación Excel
-    toast.info("Función de exportación en desarrollo");
+    if (!data[activeTab] || data[activeTab].length === 0) {
+      toast.error("No hay datos para exportar");
+      return;
+    }
+    
+    // Importar dinámicamente la función de Excel
+    import("../../../utils/excelTemplate").then(({ createCompleteExcel }) => {
+      const headers = getReportHeaders(activeTab);
+      const bodyData = data[activeTab].map((item, i) => getReportRowData(activeTab, item, i));
+      
+      createCompleteExcel(
+        `Reporte de ${getReportTitle(activeTab)}`,
+        "Sistema SIGO - Reportes",
+        headers,
+        bodyData,
+        `reporte_${activeTab}`,
+        getReportTitle(activeTab)
+      );
+      
+      toast.success("Excel exportado correctamente");
+    }).catch(error => {
+      console.error("Error al exportar Excel:", error);
+      toast.error("Error al exportar Excel");
+    });
+  };
+
+  const getReportTitle = (tab) => {
+    const titles = {
+      estudiantes: "Estudiantes por Curso",
+      institucional: "Reporte Institucional",
+      asistencia: "Reporte de Asistencia"
+    };
+    return titles[tab] || "Reporte";
+  };
+
+  const getReportHeaders = (tab) => {
+    const headers = {
+      estudiantes: ["#", "Nombre", "Apellido", "RUT", "Curso", "Especialidad", "Estado"],
+      institucional: ["#", "Métrica", "Valor", "Descripción"],
+      asistencia: ["#", "Estudiante", "Curso", "Fecha", "Estado", "Observaciones"]
+    };
+    return headers[tab] || ["#", "Dato"];
+  };
+
+  const getReportRowData = (tab, item, index) => {
+    switch (tab) {
+      case "estudiantes":
+        return [
+          index + 1,
+          item.nombre || "-",
+          item.apellido || "-",
+          item.rut || "-",
+          item.curso || "-",
+          item.especialidad || "-",
+          item.estado || "-"
+        ];
+      case "institucional":
+        return [
+          index + 1,
+          item.metrica || "-",
+          item.valor || "-",
+          item.descripcion || "-"
+        ];
+      case "asistencia":
+        return [
+          index + 1,
+          item.estudiante || "-",
+          item.curso || "-",
+          item.fecha ? new Date(item.fecha).toLocaleDateString() : "-",
+          item.estado || "-",
+          item.observaciones || "-"
+        ];
+      default:
+        return [index + 1, JSON.stringify(item)];
+    }
   };
 
   return (

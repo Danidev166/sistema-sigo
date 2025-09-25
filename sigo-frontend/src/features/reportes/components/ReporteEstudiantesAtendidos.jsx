@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import reporteService from "../services/ReporteService";
 import { toast } from "react-hot-toast";
 import ExportarAtendidosPDF from "./ExportarAtendidosPDF";
+import ExportarAtendidosExcel from "./ExportarAtendidosExcel";
 
 const motivos = ["Académico", "Conductual", "Familiar", "Emocional", "Otro"];
 
@@ -64,8 +65,9 @@ export default function ReporteEstudiantesAtendidos() {
         </div>
         <button type="submit" className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded text-sm">Filtrar</button>
       </form>
-      <div className="flex justify-end mb-2">
+      <div className="flex justify-end gap-2 mb-2">
         <ExportarAtendidosPDF data={data} />
+        <ExportarAtendidosExcel data={data} />
       </div>
       <div className="overflow-x-auto rounded shadow bg-white dark:bg-slate-800">
         <table className="min-w-full divide-y divide-gray-200 dark:divide-slate-700">

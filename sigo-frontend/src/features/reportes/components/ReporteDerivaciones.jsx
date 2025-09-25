@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import reporteService from "../services/ReporteService";
 import { toast } from "react-hot-toast";
 import ExportarDerivacionesPDF from "./ExportarDerivacionesPDF";
+import ExportarDerivacionesExcel from "./ExportarDerivacionesExcel";
 
 const estados = ["Pendiente", "En curso", "Finalizada"];
 
@@ -123,9 +124,10 @@ export default function ReporteDerivaciones() {
         </form>
       </div>
 
-      {/* Botón de exportar */}
-      <div className="flex justify-end mb-2">
+      {/* Botones de exportar */}
+      <div className="flex justify-end gap-2 mb-2">
         <ExportarDerivacionesPDF data={data} />
+        <ExportarDerivacionesExcel data={data} />
       </div>
 
       {/* Tabla responsiva */}
