@@ -7,11 +7,31 @@ const LogsActividadModel = require('../models/logsActividadModel');
 class AgendaController {
   static async obtenerTodos(req, res, next) {
     try {
+      const { tipo, curso, fecha_inicio, fecha_fin, estado } = req.query;
+      
+      logger.info("📅 Obteniendo agenda con filtros:", { tipo, curso, fecha_inicio, fecha_fin, estado });
+      
+      // Por ahora, ignorar los filtros y devolver todos los datos
+      // TODO: Implementar filtros en el modelo
       const agenda = await AgendaModel.obtenerTodos();
-      res.json(agenda);
+      
+      logger.info(`📅 Agenda obtenida: ${agenda.length} registros`);
+      
+      res.json({
+        success: true,
+        data: agenda,
+        message: "Agenda obtenida correctamente"
+      });
     } catch (error) {
       logger.error("❌ Error al obtener agenda:", error);
-      next(error);
+      
+      // Retornar respuesta de error estructurada
+      res.status(500).json({
+        success: false,
+        data: [],
+        message: "Error al obtener agenda",
+        error: error.message
+      });
     }
   }
 
