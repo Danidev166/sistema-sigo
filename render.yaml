@@ -36,9 +36,8 @@ services:
         value: https://sistema-sigo-2025.onrender.com
 
   # Frontend Service
-  - type: web
+  - type: static
     name: sigo-frontend
-    env: static
     buildCommand: cd sigo-frontend && npm install && npm run build
     staticPublishPath: ./sigo-frontend/dist
     envVars:
