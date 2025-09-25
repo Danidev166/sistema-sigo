@@ -8,9 +8,6 @@ import './index.css';
 import './styles/animations.css';
 import './styles/typography.css'; // Importación de tipografía moderna
 import './styles/modern-effects.css'; // Importación de efectos modernos
-
-// Debug API URL
-import './debug-api.js';
 import './styles/responsive.css'; // Importación de utilidades responsive
 
 ReactDOM.createRoot(document.getElementById('root')).render(
