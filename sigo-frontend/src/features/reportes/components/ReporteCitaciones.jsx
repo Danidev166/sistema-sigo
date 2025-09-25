@@ -35,16 +35,31 @@ export default function ReporteCitaciones() {
       const response = await api.get('/agenda', { params: { ...filtros, tipo: 'citacion' } });
       const citaciones = response.data.data || response.data || [];
       
-      setData(citaciones);
+      console.log('Datos de citaciones recibidos:', citaciones);
+      
+      // Mapear datos para asegurar consistencia
+      const citacionesMapeadas = citaciones.map(citacion => ({
+        id: citacion.id,
+        nombre_estudiante: citacion.nombre_estudiante || citacion.estudiante_nombre || citacion.nombre || '-',
+        apellido_estudiante: citacion.apellido_estudiante || citacion.estudiante_apellido || citacion.apellido || '',
+        curso: citacion.curso || citacion.curso_estudiante || '-',
+        tipo: citacion.tipo || citacion.tipo_citacion || citacion.motivo || '-',
+        fecha_programada: citacion.fecha_programada || citacion.fecha || citacion.fecha_citacion,
+        estado: citacion.estado || citacion.estado_citacion || 'Programada',
+        asistencia: citacion.asistencia || citacion.asistio || '-',
+        observaciones: citacion.observaciones || citacion.descripcion || '-'
+      }));
+      
+      setData(citacionesMapeadas);
       
       // Calcular estadísticas
       const stats = {
-        total: citaciones.length,
-        programadas: citaciones.filter(c => c.estado === 'Programada').length,
-        asistidas: citaciones.filter(c => c.estado === 'Asistida').length,
-        no_asistidas: citaciones.filter(c => c.estado === 'No Asistida').length,
-        porcentaje_asistencia: citaciones.length > 0 ? 
-          Math.round((citaciones.filter(c => c.estado === 'Asistida').length / citaciones.length) * 100) : 0
+        total: citacionesMapeadas.length,
+        programadas: citacionesMapeadas.filter(c => c.estado === 'Programada').length,
+        asistidas: citacionesMapeadas.filter(c => c.estado === 'Asistida' || c.asistencia === 'Sí').length,
+        no_asistidas: citacionesMapeadas.filter(c => c.estado === 'No Asistida' || c.asistencia === 'No').length,
+        porcentaje_asistencia: citacionesMapeadas.length > 0 ? 
+          Math.round((citacionesMapeadas.filter(c => c.estado === 'Asistida' || c.asistencia === 'Sí').length / citacionesMapeadas.length) * 100) : 0
       };
       setEstadisticas(stats);
     } catch (error) {
@@ -57,15 +72,28 @@ export default function ReporteCitaciones() {
         // Filtrar solo los que son citaciones
         const citaciones = seguimientos.filter(s => s.tipo === 'citacion' || s.tipo === 'Citación');
         
-        setData(citaciones);
+        // Mapear datos de seguimiento
+        const citacionesMapeadas = citaciones.map(seguimiento => ({
+          id: seguimiento.id,
+          nombre_estudiante: seguimiento.nombre_estudiante || seguimiento.estudiante_nombre || seguimiento.nombre || '-',
+          apellido_estudiante: seguimiento.apellido_estudiante || seguimiento.estudiante_apellido || seguimiento.apellido || '',
+          curso: seguimiento.curso || seguimiento.curso_estudiante || '-',
+          tipo: seguimiento.tipo || seguimiento.motivo || '-',
+          fecha_programada: seguimiento.fecha_programada || seguimiento.fecha || seguimiento.fecha_seguimiento,
+          estado: seguimiento.estado || 'Programada',
+          asistencia: seguimiento.asistencia || '-',
+          observaciones: seguimiento.observaciones || seguimiento.descripcion || '-'
+        }));
+        
+        setData(citacionesMapeadas);
         
         const stats = {
-          total: citaciones.length,
-          programadas: citaciones.filter(c => c.estado === 'Programada').length,
-          asistidas: citaciones.filter(c => c.estado === 'Asistida').length,
-          no_asistidas: citaciones.filter(c => c.estado === 'No Asistida').length,
-          porcentaje_asistencia: citaciones.length > 0 ? 
-            Math.round((citaciones.filter(c => c.estado === 'Asistida').length / citaciones.length) * 100) : 0
+          total: citacionesMapeadas.length,
+          programadas: citacionesMapeadas.filter(c => c.estado === 'Programada').length,
+          asistidas: citacionesMapeadas.filter(c => c.estado === 'Asistida' || c.asistencia === 'Sí').length,
+          no_asistidas: citacionesMapeadas.filter(c => c.estado === 'No Asistida' || c.asistencia === 'No').length,
+          porcentaje_asistencia: citacionesMapeadas.length > 0 ? 
+            Math.round((citacionesMapeadas.filter(c => c.estado === 'Asistida' || c.asistencia === 'Sí').length / citacionesMapeadas.length) * 100) : 0
         };
         setEstadisticas(stats);
       } catch (error2) {
