@@ -36,19 +36,72 @@ export default function ReporteCitaciones() {
       const citaciones = response.data.data || response.data || [];
       
       console.log('Datos de citaciones recibidos:', citaciones);
+      console.log('Primera citación completa:', citaciones[0]);
       
       // Mapear datos para asegurar consistencia
-      const citacionesMapeadas = citaciones.map(citacion => ({
-        id: citacion.id,
-        nombre_estudiante: citacion.nombre_estudiante || citacion.estudiante_nombre || citacion.nombre || '-',
-        apellido_estudiante: citacion.apellido_estudiante || citacion.estudiante_apellido || citacion.apellido || '',
-        curso: citacion.curso || citacion.curso_estudiante || '-',
-        tipo: citacion.tipo || citacion.tipo_citacion || citacion.motivo || '-',
-        fecha_programada: citacion.fecha_programada || citacion.fecha || citacion.fecha_citacion,
-        estado: citacion.estado || citacion.estado_citacion || 'Programada',
-        asistencia: citacion.asistencia || citacion.asistio || '-',
-        observaciones: citacion.observaciones || citacion.descripcion || '-'
-      }));
+      const citacionesMapeadas = citaciones.map(citacion => {
+        console.log('Mapeando citación:', citacion);
+        
+        // Buscar datos del estudiante en diferentes ubicaciones
+        const nombreEstudiante = citacion.nombre_estudiante || 
+                                citacion.estudiante_nombre || 
+                                citacion.nombre || 
+                                citacion.estudiante?.nombre ||
+                                citacion.estudiante?.nombre_estudiante ||
+                                '-';
+        
+        const apellidoEstudiante = citacion.apellido_estudiante || 
+                                  citacion.estudiante_apellido || 
+                                  citacion.apellido || 
+                                  citacion.estudiante?.apellido ||
+                                  citacion.estudiante?.apellido_estudiante ||
+                                  '';
+        
+        const curso = citacion.curso || 
+                     citacion.curso_estudiante || 
+                     citacion.estudiante?.curso ||
+                     citacion.estudiante?.curso_estudiante ||
+                     '-';
+        
+        const tipo = citacion.tipo || 
+                    citacion.tipo_citacion || 
+                    citacion.motivo || 
+                    citacion.tipo_agenda ||
+                    '-';
+        
+        const fechaProgramada = citacion.fecha_programada || 
+                               citacion.fecha || 
+                               citacion.fecha_citacion ||
+                               citacion.fecha_agenda;
+        
+        const estado = citacion.estado || 
+                      citacion.estado_citacion || 
+                      citacion.estado_agenda ||
+                      'Programada';
+        
+        const asistencia = citacion.asistencia || 
+                          citacion.asistio || 
+                          citacion.asistencia_agenda ||
+                          (estado === 'Asistida' ? 'Sí' : estado === 'No Asistida' ? 'No' : '-');
+        
+        const observaciones = citacion.observaciones || 
+                             citacion.descripcion || 
+                             citacion.observaciones_agenda ||
+                             citacion.comentarios ||
+                             '-';
+        
+        return {
+          id: citacion.id,
+          nombre_estudiante: nombreEstudiante,
+          apellido_estudiante: apellidoEstudiante,
+          curso: curso,
+          tipo: tipo,
+          fecha_programada: fechaProgramada,
+          estado: estado,
+          asistencia: asistencia,
+          observaciones: observaciones
+        };
+      });
       
       setData(citacionesMapeadas);
       
