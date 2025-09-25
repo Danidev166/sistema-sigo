@@ -37,11 +37,7 @@ class AgendaModel {
         'Programada' AS estado,
         'Citación' AS tipo,
         COALESCE(a.observaciones, 'Sin observaciones') AS observaciones,
-        CASE 
-          WHEN a.estado_asistencia = 'asistida' THEN 'Sí'
-          WHEN a.estado_asistencia = 'no_asistida' THEN 'No'
-          ELSE 'Pendiente'
-        END AS asistencia
+        'Pendiente' AS asistencia
       FROM agenda a
       LEFT JOIN estudiantes e ON e.id = a.id_estudiante
       ORDER BY a.fecha DESC
