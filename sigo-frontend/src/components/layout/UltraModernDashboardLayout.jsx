@@ -4,8 +4,7 @@ import ImprovedSidebar from "./ImprovedSidebar";
 import Footer from "./Footer";
 import MobileMenuButton from "../ui/MobileMenuButton";
 import { useAuth } from "../../context/useAuth";
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+;
 
 /**
  * Layout ultra-moderno del dashboard con estilos avanzados
@@ -131,19 +130,7 @@ export default function UltraModernDashboardLayout({ children }) {
         <Footer />
 
         {/* Toast notifications con estilos mejorados */}
-        <ToastContainer 
-          position="top-right" 
-          autoClose={5000} 
-          hideProgressBar={false} 
-          newestOnTop 
-          closeOnClick 
-          pauseOnFocusLoss 
-          draggable 
-          pauseOnHover 
-          className="lg:ml-0"
-          toastClassName="!bg-white/90 dark:!bg-gray-800/90 !backdrop-blur-xl !border !border-gray-200/50 dark:!border-gray-700/50 !shadow-xl"
-          progressClassName="!bg-gradient-to-r !from-blue-500 !to-purple-500"
-        />
+        <!-- ToastContainer removido - Toaster ya está en main.jsx -->
       </div>
 
     </div>

@@ -2,7 +2,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { format } from "date-fns";
 import estudianteService from "../../services/estudianteService";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import { Button } from "../ui/Button";
 import AcademicoFormModal from "../../components/academico/AcademicoFormModal";
 import SeguimientoFormModal from "../../components/academico/SeguimientoFormModal";

@@ -3,7 +3,7 @@ import { useEffect, useState, useCallback } from "react";
 import { format } from "date-fns";
 import { CalendarCheckIcon } from "lucide-react";
 import estudianteService from "../../services/estudianteService";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 
 export default function Entrevistas({ idEstudiante }) {
   const [entrevistas, setEntrevistas] = useState([]);

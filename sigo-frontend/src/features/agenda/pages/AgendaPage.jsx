@@ -13,7 +13,7 @@
  */
 import { useEffect, useState } from "react";
 import { Plus } from "lucide-react";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import ImprovedDashboardLayout from "../../../components/layout/ImprovedDashboardLayout";
 import Button from "../../../components/ui/Button";
 

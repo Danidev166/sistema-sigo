@@ -17,7 +17,7 @@ import FiltroEvaluacion from "../components/FiltroEvaluacion";
 import TablaResultadosEvaluacion from "../components/TablaResultadosEvaluacion";
 import BotonExportarPDF from "../../seguimiento/components/BotonExportarPDF";
 import evaluacionService from "../services/evaluacionService";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 
 export default function ResultadoEvaluacionPage() {
   const [resultados, setResultados] = useState([]);

@@ -21,7 +21,7 @@ import EditarMovimientoModal from "../components/EditarMovimientoModal";
 import MovimientoTable from "../components/MovimientoTable";
 import FiltroMovimientos from "../components/FiltroMovimientos";
 import ExportarMovimientosPDF from "../components/ExportarMovimientosPDF";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 
 export default function MovimientosPage() {
   const [movimientos, setMovimientos] = useState([]);

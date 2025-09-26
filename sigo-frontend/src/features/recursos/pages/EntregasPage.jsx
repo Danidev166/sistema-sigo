@@ -16,7 +16,7 @@ import recursoService from "../services/recursoService";
 import EntregaTable from "../components/EntregaTable";
 import FiltroEntregas from "../components/FiltroEntregas";
 import ExportarEntregasPDF from "../components/ExportarEntregasPDF";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 
 export default function EntregasPage() {
   const [entregas, setEntregas] = useState([]);

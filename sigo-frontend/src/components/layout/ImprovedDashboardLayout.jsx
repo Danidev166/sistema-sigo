@@ -4,8 +4,7 @@ import ImprovedSidebar from "./ImprovedSidebar";
 import Footer from "./Footer";
 import MobileMenuButton from "../ui/MobileMenuButton";
 import { useAuth } from "../../context/useAuth";
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+;
 
 /**
  * Layout mejorado del dashboard con sidebar optimizado
@@ -91,17 +90,7 @@ export default function ImprovedDashboardLayout({ children }) {
         <Footer />
 
         {/* Toast notifications */}
-        <ToastContainer 
-          position="top-right" 
-          autoClose={5000} 
-          hideProgressBar={false} 
-          newestOnTop 
-          closeOnClick 
-          pauseOnFocusLoss 
-          draggable 
-          pauseOnHover 
-          className="lg:ml-0"
-        />
+        <!-- ToastContainer removido - Toaster ya está en main.jsx -->
       </div>
     </div>
   );

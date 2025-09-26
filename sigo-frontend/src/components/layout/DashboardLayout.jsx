@@ -19,8 +19,7 @@ import {
 } from "lucide-react";
 
 import { useAuth } from "../../context/useAuth";
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+;
 import { BellIcon } from '@heroicons/react/24/outline';
 
 /**
@@ -60,7 +59,7 @@ export default function DashboardLayout({ children }) {
           {children}
         </main>
         <Footer />
-        <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop closeOnClick pauseOnFocusLoss draggable pauseOnHover />
+        <!-- ToastContainer removido - Toaster ya está en main.jsx -->
       </div>
     </div>
   );

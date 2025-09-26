@@ -17,7 +17,7 @@ import seguimientoPsicosocialService from "../services/seguimientoPsicosocialSer
 import estudianteService from "../../estudiantes/services/estudianteService";
 import SeguimientoTable from "../components/SeguimientoTable";
 import SeguimientoPsicosocialFormModal from "../components/SeguimientoPsicosocialFormModal";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 
 export default function SeguimientoPsicosocialPage() {
   const [seguimientos, setSeguimientos] = useState([]);

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { toast } from 'react-toastify';
+import { toast } from 'react-hot-toast';
 import LogsService from '../services/logsService';
 import LogsTable from '../components/LogsTable';
 import DeleteConfirmModal from '../components/DeleteConfirmModal';

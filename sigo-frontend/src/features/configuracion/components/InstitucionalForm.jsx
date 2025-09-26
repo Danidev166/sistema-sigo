@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import configuracionService from "../services/configuracionService";
 import Button from "../../../components/ui/Button";
 

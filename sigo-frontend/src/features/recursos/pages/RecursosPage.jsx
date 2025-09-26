@@ -20,7 +20,7 @@ import RecursoTable from "../components/RecursoTable";
 import RecursoFormModal from "../components/RecursoFormModal";
 import DeleteConfirmModal from "../../estudiantes/components/intervenciones/DeleteConfirmModal";
 import FiltroInventario from "../components/FiltroInventario";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import ExportarInventarioPDF from "../components/ExportarInventarioPDF";
 
 export default function RecursosPage() {

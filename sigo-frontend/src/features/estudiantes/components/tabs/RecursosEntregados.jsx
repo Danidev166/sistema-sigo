@@ -1,7 +1,7 @@
 // src/features/estudiantes/tabs/RecursosEntregados.jsx
 import { useEffect, useState } from "react";
 import { format } from "date-fns";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import estudianteService from "../../services/estudianteService";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";

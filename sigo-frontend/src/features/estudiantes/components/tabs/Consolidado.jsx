@@ -2,7 +2,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { format } from "date-fns";
 import estudianteService from "../../services/estudianteService";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 
 export default function Consolidado({ idEstudiante }) {
   const [datos, setDatos] = useState({

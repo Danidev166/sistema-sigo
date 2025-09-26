@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { toast } from 'react-toastify';
+import { toast } from 'react-hot-toast';
 import configuracionService from '../services/configuracionService';
 import InputField from '../../estudiantes/components/InputField';
 import ToggleField from '../../../components/ui/ToggleField';

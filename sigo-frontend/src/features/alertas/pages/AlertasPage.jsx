@@ -13,7 +13,7 @@
 import { useEffect, useState } from "react";
 import ImprovedDashboardLayout from "../../../components/layout/ImprovedDashboardLayout";
 import alertaService from "../services/alertaService";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import AlertaTable from "../components/AlertaTable";
 
 export default function AlertasPage() {

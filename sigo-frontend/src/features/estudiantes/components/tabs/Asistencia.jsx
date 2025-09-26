@@ -3,7 +3,7 @@ import { useEffect, useState, useCallback } from "react";
 import { format } from "date-fns";
 import { Plus, Pencil, Trash2, Loader2 } from "lucide-react";
 import estudianteService from "../../services/estudianteService";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import AsistenciaFormModal from "../../components/asistencia/AsistenciaFormModal";
 import DeleteConfirmModal from "../../components/asistencia/DeleteConfirmModal";
 import {

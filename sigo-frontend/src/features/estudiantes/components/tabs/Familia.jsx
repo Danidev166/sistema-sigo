@@ -4,7 +4,7 @@ import estudianteService from "../../services/estudianteService";
 import InputField from "../InputField";
 import TextareaField from "../TextareaField";
 import { Button } from "../ui/Button";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 
 export default function Familia({ idEstudiante }) {
   const [datos, setDatos] = useState([]);

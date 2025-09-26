@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { BellIcon } from '@heroicons/react/24/outline';
 import notificacionService from '../services/notificacionService';
-import { toast } from 'react-toastify';
+import { toast } from 'react-hot-toast';
 
 const NotificacionBadge = () => {
   const [notificaciones, setNotificaciones] = useState([]);

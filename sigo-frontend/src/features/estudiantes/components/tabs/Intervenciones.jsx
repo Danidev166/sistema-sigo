@@ -5,7 +5,7 @@ import { Plus, Pencil, Trash2 } from "lucide-react";
 import estudianteService from "../../services/estudianteService";
 import IntervencionFormModal from "../../components/intervenciones/IntervencionFormModal";
 import DeleteConfirmModal from "../../components/intervenciones/DeleteConfirmModal";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 
 export default function Intervenciones({ idEstudiante }) {
   const [intervenciones, setIntervenciones] = useState([]);

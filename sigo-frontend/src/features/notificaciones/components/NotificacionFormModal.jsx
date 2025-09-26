@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import notificacionService from '../services/notificacionService';
 import Button from '../../../components/ui/Button';
 import { AuthContext } from '../../../context/AuthContext';
-import { toast } from 'react-toastify';
+import { toast } from 'react-hot-toast';
 
 const NotificacionFormModal = ({ open, onClose, onCreated }) => {
   const { user } = useContext(AuthContext);
