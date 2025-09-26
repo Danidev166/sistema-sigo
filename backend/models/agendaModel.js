@@ -30,7 +30,7 @@ class AgendaModel {
           COALESCE(e.curso, 'Sin curso') as curso,
           'Pendiente' as estado,
           'Citación' as tipo,
-          COALESCE(a.observaciones, 'Sin observaciones') as observaciones,
+          'Sin observaciones' as observaciones,
           COALESCE(a.asistencia, 'Pendiente') as asistencia
         FROM agenda a
         LEFT JOIN estudiantes e ON a.id_estudiante = e.id
