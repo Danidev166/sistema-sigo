@@ -21,4 +21,7 @@ router.put("/:id", verifyToken, validateBody(agendaSchema), AgendaController.act
 // ✅ Eliminar agenda
 router.delete("/:id", verifyToken, AgendaController.eliminar);
 
+// 🆕 Actualizar asistencia a entrevista
+router.patch("/:id/asistencia", verifyToken, AgendaController.actualizarAsistencia);
+
 module.exports = router;

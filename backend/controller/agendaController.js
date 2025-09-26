@@ -155,6 +155,46 @@ class AgendaController {
       next(error);
     }
   }
+
+  // 🆕 MÉTODO PARA ACTUALIZAR ASISTENCIA A ENTREVISTA
+  static async actualizarAsistencia(req, res, next) {
+    try {
+      const { id } = req.params;
+      const { asistencia, observaciones } = req.body;
+      
+      // Validar que el estado de asistencia sea válido
+      const estadosValidos = ['Presente', 'Ausente', 'Justificada', 'Pendiente'];
+      if (!estadosValidos.includes(asistencia)) {
+        return res.status(400).json({ 
+          error: 'Estado de asistencia inválido',
+          estados_validos: estadosValidos
+        });
+      }
+
+      // Actualizar el campo asistencia en la agenda
+      const { getPool } = require('../config/db');
+      const pool = await getPool();
+      
+      await pool.raw.query(`
+        UPDATE agenda 
+        SET asistencia = $1,
+            observaciones = COALESCE($2, observaciones)
+        WHERE id = $3
+      `, [asistencia, observaciones, parseInt(id, 10)]);
+
+      logger.info(`📋 Asistencia actualizada para agenda ID ${id}: ${asistencia}`);
+      
+      res.json({ 
+        message: "Asistencia actualizada correctamente",
+        agenda_id: id,
+        asistencia: asistencia
+      });
+      
+    } catch (error) {
+      logger.error("❌ Error al actualizar asistencia:", error);
+      next(error);
+    }
+  }
 }
 
 module.exports = AgendaController;
