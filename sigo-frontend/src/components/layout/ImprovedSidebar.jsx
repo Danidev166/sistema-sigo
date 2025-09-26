@@ -101,7 +101,7 @@ const ImprovedSidebar = memo(({ isAdmin, handleLogout, isOpen, onClose }) => {
           <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110">
             <span className="text-white font-bold text-sm tracking-tight">S</span>
           </div>
-          <h1 className="text-h5 font-bold tracking-tight text-gradient">SIGO PRO</h1>
+          <h1 className="text-h5 font-bold tracking-tight text-gradient">SIGO</h1>
         </div>
           <button
             onClick={onClose}

@@ -26,7 +26,7 @@ export default function FixedTopBar() {
           alt="Logo SIGO"
           className="w-10 h-10 object-contain rounded-full border border-white"
         />
-        <h1 className="text-lg sm:text-xl font-semibold tracking-wide">SIGO PRO</h1>
+        <h1 className="text-lg sm:text-xl font-semibold tracking-wide">SIGO</h1>
       </div>
 
       {/* Bienvenida + Avatar + Logout */}

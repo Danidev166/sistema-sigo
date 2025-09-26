@@ -43,7 +43,7 @@ export default function DashboardHeader() {
 
       {/* Texto institucional */}
       <div className="text-body-sm text-gray-400 dark:text-gray-300 font-medium text-center sm:text-right">
-        SIGO PRO · Liceo Politécnico Bicentenario Caupolicán
+        SIGO · Liceo Politécnico Bicentenario Caupolicán
       </div>
     </div>
   );

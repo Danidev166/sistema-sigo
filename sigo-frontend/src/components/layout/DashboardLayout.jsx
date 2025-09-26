@@ -70,7 +70,7 @@ function SidebarContent({ isAdmin, handleLogout }) {
     <>
       <div>
         <div className="text-center text-2xl font-bold py-6 border-b border-white/10">
-          SIGO PRO
+          SIGO
         </div>
         <nav className="px-4 py-6 space-y-2">
           <NavItem to="/dashboard" icon={<HomeIcon size={18} />}>Inicio</NavItem>
