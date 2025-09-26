@@ -21,6 +21,12 @@ const NotificacionFormModal = ({ open, onClose, onCreated }) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  const handleOverlayClick = (e) => {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -43,9 +49,26 @@ const NotificacionFormModal = ({ open, onClose, onCreated }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
-      <div className="bg-white rounded shadow-lg p-6 w-full max-w-md">
-        <h2 className="text-xl font-bold mb-4">Crear Notificación</h2>
+    <div 
+      className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50"
+      onClick={handleOverlayClick}
+    >
+      <div 
+        className="bg-white rounded shadow-lg p-6 w-full max-w-md"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-xl font-bold">Crear Notificación</h2>
+          <button
+            onClick={onClose}
+            className="text-gray-400 hover:text-red-500 transition-colors p-1 rounded-full hover:bg-gray-100"
+            title="Cerrar"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
         {error && <div className="text-red-500 mb-2">{error}</div>}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
