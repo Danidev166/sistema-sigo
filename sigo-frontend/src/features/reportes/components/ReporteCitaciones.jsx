@@ -85,7 +85,7 @@ export default function ReporteCitaciones() {
         const asistencia = citacion.asistencia || 
                           citacion.asistio || 
                           citacion.asistencia_agenda ||
-                          (isRealizada ? 'Presente' : 'Pendiente');
+                          'Pendiente';
         
         const observaciones = citacion.observaciones || 
                              citacion.descripcion || 
@@ -112,10 +112,10 @@ export default function ReporteCitaciones() {
       const stats = {
         total: citacionesMapeadas.length,
         programadas: citacionesMapeadas.filter(c => c.estado === 'Programada').length,
-        asistidas: citacionesMapeadas.filter(c => c.estado === 'Asistida' || c.asistencia === 'Sí').length,
-        no_asistidas: citacionesMapeadas.filter(c => c.estado === 'No Asistida' || c.asistencia === 'No').length,
+        asistidas: citacionesMapeadas.filter(c => c.asistencia === 'Presente' || c.estado === 'Asistida').length,
+        no_asistidas: citacionesMapeadas.filter(c => c.asistencia === 'Ausente' || c.estado === 'No Asistida').length,
         porcentaje_asistencia: citacionesMapeadas.length > 0 ? 
-          Math.round((citacionesMapeadas.filter(c => c.estado === 'Asistida' || c.asistencia === 'Sí').length / citacionesMapeadas.length) * 100) : 0
+          Math.round((citacionesMapeadas.filter(c => c.asistencia === 'Presente' || c.estado === 'Asistida').length / citacionesMapeadas.length) * 100) : 0
       };
       setEstadisticas(stats);
     } catch (error) {
@@ -146,10 +146,10 @@ export default function ReporteCitaciones() {
         const stats = {
           total: citacionesMapeadas.length,
           programadas: citacionesMapeadas.filter(c => c.estado === 'Programada').length,
-          asistidas: citacionesMapeadas.filter(c => c.estado === 'Asistida' || c.asistencia === 'Sí').length,
-          no_asistidas: citacionesMapeadas.filter(c => c.estado === 'No Asistida' || c.asistencia === 'No').length,
+          asistidas: citacionesMapeadas.filter(c => c.asistencia === 'Presente' || c.estado === 'Asistida').length,
+          no_asistidas: citacionesMapeadas.filter(c => c.asistencia === 'Ausente' || c.estado === 'No Asistida').length,
           porcentaje_asistencia: citacionesMapeadas.length > 0 ? 
-            Math.round((citacionesMapeadas.filter(c => c.estado === 'Asistida' || c.asistencia === 'Sí').length / citacionesMapeadas.length) * 100) : 0
+            Math.round((citacionesMapeadas.filter(c => c.asistencia === 'Presente' || c.estado === 'Asistida').length / citacionesMapeadas.length) * 100) : 0
         };
         setEstadisticas(stats);
       } catch (error2) {
@@ -485,11 +485,12 @@ export default function ReporteCitaciones() {
                     </td>
                     <td className="px-3 py-4">
                       <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                        row.asistencia === 'Sí' || row.estado === 'Asistida' ? 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-300' :
-                        row.asistencia === 'No' || row.estado === 'No Asistida' ? 'bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-300' :
+                        row.asistencia === 'Presente' ? 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-300' :
+                        row.asistencia === 'Ausente' ? 'bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-300' :
+                        row.asistencia === 'Justificada' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-300' :
                         'bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-300'
                       }`}>
-                        {row.asistencia || (row.estado === 'Asistida' ? 'Sí' : row.estado === 'No Asistida' ? 'No' : '-')}
+                        {row.asistencia || '-'}
                       </span>
                     </td>
                     <td className="px-3 py-4 text-sm text-gray-900 dark:text-white">{row.observaciones || row.descripcion || "-"}</td>
