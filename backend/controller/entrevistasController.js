@@ -231,8 +231,7 @@ class EntrevistasController {
       // Marcar agenda como realizada directamente con PostgreSQL
       await pool.raw.query(`
         UPDATE agenda
-           SET motivo = motivo || ' (Registrada)',
-               asistencia = 'Sí'
+           SET motivo = motivo || ' (Registrada)'
          WHERE id = $1
       `, [parseInt(idAgenda, 10)]);
 

@@ -45,13 +45,26 @@ class AgendaController {
       // 🆕 CREAR REGISTRO DE ASISTENCIA AUTOMÁTICAMENTE
       try {
         const AsistenciaModel = require('../models/asistenciaModel');
-        await AsistenciaModel.crear({
-          id_estudiante: req.body.id_estudiante,
-          fecha: req.body.fecha,
-          tipo: 'Pendiente', // Estado inicial
-          justificacion: `Cita agendada: ${req.body.motivo} - ${req.body.profesional}`
-        });
-        logger.info(`📋 Registro de asistencia creado automáticamente para agenda ID ${nuevaAgenda.id}`);
+        
+        // Verificar si ya existe una asistencia para esta fecha y estudiante
+        const { getPool } = require('../config/db');
+        const pool = await getPool();
+        const existingAsistencia = await pool.raw.query(`
+          SELECT id FROM asistencia 
+          WHERE id_estudiante = $1 AND fecha = $2
+        `, [req.body.id_estudiante, req.body.fecha]);
+        
+        if (existingAsistencia.rows.length === 0) {
+          await AsistenciaModel.crear({
+            id_estudiante: req.body.id_estudiante,
+            fecha: req.body.fecha,
+            tipo: 'Pendiente', // Estado inicial
+            justificacion: `Cita agendada: ${req.body.motivo} - ${req.body.profesional}`
+          });
+          logger.info(`📋 Registro de asistencia creado automáticamente para agenda ID ${nuevaAgenda.id}`);
+        } else {
+          logger.info(`📋 Ya existe asistencia para esta fecha, no se crea duplicado`);
+        }
       } catch (asistenciaError) {
         logger.warn(`⚠️ Error al crear asistencia automática: ${asistenciaError.message}`);
         // No fallar la creación de agenda por error en asistencia
