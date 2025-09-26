@@ -270,6 +270,4 @@ static async registrarDesdeAgenda(req, res, next) {
   }
 }
 
-}
-
 module.exports = EntrevistasController;
