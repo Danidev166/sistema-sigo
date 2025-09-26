@@ -162,6 +162,8 @@ class AgendaController {
       const { id } = req.params;
       const { asistencia, observaciones } = req.body;
       
+      logger.info(`🔍 Debug - Actualizando asistencia para agenda ID ${id}:`, { asistencia, observaciones });
+      
       // Validar que el estado de asistencia sea válido
       const estadosValidos = ['Presente', 'Ausente', 'Justificada', 'Pendiente'];
       if (!estadosValidos.includes(asistencia)) {
@@ -175,12 +177,15 @@ class AgendaController {
       const { getPool } = require('../config/db');
       const pool = await getPool();
       
-      await pool.raw.query(`
+      // Actualizar asistencia y observaciones
+      const result = await pool.raw.query(`
         UPDATE agenda 
         SET asistencia = $1,
             observaciones = COALESCE($2, observaciones)
         WHERE id = $3
       `, [asistencia, observaciones, parseInt(id, 10)]);
+      
+      logger.info(`📋 Resultado de actualización:`, result);
 
       logger.info(`📋 Asistencia actualizada para agenda ID ${id}: ${asistencia}`);
       
@@ -192,7 +197,12 @@ class AgendaController {
       
     } catch (error) {
       logger.error("❌ Error al actualizar asistencia:", error);
-      next(error);
+      logger.error("❌ Stack trace:", error.stack);
+      res.status(500).json({ 
+        error: "Error interno del servidor",
+        details: error.message,
+        stack: error.stack
+      });
     }
   }
 }
