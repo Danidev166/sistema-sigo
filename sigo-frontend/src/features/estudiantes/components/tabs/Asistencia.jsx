@@ -123,8 +123,12 @@ export default function Asistencia({ idEstudiante }) {
                       {format(new Date(a.fecha), "dd/MM/yyyy")}
                     </TableCell>
                     <TableCell>
-                      {a.tipo === "justificada" ? (
+                      {a.tipo === "Presente" ? (
+                        <span className="text-green-600 font-medium">Presente</span>
+                      ) : a.tipo === "justificada" ? (
                         <span className="text-green-600 font-medium">Justificada</span>
+                      ) : a.tipo === "Pendiente" ? (
+                        <span className="text-yellow-600 font-medium">Pendiente</span>
                       ) : (
                         <span className="text-red-600 font-medium capitalize">{a.tipo}</span>
                       )}

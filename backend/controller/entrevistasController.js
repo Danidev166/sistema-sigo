@@ -230,9 +230,34 @@ static async registrarDesdeAgenda(req, res, next) {
     // Marcar agenda como realizada directamente con PostgreSQL
     await pool.raw.query(`
       UPDATE agenda
-         SET motivo = motivo || ' (Registrada)'
+         SET motivo = motivo || ' (Registrada)',
+             asistencia = 'Sí'
        WHERE id = $1
     `, [parseInt(idAgenda, 10)]);
+
+    // 🆕 ACTUALIZAR REGISTRO DE ASISTENCIA
+    try {
+      const AsistenciaModel = require('../models/asistenciaModel');
+      // Buscar el registro de asistencia relacionado con esta agenda
+      const asistenciaResult = await pool.raw.query(`
+        SELECT id FROM asistencia 
+        WHERE id_estudiante = $1 AND fecha = $2 
+        AND justificacion LIKE '%Cita agendada%'
+        ORDER BY id DESC LIMIT 1
+      `, [agenda.id_estudiante, agenda.fecha]);
+      
+      if (asistenciaResult.rows.length > 0) {
+        await AsistenciaModel.actualizar(asistenciaResult.rows[0].id, {
+          id_estudiante: agenda.id_estudiante,
+          fecha: agenda.fecha,
+          tipo: 'Presente', // Cambiar de 'Pendiente' a 'Presente'
+          justificacion: `Entrevista realizada: ${agenda.motivo} - ${agenda.profesional}. Observaciones: ${observaciones || 'Sin observaciones'}`
+        });
+        logger.info(`📋 Asistencia actualizada a 'Presente' para agenda ID ${idAgenda}`);
+      }
+    } catch (asistenciaError) {
+      logger.warn(`⚠️ Error al actualizar asistencia: ${asistenciaError.message}`);
+    }
 
     res.status(201).json({
       message: "✅ Entrevista registrada desde Agenda",

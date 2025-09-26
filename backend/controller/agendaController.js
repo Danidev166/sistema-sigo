@@ -42,6 +42,21 @@ class AgendaController {
       const nuevaAgenda = await AgendaModel.crear(req.body);
       const estudiante = await EstudianteModel.obtenerPorId(req.body.id_estudiante);
 
+      // 🆕 CREAR REGISTRO DE ASISTENCIA AUTOMÁTICAMENTE
+      try {
+        const AsistenciaModel = require('../models/asistenciaModel');
+        await AsistenciaModel.crear({
+          id_estudiante: req.body.id_estudiante,
+          fecha: req.body.fecha,
+          tipo: 'Pendiente', // Estado inicial
+          justificacion: `Cita agendada: ${req.body.motivo} - ${req.body.profesional}`
+        });
+        logger.info(`📋 Registro de asistencia creado automáticamente para agenda ID ${nuevaAgenda.id}`);
+      } catch (asistenciaError) {
+        logger.warn(`⚠️ Error al crear asistencia automática: ${asistenciaError.message}`);
+        // No fallar la creación de agenda por error en asistencia
+      }
+
       logger.info(`📅 Entrevista agendada por ${req.user?.email || "usuario desconocido"} para estudiante ID ${req.body.id_estudiante}`);
 
       if (!estudiante?.email) {
