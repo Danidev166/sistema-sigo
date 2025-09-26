@@ -11,4 +11,4 @@ Estructura real verificada:
 - seguimiento_psicosocial: fecha_seguimiento (no fecha)
 - intervenciones: fecha_intervencion (no fecha)
 
-El servidor necesita reiniciarse para cargar los cambios.
+El servidor necesita reiniciarse para cargar los cambios.# Deploy automático Thu, Sep 25, 2025 10:11:34 PM
