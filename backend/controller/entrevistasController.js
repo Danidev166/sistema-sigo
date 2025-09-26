@@ -270,5 +270,6 @@ class EntrevistasController {
       next(error);
     }
   }
+}
 
 module.exports = EntrevistasController;
