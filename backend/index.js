@@ -187,6 +187,7 @@ const routes = [
   { path: "/seguimiento-cronologico", module: "./routes/seguimientoCronologico" },
   { path: "/test", module: "./routes/test" },
   { path: "/migrate", module: "./routes/migrate" },
+  { path: "/migrate-apoderado", module: "./routes/migrate-apoderado" },
 ];
 
 routes.forEach(({ path: routePath, module }) => {

@@ -25,17 +25,22 @@ const EstudianteModel = {
       .input('curso',              sql.NVarChar, estudiante.curso)
       .input('especialidad',       sql.NVarChar, estudiante.especialidad)
       .input('situacion_economica',sql.NVarChar, estudiante.situacion_economica)
+      .input('nombreApoderado',    sql.NVarChar, estudiante.nombreApoderado || '')
+      .input('telefonoApoderado',  sql.NVarChar, estudiante.telefonoApoderado || '')
+      .input('emailApoderado',     sql.NVarChar, estudiante.emailApoderado || '')
       .input('fecha_registro',     sql.DateTime, new Date())
       .input('estado',             sql.VarChar,  estudiante.estado || 'Activo')
       .query(`
         INSERT INTO estudiantes (
           nombre, apellido, rut, email, telefono, direccion,
           fecha_nacimiento, curso, especialidad, situacion_economica,
+          nombre_apoderado, telefono_apoderado, email_apoderado,
           fecha_registro, estado
         )
         VALUES (
           @nombre, @apellido, @rut, @email, @telefono, @direccion,
           @fecha_nacimiento, @curso, @especialidad, @situacion_economica,
+          @nombreApoderado, @telefonoApoderado, @emailApoderado,
           @fecha_registro, @estado
         )
         RETURNING *
@@ -59,17 +64,22 @@ const EstudianteModel = {
             .input('curso',              sql.NVarChar, est.curso)
             .input('especialidad',       sql.NVarChar, est.especialidad)
             .input('situacion_economica',sql.NVarChar, est.situacion_economica)
+            .input('nombreApoderado',    sql.NVarChar, est.nombreApoderado || '')
+            .input('telefonoApoderado',  sql.NVarChar, est.telefonoApoderado || '')
+            .input('emailApoderado',     sql.NVarChar, est.emailApoderado || '')
             .input('fecha_registro',     sql.DateTime, new Date())
             .input('estado',             sql.VarChar,  est.estado || 'Activo')
             .query(`
               INSERT INTO estudiantes (
                 nombre, apellido, rut, email, telefono, direccion,
                 fecha_nacimiento, curso, especialidad, situacion_economica,
+                nombre_apoderado, telefono_apoderado, email_apoderado,
                 fecha_registro, estado
               )
               VALUES (
                 @nombre, @apellido, @rut, @email, @telefono, @direccion,
                 @fecha_nacimiento, @curso, @especialidad, @situacion_economica,
+                @nombreApoderado, @telefonoApoderado, @emailApoderado,
                 @fecha_registro, @estado
               )
             `);
@@ -113,6 +123,9 @@ const EstudianteModel = {
       .input('curso',               sql.NVarChar,datos.curso)
       .input('especialidad',        sql.NVarChar,datos.especialidad)
       .input('situacion_economica', sql.NVarChar,datos.situacion_economica)
+      .input('nombreApoderado',     sql.NVarChar,datos.nombreApoderado || '')
+      .input('telefonoApoderado',   sql.NVarChar,datos.telefonoApoderado || '')
+      .input('emailApoderado',      sql.NVarChar,datos.emailApoderado || '')
       .input('estado',              sql.VarChar, datos.estado)
       .query(`
         UPDATE estudiantes
@@ -126,6 +139,9 @@ const EstudianteModel = {
                curso = @curso,
                especialidad = @especialidad,
                situacion_economica = @situacion_economica,
+               nombre_apoderado = @nombreApoderado,
+               telefono_apoderado = @telefonoApoderado,
+               email_apoderado = @emailApoderado,
                estado = @estado
          WHERE id = @id
       `);
