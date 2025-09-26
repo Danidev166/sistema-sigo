@@ -85,13 +85,13 @@ export default function ReporteCitaciones() {
         const asistencia = citacion.asistencia || 
                           citacion.asistio || 
                           citacion.asistencia_agenda ||
-                          (isRealizada ? 'Sí' : '-');
+                          (isRealizada ? 'Presente' : 'Pendiente');
         
         const observaciones = citacion.observaciones || 
                              citacion.descripcion || 
                              citacion.observaciones_agenda ||
                              citacion.comentarios ||
-                             '-';
+                             'Sin observaciones';
         
         return {
           id: citacion.id,

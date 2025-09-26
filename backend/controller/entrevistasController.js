@@ -202,7 +202,7 @@ class EntrevistasController {
         return res.status(404).json({ error: "Agenda no encontrada" });
       }
 
-      const { observaciones, conclusiones, acciones_acordadas } = req.body;
+      const { observaciones, conclusiones, acciones_acordadas, asistio } = req.body;
 
       const fechaStr = new Date(agenda.fecha).toISOString().split("T")[0];
       const horaStr = typeof agenda.hora === "string"
@@ -228,13 +228,16 @@ class EntrevistasController {
 
       const nueva = await EntrevistaModel.crear(entrevistaData);
 
-      // Marcar agenda como realizada directamente con PostgreSQL
+      // Marcar agenda como realizada y actualizar asistencia
       await pool.raw.query(`
         UPDATE agenda
            SET motivo = motivo || ' (Registrada)',
-               asistencia = 'Presente'
-         WHERE id = $1
-      `, [parseInt(idAgenda, 10)]);
+               asistencia = $1,
+               observaciones = $2
+         WHERE id = $3
+      `, [asistio || 'Presente', observaciones || '', parseInt(idAgenda, 10)]);
+      
+      logger.info(`📋 Agenda ID ${idAgenda} marcada como asistida`);
 
       // 🆕 ACTUALIZAR REGISTRO DE ASISTENCIA
       try {

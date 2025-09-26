@@ -19,22 +19,39 @@ export default function RegistrarEntrevistaModal({ isOpen, onClose, onSubmit }) 
   const [observaciones, setObservaciones] = useState("");
   const [conclusiones, setConclusiones] = useState("");
   const [acciones, setAcciones] = useState("");
+  const [asistio, setAsistio] = useState("Presente");
 
   const handleSubmit = () => {
     onSubmit({
       observaciones,
       conclusiones,
-      acciones_acordadas: acciones
+      acciones_acordadas: acciones,
+      asistio
     });
     onClose();
     setObservaciones("");
     setConclusiones("");
     setAcciones("");
+    setAsistio("Presente");
   };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Registrar Entrevista Realizada">
       <div className="space-y-4 max-h-[80vh] overflow-y-auto px-1">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            ¿Asistió a la entrevista?
+          </label>
+          <select
+            className="w-full border rounded p-2 text-sm dark:bg-slate-700 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            value={asistio}
+            onChange={(e) => setAsistio(e.target.value)}
+          >
+            <option value="Presente">Presente</option>
+            <option value="Ausente">Ausente</option>
+            <option value="Justificada">Justificada</option>
+          </select>
+        </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
             Observaciones:
