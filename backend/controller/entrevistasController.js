@@ -181,93 +181,94 @@ class EntrevistasController {
       next(error);
     }
   }
-static async registrarDesdeAgenda(req, res, next) {
-  try {
-    const { idAgenda } = req.params;
-    const userId = req.user?.id;
 
-    logger.info("🔍 req.user:", req.user);
-
-    // Obtener agenda directamente con PostgreSQL
-    const { getPool } = require('../config/db');
-    const pool = await getPool();
-    
-    const agendaResult = await pool.raw.query('SELECT * FROM agenda WHERE id = $1', [parseInt(idAgenda, 10)]);
-    const agenda = agendaResult.rows[0];
-
-    logger.info("🔍 QUERY RESULT obtenerAgendaPorId:", agenda);
-
-    if (!agenda) {
-      return res.status(404).json({ error: "Agenda no encontrada" });
-    }
-
-    const { observaciones, conclusiones, acciones_acordadas } = req.body;
-
-    const fechaStr = new Date(agenda.fecha).toISOString().split("T")[0];
-    const horaStr = typeof agenda.hora === "string"
-      ? agenda.hora
-      : new Date(agenda.hora).toISOString().substring(11, 16);
-
-    const fechaHora = new Date(`${fechaStr}T${horaStr}`);
-
-    if (isNaN(fechaHora)) {
-      throw new Error(`Fecha inválida: ${fechaStr}T${horaStr}`);
-    }
-
-    const entrevistaData = {
-      id_estudiante: agenda.id_estudiante,
-      id_orientador: userId,
-      fecha_entrevista: fechaHora,
-      motivo: agenda.motivo,
-      observaciones: observaciones || "",
-      conclusiones: conclusiones || "",
-      acciones_acordadas: acciones_acordadas || "",
-      estado: "realizada"
-    };
-
-    const nueva = await EntrevistaModel.crear(entrevistaData);
-
-    // Marcar agenda como realizada directamente con PostgreSQL
-    await pool.raw.query(`
-      UPDATE agenda
-         SET motivo = motivo || ' (Registrada)',
-             asistencia = 'Sí'
-       WHERE id = $1
-    `, [parseInt(idAgenda, 10)]);
-
-    // 🆕 ACTUALIZAR REGISTRO DE ASISTENCIA
+  static async registrarDesdeAgenda(req, res, next) {
     try {
-      const AsistenciaModel = require('../models/asistenciaModel');
-      // Buscar el registro de asistencia relacionado con esta agenda
-      const asistenciaResult = await pool.raw.query(`
-        SELECT id FROM asistencia 
-        WHERE id_estudiante = $1 AND fecha = $2 
-        AND justificacion LIKE '%Cita agendada%'
-        ORDER BY id DESC LIMIT 1
-      `, [agenda.id_estudiante, agenda.fecha]);
+      const { idAgenda } = req.params;
+      const userId = req.user?.id;
+
+      logger.info("🔍 req.user:", req.user);
+
+      // Obtener agenda directamente con PostgreSQL
+      const { getPool } = require('../config/db');
+      const pool = await getPool();
       
-      if (asistenciaResult.rows.length > 0) {
-        await AsistenciaModel.actualizar(asistenciaResult.rows[0].id, {
-          id_estudiante: agenda.id_estudiante,
-          fecha: agenda.fecha,
-          tipo: 'Presente', // Cambiar de 'Pendiente' a 'Presente'
-          justificacion: `Entrevista realizada: ${agenda.motivo} - ${agenda.profesional}. Observaciones: ${observaciones || 'Sin observaciones'}`
-        });
-        logger.info(`📋 Asistencia actualizada a 'Presente' para agenda ID ${idAgenda}`);
+      const agendaResult = await pool.raw.query('SELECT * FROM agenda WHERE id = $1', [parseInt(idAgenda, 10)]);
+      const agenda = agendaResult.rows[0];
+
+      logger.info("🔍 QUERY RESULT obtenerAgendaPorId:", agenda);
+
+      if (!agenda) {
+        return res.status(404).json({ error: "Agenda no encontrada" });
       }
-    } catch (asistenciaError) {
-      logger.warn(`⚠️ Error al actualizar asistencia: ${asistenciaError.message}`);
+
+      const { observaciones, conclusiones, acciones_acordadas } = req.body;
+
+      const fechaStr = new Date(agenda.fecha).toISOString().split("T")[0];
+      const horaStr = typeof agenda.hora === "string"
+        ? agenda.hora
+        : new Date(agenda.hora).toISOString().substring(11, 16);
+
+      const fechaHora = new Date(`${fechaStr}T${horaStr}`);
+
+      if (isNaN(fechaHora)) {
+        throw new Error(`Fecha inválida: ${fechaStr}T${horaStr}`);
+      }
+
+      const entrevistaData = {
+        id_estudiante: agenda.id_estudiante,
+        id_orientador: userId,
+        fecha_entrevista: fechaHora,
+        motivo: agenda.motivo,
+        observaciones: observaciones || "",
+        conclusiones: conclusiones || "",
+        acciones_acordadas: acciones_acordadas || "",
+        estado: "realizada"
+      };
+
+      const nueva = await EntrevistaModel.crear(entrevistaData);
+
+      // Marcar agenda como realizada directamente con PostgreSQL
+      await pool.raw.query(`
+        UPDATE agenda
+           SET motivo = motivo || ' (Registrada)',
+               asistencia = 'Sí'
+         WHERE id = $1
+      `, [parseInt(idAgenda, 10)]);
+
+      // 🆕 ACTUALIZAR REGISTRO DE ASISTENCIA
+      try {
+        const AsistenciaModel = require('../models/asistenciaModel');
+        // Buscar el registro de asistencia relacionado con esta agenda
+        const asistenciaResult = await pool.raw.query(`
+          SELECT id FROM asistencia 
+          WHERE id_estudiante = $1 AND fecha = $2 
+          AND justificacion LIKE '%Cita agendada%'
+          ORDER BY id DESC LIMIT 1
+        `, [agenda.id_estudiante, agenda.fecha]);
+        
+        if (asistenciaResult.rows.length > 0) {
+          await AsistenciaModel.actualizar(asistenciaResult.rows[0].id, {
+            id_estudiante: agenda.id_estudiante,
+            fecha: agenda.fecha,
+            tipo: 'Presente', // Cambiar de 'Pendiente' a 'Presente'
+            justificacion: `Entrevista realizada: ${agenda.motivo} - ${agenda.profesional}. Observaciones: ${observaciones || 'Sin observaciones'}`
+          });
+          logger.info(`📋 Asistencia actualizada a 'Presente' para agenda ID ${idAgenda}`);
+        }
+      } catch (asistenciaError) {
+        logger.warn(`⚠️ Error al actualizar asistencia: ${asistenciaError.message}`);
+      }
+
+      res.status(201).json({
+        message: "✅ Entrevista registrada desde Agenda",
+        entrevista: nueva
+      });
+
+    } catch (error) {
+      logger.error("❌ Error al registrar entrevista desde Agenda:", error);
+      next(error);
     }
-
-    res.status(201).json({
-      message: "✅ Entrevista registrada desde Agenda",
-      entrevista: nueva
-    });
-
-  } catch (error) {
-    logger.error("❌ Error al registrar entrevista desde Agenda:", error);
-    next(error);
   }
-}
 
 module.exports = EntrevistasController;
