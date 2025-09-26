@@ -5,8 +5,11 @@ const AsistenciaController = {
   async crear(req, res, next) {
     try {
       const { id_estudiante, fecha, tipo, justificacion } = req.body;
-      await AsistenciaModel.crear({ id_estudiante, fecha, tipo, justificacion });
-      res.status(201).json({ message: "Asistencia registrada correctamente" });
+      const nuevaAsistencia = await AsistenciaModel.crear({ id_estudiante, fecha, tipo, justificacion });
+      res.status(201).json({ 
+        message: "Asistencia registrada correctamente",
+        asistencia: nuevaAsistencia
+      });
     } catch (error) {
       logger.error("❌ Error al crear asistencia:", error);
       next(error);
