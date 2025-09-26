@@ -16,7 +16,7 @@ export default function Modal({ isOpen, onClose, title, children, size = "lg" })
 
   return (
     <Transition show={isOpen} as={Fragment}>
-      <Dialog as="div" className="relative z-50" onClose={() => {}} static>
+      <Dialog as="div" className="relative z-50" onClose={onClose}>
         {/* Fondo oscurecido con desenfoque */}
         <Transition.Child
           as={Fragment}
