@@ -1,4 +1,4 @@
-import logo from "../../../assets/logo.png";
+import logo from "../../../assets/logo-pages.png";
 import { useAuth } from "../../../context/useAuth";
 import NotificacionBadge from '../../notificaciones/components/NotificacionBadge';
 
@@ -25,7 +25,7 @@ export default function DashboardHeader() {
         <img
           src={logo}
           alt="Logo institucional"
-          className="w-12 h-12 object-contain rounded-full border border-gray-300 dark:border-slate-600 shadow overflow-hidden"
+          className="w-16 h-16 object-cover rounded-full border-2 border-blue-200 dark:border-blue-700 shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden bg-white dark:bg-slate-100 p-1"
         />
         <div className="text-left">
           <p className="text-body-sm text-gray-500 dark:text-gray-300">Bienvenido/a</p>
