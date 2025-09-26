@@ -223,7 +223,7 @@ class EntrevistasController {
         observaciones: observaciones || "",
         conclusiones: conclusiones || "",
         acciones_acordadas: acciones_acordadas || "",
-        estado: "realizada"
+        estado: "Realizada"
       };
 
       const nueva = await EntrevistaModel.crear(entrevistaData);

@@ -11,7 +11,7 @@ export default function Entrevistas({ idEstudiante }) {
 
   const fetchEntrevistas = useCallback(async () => {
     try {
-      const res = await estudianteService.getEntrevistas(idEstudiante, "realizada");
+      const res = await estudianteService.getEntrevistas(idEstudiante, "Realizada");
       const ordenadas = res.data.sort(
         (a, b) => new Date(b.fecha_entrevista) - new Date(a.fecha_entrevista)
       );
