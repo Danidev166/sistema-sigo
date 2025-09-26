@@ -24,6 +24,14 @@ const agendaSchema = Joi.object({
       "string.email": "El correo del orientador debe ser válido",
     }),
 
+  asistencia: Joi.string()
+    .valid('Pendiente', 'Presente', 'Ausente', 'Justificada')
+    .default('Pendiente')
+    .optional()
+    .messages({
+      "any.only": "El estado de asistencia debe ser: Pendiente, Presente, Ausente o Justificada"
+    }),
+
   creado_en: Joi.date().optional(), // generado automáticamente si no se envía
 });
 
