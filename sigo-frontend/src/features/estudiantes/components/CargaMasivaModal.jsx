@@ -316,6 +316,18 @@ export default function CargaMasivaModal({ isOpen, onClose, onUpload }) {
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Carga Masiva de Estudiantes">
       <div className="space-y-5 text-sm text-gray-700 dark:text-gray-300">
+        {/* Botón de cerrar */}
+        <div className="flex justify-end">
+          <button
+            onClick={onClose}
+            className="text-gray-400 hover:text-red-500 transition-colors p-1 rounded-full hover:bg-gray-100 dark:hover:bg-slate-700"
+            title="Cerrar"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
         {/* Instrucciones */}
         <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
           <p className="font-medium text-blue-800 dark:text-blue-200 mb-2">
@@ -472,6 +484,16 @@ export default function CargaMasivaModal({ isOpen, onClose, onUpload }) {
               {OPCIONES_CURSOS.map(c => c.value).join(", ")}
             </code>
           </div>
+        </div>
+
+        {/* Botones de acción */}
+        <div className="flex justify-end gap-2 pt-4 border-t border-gray-200 dark:border-slate-700">
+          <button
+            onClick={onClose}
+            className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            Cerrar
+          </button>
         </div>
       </div>
     </Modal>
