@@ -12,17 +12,15 @@ const AsistenciaModel = {
   async crear(data) {
     const pool = await getPool();
     const query = `
-      INSERT INTO asistencia (id_estudiante, fecha, tipo, justificacion, responsable_id, observaciones)
-      VALUES ($1, $2, $3, $4, $5, $6)
+      INSERT INTO asistencia (id_estudiante, fecha, tipo, justificacion)
+      VALUES ($1, $2, $3, $4)
       RETURNING *
     `;
     const values = [
       data.id_estudiante,
       toPgDate(data.fecha),
       data.tipo,
-      data.justificacion || '',
-      data.responsable_id || null,
-      data.observaciones || ''
+      data.justificacion || ''
     ];
     const result = await pool.raw.query(query, values);
     return result.rows[0];
@@ -71,18 +69,14 @@ const AsistenciaModel = {
          SET id_estudiante = $1,
              fecha         = $2,
              tipo          = $3,
-             justificacion = $4,
-             responsable_id = $5,
-             observaciones = $6
-       WHERE id = $7
+             justificacion = $4
+       WHERE id = $5
     `;
     const values = [
       data.id_estudiante,
       toPgDate(data.fecha),
       data.tipo,
       data.justificacion || '',
-      data.responsable_id || null,
-      data.observaciones || '',
       id
     ];
     await pool.raw.query(query, values);

@@ -30,7 +30,7 @@ class AgendaModel {
           COALESCE(e.curso, 'Sin curso') as curso,
           'Pendiente' as estado,
           'Citación' as tipo,
-          'Sin observaciones' as observaciones,
+          COALESCE(a.observaciones, 'Sin observaciones') as observaciones,
           COALESCE(a.asistencia, 'Pendiente') as asistencia
         FROM agenda a
         LEFT JOIN estudiantes e ON a.id_estudiante = e.id
@@ -53,7 +53,20 @@ class AgendaModel {
 
   static async obtenerPorId(id) {
     const pool = await getPool();
-    const result = await pool.raw.query('SELECT * FROM agenda WHERE id = $1', [id]);
+    const result = await pool.raw.query(`
+      SELECT 
+        a.*,
+        COALESCE(e.nombre, 'Sin nombre') as nombre_estudiante,
+        COALESCE(e.apellido, '') as apellido_estudiante,
+        COALESCE(e.curso, 'Sin curso') as curso,
+        'Pendiente' as estado,
+        'Citación' as tipo,
+        COALESCE(a.observaciones, 'Sin observaciones') as observaciones,
+        COALESCE(a.asistencia, 'Pendiente') as asistencia
+      FROM agenda a
+      LEFT JOIN estudiantes e ON a.id_estudiante = e.id
+      WHERE a.id = $1
+    `, [id]);
     return result.rows[0] || null;
   }
 

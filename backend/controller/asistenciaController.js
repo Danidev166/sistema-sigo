@@ -5,14 +5,23 @@ const AsistenciaController = {
   async crear(req, res, next) {
     try {
       const { id_estudiante, fecha, tipo, justificacion } = req.body;
+      logger.info("🔍 Debug - Datos recibidos:", { id_estudiante, fecha, tipo, justificacion });
+      
       const nuevaAsistencia = await AsistenciaModel.crear({ id_estudiante, fecha, tipo, justificacion });
+      logger.info("✅ Debug - Asistencia creada exitosamente:", nuevaAsistencia);
+      
       res.status(201).json({ 
         message: "Asistencia registrada correctamente",
         asistencia: nuevaAsistencia
       });
     } catch (error) {
       logger.error("❌ Error al crear asistencia:", error);
-      next(error);
+      logger.error("❌ Stack trace:", error.stack);
+      res.status(500).json({ 
+        error: "Error interno del servidor",
+        details: error.message,
+        stack: error.stack
+      });
     }
   },
 
