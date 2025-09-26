@@ -242,7 +242,10 @@ export default function CargaMasivaModal({ isOpen, onClose, onUpload }) {
         curso: estudiante.curso?.toString().trim() || "",
         especialidad: estudiante.especialidad?.toString().toUpperCase().trim() || "",
         situacion_economica: estudiante.situacion_economica?.toString().toUpperCase().trim() || "",
-        estado: estudiante.estado?.toString().trim() || "Activo"
+        estado: estudiante.estado?.toString().trim() || "Activo",
+        nombre_apoderado: estudiante.nombre_apoderado?.toString().toUpperCase().trim() || "",
+        telefono_apoderado: estudiante.telefono_apoderado?.toString().trim() || "",
+        email_apoderado: estudiante.email_apoderado?.toString().trim() || ""
       }));
 
       setDatos(datosFormateados);
@@ -270,7 +273,8 @@ export default function CargaMasivaModal({ isOpen, onClose, onUpload }) {
   const handleDescargarPlantilla = (formato = 'csv') => {
     const headers = [
       "nombre", "apellido", "rut", "email", "telefono", "direccion", 
-      "fecha_nacimiento", "curso", "especialidad", "situacion_economica", "estado"
+      "fecha_nacimiento", "curso", "especialidad", "situacion_economica", "estado",
+      "nombre_apoderado", "telefono_apoderado", "email_apoderado"
     ];
     
     // Generar RUTs válidos para la plantilla
@@ -278,8 +282,8 @@ export default function CargaMasivaModal({ isOpen, onClose, onUpload }) {
     const rut2 = generarRutValido();
     
     const datosEjemplo = [
-      ["JUAN", "PÉREZ", rut1, "juan@email.com", "+56912345678", "AV. PRINCIPAL 123", "2005-03-15", "1° Medio A", "TÉCNICO", "MEDIA", "Activo"],
-      ["MARÍA", "GONZÁLEZ", rut2, "maria@email.com", "+56987654321", "CALLE SECUNDARIA 456", "2004-07-22", "2° Medio B", "HUMANISTA", "BAJA", "Activo"]
+      ["JUAN", "PÉREZ", rut1, "juan@email.com", "+56912345678", "AV. PRINCIPAL 123", "2005-03-15", "1° Medio A", "TÉCNICO", "MEDIA", "Activo", "CARLOS PÉREZ", "+56911111111", "carlos@email.com"],
+      ["MARÍA", "GONZÁLEZ", rut2, "maria@email.com", "+56987654321", "CALLE SECUNDARIA 456", "2004-07-22", "2° Medio B", "HUMANISTA", "BAJA", "Activo", "ANA GONZÁLEZ", "+56922222222", "ana@email.com"]
     ];
 
     if (formato === 'excel') {
@@ -433,6 +437,11 @@ export default function CargaMasivaModal({ isOpen, onClose, onUpload }) {
                   <div className="text-green-700 dark:text-green-300">
                     RUT: {estudiante.rut} | Curso: {estudiante.curso || 'No especificado'}
                   </div>
+                  {estudiante.nombre_apoderado && (
+                    <div className="text-green-600 dark:text-green-400 text-xs">
+                      Apoderado: {estudiante.nombre_apoderado}
+                    </div>
+                  )}
                 </div>
               ))}
               {datos.length > 3 && (
@@ -475,7 +484,7 @@ export default function CargaMasivaModal({ isOpen, onClose, onUpload }) {
             </div>
             <div>
               <p className="font-medium text-gray-600 dark:text-gray-400">Opcionales:</p>
-              <code className="text-xs">email, telefono, curso, especialidad, situacion_economica, estado</code>
+              <code className="text-xs">email, telefono, curso, especialidad, situacion_economica, estado, nombre_apoderado, telefono_apoderado, email_apoderado</code>
             </div>
           </div>
           <div className="mt-2">
