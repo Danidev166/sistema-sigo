@@ -9,6 +9,7 @@ import './styles/animations.css';
 import './styles/typography.css'; // Importación de tipografía moderna
 import './styles/modern-effects.css'; // Importación de efectos modernos
 import './styles/responsive.css'; // Importación de utilidades responsive
+import './styles/layout-shift-fix.css'; // Importación de estilos para prevenir layout shift
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

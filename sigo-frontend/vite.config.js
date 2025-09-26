@@ -60,9 +60,15 @@ export default defineConfig({
   build: {
     minify: 'terser',
     terserOptions: {
-      compress: { drop_console: true, drop_debugger: true }
+      compress: { 
+        drop_console: true, 
+        drop_debugger: true,
+        pure_funcs: ['console.log', 'console.info'],
+        passes: 2
+      }
     },
     sourcemap: false,
+    chunkSizeWarningLimit: 1000,
     rollupOptions: {
       output: {
         manualChunks: {
@@ -71,7 +77,11 @@ export default defineConfig({
           'router': ['react-router-dom'],
           'charts': ['recharts'],
           'utils': ['date-fns', 'axios'],
-        }
+          'toast': ['react-hot-toast'],
+        },
+        chunkFileNames: 'assets/js/[name]-[hash].js',
+        entryFileNames: 'assets/js/[name]-[hash].js',
+        assetFileNames: 'assets/[ext]/[name]-[hash].[ext]'
       }
     }
   },

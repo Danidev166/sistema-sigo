@@ -1,142 +1,128 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { useDebounce } from '../utils/performance';
 
 /**
- * Hook optimizado para llamadas API con cache inteligente
+ * Hook para optimizar llamadas a la API
  * 
- * @param {string} key - Clave única para el cache
- * @param {Function} fetchFn - Función que retorna la promesa de la API
- * @param {Object} options - Opciones de configuración
- * @param {number} options.ttl - Tiempo de vida del cache en ms (default: 5 minutos)
- * @param {boolean} options.enabled - Si la llamada debe ejecutarse (default: true)
- * @param {number} options.debounceMs - Tiempo de debounce en ms (default: 0)
- * @returns {Object} { data, loading, error, refetch, invalidateCache }
+ * Características:
+ * - Cache de respuestas
+ * - Debounce para búsquedas
+ * - Retry automático
+ * - Loading states optimizados
  */
-export const useOptimizedApi = (key, fetchFn, options = {}) => {
+export function useOptimizedAPI(apiFunction, options = {}) {
   const {
-    ttl = 5 * 60 * 1000, // 5 minutos
-    enabled = true,
-    debounceMs = 0
+    debounceMs = 300,
+    cacheTime = 5 * 60 * 1000, // 5 minutos
+    retryAttempts = 3,
+    retryDelay = 1000,
+    enabled = true
   } = options;
 
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [lastFetch, setLastFetch] = useState(0);
+  
+  const cacheRef = useRef(new Map());
   const abortControllerRef = useRef(null);
-  const debounceTimeoutRef = useRef(null);
+  const retryTimeoutRef = useRef(null);
 
-  const CACHE_PREFIX = 'sigo_api_cache_';
-
-  const getCachedData = useCallback(() => {
-    try {
-      const cached = localStorage.getItem(CACHE_PREFIX + key);
-      if (cached) {
-        const { data: cachedData, timestamp } = JSON.parse(cached);
-        if (Date.now() - timestamp < ttl) {
-          return cachedData;
-        }
-      }
-    } catch (err) {
-      console.warn('Error reading cache:', err);
-    }
-    return null;
-  }, [key, ttl]);
-
-  const setCachedData = useCallback((newData) => {
-    try {
-      localStorage.setItem(CACHE_PREFIX + key, JSON.stringify({
-        data: newData,
-        timestamp: Date.now()
-      }));
-    } catch (err) {
-      console.warn('Error setting cache:', err);
-    }
-  }, [key]);
-
-  const invalidateCache = useCallback(() => {
-    try {
-      localStorage.removeItem(CACHE_PREFIX + key);
-    } catch (err) {
-      console.warn('Error invalidating cache:', err);
-    }
-  }, [key]);
-
-  const fetchData = useCallback(async (forceRefresh = false) => {
+  // Función de API con debounce
+  const debouncedApiCall = useDebounce(async (...args) => {
     if (!enabled) return;
 
-    // Cancelar llamada anterior si existe
-    if (abortControllerRef.current) {
-      abortControllerRef.current.abort();
-    }
-
-    // Crear nuevo AbortController
-    abortControllerRef.current = new AbortController();
-
-    // Verificar cache si no es force refresh
-    if (!forceRefresh) {
-      const cachedData = getCachedData();
-      if (cachedData) {
-        setData(cachedData);
+    const cacheKey = JSON.stringify(args);
+    const now = Date.now();
+    
+    // Verificar cache
+    if (cacheRef.current.has(cacheKey)) {
+      const cached = cacheRef.current.get(cacheKey);
+      if (now - cached.timestamp < cacheTime) {
+        setData(cached.data);
+        setLoading(false);
         return;
       }
     }
 
+    // Cancelar llamada anterior
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+
+    abortControllerRef.current = new AbortController();
+    
     setLoading(true);
     setError(null);
 
-    try {
-      const result = await fetchFn(abortControllerRef.current.signal);
-      setData(result);
-      setCachedData(result);
-    } catch (err) {
-      if (err.name !== 'AbortError') {
+    let attempt = 0;
+    const makeRequest = async () => {
+      try {
+        const result = await apiFunction(...args, {
+          signal: abortControllerRef.current.signal
+        });
+        
+        // Guardar en cache
+        cacheRef.current.set(cacheKey, {
+          data: result,
+          timestamp: now
+        });
+        
+        setData(result);
+        setLastFetch(now);
+        setError(null);
+      } catch (err) {
+        if (err.name === 'AbortError') return;
+        
+        if (attempt < retryAttempts) {
+          attempt++;
+          retryTimeoutRef.current = setTimeout(makeRequest, retryDelay * attempt);
+          return;
+        }
+        
         setError(err);
-        console.error('API Error:', err);
-      }
-    } finally {
-      setLoading(false);
-    }
-  }, [enabled, fetchFn, getCachedData, setCachedData]);
-
-  const debouncedFetch = useCallback((forceRefresh = false) => {
-    if (debounceMs > 0) {
-      if (debounceTimeoutRef.current) {
-        clearTimeout(debounceTimeoutRef.current);
-      }
-      debounceTimeoutRef.current = setTimeout(() => {
-        fetchData(forceRefresh);
-      }, debounceMs);
-    } else {
-      fetchData(forceRefresh);
-    }
-  }, [fetchData, debounceMs]);
-
-  const refetch = useCallback(() => {
-    debouncedFetch(true);
-  }, [debouncedFetch]);
-
-  useEffect(() => {
-    if (enabled) {
-      debouncedFetch();
-    }
-
-    return () => {
-      if (abortControllerRef.current) {
-        abortControllerRef.current.abort();
-      }
-      if (debounceTimeoutRef.current) {
-        clearTimeout(debounceTimeoutRef.current);
+      } finally {
+        setLoading(false);
       }
     };
-  }, [enabled, debouncedFetch]);
 
-  // Limpiar al desmontar
+    makeRequest();
+  }, debounceMs);
+
+  // Función para limpiar cache
+  const clearCache = useCallback(() => {
+    cacheRef.current.clear();
+  }, []);
+
+  // Función para invalidar cache específico
+  const invalidateCache = useCallback((pattern) => {
+    if (pattern) {
+      const regex = new RegExp(pattern);
+      for (const [key] of cacheRef.current) {
+        if (regex.test(key)) {
+          cacheRef.current.delete(key);
+        }
+      }
+    } else {
+      cacheRef.current.clear();
+    }
+  }, []);
+
+  // Función para refetch manual
+  const refetch = useCallback((...args) => {
+    const cacheKey = JSON.stringify(args);
+    cacheRef.current.delete(cacheKey);
+    debouncedApiCall(...args);
+  }, [debouncedApiCall]);
+
+  // Cleanup
   useEffect(() => {
     return () => {
       if (abortControllerRef.current) {
         abortControllerRef.current.abort();
       }
-      if (debounceTimeoutRef.current) {
-        clearTimeout(debounceTimeoutRef.current);
+      if (retryTimeoutRef.current) {
+        clearTimeout(retryTimeoutRef.current);
       }
     };
   }, []);
@@ -146,40 +132,123 @@ export const useOptimizedApi = (key, fetchFn, options = {}) => {
     loading,
     error,
     refetch,
-    invalidateCache
+    clearCache,
+    invalidateCache,
+    lastFetch,
+    // Función para hacer llamadas
+    call: debouncedApiCall
   };
-};
+}
 
 /**
- * Hook para debounce de valores
- * 
- * @param {any} value - Valor a debouncear
- * @param {number} delay - Delay en ms
- * @returns {any} Valor debounceado
+ * Hook específico para listas con paginación
  */
-export const useDebounce = (value, delay) => {
-  const [debouncedValue, setDebouncedValue] = useState(value);
+export function useOptimizedList(apiFunction, options = {}) {
+  const {
+    pageSize = 20,
+    initialPage = 1,
+    ...apiOptions
+  } = options;
+
+  const [page, setPage] = useState(initialPage);
+  const [totalPages, setTotalPages] = useState(0);
+  const [totalItems, setTotalItems] = useState(0);
+
+  const { data, loading, error, refetch, ...api } = useOptimizedAPI(
+    useCallback(async (pageNum, searchQuery = '', signal) => {
+      const result = await apiFunction({
+        page: pageNum,
+        limit: pageSize,
+        search: searchQuery
+      }, { signal });
+      
+      setTotalPages(Math.ceil(result.total / pageSize));
+      setTotalItems(result.total);
+      
+      return result;
+    }, [apiFunction, pageSize]),
+    apiOptions
+  );
+
+  const goToPage = useCallback((newPage) => {
+    setPage(newPage);
+    refetch(newPage);
+  }, [refetch]);
+
+  const nextPage = useCallback(() => {
+    if (page < totalPages) {
+      goToPage(page + 1);
+    }
+  }, [page, totalPages, goToPage]);
+
+  const prevPage = useCallback(() => {
+    if (page > 1) {
+      goToPage(page - 1);
+    }
+  }, [page, goToPage]);
+
+  return {
+    ...api,
+    data: data?.items || [],
+    page,
+    totalPages,
+    totalItems,
+    goToPage,
+    nextPage,
+    prevPage,
+    hasNextPage: page < totalPages,
+    hasPrevPage: page > 1
+  };
+}
+
+/**
+ * Hook para búsquedas optimizadas
+ */
+export function useOptimizedSearch(apiFunction, options = {}) {
+  const {
+    minLength = 2,
+    debounceMs = 300,
+    ...apiOptions
+  } = options;
+
+  const [query, setQuery] = useState('');
+  const [results, setResults] = useState([]);
+
+  const { data, loading, error } = useOptimizedAPI(
+    useCallback(async (searchQuery, signal) => {
+      if (searchQuery.length < minLength) {
+        return [];
+      }
+      return await apiFunction(searchQuery, { signal });
+    }, [apiFunction, minLength]),
+    {
+      ...apiOptions,
+      debounceMs
+    }
+  );
 
   useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedValue(value);
-    }, delay);
+    if (data) {
+      setResults(data);
+    }
+  }, [data]);
 
-    return () => {
-      clearTimeout(handler);
-    };
-  }, [value, delay]);
+  const search = useCallback((searchQuery) => {
+    setQuery(searchQuery);
+    if (searchQuery.length >= minLength) {
+      // La llamada se hace automáticamente por el debounce
+    } else {
+      setResults([]);
+    }
+  }, [minLength]);
 
-  return debouncedValue;
-};
-
-/**
- * Hook para memoización de funciones costosas
- * 
- * @param {Function} fn - Función a memoizar
- * @param {Array} deps - Dependencias
- * @returns {Function} Función memoizada
- */
-export const useMemoizedCallback = (fn, deps) => {
-  return useCallback(fn, deps);
-}; 
+  return {
+    query,
+    results,
+    loading,
+    error,
+    search,
+    hasResults: results.length > 0,
+    isSearching: loading && query.length >= minLength
+  };
+}
