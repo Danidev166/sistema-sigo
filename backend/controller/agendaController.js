@@ -177,13 +177,12 @@ class AgendaController {
       const { getPool } = require('../config/db');
       const pool = await getPool();
       
-      // Actualizar asistencia y observaciones
+      // Actualizar solo asistencia (observaciones se manejará por separado)
       const result = await pool.raw.query(`
         UPDATE agenda 
-        SET asistencia = $1,
-            observaciones = COALESCE($2, observaciones)
-        WHERE id = $3
-      `, [asistencia, observaciones, parseInt(id, 10)]);
+        SET asistencia = $1
+        WHERE id = $2
+      `, [asistencia, parseInt(id, 10)]);
       
       logger.info(`📋 Resultado de actualización:`, result);
 

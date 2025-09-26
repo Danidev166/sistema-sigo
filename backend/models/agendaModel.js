@@ -30,8 +30,8 @@ class AgendaModel {
           COALESCE(e.curso, 'Sin curso') as curso,
           'Pendiente' as estado,
           'Citación' as tipo,
-          'Sin observaciones' as observaciones,
-          'Pendiente' as asistencia
+          COALESCE(a.observaciones, 'Sin observaciones') as observaciones,
+          COALESCE(a.asistencia, 'Pendiente') as asistencia
         FROM agenda a
         LEFT JOIN estudiantes e ON a.id_estudiante = e.id
         ORDER BY a.fecha DESC
@@ -62,8 +62,8 @@ class AgendaModel {
     const horaStr = normalizeTimeStr(data.hora);
 
     const query = `
-      INSERT INTO agenda (id_estudiante, fecha, hora, motivo, profesional, email_orientador, creado_en)
-      VALUES ($1, $2, $3::time, $4, $5, $6, $7)
+      INSERT INTO agenda (id_estudiante, fecha, hora, motivo, profesional, email_orientador, asistencia, creado_en)
+      VALUES ($1, $2, $3::time, $4, $5, $6, $7, $8)
       RETURNING *
     `;
     
@@ -74,6 +74,7 @@ class AgendaModel {
       data.motivo,
       data.profesional,
       data.email_orientador || null,
+      data.asistencia || 'Pendiente',
       new Date()
     ];
 
