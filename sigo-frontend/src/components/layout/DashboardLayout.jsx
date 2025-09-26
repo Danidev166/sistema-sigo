@@ -59,7 +59,7 @@ export default function DashboardLayout({ children }) {
           {children}
         </main>
         <Footer />
-        <!-- ToastContainer removido - Toaster ya está en main.jsx -->
+        {/* ToastContainer removido - Toaster ya está en main.jsx */}
       </div>
     </div>
   );

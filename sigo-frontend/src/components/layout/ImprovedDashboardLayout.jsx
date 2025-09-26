@@ -90,7 +90,7 @@ export default function ImprovedDashboardLayout({ children }) {
         <Footer />
 
         {/* Toast notifications */}
-        <!-- ToastContainer removido - Toaster ya está en main.jsx -->
+        {/* ToastContainer removido - Toaster ya está en main.jsx */}
       </div>
     </div>
   );

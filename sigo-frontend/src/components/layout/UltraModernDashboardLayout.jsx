@@ -130,7 +130,7 @@ export default function UltraModernDashboardLayout({ children }) {
         <Footer />
 
         {/* Toast notifications con estilos mejorados */}
-        <!-- ToastContainer removido - Toaster ya está en main.jsx -->
+        {/* ToastContainer removido - Toaster ya está en main.jsx */}
       </div>
 
     </div>
