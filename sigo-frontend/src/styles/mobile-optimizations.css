@@ -29,25 +29,35 @@
     box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.1), 0 8px 16px -4px rgba(0, 0, 0, 0.06);
   }
   
-  /* Mejorar contraste en pantallas pequeñas */
-  .text-gray-600 {
+  /* Mejorar contraste en pantallas pequeñas SOLO en fondos claros */
+  .bg-white .text-gray-600,
+  .bg-gray-50 .text-gray-600,
+  .bg-gray-100 .text-gray-600 {
     color: #374151 !important; /* Más oscuro para mejor contraste */
   }
   
-  .text-gray-500 {
+  .bg-white .text-gray-500,
+  .bg-gray-50 .text-gray-500,
+  .bg-gray-100 .text-gray-500 {
     color: #4b5563 !important; /* Más oscuro para mejor contraste */
   }
   
-  .text-gray-400 {
+  .bg-white .text-gray-400,
+  .bg-gray-50 .text-gray-400,
+  .bg-gray-100 .text-gray-400 {
     color: #6b7280 !important; /* Más oscuro para mejor contraste */
   }
   
-  /* Forzar contraste mejorado en móviles */
-  .text-gray-700 {
+  /* Forzar contraste mejorado en móviles SOLO en fondos claros */
+  .bg-white .text-gray-700,
+  .bg-gray-50 .text-gray-700,
+  .bg-gray-100 .text-gray-700 {
     color: #1f2937 !important; /* Muy oscuro para máximo contraste */
   }
   
-  .text-gray-800 {
+  .bg-white .text-gray-800,
+  .bg-gray-50 .text-gray-800,
+  .bg-gray-100 .text-gray-800 {
     color: #111827 !important; /* Casi negro para máximo contraste */
   }
   

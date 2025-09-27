@@ -51,29 +51,41 @@
     touch-action: manipulation;
   }
   
-  /* Mejorar contraste en iOS */
-  .text-gray-600 {
+  /* Mejorar contraste en iOS SOLO en fondos claros */
+  .bg-white .text-gray-600,
+  .bg-gray-50 .text-gray-600,
+  .bg-gray-100 .text-gray-600 {
     color: #374151 !important; /* Más oscuro para mejor contraste en iOS */
   }
   
-  .text-gray-500 {
+  .bg-white .text-gray-500,
+  .bg-gray-50 .text-gray-500,
+  .bg-gray-100 .text-gray-500 {
     color: #4b5563 !important; /* Más oscuro para mejor contraste en iOS */
   }
   
-  .text-gray-400 {
+  .bg-white .text-gray-400,
+  .bg-gray-50 .text-gray-400,
+  .bg-gray-100 .text-gray-400 {
     color: #6b7280 !important; /* Más oscuro para mejor contraste en iOS */
   }
   
-  /* Forzar contraste mejorado en iOS */
-  .text-gray-700 {
+  /* Forzar contraste mejorado en iOS SOLO en fondos claros */
+  .bg-white .text-gray-700,
+  .bg-gray-50 .text-gray-700,
+  .bg-gray-100 .text-gray-700 {
     color: #1f2937 !important; /* Muy oscuro para máximo contraste */
   }
   
-  .text-gray-800 {
+  .bg-white .text-gray-800,
+  .bg-gray-50 .text-gray-800,
+  .bg-gray-100 .text-gray-800 {
     color: #111827 !important; /* Casi negro para máximo contraste */
   }
   
-  .text-gray-900 {
+  .bg-white .text-gray-900,
+  .bg-gray-50 .text-gray-900,
+  .bg-gray-100 .text-gray-900 {
     color: #000000 !important; /* Negro puro para máximo contraste */
   }
 }
