@@ -3,10 +3,22 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/src/assets/logo-pages.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="description" content="Sistema Integrado de Gestión y Orientación (SIGO) - Plataforma educacional para el seguimiento integral de estudiantes" />
     <meta name="keywords" content="SIGO, sistema educativo, gestión estudiantil, orientación, seguimiento académico" />
     <meta name="author" content="SIGO Team" />
+    
+    <!-- Meta tags específicos para iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="SIGO" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    
+    <!-- Preload de fuentes para mejor rendimiento -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" /></noscript>
+    
     <title>SIGO - Sistema Integrado de Gestión y Orientación</title>
   </head>
   <body>

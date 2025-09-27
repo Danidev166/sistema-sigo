@@ -1,0 +1,283 @@
+/* Optimizaciones específicas para dispositivos móviles - SIGO */
+
+/* Mejoras para Android WebView */
+@media screen and (max-width: 768px) {
+  /* Optimizar renderizado de fuentes en Android */
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    -webkit-text-stroke: 0.01em transparent;
+  }
+  
+  /* Mejorar kerning en Android */
+  * {
+    -webkit-font-feature-settings: "kern" 1;
+    font-feature-settings: "kern" 1;
+  }
+  
+  /* Optimizar sombras para pantallas de alta densidad */
+  .shadow-soft {
+    box-shadow: 0 1px 6px -1px rgba(0, 0, 0, 0.06), 0 2px 8px -1px rgba(0, 0, 0, 0.03);
+  }
+  
+  .shadow-medium {
+    box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.08), 0 4px 12px -2px rgba(0, 0, 0, 0.04);
+  }
+  
+  .shadow-strong {
+    box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.1), 0 8px 16px -4px rgba(0, 0, 0, 0.06);
+  }
+  
+  /* Mejorar contraste en pantallas pequeñas */
+  .text-gray-600 {
+    color: #4b5563 !important;
+  }
+  
+  .text-gray-500 {
+    color: #6b7280 !important;
+  }
+  
+  /* Optimizar botones para touch */
+  button, .btn-acceso {
+    min-height: 44px; /* Tamaño mínimo recomendado para touch */
+    touch-action: manipulation;
+  }
+  
+  /* Mejorar espaciado en móviles */
+  .p-4 {
+    padding: 1rem !important;
+  }
+  
+  .p-6 {
+    padding: 1.25rem !important;
+  }
+  
+  /* Optimizar transiciones para touch */
+  .transition-all {
+    transition: all 0.2s ease-out !important;
+  }
+  
+  /* Mejorar efectos de hover para touch */
+  .hover-lift:active {
+    transform: translateY(-1px);
+  }
+  
+  .scale-on-hover:active {
+    transform: scale(0.98);
+  }
+}
+
+/* Optimizaciones específicas para Android */
+@media screen and (max-width: 768px) and (-webkit-min-device-pixel-ratio: 1.5) {
+  /* Mejorar renderizado de gradientes en Android */
+  .gradient-animated {
+    background-attachment: scroll;
+  }
+  
+  /* Optimizar backdrop-filter para Android */
+  .glass {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  
+  /* Mejorar renderizado de bordes redondeados */
+  .rounded-lg {
+    border-radius: 0.5rem !important;
+  }
+  
+  .rounded-xl {
+    border-radius: 0.75rem !important;
+  }
+}
+
+/* Optimizaciones para pantallas de muy alta densidad */
+@media screen and (min-resolution: 3dppx) {
+  body {
+    -webkit-font-smoothing: subpixel-antialiased;
+  }
+  
+  /* Reducir intensidad de sombras en pantallas muy densas */
+  .shadow-soft {
+    box-shadow: 0 1px 4px -1px rgba(0, 0, 0, 0.04), 0 2px 6px -1px rgba(0, 0, 0, 0.02);
+  }
+  
+  .shadow-medium {
+    box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.06), 0 4px 8px -2px rgba(0, 0, 0, 0.03);
+  }
+  
+  .shadow-strong {
+    box-shadow: 0 4px 8px -2px rgba(0, 0, 0, 0.08), 0 8px 12px -4px rgba(0, 0, 0, 0.04);
+  }
+}
+
+/* Mejoras para dispositivos con pantalla pequeña */
+@media screen and (max-width: 480px) {
+  /* Ajustar tamaños de fuente para pantallas muy pequeñas */
+  .text-4xl {
+    font-size: 1.875rem !important;
+    line-height: 2.25rem !important;
+  }
+  
+  .text-3xl {
+    font-size: 1.5rem !important;
+    line-height: 2rem !important;
+  }
+  
+  .text-2xl {
+    font-size: 1.25rem !important;
+    line-height: 1.75rem !important;
+  }
+  
+  /* Mejorar espaciado en pantallas muy pequeñas */
+  .space-y-8 > * + * {
+    margin-top: 1.5rem !important;
+  }
+  
+  .space-y-4 > * + * {
+    margin-top: 1rem !important;
+  }
+}
+
+/* Optimizaciones para orientación landscape en móviles */
+@media screen and (max-width: 768px) and (orientation: landscape) {
+  /* Ajustar espaciado vertical en landscape */
+  .space-y-8 > * + * {
+    margin-top: 1rem !important;
+  }
+  
+  /* Reducir altura de elementos en landscape */
+  .min-h-screen {
+    min-height: 100vh !important;
+  }
+}
+
+/* Optimizaciones específicas para iOS Safari */
+@supports (-webkit-touch-callout: none) {
+  /* Mejorar renderizado de fuentes en iOS */
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    -webkit-text-stroke: 0.01em transparent;
+  }
+  
+  /* Optimizar sombras para iOS */
+  .shadow-soft {
+    box-shadow: 0 1px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 8px -1px rgba(0, 0, 0, 0.02);
+  }
+  
+  .shadow-medium {
+    box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.07), 0 4px 12px -2px rgba(0, 0, 0, 0.03);
+  }
+  
+  .shadow-strong {
+    box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.09), 0 8px 16px -4px rgba(0, 0, 0, 0.05);
+  }
+  
+  /* Mejorar backdrop-filter en iOS */
+  .glass {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  
+  /* Optimizar transiciones para iOS */
+  .transition-all {
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  }
+  
+  /* Mejorar efectos de touch en iOS */
+  .hover-lift:active {
+    transform: translateY(-2px);
+    transition: transform 0.1s ease-out;
+  }
+  
+  .scale-on-hover:active {
+    transform: scale(0.97);
+    transition: transform 0.1s ease-out;
+  }
+  
+  /* Optimizar botones para iOS */
+  button, .btn-acceso {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+    touch-action: manipulation;
+  }
+  
+  /* Mejorar contraste en iOS */
+  .text-gray-600 {
+    color: #4b5563 !important;
+  }
+  
+  .text-gray-500 {
+    color: #6b7280 !important;
+  }
+}
+
+/* Optimizaciones para iPhone con notch */
+@supports (padding: max(0px)) {
+  .safe-area-top {
+    padding-top: max(1rem, env(safe-area-inset-top));
+  }
+  
+  .safe-area-bottom {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+  
+  .safe-area-left {
+    padding-left: max(1rem, env(safe-area-inset-left));
+  }
+  
+  .safe-area-right {
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+}
+
+/* Optimizaciones para iPad */
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  /* Mejorar renderizado en iPad */
+  body {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  
+  /* Ajustar sombras para iPad */
+  .shadow-soft {
+    box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.06), 0 4px 12px -2px rgba(0, 0, 0, 0.03);
+  }
+  
+  .shadow-medium {
+    box-shadow: 0 4px 12px -3px rgba(0, 0, 0, 0.08), 0 6px 16px -3px rgba(0, 0, 0, 0.04);
+  }
+  
+  .shadow-strong {
+    box-shadow: 0 8px 16px -4px rgba(0, 0, 0, 0.1), 0 12px 20px -6px rgba(0, 0, 0, 0.06);
+  }
+  
+  /* Mejorar espaciado en iPad */
+  .p-4 {
+    padding: 1.25rem !important;
+  }
+  
+  .p-6 {
+    padding: 1.5rem !important;
+  }
+}
+
+/* Optimizaciones para iOS en modo landscape */
+@media screen and (max-width: 1024px) and (orientation: landscape) and (-webkit-touch-callout: none) {
+  /* Ajustar para landscape en iOS */
+  .space-y-8 > * + * {
+    margin-top: 1rem !important;
+  }
+  
+  /* Optimizar altura en landscape iOS */
+  .min-h-screen {
+    min-height: 100vh !important;
+    min-height: -webkit-fill-available !important;
+  }
+  
+  /* Mejorar scroll en landscape iOS */
+  .overflow-y-auto {
+    -webkit-overflow-scrolling: touch;
+  }
+}

@@ -3,6 +3,7 @@ import { Suspense, lazy } from 'react';
 import { publicRoutes, privateRoutes, fallbackRoute } from './configRouter';
 import ProtectedRoute from './ProtectedRoute';
 import NotificacionesPage from '../features/notificaciones/pages/NotificacionesPage';
+import ConsistencyTest from '../components/ConsistencyTest';
 
 // Componente de carga optimizado
 const LoadingSpinner = () => (
@@ -44,6 +45,9 @@ export default function AppRouter() {
 
         {/* Ruta de notificaciones */}
         <Route path="/notificaciones" element={<NotificacionesPage />} />
+        
+        {/* Ruta temporal para prueba de consistencia */}
+        <Route path="/consistency-test" element={<ConsistencyTest />} />
       </Routes>
     </Suspense>
   );

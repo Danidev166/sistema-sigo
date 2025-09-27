@@ -4,12 +4,14 @@ import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from './context/AuthProvider'; // ✅ Import correcto
 import { Toaster } from 'react-hot-toast';
 import App from './App';
-import './index.css';
+import './globals.css';
 import './styles/animations.css';
 import './styles/typography.css'; // Importación de tipografía moderna
 import './styles/modern-effects.css'; // Importación de efectos modernos
 import './styles/responsive.css'; // Importación de utilidades responsive
 import './styles/layout-shift-fix.css'; // Importación de estilos para prevenir layout shift
+import './styles/mobile-optimizations.css'; // Optimizaciones para móviles y Android
+import './styles/ios-optimizations.css'; // Optimizaciones específicas para iOS
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
