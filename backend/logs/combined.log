@@ -259,3 +259,12 @@
 [2025-09-27 17:16:59] INFO: 📅 Agenda obtenida: 2 registros
 [2025-09-27 17:16:59] INFO: 📅 Obteniendo agenda con filtros:
 [2025-09-27 17:16:59] INFO: 📅 Agenda obtenida: 2 registros
+[2025-09-27 17:18:34] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://localhost:5175
+[2025-09-27 17:18:35] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://localhost:5175
+[2025-09-27 17:18:35] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://localhost:5175
+[2025-09-27 17:18:52] INFO: 📥 Login recibido:
+[2025-09-27 17:18:52] INFO: ✅ Login exitoso
+[2025-09-27 17:18:58] INFO: 📅 Obteniendo agenda con filtros:
+[2025-09-27 17:18:58] INFO: 📅 Agenda obtenida: 2 registros
+[2025-09-27 17:18:59] INFO: 📅 Obteniendo agenda con filtros:
+[2025-09-27 17:18:59] INFO: 📅 Agenda obtenida: 2 registros

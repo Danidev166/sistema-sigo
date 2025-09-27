@@ -12,6 +12,7 @@ import './styles/responsive.css'; // Importación de utilidades responsive
 import './styles/layout-shift-fix.css'; // Importación de estilos para prevenir layout shift
 import './styles/mobile-optimizations.css'; // Optimizaciones para móviles y Android
 import './styles/ios-optimizations.css'; // Optimizaciones específicas para iOS
+import './styles/contrast-improvements.css'; // Mejoras de contraste para mejor legibilidad
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

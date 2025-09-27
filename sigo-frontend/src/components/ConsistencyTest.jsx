@@ -10,14 +10,14 @@ export default function ConsistencyTest() {
           <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
             Prueba de Consistencia SIGO
           </h1>
-          <p className="text-lg text-gray-600 dark:text-gray-400">
+          <p className="text-lg text-gray-800 dark:text-gray-200 font-medium">
             Verificación de estilos entre Chrome Windows y Chrome Mac
           </p>
         </div>
 
         {/* Paleta de colores SIGO */}
         <div className="space-y-4">
-          <h2 className="text-2xl font-semibold text-gray-800 dark:text-white">
+          <h2 className="text-2xl font-semibold text-gray-900 dark:text-white">
             Paleta Institucional SIGO
           </h2>
           <div className="grid grid-cols-5 gap-4">
@@ -26,7 +26,7 @@ export default function ConsistencyTest() {
                 <div 
                   className={`w-16 h-16 mx-auto rounded-lg shadow-soft bg-sigo-${shade}`}
                 ></div>
-                <p className="text-xs mt-2 text-gray-600 dark:text-gray-400">
+                <p className="text-xs mt-2 text-gray-800 dark:text-gray-300 font-medium">
                   {shade}
                 </p>
               </div>
