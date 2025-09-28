@@ -12,7 +12,9 @@
  */
 // src/features/seguimiento/pages/SeguimientoPsicosocialPage.jsx
 import { useEffect, useState } from "react";
+import { UserCog, Plus } from "lucide-react";
 import ImprovedDashboardLayout from "../../../components/layout/ImprovedDashboardLayout";
+import { TableHeader } from "../../../components/headers/InstitutionalHeader";
 import seguimientoPsicosocialService from "../services/seguimientoPsicosocialService";
 import estudianteService from "../../estudiantes/services/estudianteService";
 import SeguimientoTable from "../components/SeguimientoTable";
@@ -87,20 +89,22 @@ export default function SeguimientoPsicosocialPage() {
   return (
     <ImprovedDashboardLayout>
       <div className="space-y-6 sm:space-y-8 px-2 sm:px-0 pb-8">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4">
-          <h1 className="text-xl sm:text-2xl font-semibold text-gray-800 dark:text-white">
-            Seguimientos Psicosociales
-          </h1>
-          <button
-            onClick={() => {
-              setEditData(null);
-              setModalOpen(true);
-            }}
-            className="w-full sm:w-auto bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
-          >
-            + Nuevo Seguimiento
-          </button>
-        </div>
+        <TableHeader
+          title="Seguimientos Psicosociales"
+          subtitle="Gestiona el seguimiento psicosocial de los estudiantes"
+          totalItems={seguimientos.length}
+          actions={[
+            {
+              label: "Nuevo Seguimiento",
+              icon: Plus,
+              onClick: () => {
+                setEditData(null);
+                setModalOpen(true);
+              },
+              variant: "primary"
+            }
+          ]}
+        />
 
         <SeguimientoTable
           seguimientos={seguimientos}

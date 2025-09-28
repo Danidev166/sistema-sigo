@@ -14,11 +14,12 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import ImprovedDashboardLayout from "../../../components/layout/ImprovedDashboardLayout";
+import { InstitutionalHeader } from "../../../components/headers/InstitutionalHeader";
 import Button from "../../../components/ui/Button";
 import QRGenerator from "../components/QRGenerator";
 import SimpleQRScanner from "../components/SimpleQRScanner";
 import EstudianteSelector from "../components/EstudianteSelector";
-import { QrCode, Smartphone, Users } from "lucide-react";
+import { QrCode, Smartphone, Users, FileText } from "lucide-react";
 
 export default function EvaluacionesVocacionalesPage() {
   const [showQRGenerator, setShowQRGenerator] = useState(false);
@@ -47,21 +48,20 @@ export default function EvaluacionesVocacionalesPage() {
   return (
     <ImprovedDashboardLayout>
       <div className="space-y-8 pb-10">
-        {/* Título */}
-        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
-          <h1 className="text-xl sm:text-2xl font-semibold text-gray-800 dark:text-white">
-            Evaluaciones Vocacionales
-          </h1>
-          <div className="flex space-x-2">
-            <Button
-              onClick={() => setShowQRScanner(true)}
-              className="flex items-center space-x-2"
-            >
-              <QrCode className="h-4 w-4" />
-              <span>Escanear QR</span>
-            </Button>
-          </div>
-        </div>
+        <InstitutionalHeader
+          title="Evaluaciones Vocacionales"
+          subtitle="Tests vocacionales para orientación estudiantil"
+          icon={FileText}
+          variant="with-icon"
+          actions={[
+            {
+              label: "Escanear QR",
+              icon: QrCode,
+              onClick: () => setShowQRScanner(true),
+              variant: "secondary"
+            }
+          ]}
+        />
 
         {/* Información sobre QR */}
         <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">

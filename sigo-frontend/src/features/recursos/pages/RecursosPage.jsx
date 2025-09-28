@@ -12,8 +12,9 @@
  */
 import { useEffect, useState } from "react";
 import ImprovedDashboardLayout from "../../../components/layout/ImprovedDashboardLayout";
+import { TableHeader } from "../../../components/headers/InstitutionalHeader";
 import Button from "../../../components/ui/Button";
-import { Plus } from "lucide-react";
+import { Plus, Package, Download } from "lucide-react";
 import recursoService from "../services/recursoService";
 import movimientoService from "../services/movimientoService";
 import RecursoTable from "../components/RecursoTable";
@@ -99,23 +100,36 @@ export default function RecursosPage() {
   return (
     <ImprovedDashboardLayout>
       <div className="space-y-6">
-        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
-          <h1 className="text-xl sm:text-2xl font-semibold text-gray-800 dark:text-white">
-            Inventario de Recursos
-          </h1>
-          <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
-            <ExportarInventarioPDF recursos={recursosFiltrados} />
-            <Button
-              className="w-full sm:w-auto"
-              onClick={() => {
+        <TableHeader
+          title="Inventario de Recursos"
+          subtitle="Gestiona el inventario de recursos del sistema"
+          totalItems={recursosFiltrados.length}
+          actions={[
+            {
+              label: "Nuevo Recurso",
+              icon: Plus,
+              onClick: () => {
                 setEditing(null);
                 setModalOpen(true);
-              }}
-            >
-              <Plus className="w-4 h-4 mr-2" />
-              Nuevo Recurso
-            </Button>
-          </div>
+              },
+              variant: "primary"
+            }
+          ]}
+          filters={[
+            {
+              label: "Exportar PDF",
+              icon: Download,
+              onClick: () => {
+                // El componente ExportarInventarioPDF maneja su propia lógica
+              },
+              variant: "secondary"
+            }
+          ]}
+        />
+        
+        {/* Mantener el componente de exportación */}
+        <div className="hidden">
+          <ExportarInventarioPDF recursos={recursosFiltrados} />
         </div>
 
         <FiltroInventario filtro={filtro} setFiltro={setFiltro} />

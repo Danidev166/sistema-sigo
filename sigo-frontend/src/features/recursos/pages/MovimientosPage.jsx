@@ -13,8 +13,9 @@
 // src/features/recursos/pages/MovimientosPage.jsx
 import { useEffect, useState } from "react";
 import ImprovedDashboardLayout from "../../../components/layout/ImprovedDashboardLayout";
+import { TableHeader } from "../../../components/headers/InstitutionalHeader";
 import Button from "../../../components/ui/Button";
-import { Plus } from "lucide-react";
+import { Plus, ArrowRightLeft, Download } from "lucide-react";
 import movimientoService from "../services/movimientoService";
 import MovimientoFormModal from "../components/MovimientoFormModal";
 import EditarMovimientoModal from "../components/EditarMovimientoModal";
@@ -146,20 +147,33 @@ export default function MovimientosPage() {
   return (
     <ImprovedDashboardLayout>
       <div className="space-y-6">
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-          <h1 className="text-xl sm:text-2xl font-semibold text-gray-800 dark:text-white">
-            Movimientos de Recursos
-          </h1>
-          <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
-            <ExportarMovimientosPDF movimientos={movimientosFiltrados} />
-            <Button
-              onClick={() => setIsModalOpen(true)}
-              className="bg-blue-600 text-white hover:bg-blue-700 w-full sm:w-auto"
-            >
-              <Plus className="w-4 h-4 mr-2" />
-              Registrar Movimiento
-            </Button>
-          </div>
+        <TableHeader
+          title="Movimientos de Recursos"
+          subtitle="Gestiona los movimientos de inventario y stock"
+          totalItems={movimientosFiltrados.length}
+          actions={[
+            {
+              label: "Registrar Movimiento",
+              icon: Plus,
+              onClick: () => setIsModalOpen(true),
+              variant: "primary"
+            }
+          ]}
+          filters={[
+            {
+              label: "Exportar PDF",
+              icon: Download,
+              onClick: () => {
+                // El componente ExportarMovimientosPDF maneja su propia lógica
+              },
+              variant: "secondary"
+            }
+          ]}
+        />
+        
+        {/* Mantener el componente de exportación */}
+        <div className="hidden">
+          <ExportarMovimientosPDF movimientos={movimientosFiltrados} />
         </div>
 
         <FiltroMovimientos
