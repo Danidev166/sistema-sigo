@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-hot-toast';
+import { FileText, Download, Trash2 } from 'lucide-react';
 import LogsService from '../services/logsService';
 import LogsTable from '../components/LogsTable';
 import DeleteConfirmModal from '../components/DeleteConfirmModal';
 import ImprovedDashboardLayout from '../../../components/layout/ImprovedDashboardLayout';
+import { TableHeader } from '../../../components/headers/InstitutionalHeader';
 import ExportarLogsPDF from '../components/ExportarLogsPDF';
 
 const LogsPage = () => {
@@ -75,8 +77,25 @@ const LogsPage = () => {
   return (
     <ImprovedDashboardLayout>
       <div className="container mx-auto px-4 py-8">
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-3xl font-bold text-gray-800">Logs de Actividad</h1>
+        <TableHeader
+          title="Logs de Actividad"
+          subtitle="Registro de actividades del sistema"
+          totalItems={logs.length}
+          actions={[
+            {
+              label: "Exportar PDF",
+              icon: Download,
+              onClick: () => {
+                // El componente ExportarLogsPDF maneja su propia lógica
+              },
+              variant: "secondary"
+            }
+          ]}
+        />
+        
+        {/* Mantener el componente de exportación */}
+        <div className="hidden">
+          <ExportarLogsPDF logs={logs} />
         </div>
 
         {/* Filtros avanzados */}

@@ -13,7 +13,8 @@
 import { useEffect, useState } from "react";
 import usuarioService from "../services/usuarioService";
 import ImprovedDashboardLayout from "../../../components/layout/ImprovedDashboardLayout";
-import { PlusIcon } from "lucide-react";
+import { TableHeader } from "../../../components/headers/InstitutionalHeader";
+import { PlusIcon, Users } from "lucide-react";
 import UserTable from "../components/UserTable";
 import UserFormModal from "../components/UserFormModal";
 import DeleteConfirmModal from "../components/DeleteConfirmModal";
@@ -140,18 +141,19 @@ export default function UsuariosPage() {
   return (
     <ImprovedDashboardLayout>
       <div className="space-y-6">
-        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
-          <h1 className="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white">
-            Gestión de Usuarios
-          </h1>
-          <button
-            onClick={() => handleEdit(null)}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md flex items-center justify-center gap-2 w-full sm:w-auto transition"
-          >
-            <PlusIcon size={18} />
-            Agregar Usuario
-          </button>
-        </div>
+        <TableHeader
+          title="Gestión de Usuarios"
+          subtitle="Administra los usuarios del sistema"
+          totalItems={usuarios.length}
+          actions={[
+            {
+              label: "Agregar Usuario",
+              icon: PlusIcon,
+              onClick: () => handleEdit(null),
+              variant: "primary"
+            }
+          ]}
+        />
 
         {loading ? (
           <p className="text-center text-gray-500 dark:text-gray-300">

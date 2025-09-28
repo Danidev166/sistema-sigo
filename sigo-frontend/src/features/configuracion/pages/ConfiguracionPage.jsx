@@ -10,7 +10,9 @@
  * @example
  * <Route path="/configuracion" element={<ConfiguracionPage />} />
  */
+import { Settings } from "lucide-react";
 import ImprovedDashboardLayout from "../../../components/layout/ImprovedDashboardLayout";
+import { InstitutionalHeader } from "../../../components/headers/InstitutionalHeader";
 import SystemStats from "../components/SystemStats";
 import AdminTools from "../components/AdminTools";
 import EmailConfig from "../components/EmailConfig";
@@ -23,14 +25,12 @@ export default function ConfiguracionPage() {
   return (
     <ImprovedDashboardLayout>
       <div className="space-y-6 px-4 sm:px-6 md:px-8 pb-8">
-        <div className="flex items-center justify-between">
-          <h1 className="text-xl sm:text-2xl font-semibold text-gray-800 dark:text-white">
-            🛠️ Central de Administración
-          </h1>
-          <div className="text-sm text-gray-500 dark:text-gray-400">
-            Panel de control del sistema
-          </div>
-        </div>
+        <InstitutionalHeader
+          title="Central de Administración"
+          subtitle="Panel de control del sistema"
+          icon={Settings}
+          variant="with-icon"
+        />
 
         {/* Estadísticas del sistema */}
         <SystemStats />
