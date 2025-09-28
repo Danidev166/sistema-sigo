@@ -11,7 +11,7 @@ const testData = {
   medio: 'Email',
   asunto: 'Citación a reunión de seguimiento académico',
   contenido: 'Estimado apoderado, solicitamos su presencia para una reunión de seguimiento académico de su pupilo/a.',
-  responsable_id: 3, // ID del usuario responsable (Daniel)
+  responsable_nombre: 'Daniel Coronado Silva', // Nombre del responsable
   hora_reunion: '14:30',
   lugar_reunion: 'Sala de reuniones - Liceo Técnico SIGO',
   enviar_email: false, // Desactivar envío de email para la prueba
@@ -122,7 +122,7 @@ async function testComunicacionFamilia() {
         tipo_comunicacion: 'Informe Académico',
         asunto: 'Informe de rendimiento académico',
         contenido: 'Informe detallado del rendimiento académico del estudiante.',
-        responsable_id: 3,
+        responsable_nombre: 'Daniel Coronado Silva',
         enviar_email: false
       },
       {
@@ -130,7 +130,7 @@ async function testComunicacionFamilia() {
         tipo_comunicacion: 'Alerta/Urgente',
         asunto: 'Alerta de asistencia',
         contenido: 'El estudiante ha faltado a clases consecutivamente.',
-        responsable_id: 3,
+        responsable_nombre: 'Daniel Coronado Silva',
         enviar_email: false
       }
     ];

@@ -224,3 +224,15 @@
 [2025-09-27 17:18:34] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://localhost:5175
 [2025-09-27 17:18:35] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://localhost:5175
 [2025-09-27 17:18:35] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://localhost:5175
+[2025-09-28 01:09:48] ERROR: ❌ Error en middleware sanitizarDatos: Cannot read properties of undefined (reading 'asunto')
+[2025-09-28 01:09:50] ERROR: ❌ Error en middleware sanitizarDatos: Cannot read properties of undefined (reading 'asunto')
+[2025-09-28 01:10:26] ERROR: Error al actualizar estudiante la sintaxis de entrada no es válida para tipo date: «0NaN-NaN-NaNTNaN:NaN:NaN.NaN+NaN:NaN»
+[2025-09-28 01:10:26] ERROR: ❌ Error en el servidor: la sintaxis de entrada no es válida para tipo date: «0NaN-NaN-NaNTNaN:NaN:NaN.NaN+NaN:NaN»
+[2025-09-28 01:10:49] ERROR: ❌ Error en middleware sanitizarDatos: Cannot read properties of undefined (reading 'asunto')
+[2025-09-28 01:10:51] ERROR: ❌ Error en middleware sanitizarDatos: Cannot read properties of undefined (reading 'asunto')
+[2025-09-28 01:10:51] ERROR: ❌ Error al registrar comunicación: invalid input syntax for type integer: "Orientador/a de turno"
+[2025-09-28 01:10:51] ERROR: ❌ Error en el servidor: invalid input syntax for type integer: "Orientador/a de turno"
+[2025-09-28 01:52:04] ERROR: ❌ Error en middleware sanitizarDatos: Cannot read properties of undefined (reading 'asunto')
+[2025-09-28 01:52:05] ERROR: ❌ Error en middleware sanitizarDatos: Cannot read properties of undefined (reading 'asunto')
+[2025-09-28 01:52:06] ERROR: ❌ Error en middleware sanitizarDatos: Cannot read properties of undefined (reading 'asunto')
+[2025-09-28 01:52:08] ERROR: ❌ Error en middleware sanitizarDatos: Cannot read properties of undefined (reading 'asunto')

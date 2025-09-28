@@ -268,3 +268,39 @@
 [2025-09-27 17:18:58] INFO: 📅 Agenda obtenida: 2 registros
 [2025-09-27 17:18:59] INFO: 📅 Obteniendo agenda con filtros:
 [2025-09-27 17:18:59] INFO: 📅 Agenda obtenida: 2 registros
+[2025-09-28 01:07:01] INFO: 📥 Login recibido:
+[2025-09-28 01:07:15] INFO: 📥 Login recibido:
+[2025-09-28 01:07:15] INFO: ✅ Login exitoso
+[2025-09-28 01:09:33] INFO: 📥 Login recibido:
+[2025-09-28 01:09:34] INFO: ✅ Login exitoso
+[2025-09-28 01:09:46] INFO: 📥 Login recibido:
+[2025-09-28 01:09:47] INFO: ✅ Login exitoso
+[2025-09-28 01:09:48] ERROR: ❌ Error en middleware sanitizarDatos: Cannot read properties of undefined (reading 'asunto')
+[2025-09-28 01:09:48] INFO: 📝 Consultar todas comunicación familiar
+[2025-09-28 01:09:50] ERROR: ❌ Error en middleware sanitizarDatos: Cannot read properties of undefined (reading 'asunto')
+[2025-09-28 01:09:50] INFO: 📝 Consultar todas comunicación familiar
+[2025-09-28 01:10:26] ERROR: Error al actualizar estudiante la sintaxis de entrada no es válida para tipo date: «0NaN-NaN-NaNTNaN:NaN:NaN.NaN+NaN:NaN»
+[2025-09-28 01:10:26] ERROR: ❌ Error en el servidor: la sintaxis de entrada no es válida para tipo date: «0NaN-NaN-NaNTNaN:NaN:NaN.NaN+NaN:NaN»
+[2025-09-28 01:10:48] INFO: 📥 Login recibido:
+[2025-09-28 01:10:48] INFO: ✅ Login exitoso
+[2025-09-28 01:10:49] ERROR: ❌ Error en middleware sanitizarDatos: Cannot read properties of undefined (reading 'asunto')
+[2025-09-28 01:10:49] INFO: 📝 Consultar todas comunicación familiar
+[2025-09-28 01:10:51] ERROR: ❌ Error en middleware sanitizarDatos: Cannot read properties of undefined (reading 'asunto')
+[2025-09-28 01:10:51] INFO: 📝 Consultar todas comunicación familiar
+[2025-09-28 01:10:51] INFO: 📝 Crear comunicación familiar
+[2025-09-28 01:10:51] ERROR: ❌ Error al registrar comunicación: invalid input syntax for type integer: "Orientador/a de turno"
+[2025-09-28 01:10:51] ERROR: ❌ Error en el servidor: invalid input syntax for type integer: "Orientador/a de turno"
+[2025-09-28 01:52:02] INFO: 📥 Login recibido:
+[2025-09-28 01:52:03] INFO: ✅ Login exitoso
+[2025-09-28 01:52:04] ERROR: ❌ Error en middleware sanitizarDatos: Cannot read properties of undefined (reading 'asunto')
+[2025-09-28 01:52:04] INFO: 📝 Consultar todas comunicación familiar
+[2025-09-28 01:52:05] ERROR: ❌ Error en middleware sanitizarDatos: Cannot read properties of undefined (reading 'asunto')
+[2025-09-28 01:52:05] INFO: 📝 Consultar todas comunicación familiar
+[2025-09-28 01:52:06] INFO: 📝 Crear comunicación familiar
+[2025-09-28 01:52:06] ERROR: ❌ Error en middleware sanitizarDatos: Cannot read properties of undefined (reading 'asunto')
+[2025-09-28 01:52:06] INFO: 📝 Consultar por ID comunicación familiar
+[2025-09-28 01:52:07] INFO: 📝 Actualizar comunicación familiar
+[2025-09-28 01:52:07] INFO: 📝 Crear comunicación familiar
+[2025-09-28 01:52:08] INFO: 📝 Crear comunicación familiar
+[2025-09-28 01:52:08] ERROR: ❌ Error en middleware sanitizarDatos: Cannot read properties of undefined (reading 'asunto')
+[2025-09-28 01:52:08] INFO: 📝 Eliminar comunicación familiar

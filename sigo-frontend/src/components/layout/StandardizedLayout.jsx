@@ -4,12 +4,12 @@ import StandardizedSidebar from "./StandardizedSidebar";
 import Footer from "./Footer";
 import MobileMenuButton from "../ui/MobileMenuButton";
 import { useAuth } from "../../context/useAuth";
-import "../../styles/sidebar-consistency.css";
 
 /**
- * Layout mejorado del dashboard con sidebar optimizado
+ * Layout estandarizado con sidebar consistente
+ * Soluciona problemas de comportamiento extraño en diferentes vistas
  */
-export default function ImprovedDashboardLayout({ children }) {
+export default function StandardizedLayout({ children }) {
   const { user, logout } = useAuth();
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -34,6 +34,18 @@ export default function ImprovedDashboardLayout({ children }) {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [sidebarOpen]);
+
+  // Cerrar sidebar al redimensionar ventana
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) {
+        setSidebarOpen(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const handleLogout = () => {
     logout();
@@ -61,7 +73,7 @@ export default function ImprovedDashboardLayout({ children }) {
 
       {/* Contenido principal */}
       <div className="flex-1 flex flex-col lg:ml-0">
-        {/* Top bar simplificado */}
+        {/* Top bar para móvil */}
         <header className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm border-b border-gray-200/50 dark:border-gray-700/50 lg:hidden">
           <div className="flex items-center justify-between px-4 py-3">
             <MobileMenuButton onClick={() => setSidebarOpen(true)} />
@@ -88,9 +100,6 @@ export default function ImprovedDashboardLayout({ children }) {
 
         {/* Footer */}
         <Footer />
-
-        {/* Toast notifications */}
-        {/* ToastContainer removido - Toaster ya está en main.jsx */}
       </div>
     </div>
   );
