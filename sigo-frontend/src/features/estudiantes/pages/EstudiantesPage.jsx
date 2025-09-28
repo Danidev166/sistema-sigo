@@ -5,6 +5,8 @@ import { toast } from "react-hot-toast";
 import EstudianteTable from "../components/EstudianteTable";
 import EstudianteFormModal from "../components/EstudianteFormModal";
 import CargaMasivaModal from "../components/CargaMasivaModal";
+import EnvioMasivoTestsModal from "../components/EnvioMasivoTestsModal";
+import SmartCourseFilter from "../../../components/ui/SmartCourseFilter";
 import DeleteConfirmModal from "../../usuarios/components/DeleteConfirmModal";
 import estudianteService from "../services/estudianteService";
 import ImprovedDashboardLayout from "../../../components/layout/ImprovedDashboardLayout";
@@ -23,11 +25,16 @@ export default function EstudiantesPage() {
   const [filters, setFilters] = useState({ curso: "", estado: "" });
 
   const [isCargaMasivaModalOpen, setIsCargaMasivaModalOpen] = useState(false);
+  const [isEnvioMasivoModalOpen, setIsEnvioMasivoModalOpen] = useState(false);
   const [isDeleteConfirmModalOpen, setIsDeleteConfirmModalOpen] = useState(false);
   const [estudianteToDelete, setEstudianteToDelete] = useState(null);
   const [estudiantes, setEstudiantes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  
+  // Estados para el filtro inteligente
+  const [cursosSeleccionados, setCursosSeleccionados] = useState([]);
+  const [estudiantesPorCurso, setEstudiantesPorCurso] = useState([]);
 
   const fetchEstudiantes = useCallback(async () => {
     setIsLoading(true);
@@ -58,15 +65,55 @@ export default function EstudiantesPage() {
     setCurrentPage(1);
   };
 
+  // Manejar cambio de cursos seleccionados en el filtro inteligente
+  const handleCursosChange = (nuevosCursos) => {
+    setCursosSeleccionados(nuevosCursos);
+    setCurrentPage(1);
+    
+    // Actualizar información de estudiantes por curso
+    const infoEstudiantes = nuevosCursos.map(curso => ({
+      curso,
+      count: estudiantes.filter(est => est.curso === curso).length
+    }));
+    setEstudiantesPorCurso(infoEstudiantes);
+  };
+
+  // Manejar envío masivo de tests
+  const handleEnvioMasivo = async (data) => {
+    try {
+      const { cursos, tipoTest, estudiantesPorCurso } = data;
+      
+      // Aquí implementarías la lógica de envío masivo
+      // Por ahora solo mostramos un mensaje de confirmación
+      toast.success(
+        `Tests ${tipoTest} enviados a ${estudiantesPorCurso.reduce((sum, item) => sum + item.count, 0)} estudiantes de ${cursos.length} curso${cursos.length !== 1 ? 's' : ''}`,
+        { duration: 5000 }
+      );
+      
+      console.log('Datos para envío masivo:', data);
+      
+      // TODO: Implementar llamada a API para envío masivo
+      // await testService.enviarMasivo(data);
+      
+    } catch (error) {
+      console.error('Error en envío masivo:', error);
+      throw error;
+    }
+  };
+
   const filteredEstudiantes = (estudiantes || []).filter((est) => {
     const matchesSearch =
       est.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
       est.apellido.toLowerCase().includes(searchTerm.toLowerCase()) ||
       est.rut.includes(searchTerm);
-    const matchesFilters =
-      (!filters.curso || est.curso === filters.curso) &&
-      (!filters.estado || est.estado === filters.estado);
-    return matchesSearch && matchesFilters;
+    
+    // Filtro por cursos seleccionados (nuevo filtro inteligente)
+    const matchesCursos = cursosSeleccionados.length === 0 || cursosSeleccionados.includes(est.curso);
+    
+    // Filtro por estado (filtro tradicional)
+    const matchesEstado = !filters.estado || est.estado === filters.estado;
+    
+    return matchesSearch && matchesCursos && matchesEstado;
   });
 
   const itemsPerPage = 10;
@@ -222,8 +269,9 @@ export default function EstudiantesPage() {
       />
 
       <div className="bg-white dark:bg-slate-800 rounded-lg shadow border border-gray-200 p-4">
-        <div className="flex flex-col sm:flex-row gap-4 mb-6">
-          <div className="relative flex-1">
+        <div className="space-y-4 mb-6">
+          {/* Búsqueda por nombre/RUT */}
+          <div className="relative">
             <Search
               size={20}
               className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
@@ -233,54 +281,62 @@ export default function EstudiantesPage() {
               placeholder="Buscar por nombre, apellido o RUT..."
               value={searchTerm}
               onChange={handleSearch}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-slate-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 dark:text-white"
             />
           </div>
-          <button
-            onClick={() => setIsFilterOpen(!isFilterOpen)}
-            className="inline-flex items-center justify-center px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50"
-          >
-            <Filter size={20} className="mr-2" />
-            Filtros
-          </button>
-        </div>
 
-        {isFilterOpen && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 p-4 bg-gray-50 dark:bg-slate-700 rounded-lg">
+          {/* Filtro inteligente de cursos */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                Curso
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Filtro por Cursos (Inteligente)
               </label>
-              <select
-                name="curso"
-                value={filters.curso}
-                onChange={handleFilterChange}
-                className="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 dark:text-white"
-              >
-                {OPCIONES_CURSOS_FILTRO.map((opcion) => (
-                  <option key={opcion.value} value={opcion.value}>
-                    {opcion.label}
-                  </option>
-                ))}
-              </select>
+              <SmartCourseFilter
+                estudiantes={estudiantes}
+                cursosSeleccionados={cursosSeleccionados}
+                onCursosChange={handleCursosChange}
+                onEnvioMasivo={() => setIsEnvioMasivoModalOpen(true)}
+                showEnvioMasivo={cursosSeleccionados.length > 0}
+              />
             </div>
+            
+            {/* Filtro tradicional de estado */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                Estado
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Estado del Estudiante
               </label>
               <select
                 name="estado"
                 value={filters.estado}
                 onChange={handleFilterChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 dark:text-white"
               >
-                <option value="">Todos</option>
+                <option value="">Todos los estados</option>
                 <option value="Activo">Activo</option>
                 <option value="Inactivo">Inactivo</option>
               </select>
             </div>
           </div>
-        )}
+
+          {/* Información de filtros activos */}
+          {(cursosSeleccionados.length > 0 || filters.estado) && (
+            <div className="flex flex-wrap gap-2 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+              <span className="text-sm font-medium text-blue-900 dark:text-blue-100">
+                Filtros activos:
+              </span>
+              {cursosSeleccionados.length > 0 && (
+                <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-200">
+                  {cursosSeleccionados.length} curso{cursosSeleccionados.length !== 1 ? 's' : ''} seleccionado{cursosSeleccionados.length !== 1 ? 's' : ''}
+                </span>
+              )}
+              {filters.estado && (
+                <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-200">
+                  Estado: {filters.estado}
+                </span>
+              )}
+            </div>
+          )}
+        </div>
 
         {isLoading ? (
           <div className="flex justify-center items-center py-8">
@@ -330,6 +386,14 @@ export default function EstudiantesPage() {
         isOpen={isCargaMasivaModalOpen}
         onClose={() => setIsCargaMasivaModalOpen(false)}
         onUpload={handleCargaMasiva}
+      />
+
+      <EnvioMasivoTestsModal
+        isOpen={isEnvioMasivoModalOpen}
+        onClose={() => setIsEnvioMasivoModalOpen(false)}
+        cursosSeleccionados={cursosSeleccionados}
+        estudiantesPorCurso={estudiantesPorCurso}
+        onConfirm={handleEnvioMasivo}
       />
 
       <DeleteConfirmModal
