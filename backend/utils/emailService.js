@@ -123,6 +123,102 @@ const enviarCodigoRecuperacion = async ({ to, codigo }) => {
   }
 };
 
+const enviarCitacionReunion = async ({ to, apoderado, estudiante, fecha, hora, lugar, motivo, profesional }) => {
+  // Verificar si las variables de email están configuradas
+  if (!process.env.MAIL_USER || !process.env.MAIL_PASS) {
+    console.log("📨 [SIMULADO] Variables de email no configuradas");
+    console.log("📨 [SIMULADO] Enviar citación a:", to);
+    console.log("👤 Apoderado:", apoderado);
+    console.log("👤 Estudiante:", estudiante);
+    console.log("📅 Fecha:", fecha, "| ⏰ Hora:", hora);
+    console.log("📍 Lugar:", lugar);
+    console.log("📌 Motivo:", motivo);
+    console.log("👨‍⚕️ Profesional:", profesional);
+    return;
+  }
+
+  if (process.env.NODE_ENV === "development") {
+    console.log("📨 [SIMULADO] Enviar citación a:", to);
+    console.log("👤 Apoderado:", apoderado);
+    console.log("👤 Estudiante:", estudiante);
+    console.log("📅 Fecha:", fecha, "| ⏰ Hora:", hora);
+    console.log("📍 Lugar:", lugar);
+    console.log("📌 Motivo:", motivo);
+    console.log("👨‍⚕️ Profesional:", profesional);
+    console.log("💡 Para enviar emails reales, cambia NODE_ENV=production");
+    return;
+  }
+
+  const transporter = nodemailer.createTransporter({
+    host: process.env.MAIL_HOST,
+    port: parseInt(process.env.MAIL_PORT || "587"),
+    secure: process.env.MAIL_SECURE === "true",
+    auth: {
+      user: process.env.MAIL_USER,
+      pass: process.env.MAIL_PASS,
+    },
+  });
+
+  const mailOptions = {
+    from: `"SIGO - Comunicación Familiar" <${process.env.MAIL_USER}>`,
+    to,
+    subject: `📅 Citación a Reunión - ${estudiante}`,
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+        <div style="background: #0e1a33; color: white; padding: 20px; text-align: center; border-radius: 10px 10px 0 0;">
+          <h1 style="margin: 0; font-size: 24px;">📅 Citación a Reunión</h1>
+          <p style="margin: 10px 0 0 0; font-size: 16px;">Sistema SIGO - Liceo Técnico</p>
+        </div>
+        <div style="background: #f8f9fa; padding: 30px; border-radius: 0 0 10px 10px;">
+          <h2 style="color: #333; margin-bottom: 20px;">Estimado/a ${apoderado}</h2>
+          
+          <p style="font-size: 16px; color: #333; margin-bottom: 20px;">
+            Le solicitamos su presencia para una reunión sobre el desempeño académico de su pupilo/a:
+          </p>
+
+          <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #007bff;">
+            <h3 style="color: #333; margin-bottom: 15px;">👤 Información del Estudiante</h3>
+            <p style="color: #666; margin: 5px 0;"><strong>Nombre:</strong> ${estudiante}</p>
+          </div>
+
+          <div style="background: #e3f2fd; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <h3 style="color: #1976d2; margin-bottom: 15px;">📅 Detalles de la Reunión</h3>
+            <p style="color: #333; margin: 5px 0;"><strong>📅 Fecha:</strong> ${fecha}</p>
+            <p style="color: #333; margin: 5px 0;"><strong>⏰ Hora:</strong> ${hora}</p>
+            <p style="color: #333; margin: 5px 0;"><strong>📍 Lugar:</strong> ${lugar}</p>
+            <p style="color: #333; margin: 5px 0;"><strong>👨‍⚕️ Profesional:</strong> ${profesional}</p>
+            <p style="color: #333; margin: 5px 0;"><strong>📌 Motivo:</strong> ${motivo}</p>
+          </div>
+
+          <div style="background: #fff3cd; padding: 15px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #ffc107;">
+            <h4 style="color: #856404; margin-bottom: 10px;">📋 Importante:</h4>
+            <ul style="color: #856404; margin: 0; padding-left: 20px;">
+              <li>Por favor confirme su asistencia</li>
+              <li>Llegue 5 minutos antes de la hora acordada</li>
+              <li>Traiga su cédula de identidad</li>
+              <li>En caso de no poder asistir, contacte con anticipación</li>
+            </ul>
+          </div>
+
+          <hr style="border: none; border-top: 1px solid #ddd; margin: 30px 0;">
+          <p style="font-size: 12px; color: #999; text-align: center; margin: 0;">
+            Sistema SIGO - Liceo Técnico<br>
+            Este mensaje fue enviado automáticamente
+          </p>
+        </div>
+      </div>
+    `,
+  };
+
+  try {
+    await transporter.sendMail(mailOptions);
+    console.log(`✅ Citación enviada a: ${to} (${apoderado})`);
+  } catch (error) {
+    console.error("❌ Error enviando citación:", error);
+    throw error;
+  }
+};
+
 const enviarTestVocacionalQR = async ({ to, estudiante, testType, qrCodeUrl, testUrl }) => {
   // Verificar si las variables de email están configuradas
   if (!process.env.MAIL_USER || !process.env.MAIL_PASS) {
@@ -244,4 +340,9 @@ const enviarTestVocacionalQR = async ({ to, estudiante, testType, qrCodeUrl, tes
   }
 };
 
-module.exports = { enviarCorreoAgenda, enviarCodigoRecuperacion, enviarTestVocacionalQR };
+module.exports = { 
+  enviarCorreoAgenda, 
+  enviarCodigoRecuperacion, 
+  enviarTestVocacionalQR,
+  enviarCitacionReunion
+};

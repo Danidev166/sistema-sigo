@@ -64,7 +64,7 @@ const ComunicacionFamiliaModel = {
 
   async obtenerPorEstudiante(idEstudiante) {
     const query = `
-      SELECT cf.*, e.nombre, e.apellido, e.rut
+      SELECT cf.*, e.nombre, e.apellido, e.rut, e.email_apoderado, e.nombre_apoderado
       FROM comunicacion_familia cf
       LEFT JOIN estudiantes e ON cf.id_estudiante = e.id
       WHERE cf.id_estudiante = $1
@@ -73,6 +73,18 @@ const ComunicacionFamiliaModel = {
     
     const result = await pool.query(query, [idEstudiante]);
     return result.rows;
+  },
+
+  async obtenerPorId(id) {
+    const query = `
+      SELECT cf.*, e.nombre, e.apellido, e.rut, e.email_apoderado, e.nombre_apoderado
+      FROM comunicacion_familia cf
+      LEFT JOIN estudiantes e ON cf.id_estudiante = e.id
+      WHERE cf.id = $1
+    `;
+    
+    const result = await pool.query(query, [id]);
+    return result.rows[0] || null;
   },
 
   async actualizar(id, data) {
