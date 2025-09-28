@@ -160,23 +160,19 @@ const StandardizedSidebar = memo(({ isAdmin, handleLogout, isOpen, onClose }) =>
               <div key={groupKey}>
                 <button
                   onClick={() => toggleGroup(groupKey)}
-                  className={`sidebar-section-header ${groupKey} ${
-                    expandedGroups[groupKey] ? 'expanded' : ''
-                  }`}
+                  className="flex items-center justify-between w-full px-3 py-2 text-left text-nav-item text-gray-300 hover:text-white hover:bg-gray-800 rounded-lg transition-colors"
                 >
-                  <div className="section-title">
-                    <span>{groupLabels[groupKey]}</span>
-                    <ChevronDownIcon 
-                      size={16} 
-                      className={`section-icon transition-transform duration-200 ${
-                        expandedGroups[groupKey] ? 'rotate-180' : ''
-                      }`}
-                    />
-                  </div>
+                  <span>{groupLabels[groupKey]}</span>
+                  <ChevronDownIcon 
+                    size={16} 
+                    className={`transition-transform duration-200 ${
+                      expandedGroups[groupKey] ? 'rotate-180' : ''
+                    }`}
+                  />
                 </button>
                 
                 {expandedGroups[groupKey] && (
-                  <div className="sidebar-section-content space-y-1">
+                  <div className="mt-2 space-y-1">
                     {items.map((item) => (
                       <NavItem
                         key={item.to}

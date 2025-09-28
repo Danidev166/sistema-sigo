@@ -357,113 +357,6 @@
   margin-bottom: 2.5rem;
 }
 
-/* Headers del Sidebar */
-.sidebar-section-header {
-  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
-  color: #f1f5f9;
-  padding: 0.75rem 1rem;
-  border-radius: 8px;
-  border-left: 4px solid #0ea5e9;
-  margin-bottom: 0.5rem;
-  font-family: var(--font-primary);
-  font-size: 0.875rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: all 0.2s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-.sidebar-section-header::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(45deg, rgba(14, 165, 233, 0.1) 0%, transparent 50%);
-  pointer-events: none;
-}
-
-.sidebar-section-header:hover {
-  background: linear-gradient(135deg, #334155 0%, #475569 100%);
-  transform: translateX(2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-}
-
-.sidebar-section-header .section-title {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-}
-
-.sidebar-section-header .section-icon {
-  color: #0ea5e9;
-  transition: transform 0.2s ease;
-}
-
-.sidebar-section-header:hover .section-icon {
-  transform: rotate(180deg);
-}
-
-/* Header de sección expandido */
-.sidebar-section-header.expanded {
-  background: linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%);
-  color: white;
-  box-shadow: 0 4px 8px rgba(14, 165, 233, 0.3);
-}
-
-.sidebar-section-header.expanded .section-icon {
-  color: white;
-}
-
-/* Headers de sección con iconos específicos */
-.sidebar-section-header.evaluations {
-  border-left-color: #10b981;
-}
-
-.sidebar-section-header.evaluations .section-icon {
-  color: #10b981;
-}
-
-.sidebar-section-header.resources {
-  border-left-color: #f59e0b;
-}
-
-.sidebar-section-header.resources .section-icon {
-  color: #f59e0b;
-}
-
-.sidebar-section-header.notifications {
-  border-left-color: #ef4444;
-}
-
-.sidebar-section-header.notifications .section-icon {
-  color: #ef4444;
-}
-
-.sidebar-section-header.admin {
-  border-left-color: #8b5cf6;
-}
-
-.sidebar-section-header.admin .section-icon {
-  color: #8b5cf6;
-}
-
-/* Contenido de sección expandido */
-.sidebar-section-content {
-  background: rgba(30, 41, 59, 0.5);
-  border-radius: 6px;
-  margin-top: 0.5rem;
-  padding: 0.5rem;
-  border: 1px solid rgba(51, 65, 85, 0.3);
-  backdrop-filter: blur(10px);
-}
 
 /* Animaciones para Headers */
 .header-institutional {
@@ -478,9 +371,6 @@
   animation: fadeInUp 0.5s ease-out;
 }
 
-.sidebar-section-header {
-  animation: slideInRight 0.3s ease-out;
-}
 
 @keyframes slideInDown {
   from {
