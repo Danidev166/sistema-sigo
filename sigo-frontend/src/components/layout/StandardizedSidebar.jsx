@@ -112,7 +112,7 @@ const StandardizedSidebar = memo(({ isAdmin, handleLogout, isOpen, onClose }) =>
             <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center shadow-lg">
               <span className="text-white font-bold text-sm tracking-tight">S</span>
             </div>
-            <h1 className="text-lg font-bold tracking-tight">SIGO</h1>
+            <h1 className="text-nav-title">SIGO</h1>
           </div>
           <button
             onClick={onClose}
@@ -131,7 +131,7 @@ const StandardizedSidebar = memo(({ isAdmin, handleLogout, isOpen, onClose }) =>
             placeholder="Buscar en el menú..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+            className="w-full pl-10 pr-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-form-input focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
           />
           {searchTerm && (
             <button
@@ -160,7 +160,7 @@ const StandardizedSidebar = memo(({ isAdmin, handleLogout, isOpen, onClose }) =>
               <div key={groupKey}>
                 <button
                   onClick={() => toggleGroup(groupKey)}
-                  className="flex items-center justify-between w-full px-3 py-2 text-left text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-800 rounded-lg transition-colors"
+                  className="flex items-center justify-between w-full px-3 py-2 text-left text-nav-item text-gray-300 hover:text-white hover:bg-gray-800 rounded-lg transition-colors"
                 >
                   <span>{groupLabels[groupKey]}</span>
                   <ChevronDownIcon 
@@ -200,22 +200,22 @@ const StandardizedSidebar = memo(({ isAdmin, handleLogout, isOpen, onClose }) =>
             </span>
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-white truncate">
+            <p className="text-institutional-sm font-medium text-white truncate">
               {user?.nombre} {user?.apellido}
             </p>
-            <p className="text-xs text-gray-400 truncate">{user?.rol}</p>
+            <p className="text-institutional-xs text-gray-400 truncate">{user?.rol}</p>
           </div>
         </div>
         
         <button
           onClick={handleLogout}
-          className="flex items-center gap-3 w-full px-3 py-2 text-sm text-gray-300 hover:text-white hover:bg-gray-800 rounded-lg transition-colors"
+          className="flex items-center gap-3 w-full px-3 py-2 text-nav-item text-gray-300 hover:text-white hover:bg-gray-800 rounded-lg transition-colors"
         >
           <LogOutIcon size={16} />
           Cerrar Sesión
         </button>
         
-        <p className="text-xs text-gray-500 mt-4 text-center">
+        <p className="text-institutional-xs text-gray-500 mt-4 text-center">
           v1.0 · SIGO © 2025
         </p>
       </div>
@@ -228,7 +228,7 @@ const NavItem = memo(({ to, icon: Icon, children, badge }) => {
     <NavLink
       to={to}
       className={({ isActive }) => `
-        flex items-center gap-3 px-3 py-2 rounded-lg font-medium text-sm
+        flex items-center gap-3 px-3 py-2 rounded-lg font-medium text-nav-item
         transition-all duration-200 ease-in-out group relative
         ${isActive 
           ? 'bg-blue-600 text-white shadow-lg' 

@@ -188,7 +188,7 @@ export default function EstudiantesPage() {
   return (
     <ImprovedDashboardLayout>
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
-        <h1 className="page-title text-xl sm:text-2xl lg:text-3xl">
+        <h1 className="text-institutional-3xl">
           Gestión de Estudiantes
         </h1>
         <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 w-full sm:w-auto">

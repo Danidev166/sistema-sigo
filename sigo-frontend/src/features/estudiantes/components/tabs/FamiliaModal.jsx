@@ -96,10 +96,10 @@ const FamiliaModal = ({ isOpen, onClose, onSubmit, estudiante, editingData = nul
               <FileText className="w-5 h-5 text-blue-600 dark:text-blue-400" />
             </div>
             <div>
-              <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+              <h2 className="text-institutional-2xl text-gray-900 dark:text-white">
                 {editingData ? 'Editar Comunicación' : 'Nueva Comunicación'}
               </h2>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
+              <p className="text-institutional-sm text-gray-500 dark:text-gray-400">
                 {estudiante?.nombre} {estudiante?.apellido}
               </p>
             </div>
@@ -116,14 +116,14 @@ const FamiliaModal = ({ isOpen, onClose, onSubmit, estudiante, editingData = nul
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
           {/* Tipo de Comunicación */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-form-label text-gray-700 dark:text-gray-300 mb-2">
               Tipo de Comunicación *
             </label>
             <select
               name="tipo_comunicacion"
               value={form.tipo_comunicacion}
               onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
+              className="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-slate-700 text-form-input"
               required
             >
               <option value="">Seleccionar tipo</option>
@@ -136,14 +136,14 @@ const FamiliaModal = ({ isOpen, onClose, onSubmit, estudiante, editingData = nul
           {/* Medio y Fecha */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label className="block text-form-label text-gray-700 dark:text-gray-300 mb-2">
                 Medio de Comunicación
               </label>
               <select
                 name="medio"
                 value={form.medio}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
+                className="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-slate-700 text-form-input"
               >
                 {mediosComunicacion.map(medio => (
                   <option key={medio} value={medio}>{medio}</option>
@@ -151,7 +151,7 @@ const FamiliaModal = ({ isOpen, onClose, onSubmit, estudiante, editingData = nul
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label className="block text-form-label text-gray-700 dark:text-gray-300 mb-2">
                 Fecha *
               </label>
               <input
@@ -159,7 +159,7 @@ const FamiliaModal = ({ isOpen, onClose, onSubmit, estudiante, editingData = nul
                 name="fecha_comunicacion"
                 value={form.fecha_comunicacion}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
+                className="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-slate-700 text-form-input"
                 required
               />
             </div>
@@ -176,7 +176,7 @@ const FamiliaModal = ({ isOpen, onClose, onSubmit, estudiante, editingData = nul
               value={form.asunto}
               onChange={handleChange}
               placeholder="Ej: Citación a reunión de seguimiento académico"
-              className="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
+              className="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-slate-700 text-form-input"
               required
             />
           </div>
@@ -230,7 +230,7 @@ const FamiliaModal = ({ isOpen, onClose, onSubmit, estudiante, editingData = nul
               onChange={handleChange}
               rows={4}
               placeholder="Escriba el contenido del mensaje..."
-              className="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
+              className="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-slate-700 text-form-input"
               required
             />
           </div>
@@ -267,7 +267,7 @@ const FamiliaModal = ({ isOpen, onClose, onSubmit, estudiante, editingData = nul
               value={form.responsable_nombre}
               onChange={handleChange}
               placeholder="Nombre del profesional responsable (ej: Pamela González)"
-              className="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
+              className="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-slate-700 text-form-input"
             />
           </div>
 
