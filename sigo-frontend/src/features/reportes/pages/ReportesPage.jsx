@@ -12,7 +12,9 @@
  */
 // src/features/reportes/pages/ReportesPage.jsx
 import { useState } from "react";
+import { BarChart3 } from "lucide-react";
 import ImprovedDashboardLayout from "../../../components/layout/ImprovedDashboardLayout";
+import { InstitutionalHeader } from "../../../components/headers/InstitutionalHeader";
 import ReporteEstudiantesAtendidos from "../components/ReporteEstudiantesAtendidos";
 import ReporteDerivaciones from "../components/ReporteDerivaciones";
 import ReportesMejorados from "../components/ReportesMejorados";
@@ -39,11 +41,12 @@ export default function ReportesPage() {
   return (
     <ImprovedDashboardLayout>
       <div className="space-y-4 sm:space-y-6 lg:space-y-8 px-2 sm:px-0 pb-6 sm:pb-8">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
-          <h1 className="page-title text-xl sm:text-2xl lg:text-3xl">
-            Reportes
-          </h1>
-        </div>
+        <InstitutionalHeader
+          title="Reportes"
+          subtitle="Análisis y estadísticas de estudiantes y actividades"
+          icon={BarChart3}
+          variant="with-icon"
+        />
         <div className="border-b border-gray-200 dark:border-slate-700 mb-4">
           <nav className="flex gap-2 overflow-x-auto">
             {tabs.map(tab => (

@@ -12,9 +12,10 @@
  * <Route path="/agenda" element={<AgendaPage />} />
  */
 import { useEffect, useState } from "react";
-import { Plus } from "lucide-react";
+import { Plus, Calendar } from "lucide-react";
 import { toast } from "react-hot-toast";
 import ImprovedDashboardLayout from "../../../components/layout/ImprovedDashboardLayout";
+import { InstitutionalHeader, HeaderIcons } from "../../../components/headers/InstitutionalHeader";
 import Button from "../../../components/ui/Button";
 
 import agendaService from "../services/AgendaService";
@@ -110,20 +111,23 @@ export default function AgendaPage() {
   return (
     <ImprovedDashboardLayout>
       <div className="space-y-4 sm:space-y-6 px-2 sm:px-4 lg:px-6 pb-6 sm:pb-8">
-        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
-          <h1 className="page-title text-xl sm:text-2xl lg:text-3xl">
-            Agenda de Entrevistas
-          </h1>
-          <Button
-            onClick={() => {
-              setEditing(null);
-              setModalOpen(true);
-            }}
-            className="w-full sm:w-auto bg-blue-600 text-white hover:bg-blue-700"
-          >
-            <Plus className="w-4 h-4 mr-2" /> Agendar Entrevista
-          </Button>
-        </div>
+        <InstitutionalHeader
+          title="Agenda de Entrevistas"
+          subtitle="Gestiona las citaciones y entrevistas programadas"
+          icon={Calendar}
+          variant="with-icon"
+          actions={[
+            {
+              label: "Agendar Entrevista",
+              icon: Plus,
+              onClick: () => {
+                setEditing(null);
+                setModalOpen(true);
+              },
+              variant: "primary"
+            }
+          ]}
+        />
 
         {loading ? (
           <p className="text-gray-500">Cargando agenda...</p>

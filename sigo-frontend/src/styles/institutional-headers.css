@@ -1,0 +1,404 @@
+/*
+ * Sistema de Headers Institucionales SIGO
+ * Headers atractivos y profesionales para sistemas institucionales
+ * Enfoque en jerarquía visual, contraste y elegancia
+ */
+
+/* Variables para headers institucionales */
+:root {
+  --header-gradient-primary: linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%);
+  --header-gradient-secondary: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  --header-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --header-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --header-border-radius: 12px;
+  --header-padding: 1.5rem 2rem;
+}
+
+/* Header Principal Institucional */
+.header-institutional {
+  background: var(--header-gradient-primary);
+  color: white;
+  padding: var(--header-padding);
+  border-radius: var(--header-border-radius);
+  box-shadow: var(--header-shadow-lg);
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+
+.header-institutional::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.header-institutional .header-title {
+  font-family: var(--font-primary);
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 1;
+}
+
+.header-institutional .header-subtitle {
+  font-family: var(--font-primary);
+  font-size: 1rem;
+  font-weight: 400;
+  margin: 0.5rem 0 0 0;
+  opacity: 0.9;
+  position: relative;
+  z-index: 1;
+}
+
+.header-institutional .header-actions {
+  position: absolute;
+  top: 50%;
+  right: 2rem;
+  transform: translateY(-50%);
+  display: flex;
+  gap: 0.75rem;
+  z-index: 1;
+}
+
+/* Header Secundario */
+.header-secondary {
+  background: var(--header-gradient-secondary);
+  color: #1e293b;
+  padding: 1.25rem 1.5rem;
+  border-radius: 8px;
+  box-shadow: var(--header-shadow);
+  border-left: 4px solid #0ea5e9;
+  margin-bottom: 1.5rem;
+}
+
+.header-secondary .header-title {
+  font-family: var(--font-primary);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+  color: #1e293b;
+}
+
+.header-secondary .header-subtitle {
+  font-family: var(--font-primary);
+  font-size: 0.875rem;
+  font-weight: 400;
+  margin: 0.25rem 0 0 0;
+  color: #64748b;
+}
+
+/* Header con Icono */
+.header-with-icon {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: white;
+  padding: 1.5rem;
+  border-radius: var(--header-border-radius);
+  box-shadow: var(--header-shadow);
+  border: 1px solid #e2e8f0;
+  margin-bottom: 1.5rem;
+}
+
+.header-with-icon .header-icon {
+  width: 3rem;
+  height: 3rem;
+  background: var(--header-gradient-primary);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.5rem;
+  box-shadow: 0 4px 6px -1px rgba(14, 165, 233, 0.3);
+}
+
+.header-with-icon .header-content {
+  flex: 1;
+}
+
+.header-with-icon .header-title {
+  font-family: var(--font-primary);
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0;
+  color: #1e293b;
+}
+
+.header-with-icon .header-subtitle {
+  font-family: var(--font-primary);
+  font-size: 0.875rem;
+  font-weight: 400;
+  margin: 0.25rem 0 0 0;
+  color: #64748b;
+}
+
+/* Header Minimalista Elegante */
+.header-minimal {
+  background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+  color: #1e293b;
+  padding: 1.5rem 2rem;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.header-minimal::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--header-gradient-primary);
+  border-radius: 0 0 8px 8px;
+}
+
+.header-minimal .header-title {
+  font-family: var(--font-primary);
+  font-size: 1.875rem;
+  font-weight: 700;
+  margin: 0;
+  color: #1e293b;
+  letter-spacing: -0.025em;
+}
+
+.header-minimal .header-subtitle {
+  font-family: var(--font-primary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin: 0.5rem 0 0 0;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Header de Sección */
+.header-section {
+  background: #f8fafc;
+  color: #1e293b;
+  padding: 1rem 1.5rem;
+  border-radius: 6px;
+  border-left: 4px solid #0ea5e9;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-section .header-title {
+  font-family: var(--font-primary);
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+  color: #1e293b;
+}
+
+.header-section .header-badge {
+  background: #0ea5e9;
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Botones de Acción para Headers */
+.header-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  font-family: var(--font-primary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.header-action-btn-primary {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.header-action-btn-primary:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.header-action-btn-secondary {
+  background: white;
+  color: #0ea5e9;
+  border: 1px solid #e2e8f0;
+}
+
+.header-action-btn-secondary:hover {
+  background: #f8fafc;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Design para Headers */
+@media (max-width: 768px) {
+  .header-institutional {
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .header-institutional .header-title {
+    font-size: 1.5rem;
+  }
+  
+  .header-institutional .header-actions {
+    position: static;
+    transform: none;
+    margin-top: 1rem;
+    justify-content: flex-start;
+  }
+  
+  .header-with-icon {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .header-with-icon .header-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1.25rem;
+  }
+}
+
+/* Modo Oscuro para Headers */
+@media (prefers-color-scheme: dark) {
+  .header-secondary {
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    color: #f1f5f9;
+    border-left-color: #0ea5e9;
+  }
+  
+  .header-secondary .header-title {
+    color: #f1f5f9;
+  }
+  
+  .header-secondary .header-subtitle {
+    color: #94a3b8;
+  }
+  
+  .header-with-icon {
+    background: #1e293b;
+    border-color: #334155;
+  }
+  
+  .header-with-icon .header-title {
+    color: #f1f5f9;
+  }
+  
+  .header-with-icon .header-subtitle {
+    color: #94a3b8;
+  }
+  
+  .header-minimal {
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    color: #f1f5f9;
+    border-color: #334155;
+  }
+  
+  .header-minimal .header-title {
+    color: #f1f5f9;
+  }
+  
+  .header-minimal .header-subtitle {
+    color: #94a3b8;
+  }
+  
+  .header-section {
+    background: #1e293b;
+    color: #f1f5f9;
+  }
+  
+  .header-section .header-title {
+    color: #f1f5f9;
+  }
+}
+
+/* Utilidades para Headers */
+.header-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, #e2e8f0 50%, transparent 100%);
+  margin: 1.5rem 0;
+}
+
+.header-spacing {
+  margin-bottom: 2rem;
+}
+
+.header-compact {
+  padding: 1rem 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.header-large {
+  padding: 2rem 2.5rem;
+  margin-bottom: 2.5rem;
+}
+
+/* Animaciones para Headers */
+.header-institutional {
+  animation: slideInDown 0.5s ease-out;
+}
+
+.header-with-icon {
+  animation: slideInLeft 0.5s ease-out;
+}
+
+.header-minimal {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

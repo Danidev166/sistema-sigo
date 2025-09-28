@@ -8,6 +8,7 @@ import CargaMasivaModal from "../components/CargaMasivaModal";
 import DeleteConfirmModal from "../../usuarios/components/DeleteConfirmModal";
 import estudianteService from "../services/estudianteService";
 import ImprovedDashboardLayout from "../../../components/layout/ImprovedDashboardLayout";
+import { TableHeader, HeaderIcons } from "../../../components/headers/InstitutionalHeader";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import logo from "../../../assets/logo-pages.png";
@@ -187,32 +188,38 @@ export default function EstudiantesPage() {
 
   return (
     <ImprovedDashboardLayout>
-      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
-        <h1 className="text-institutional-3xl">
-          Gestión de Estudiantes
-        </h1>
-        <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 w-full sm:w-auto">
-          <button
-            onClick={handleExportPDF}
-            className="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-gray-800 dark:text-white px-4 py-2 rounded text-sm font-medium"
-          >
-            <FileDown size={16} />
-            Exportar PDF
-          </button>
-          <button
-            onClick={() => setIsModalOpen(true)}
-            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md"
-          >
-            <Plus size={16} /> Agregar Estudiante
-          </button>
-          <button
-            onClick={() => setIsCargaMasivaModalOpen(true)}
-            className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md"
-          >
-            <Plus size={16} /> Carga Masiva
-          </button>
-        </div>
-      </div>
+      <TableHeader
+        title="Gestión de Estudiantes"
+        subtitle="Administra la información de los estudiantes del sistema"
+        totalItems={estudiantes.length}
+        actions={[
+          {
+            label: "Exportar PDF",
+            icon: FileDown,
+            onClick: handleExportPDF,
+            variant: "secondary"
+          },
+          {
+            label: "Agregar Estudiante",
+            icon: Plus,
+            onClick: () => setIsModalOpen(true),
+            variant: "primary"
+          },
+          {
+            label: "Carga Masiva",
+            icon: Plus,
+            onClick: () => setIsCargaMasivaModalOpen(true),
+            variant: "primary"
+          }
+        ]}
+        filters={[
+          {
+            label: "Filtros",
+            icon: Filter,
+            onClick: () => setIsFilterOpen(true)
+          }
+        ]}
+      />
 
       <div className="bg-white dark:bg-slate-800 rounded-lg shadow border border-gray-200 p-4">
         <div className="flex flex-col sm:flex-row gap-4 mb-6">
