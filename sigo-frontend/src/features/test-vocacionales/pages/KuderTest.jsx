@@ -17,7 +17,7 @@ import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import ImprovedDashboardLayout from "../../../components/layout/ImprovedDashboardLayout";
 import Button from "../../../components/ui/Button";
-import logo from "../../../assets/logo.png";
+import logo from "../../../assets/logo.webp";
 import api from "../../../services/axios";
 import { interpretarKuder } from "../utils/interpretaciones";
 

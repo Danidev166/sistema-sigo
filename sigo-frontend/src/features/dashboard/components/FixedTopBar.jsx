@@ -1,5 +1,5 @@
 import { useAuth } from "../../../context/useAuth";
-import logo from "../../../assets/logo.png";
+import logo from "../../../assets/logo.webp";
 import { LogOutIcon } from "lucide-react";
 
 /**

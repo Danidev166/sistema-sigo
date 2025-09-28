@@ -1,4 +1,4 @@
-import logo from "../../../assets/logo-pages.png";
+import logo from "../../../assets/logo-pages.webp";
 import { useAuth } from "../../../context/useAuth";
 import NotificacionBadge from '../../notificaciones/components/NotificacionBadge';
 

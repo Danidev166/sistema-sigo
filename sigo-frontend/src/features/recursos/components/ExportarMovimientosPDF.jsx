@@ -3,7 +3,7 @@ import { FileDown } from "lucide-react";
 import { toast } from "react-hot-toast";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
-import logo from "../../../assets/logo-pages.png";
+import logo from "../../../assets/logo-pages.webp";
 
 /**
  * Componente para exportar movimientos a PDF.

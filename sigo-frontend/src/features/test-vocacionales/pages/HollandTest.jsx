@@ -15,7 +15,7 @@ import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import ImprovedDashboardLayout from "../../../components/layout/ImprovedDashboardLayout";
 import Button from "../../../components/ui/Button";
-import logo from "../../../assets/logo.png";
+import logo from "../../../assets/logo.webp";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import api from "../../../services/axios";

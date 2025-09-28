@@ -5,7 +5,7 @@
 
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
-import logo from "../assets/logo-pages.png";
+import logo from "../assets/logo-pages.webp";
 
 /**
  * Crea un documento PDF con el diseño estándar del Liceo

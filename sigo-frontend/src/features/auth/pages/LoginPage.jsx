@@ -11,7 +11,7 @@
  * <Route path="/login" element={<LoginPage />} />
  */
 import Footer from '../../../components/layout/Footer.jsx';
-import logo from '../../../assets/logo.png';
+import logo from '../../../assets/logo.webp';
 import { Link } from 'react-router-dom';
 import LoginForm from '../components/LoginForm.jsx';
 

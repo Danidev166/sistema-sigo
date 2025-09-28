@@ -11,7 +11,7 @@ import ImprovedDashboardLayout from "../../../components/layout/ImprovedDashboar
 import { TableHeader, HeaderIcons } from "../../../components/headers/InstitutionalHeader";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
-import logo from "../../../assets/logo-pages.png";
+import logo from "../../../assets/logo-pages.webp";
 import { OPCIONES_CURSOS_FILTRO } from "../constants/cursos";
 
 export default function EstudiantesPage() {

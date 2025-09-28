@@ -11,7 +11,7 @@
  * <Route path="/recuperar" element={<RecuperarPasswordPage />} />
  */
 import Footer from '../../../components/layout/Footer.jsx';
-import logo from '../../../assets/logo.png';
+import logo from '../../../assets/logo.webp';
 import { useState } from 'react';
 import InputField from '../components/InputField.jsx';
 import SubmitButton from '../components/SubmitButton.jsx';

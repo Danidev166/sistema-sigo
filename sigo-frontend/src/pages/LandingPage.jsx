@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import logo from '/src/assets/logo.png'
+import logo from '/src/assets/logo.webp'
 import Footer from '../components/layout/Footer'
 import ButtonPrimary from '../components/ui/ButtonPrimary'
 
