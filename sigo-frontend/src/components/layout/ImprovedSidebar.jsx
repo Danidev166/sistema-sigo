@@ -105,7 +105,7 @@ const ImprovedSidebar = memo(({ isAdmin, handleLogout, isOpen, onClose }) => {
         </div>
           <button
             onClick={onClose}
-            className="lg:hidden p-1 rounded-md hover:bg-gray-800 transition-colors"
+            className="lg:hidden p-2 rounded-lg hover:bg-gray-800 hover:scale-110 transition-all duration-200 group"
             aria-label="Cerrar menú"
           >
             <XIcon size={20} />
@@ -125,7 +125,7 @@ const ImprovedSidebar = memo(({ isAdmin, handleLogout, isOpen, onClose }) => {
           {searchTerm && (
             <button
               onClick={() => setSearchTerm('')}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white hover:bg-gray-700 rounded-full p-1 transition-all duration-200 hover:scale-110"
             >
               <XIcon size={16} />
             </button>
@@ -149,12 +149,12 @@ const ImprovedSidebar = memo(({ isAdmin, handleLogout, isOpen, onClose }) => {
               <div key={groupKey}>
                 <button
                   onClick={() => toggleGroup(groupKey)}
-                  className="flex items-center justify-between w-full px-2 py-2 text-label text-gray-300 hover:text-white transition-colors"
+                  className="flex items-center justify-between w-full px-3 py-2 text-label text-gray-300 hover:text-white hover:bg-gray-800 rounded-lg transition-all duration-200 group"
                 >
                   <span>{groupLabels[groupKey]}</span>
                   <ChevronDownIcon 
                     size={16} 
-                    className={`transition-transform duration-200 ${
+                    className={`transition-all duration-200 group-hover:scale-110 ${
                       expandedGroups[groupKey] ? 'rotate-180' : ''
                     }`}
                   />
@@ -183,17 +183,17 @@ const ImprovedSidebar = memo(({ isAdmin, handleLogout, isOpen, onClose }) => {
 
       {/* Footer con usuario */}
       <div className="p-4 border-t border-gray-700">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
+        <div className="flex items-center gap-3 mb-4 p-2 rounded-lg hover:bg-gray-800 transition-all duration-200 group cursor-pointer">
+          <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
             <span className="text-white font-semibold text-sm">
               {user?.nombre?.charAt(0) || 'U'}
             </span>
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-body-sm font-medium text-white truncate">
+            <p className="text-body-sm font-medium text-white truncate group-hover:text-blue-300 transition-colors duration-200">
               {user?.nombre} {user?.apellido}
             </p>
-            <p className="text-caption text-gray-400 truncate">{user?.rol}</p>
+            <p className="text-caption text-gray-400 truncate group-hover:text-gray-300 transition-colors duration-200">{user?.rol}</p>
           </div>
         </div>
         
@@ -222,9 +222,9 @@ const NavItem = memo(({ to, icon: Icon, children, badge, isActive }) => {
         transition-all duration-200 ease-in-out group relative
         ${isActive 
           ? 'bg-blue-600 text-white shadow-lg' 
-          : 'text-gray-300 hover:bg-gray-800 hover:text-white'
+          : 'text-gray-300 hover:bg-blue-600/20 hover:text-white hover:shadow-md'
         }
-        hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50
+        hover:scale-105 hover:translate-x-1 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50
       `}
     >
       <Icon 
