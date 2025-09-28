@@ -10,7 +10,7 @@ const FamiliaModal = ({ isOpen, onClose, onSubmit, estudiante, editingData = nul
     medio: 'Email',
     asunto: '',
     contenido: '',
-    responsable_id: '',
+    responsable_nombre: '',
     hora_reunion: '',
     lugar_reunion: '',
     enviar_email: false,
@@ -41,7 +41,7 @@ const FamiliaModal = ({ isOpen, onClose, onSubmit, estudiante, editingData = nul
         medio: editingData.medio || 'Email',
         asunto: editingData.asunto || '',
         contenido: editingData.contenido || '',
-        responsable_id: editingData.responsable_id || '',
+        responsable_nombre: editingData.responsable_nombre || '',
         hora_reunion: editingData.hora_reunion || '',
         lugar_reunion: editingData.lugar_reunion || '',
         enviar_email: editingData.enviar_email || false,
@@ -54,7 +54,7 @@ const FamiliaModal = ({ isOpen, onClose, onSubmit, estudiante, editingData = nul
         medio: 'Email',
         asunto: '',
         contenido: '',
-        responsable_id: '',
+        responsable_nombre: '',
         hora_reunion: '',
         lugar_reunion: '',
         enviar_email: false,
@@ -263,10 +263,10 @@ const FamiliaModal = ({ isOpen, onClose, onSubmit, estudiante, editingData = nul
             </label>
             <input
               type="text"
-              name="responsable_id"
-              value={form.responsable_id}
+              name="responsable_nombre"
+              value={form.responsable_nombre}
               onChange={handleChange}
-              placeholder="Nombre del profesional responsable"
+              placeholder="Nombre del profesional responsable (ej: Pamela González)"
               className="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
             />
           </div>

@@ -58,7 +58,7 @@ const comunicacionFamiliaSchema = Joi.object({
       'any.required': 'El contenido es obligatorio'
     }),
 
-  responsable_id: Joi.string().min(2).max(100).optional()
+  responsable_nombre: Joi.string().min(2).max(100).optional()
     .messages({
       'string.base': 'El responsable debe ser texto',
       'string.min': 'El responsable debe tener al menos 2 caracteres',

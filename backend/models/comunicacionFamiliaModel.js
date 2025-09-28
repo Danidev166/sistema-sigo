@@ -17,7 +17,7 @@ const ComunicacionFamiliaModel = {
   async crear(data) {
     const query = `
       INSERT INTO comunicacion_familia
-        (id_estudiante, fecha_comunicacion, tipo_comunicacion, medio, asunto, contenido, responsable_id, respuesta_familia, estado)
+        (id_estudiante, fecha_comunicacion, tipo_comunicacion, medio, asunto, contenido, responsable_nombre, respuesta_familia, estado)
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
       RETURNING *
     `;
@@ -29,7 +29,7 @@ const ComunicacionFamiliaModel = {
       data.medio || '',
       data.asunto || '',
       data.contenido || '',
-      data.responsable_id || null,
+      data.responsable_nombre || null,
       data.respuesta_familia || '',
       data.estado || 'Enviado'
     ];
@@ -96,7 +96,7 @@ const ComunicacionFamiliaModel = {
           medio = $4,
           asunto = $5,
           contenido = $6,
-          responsable_id = $7,
+          responsable_nombre = $7,
           respuesta_familia = $8,
           estado = $9
       WHERE id = $10
@@ -110,7 +110,7 @@ const ComunicacionFamiliaModel = {
       data.medio || '',
       data.asunto || '',
       data.contenido || '',
-      data.responsable_id || null,
+      data.responsable_nombre || null,
       data.respuesta_familia || '',
       data.estado || 'Enviado',
       id
