@@ -11,7 +11,7 @@
  * <Route path="/entregas" element={<EntregasPage />} />
  */
 import { useEffect, useState } from "react";
-import DashboardLayout from "../../../components/layout/DashboardLayout";
+import ImprovedDashboardLayout from "../../../components/layout/ImprovedDashboardLayout";
 import recursoService from "../services/recursoService";
 import EntregaTable from "../components/EntregaTable";
 import FiltroEntregas from "../components/FiltroEntregas";
@@ -57,7 +57,7 @@ export default function EntregasPage() {
   });
 
   return (
-    <DashboardLayout>
+    <ImprovedDashboardLayout>
       <div className="space-y-6">
         {/* Encabezado */}
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
@@ -79,6 +79,6 @@ export default function EntregasPage() {
           <EntregaTable entregas={filteredEntregas} />
         )}
       </div>
-    </DashboardLayout>
+    </ImprovedDashboardLayout>
   );
 }

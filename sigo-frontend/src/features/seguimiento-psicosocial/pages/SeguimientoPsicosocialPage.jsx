@@ -12,7 +12,7 @@
  */
 // src/features/seguimiento/pages/SeguimientoPsicosocialPage.jsx
 import { useEffect, useState } from "react";
-import DashboardLayout from "../../../components/layout/DashboardLayout";
+import ImprovedDashboardLayout from "../../../components/layout/ImprovedDashboardLayout";
 import seguimientoPsicosocialService from "../services/seguimientoPsicosocialService";
 import estudianteService from "../../estudiantes/services/estudianteService";
 import SeguimientoTable from "../components/SeguimientoTable";
@@ -85,7 +85,7 @@ export default function SeguimientoPsicosocialPage() {
   }, []);
 
   return (
-    <DashboardLayout>
+    <ImprovedDashboardLayout>
       <div className="space-y-6 sm:space-y-8 px-2 sm:px-0 pb-8">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4">
           <h1 className="text-xl sm:text-2xl font-semibold text-gray-800 dark:text-white">
@@ -122,6 +122,6 @@ export default function SeguimientoPsicosocialPage() {
           estudiantes={estudiantes}
         />
       </div>
-    </DashboardLayout>
+    </ImprovedDashboardLayout>
   );
 }

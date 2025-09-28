@@ -12,7 +12,7 @@
  */
 // src/features/evaluaciones/pages/ResultadoEvaluacionPage.jsx
 import { useEffect, useState } from "react";
-import DashboardLayout from "../../../components/layout/DashboardLayout";
+import ImprovedDashboardLayout from "../../../components/layout/ImprovedDashboardLayout";
 import FiltroEvaluacion from "../components/FiltroEvaluacion";
 import TablaResultadosEvaluacion from "../components/TablaResultadosEvaluacion";
 import BotonExportarPDF from "../../seguimiento/components/BotonExportarPDF";
@@ -53,7 +53,7 @@ export default function ResultadoEvaluacionPage() {
   });
 
   return (
-    <DashboardLayout>
+    <ImprovedDashboardLayout>
       <div className="space-y-8 pb-8">
         {/* Encabezado */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -69,6 +69,6 @@ export default function ResultadoEvaluacionPage() {
         {/* Tabla de resultados */}
         <TablaResultadosEvaluacion resultados={resultadosFiltrados} loading={loading} />
       </div>
-    </DashboardLayout>
+    </ImprovedDashboardLayout>
   );
 }

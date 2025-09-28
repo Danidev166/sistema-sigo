@@ -13,7 +13,7 @@
 // src/features/test-vocacionales/pages/AptitudesTest.jsx
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import DashboardLayout from "../../../components/layout/DashboardLayout";
+import ImprovedDashboardLayout from "../../../components/layout/ImprovedDashboardLayout";
 import Button from "../../../components/ui/Button";
 import logo from "../../../assets/logo.png";
 import jsPDF from "jspdf";
@@ -215,7 +215,7 @@ export default function AptitudesTest() {
   };
 
   return (
-    <DashboardLayout>
+    <ImprovedDashboardLayout>
       <div className="space-y-8 pb-12">
         <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
           Test de Aptitudes Generales
@@ -275,6 +275,6 @@ export default function AptitudesTest() {
           </Button>
         </div>
       </div>
-    </DashboardLayout>
+    </ImprovedDashboardLayout>
   );
 }

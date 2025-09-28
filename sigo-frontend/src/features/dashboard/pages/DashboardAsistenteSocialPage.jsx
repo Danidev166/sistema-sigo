@@ -1,12 +1,12 @@
-import DashboardLayout from '../../../components/layout/DashboardLayout';
+import ImprovedDashboardLayout from '../../../components/layout/ImprovedDashboardLayout';
 import DashboardAsistenteSocial from '../components/DashboardAsistenteSocial';
 import DashboardHeader from '../components/DashboardHeader';
 
 export default function DashboardAsistenteSocialPage() {
   return (
-    <DashboardLayout>
+    <ImprovedDashboardLayout>
       <DashboardHeader />
       <DashboardAsistenteSocial />
-    </DashboardLayout>
+    </ImprovedDashboardLayout>
   );
 } 

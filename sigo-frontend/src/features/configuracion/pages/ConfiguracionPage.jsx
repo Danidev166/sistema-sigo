@@ -10,7 +10,7 @@
  * @example
  * <Route path="/configuracion" element={<ConfiguracionPage />} />
  */
-import DashboardLayout from "../../../components/layout/DashboardLayout";
+import ImprovedDashboardLayout from "../../../components/layout/ImprovedDashboardLayout";
 import SystemStats from "../components/SystemStats";
 import AdminTools from "../components/AdminTools";
 import EmailConfig from "../components/EmailConfig";
@@ -21,7 +21,7 @@ import PoliticasForm from "../components/PoliticasForm";
 
 export default function ConfiguracionPage() {
   return (
-    <DashboardLayout>
+    <ImprovedDashboardLayout>
       <div className="space-y-6 px-4 sm:px-6 md:px-8 pb-8">
         <div className="flex items-center justify-between">
           <h1 className="text-xl sm:text-2xl font-semibold text-gray-800 dark:text-white">
@@ -64,6 +64,6 @@ export default function ConfiguracionPage() {
           </div>
         </div>
       </div>
-    </DashboardLayout>
+    </ImprovedDashboardLayout>
   );
 }

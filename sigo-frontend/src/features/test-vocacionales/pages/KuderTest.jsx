@@ -15,7 +15,7 @@ import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
-import DashboardLayout from "../../../components/layout/DashboardLayout";
+import ImprovedDashboardLayout from "../../../components/layout/ImprovedDashboardLayout";
 import Button from "../../../components/ui/Button";
 import logo from "../../../assets/logo.png";
 import api from "../../../services/axios";
@@ -233,7 +233,7 @@ export default function KuderTest() {
   };
 
   return (
-    <DashboardLayout>
+    <ImprovedDashboardLayout>
       <div className="space-y-8 pb-10">
         <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
           Test de Intereses Kuder
@@ -286,6 +286,6 @@ export default function KuderTest() {
           </Button>
         </div>
       </div>
-    </DashboardLayout>
+    </ImprovedDashboardLayout>
   );
 }

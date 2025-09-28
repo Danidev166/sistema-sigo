@@ -5,7 +5,7 @@ import estudianteService from "../services/estudianteService";
 
 import EstudianteHeader from "../components/EstudianteHeader";
 import EstudianteTabs from "../components/EstudianteTabs";
-import DashboardLayout from "../../../components/layout/DashboardLayout";
+import ImprovedDashboardLayout from "../../../components/layout/ImprovedDashboardLayout";
 
 export default function EstudianteDetalle() {
   const { id } = useParams();
@@ -29,30 +29,30 @@ export default function EstudianteDetalle() {
 
   if (loading) {
     return (
-      <DashboardLayout>
+      <ImprovedDashboardLayout>
         <div className="flex items-center justify-center h-64 text-gray-600 text-sm">
           Cargando estudiante...
         </div>
-      </DashboardLayout>
+      </ImprovedDashboardLayout>
     );
   }
 
   if (!estudiante) {
     return (
-      <DashboardLayout>
+      <ImprovedDashboardLayout>
         <div className="flex items-center justify-center h-64 text-red-500 text-sm">
           No se encontró el estudiante.
         </div>
-      </DashboardLayout>
+      </ImprovedDashboardLayout>
     );
   }
 
   return (
-    <DashboardLayout>
+    <ImprovedDashboardLayout>
       <div className="space-y-6 px-4 sm:px-6 lg:px-8 py-4">
         <EstudianteHeader estudiante={estudiante} />
         <EstudianteTabs idEstudiante={id} />
       </div>
-    </DashboardLayout>
+    </ImprovedDashboardLayout>
   );
 }

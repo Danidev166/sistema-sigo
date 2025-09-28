@@ -12,7 +12,7 @@
  */
 import { useEffect, useState } from "react";
 import usuarioService from "../services/usuarioService";
-import DashboardLayout from "../../../components/layout/DashboardLayout";
+import ImprovedDashboardLayout from "../../../components/layout/ImprovedDashboardLayout";
 import { PlusIcon } from "lucide-react";
 import UserTable from "../components/UserTable";
 import UserFormModal from "../components/UserFormModal";
@@ -138,7 +138,7 @@ export default function UsuariosPage() {
   };
 
   return (
-    <DashboardLayout>
+    <ImprovedDashboardLayout>
       <div className="space-y-6">
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
           <h1 className="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white">
@@ -188,6 +188,6 @@ export default function UsuariosPage() {
             : ''
         }
       />
-    </DashboardLayout>
+    </ImprovedDashboardLayout>
   );
 }

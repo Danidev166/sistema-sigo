@@ -12,7 +12,7 @@
  */
 // src/features/recursos/pages/MovimientosPage.jsx
 import { useEffect, useState } from "react";
-import DashboardLayout from "../../../components/layout/DashboardLayout";
+import ImprovedDashboardLayout from "../../../components/layout/ImprovedDashboardLayout";
 import Button from "../../../components/ui/Button";
 import { Plus } from "lucide-react";
 import movimientoService from "../services/movimientoService";
@@ -144,7 +144,7 @@ export default function MovimientosPage() {
   };
 
   return (
-    <DashboardLayout>
+    <ImprovedDashboardLayout>
       <div className="space-y-6">
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
           <h1 className="text-xl sm:text-2xl font-semibold text-gray-800 dark:text-white">
@@ -241,6 +241,6 @@ export default function MovimientosPage() {
           movimiento={movimientoAEditar}
         />
       </div>
-    </DashboardLayout>
+    </ImprovedDashboardLayout>
   );
 }
