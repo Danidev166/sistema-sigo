@@ -5,7 +5,7 @@ import estudianteService from "../../services/estudianteService";
 import { Button } from "../ui/Button";
 import { toast } from "react-hot-toast";
 import FamiliaModal from "./FamiliaModal";
-import DeleteConfirmModal from "../DeleteConfirmModal";
+import DeleteConfirmModal from "../intervenciones/DeleteConfirmModal";
 
 export default function Familia({ idEstudiante }) {
   const [comunicaciones, setComunicaciones] = useState([]);

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { X, Send, Calendar, Clock, MapPin, User, FileText } from 'lucide-react';
-import { Button } from '../../ui/Button';
+import { Button } from '../ui/Button';
 import { toast } from 'react-hot-toast';
 
 const FamiliaModal = ({ isOpen, onClose, onSubmit, estudiante, editingData = null }) => {
