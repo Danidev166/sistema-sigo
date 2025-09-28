@@ -1,3 +1,5 @@
+import { CheckCircle, Edit, Trash2 } from "lucide-react";
+
 /**
  * Componente de tabla para mostrar la agenda de entrevistas.
  *
@@ -51,27 +53,35 @@ export default function AgendaTable({ agendaItems, onEdit, onDelete, onRegistrar
                       {isRealizada ? "Realizada" : "Pendiente"}
                     </span>
                   </td>
-                  <td className="flex flex-wrap gap-2 px-2 py-1">
-                    <button
-                      onClick={() => onEdit(item)}
-                      className="bg-yellow-200 hover:bg-yellow-300 px-2 py-1 rounded text-sm"
-                    >
-                      Editar
-                    </button>
-                    <button
-                      onClick={() => onDelete(item)}
-                      className="bg-red-200 hover:bg-red-300 px-2 py-1 rounded text-sm"
-                    >
-                      Eliminar
-                    </button>
-                    {!isRealizada && (
+                  <td className="px-2 py-1">
+                    <div className="flex flex-wrap gap-1.5">
                       <button
-                        onClick={() => onRegistrarEntrevista(item)}
-                        className="bg-green-200 hover:bg-green-300 px-2 py-1 rounded text-sm"
+                        onClick={() => onEdit(item)}
+                        className="inline-flex items-center gap-1.5 bg-amber-100 hover:bg-amber-200 dark:bg-amber-900/30 dark:hover:bg-amber-900/50 text-amber-800 dark:text-amber-200 px-2.5 py-1.5 rounded-md text-xs font-medium transition-colors duration-200"
+                        title="Editar entrevista"
                       >
-                        Registrar Realizada
+                        <Edit size={12} />
+                        Editar
                       </button>
-                    )}
+                      <button
+                        onClick={() => onDelete(item)}
+                        className="inline-flex items-center gap-1.5 bg-red-100 hover:bg-red-200 dark:bg-red-900/30 dark:hover:bg-red-900/50 text-red-800 dark:text-red-200 px-2.5 py-1.5 rounded-md text-xs font-medium transition-colors duration-200"
+                        title="Eliminar entrevista"
+                      >
+                        <Trash2 size={12} />
+                        Eliminar
+                      </button>
+                      {!isRealizada && (
+                        <button
+                          onClick={() => onRegistrarEntrevista(item)}
+                          className="inline-flex items-center gap-1.5 bg-green-100 hover:bg-green-200 dark:bg-green-900/30 dark:hover:bg-green-900/50 text-green-800 dark:text-green-200 px-2.5 py-1.5 rounded-md text-xs font-medium transition-colors duration-200"
+                          title="Registrar como realizada"
+                        >
+                          <CheckCircle size={12} />
+                          Registrar
+                        </button>
+                      )}
+                    </div>
                   </td>
                 </tr>
               );
@@ -122,22 +132,28 @@ export default function AgendaTable({ agendaItems, onEdit, onDelete, onRegistrar
               <div className="flex flex-wrap gap-2 pt-2">
                 <button
                   onClick={() => onEdit(item)}
-                  className="bg-yellow-200 hover:bg-yellow-300 px-2 py-1 rounded text-sm flex-1"
+                  className="inline-flex items-center justify-center gap-1.5 bg-amber-100 hover:bg-amber-200 dark:bg-amber-900/30 dark:hover:bg-amber-900/50 text-amber-800 dark:text-amber-200 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 flex-1"
+                  title="Editar entrevista"
                 >
+                  <Edit size={14} />
                   Editar
                 </button>
                 <button
                   onClick={() => onDelete(item)}
-                  className="bg-red-200 hover:bg-red-300 px-2 py-1 rounded text-sm flex-1"
+                  className="inline-flex items-center justify-center gap-1.5 bg-red-100 hover:bg-red-200 dark:bg-red-900/30 dark:hover:bg-red-900/50 text-red-800 dark:text-red-200 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 flex-1"
+                  title="Eliminar entrevista"
                 >
+                  <Trash2 size={14} />
                   Eliminar
                 </button>
                 {!isRealizada && (
                   <button
                     onClick={() => onRegistrarEntrevista(item)}
-                    className="bg-green-200 hover:bg-green-300 px-2 py-1 rounded text-sm flex-1"
+                    className="inline-flex items-center justify-center gap-1.5 bg-green-100 hover:bg-green-200 dark:bg-green-900/30 dark:hover:bg-green-900/50 text-green-800 dark:text-green-200 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 flex-1"
+                    title="Registrar como realizada"
                   >
-                    Registrar Realizada
+                    <CheckCircle size={14} />
+                    Registrar
                   </button>
                 )}
               </div>
