@@ -2,7 +2,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { Plus, Edit, Trash2, Mail, Phone, Calendar, User, AlertCircle, Search, Filter, ChevronLeft, ChevronRight } from "lucide-react";
 import estudianteService from "../../services/estudianteService";
-import apoderadosService from "../../services/apoderadosService";
+import apoderadosService from "../../../../services/apoderadosService";
 import { Button } from "../ui/Button";
 import { toast } from "react-hot-toast";
 import FamiliaModal from "./FamiliaModal";
