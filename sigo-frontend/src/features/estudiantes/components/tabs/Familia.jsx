@@ -1,38 +1,71 @@
 // src/features/estudiantes/pages/tabs/Familia.jsx
 import { useEffect, useState, useCallback } from "react";
-import { Plus, Edit, Trash2, Mail, Phone, Calendar, User, AlertCircle } from "lucide-react";
+import { Plus, Edit, Trash2, Mail, Phone, Calendar, User, AlertCircle, Search, Filter, ChevronLeft, ChevronRight } from "lucide-react";
 import estudianteService from "../../services/estudianteService";
+import apoderadosService from "../../services/apoderadosService";
 import { Button } from "../ui/Button";
 import { toast } from "react-hot-toast";
 import FamiliaModal from "./FamiliaModal";
 import DeleteConfirmModal from "../intervenciones/DeleteConfirmModal";
 
 export default function Familia({ idEstudiante }) {
-  const [comunicaciones, setComunicaciones] = useState([]);
-  const [estudiante, setEstudiante] = useState(null);
+  const [apoderados, setApoderados] = useState([]);
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
   const [editingData, setEditingData] = useState(null);
   const [deleteTarget, setDeleteTarget] = useState(null);
+  
+  // Filtros y paginación
+  const [filtros, setFiltros] = useState({
+    curso: '',
+    nombre: '',
+    email: ''
+  });
+  const [paginacion, setPaginacion] = useState({
+    total: 0,
+    limit: 10,
+    offset: 0,
+    paginas: 0
+  });
+  const [paginaActual, setPaginaActual] = useState(1);
 
-  const fetchDatos = useCallback(async () => {
+  const fetchApoderados = useCallback(async () => {
     try {
       setLoading(true);
-      const [comunicacionesRes, estudianteRes] = await Promise.all([
-        estudianteService.getComunicacionFamilia(idEstudiante),
-        estudianteService.getEstudianteById(idEstudiante)
-      ]);
+      const offset = (paginaActual - 1) * paginacion.limit;
       
-      const ordenadas = comunicacionesRes.data.sort((a, b) => new Date(b.fecha_comunicacion) - new Date(a.fecha_comunicacion));
-      setComunicaciones(ordenadas);
-      setEstudiante(estudianteRes.data);
+      const response = await apoderadosService.obtenerApoderados({
+        ...filtros,
+        limit: paginacion.limit,
+        offset
+      });
+      
+      setApoderados(response.apoderados);
+      setPaginacion(response.paginacion);
     } catch (error) {
-      console.error("❌ Error al cargar datos:", error);
-      toast.error("Error al cargar comunicaciones familiares");
+      console.error("❌ Error al cargar apoderados:", error);
+      toast.error("Error al cargar lista de apoderados");
     } finally {
       setLoading(false);
     }
-  }, [idEstudiante]);
+  }, [filtros, paginaActual, paginacion.limit]);
+
+  // Manejar cambios en filtros
+  const handleFiltroChange = (campo, valor) => {
+    setFiltros(prev => ({ ...prev, [campo]: valor }));
+    setPaginaActual(1); // Reset a primera página
+  };
+
+  // Limpiar filtros
+  const limpiarFiltros = () => {
+    setFiltros({ curso: '', nombre: '', email: '' });
+    setPaginaActual(1);
+  };
+
+  // Cambiar página
+  const cambiarPagina = (nuevaPagina) => {
+    setPaginaActual(nuevaPagina);
+  };
 
   const handleSubmit = async (formData) => {
     try {
@@ -104,8 +137,8 @@ export default function Familia({ idEstudiante }) {
   };
 
   useEffect(() => {
-    fetchDatos();
-  }, [fetchDatos]);
+    fetchApoderados();
+  }, [fetchApoderados]);
 
   if (loading) {
     return (
@@ -124,7 +157,7 @@ export default function Familia({ idEstudiante }) {
             Comunicación con la Familia
           </h3>
           <p className="text-sm text-gray-600 dark:text-gray-400">
-            Gestiona las comunicaciones con el apoderado de {estudiante?.nombre} {estudiante?.apellido}
+            Gestiona las comunicaciones con todos los apoderados
           </p>
         </div>
         <Button
@@ -139,127 +172,179 @@ export default function Familia({ idEstudiante }) {
         </Button>
       </div>
 
-      {/* Información del Apoderado */}
-      {estudiante?.email_apoderado && (
-        <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
-          <h4 className="text-sm font-medium text-blue-800 dark:text-blue-200 mb-2">
-            📧 Información del Apoderado
-          </h4>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-            <div>
-              <span className="text-blue-700 dark:text-blue-300 font-medium">Nombre:</span>
-              <p className="text-blue-600 dark:text-blue-400">{estudiante.nombre_apoderado || 'No registrado'}</p>
-            </div>
-            <div>
-              <span className="text-blue-700 dark:text-blue-300 font-medium">Email:</span>
-              <p className="text-blue-600 dark:text-blue-400">{estudiante.email_apoderado}</p>
-            </div>
-            <div>
-              <span className="text-blue-700 dark:text-blue-300 font-medium">Teléfono:</span>
-              <p className="text-blue-600 dark:text-blue-400">{estudiante.telefono_apoderado || 'No registrado'}</p>
-            </div>
+      {/* Filtros */}
+      <div className="bg-white dark:bg-slate-800 rounded-lg shadow-sm border border-gray-200 dark:border-slate-700 p-4">
+        <div className="flex items-center gap-2 mb-4">
+          <Filter className="w-5 h-5 text-gray-500" />
+          <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300">Filtros de búsqueda</h4>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Curso
+            </label>
+            <input
+              type="text"
+              placeholder="Ej: 4A, 3B..."
+              value={filtros.curso}
+              onChange={(e) => handleFiltroChange('curso', e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 dark:text-white"
+            />
+          </div>
+          
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Nombre
+            </label>
+            <input
+              type="text"
+              placeholder="Nombre del apoderado o estudiante"
+              value={filtros.nombre}
+              onChange={(e) => handleFiltroChange('nombre', e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 dark:text-white"
+            />
+          </div>
+          
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Email
+            </label>
+            <input
+              type="text"
+              placeholder="Email del apoderado"
+              value={filtros.email}
+              onChange={(e) => handleFiltroChange('email', e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 dark:text-white"
+            />
           </div>
         </div>
-      )}
+        
+        <div className="flex justify-end mt-4">
+          <Button
+            onClick={limpiarFiltros}
+            className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
+            variant="ghost"
+          >
+            Limpiar filtros
+          </Button>
+        </div>
+      </div>
 
-      {/* Lista de Comunicaciones */}
+      {/* Lista de Apoderados */}
       <div className="space-y-4">
-        {comunicaciones.length === 0 ? (
+        {apoderados.length === 0 ? (
           <div className="text-center py-12 bg-gray-50 dark:bg-slate-800 rounded-lg">
             <Mail className="w-12 h-12 text-gray-400 mx-auto mb-4" />
             <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
-              No hay comunicaciones registradas
+              No se encontraron apoderados
             </h3>
-            <p className="text-gray-600 dark:text-gray-400 mb-4">
-              Comienza enviando una comunicación al apoderado
+            <p className="text-gray-600 dark:text-gray-400">
+              {Object.values(filtros).some(f => f) 
+                ? 'Intenta ajustar los filtros de búsqueda'
+                : 'No hay apoderados con email registrado'
+              }
             </p>
-            <Button
-              onClick={() => setModalOpen(true)}
-              className="bg-blue-600 text-white hover:bg-blue-700"
-            >
-              <Plus className="w-4 h-4 mr-2" />
-              Nueva Comunicación
-            </Button>
           </div>
         ) : (
-          comunicaciones.map((item) => (
-            <div
-              key={item.id}
-              className="bg-white dark:bg-slate-800 rounded-lg shadow-sm border border-gray-200 dark:border-slate-700 p-6 hover:shadow-md transition-shadow"
-            >
-              <div className="flex items-start justify-between">
-                <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-3">
-                    {getTipoIcon(item.tipo_comunicacion)}
-                    <h4 className="text-lg font-medium text-gray-900 dark:text-white">
-                      {item.asunto}
-                    </h4>
-                    <span className={`px-2 py-1 text-xs rounded-full ${
-                      item.estado === 'Enviado' 
-                        ? 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400'
-                        : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400'
-                    }`}>
-                      {item.estado}
-                    </span>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-                      <Calendar className="w-4 h-4" />
-                      <span>{new Date(item.fecha_comunicacion).toLocaleDateString('es-CL')}</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-                      {getMedioIcon(item.medio)}
-                      <span>{item.medio}</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-                      <User className="w-4 h-4" />
-                      <span>{item.responsable_id || 'No especificado'}</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-                      <span className="font-medium">Tipo:</span>
-                      <span>{item.tipo_comunicacion}</span>
-                    </div>
-                  </div>
-
-                  <div className="bg-gray-50 dark:bg-slate-700 p-3 rounded-lg">
-                    <p className="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-line">
-                      {item.contenido}
-                    </p>
-                  </div>
-
-                  {item.hora_reunion && (
-                    <div className="mt-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-                      <h5 className="text-sm font-medium text-blue-800 dark:text-blue-200 mb-1">
-                        📅 Detalles de la Reunión
-                      </h5>
-                      <div className="text-sm text-blue-700 dark:text-blue-300">
-                        <p><strong>Hora:</strong> {item.hora_reunion}</p>
-                        {item.lugar_reunion && <p><strong>Lugar:</strong> {item.lugar_reunion}</p>}
+          <>
+            {apoderados.map((apoderado) => (
+              <div
+                key={apoderado.estudiante_id}
+                className="bg-white dark:bg-slate-800 rounded-lg shadow-sm border border-gray-200 dark:border-slate-700 p-6 hover:shadow-md transition-shadow"
+              >
+                <div className="flex items-start justify-between">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center">
+                        <User className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                      </div>
+                      <div>
+                        <h4 className="text-lg font-medium text-gray-900 dark:text-white">
+                          {apoderado.nombre_apoderado || 'Sin nombre'}
+                        </h4>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                          Apoderado de {apoderado.estudiante_nombre} {apoderado.estudiante_apellido}
+                        </p>
                       </div>
                     </div>
-                  )}
-                </div>
 
-                <div className="flex items-center gap-2 ml-4">
-                  <button
-                    onClick={() => handleEdit(item)}
-                    className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors"
-                    title="Editar"
-                  >
-                    <Edit className="w-4 h-4" />
-                  </button>
-                  <button
-                    onClick={() => setDeleteTarget(item)}
-                    className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
-                    title="Eliminar"
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </button>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                      <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+                        <Mail className="w-4 h-4" />
+                        <span>{apoderado.email_apoderado}</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+                        <Phone className="w-4 h-4" />
+                        <span>{apoderado.telefono_apoderado || 'No registrado'}</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+                        <Calendar className="w-4 h-4" />
+                        <span>{apoderado.curso}</span>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
+                      <span>Comunicaciones: {apoderado.total_comunicaciones}</span>
+                      {apoderado.ultima_comunicacion && (
+                        <span>Última: {new Date(apoderado.ultima_comunicacion).toLocaleDateString('es-CL')}</span>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2 ml-4">
+                    <button
+                      onClick={() => {
+                        setEditingData({ 
+                          id_estudiante: apoderado.estudiante_id,
+                          nombre_apoderado: apoderado.nombre_apoderado,
+                          email_apoderado: apoderado.email_apoderado
+                        });
+                        setModalOpen(true);
+                      }}
+                      className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors"
+                      title="Enviar comunicación"
+                    >
+                      <Mail className="w-4 h-4" />
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))
+            ))}
+
+            {/* Paginación */}
+            {paginacion.paginas > 1 && (
+              <div className="flex items-center justify-between bg-white dark:bg-slate-800 rounded-lg shadow-sm border border-gray-200 dark:border-slate-700 p-4">
+                <div className="text-sm text-gray-700 dark:text-gray-300">
+                  Mostrando {apoderados.length} de {paginacion.total} apoderados
+                </div>
+                
+                <div className="flex items-center gap-2">
+                  <Button
+                    onClick={() => cambiarPagina(paginaActual - 1)}
+                    disabled={paginaActual === 1}
+                    className="p-2"
+                    variant="ghost"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                  </Button>
+                  
+                  <span className="text-sm text-gray-700 dark:text-gray-300">
+                    Página {paginaActual} de {paginacion.paginas}
+                  </span>
+                  
+                  <Button
+                    onClick={() => cambiarPagina(paginaActual + 1)}
+                    disabled={paginaActual === paginacion.paginas}
+                    className="p-2"
+                    variant="ghost"
+                  >
+                    <ChevronRight className="w-4 h-4" />
+                  </Button>
+                </div>
+              </div>
+            )}
+          </>
         )}
       </div>
 
@@ -271,8 +356,8 @@ export default function Familia({ idEstudiante }) {
           setEditingData(null);
         }}
         onSubmit={handleSubmit}
-        estudiante={estudiante}
-        editingData={editingData}
+        estudiante={editingData}
+        editingData={null}
       />
 
       <DeleteConfirmModal
