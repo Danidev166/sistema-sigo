@@ -18,6 +18,8 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../../context/useAuth';
 import useNotifications from '../../hooks/useNotifications';
+import SigoLogo from '../ui/SigoLogo';
+import '../../styles/sidebar-scroll.css';
 
 /**
  * Sidebar estandarizado con comportamiento consistente
@@ -104,16 +106,15 @@ const StandardizedSidebar = memo(({ isAdmin, handleLogout, isOpen, onClose }) =>
   `;
 
   return (
-    <aside className={sidebarClasses} data-sidebar>
+    <aside className={`${sidebarClasses} sidebar-container`} data-sidebar>
       {/* Header con búsqueda */}
       <div className="p-4 sm:p-6 border-b border-gray-700">
         <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center shadow-lg">
-              <span className="text-white font-bold text-sm tracking-tight">S</span>
-            </div>
-            <h1 className="text-nav-title">SIGO</h1>
-          </div>
+          <SigoLogo 
+            size={32} 
+            variant="default" 
+            className="flex-shrink-0"
+          />
           <button
             onClick={onClose}
             className="lg:hidden p-2 rounded-lg hover:bg-gray-800 transition-colors"
@@ -145,7 +146,7 @@ const StandardizedSidebar = memo(({ isAdmin, handleLogout, isOpen, onClose }) =>
       </div>
 
       {/* Navegación */}
-      <nav className="flex-1 overflow-y-auto py-4">
+      <nav className="flex-1 overflow-y-auto py-4 sidebar-nav">
         <div className="px-4 space-y-6">
           {Object.entries(filteredGroups).map(([groupKey, items]) => {
             const groupLabels = {
@@ -215,9 +216,16 @@ const StandardizedSidebar = memo(({ isAdmin, handleLogout, isOpen, onClose }) =>
           Cerrar Sesión
         </button>
         
-        <p className="text-institutional-xs text-gray-500 mt-4 text-center">
-          v1.0 · SIGO © 2025
-        </p>
+        <div className="flex items-center justify-center gap-2 mt-4">
+          <SigoLogo 
+            size={16} 
+            variant="icon-only" 
+            className="text-gray-500"
+          />
+          <p className="text-institutional-xs text-gray-500">
+            v1.0 · SIGO © 2025
+          </p>
+        </div>
       </div>
     </aside>
   );

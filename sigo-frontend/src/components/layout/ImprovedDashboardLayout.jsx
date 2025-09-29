@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import StandardizedSidebar from "./StandardizedSidebar";
 import Footer from "./Footer";
 import MobileMenuButton from "../ui/MobileMenuButton";
+import SigoLogo from "../ui/SigoLogo";
 import { useAuth } from "../../context/useAuth";
 import "../../styles/sidebar-consistency.css";
 
@@ -64,7 +65,14 @@ export default function ImprovedDashboardLayout({ children }) {
         {/* Top bar simplificado */}
         <header className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm border-b border-gray-200/50 dark:border-gray-700/50 lg:hidden">
           <div className="flex items-center justify-between px-4 py-3">
-            <MobileMenuButton onClick={() => setSidebarOpen(true)} />
+            <div className="flex items-center gap-3">
+              <MobileMenuButton onClick={() => setSidebarOpen(true)} />
+              <SigoLogo 
+                size={24} 
+                variant="compact" 
+                className="text-gray-900 dark:text-white"
+              />
+            </div>
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center shadow-lg">
                 <span className="text-white font-bold text-sm">
