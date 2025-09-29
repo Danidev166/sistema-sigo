@@ -34,6 +34,7 @@ router.get("/lista-simple", async (req, res) => {
 // Rutas de apoderados
 router.get("/apoderados", EstudianteController.obtenerApoderados);
 router.get("/apoderados/estadisticas", EstudianteController.obtenerEstadisticasApoderados);
+router.get("/cursos", EstudianteController.obtenerCursos);
 
 // Otras rutas de estudiantes...
 router.get("/", EstudianteController.obtenerTodos);

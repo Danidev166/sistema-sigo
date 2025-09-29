@@ -44,6 +44,19 @@ const apoderadosService = {
       console.error('Error al obtener estadísticas:', error);
       throw error;
     }
+  },
+
+  /**
+   * Obtener lista de cursos disponibles
+   */
+  async obtenerCursos() {
+    try {
+      const response = await axios.get('/estudiantes/cursos');
+      return response.data;
+    } catch (error) {
+      console.error('Error al obtener cursos:', error);
+      throw error;
+    }
   }
 };
 

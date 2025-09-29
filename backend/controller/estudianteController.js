@@ -180,7 +180,8 @@ static async obtenerTodos(_req, res, next) {
       
       logger.info('📋 Obteniendo lista de apoderados:', { curso, nombre, email, limit, offset });
       
-      const pool = await EstudianteModel.getPool();
+      const { getPool } = require('../config/db');
+      const pool = await getPool();
       
       // Construir query con filtros
       let whereConditions = [];
@@ -294,7 +295,8 @@ static async obtenerTodos(_req, res, next) {
    */
   static async obtenerEstadisticasApoderados(req, res, next) {
     try {
-      const pool = await EstudianteModel.getPool();
+      const { getPool } = require('../config/db');
+      const pool = await getPool();
       
       // Estadísticas por curso
       const cursoQuery = `
@@ -330,6 +332,36 @@ static async obtenerTodos(_req, res, next) {
       
     } catch (error) {
       logger.error('❌ Error al obtener estadísticas de apoderados:', error);
+      next(error);
+    }
+  }
+
+  /**
+   * Obtener lista de cursos disponibles
+   * GET /api/estudiantes/cursos
+   */
+  static async obtenerCursos(req, res, next) {
+    try {
+      const { getPool } = require('../config/db');
+      const pool = await getPool();
+      
+      const query = `
+        SELECT DISTINCT e.curso
+        FROM estudiantes e
+        WHERE e.estado = 'Activo' 
+          AND e.email_apoderado IS NOT NULL 
+          AND e.email_apoderado != ''
+        ORDER BY e.curso
+      `;
+      
+      const result = await pool.request().query(query);
+      
+      res.json({
+        cursos: result.recordset.map(row => row.curso)
+      });
+      
+    } catch (error) {
+      logger.error('❌ Error al obtener cursos:', error);
       next(error);
     }
   }

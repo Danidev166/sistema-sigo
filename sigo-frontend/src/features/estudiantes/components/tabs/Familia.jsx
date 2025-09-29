@@ -28,6 +28,7 @@ export default function Familia({ idEstudiante }) {
     paginas: 0
   });
   const [paginaActual, setPaginaActual] = useState(1);
+  const [cursos, setCursos] = useState([]);
 
   const fetchApoderados = useCallback(async () => {
     try {
@@ -49,6 +50,16 @@ export default function Familia({ idEstudiante }) {
       setLoading(false);
     }
   }, [filtros, paginaActual, paginacion.limit]);
+
+  // Cargar cursos disponibles
+  const fetchCursos = useCallback(async () => {
+    try {
+      const response = await apoderadosService.obtenerCursos();
+      setCursos(response.cursos);
+    } catch (error) {
+      console.error('Error al cargar cursos:', error);
+    }
+  }, []);
 
   // Manejar cambios en filtros
   const handleFiltroChange = (campo, valor) => {
@@ -137,8 +148,9 @@ export default function Familia({ idEstudiante }) {
   };
 
   useEffect(() => {
+    fetchCursos();
     fetchApoderados();
-  }, [fetchApoderados]);
+  }, [fetchCursos, fetchApoderados]);
 
   if (loading) {
     return (
@@ -184,13 +196,18 @@ export default function Familia({ idEstudiante }) {
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Curso
             </label>
-            <input
-              type="text"
-              placeholder="Ej: 4A, 3B..."
+            <select
               value={filtros.curso}
               onChange={(e) => handleFiltroChange('curso', e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 dark:text-white"
-            />
+            >
+              <option value="">Todos los cursos</option>
+              {cursos.map((curso) => (
+                <option key={curso} value={curso}>
+                  {curso}
+                </option>
+              ))}
+            </select>
           </div>
           
           <div>
