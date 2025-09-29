@@ -149,7 +149,7 @@ const enviarCitacionReunion = async ({ to, apoderado, estudiante, fecha, hora, l
     return;
   }
 
-  const transporter = nodemailer.createTransporter({
+  const transporter = nodemailer.createTransport({
     host: process.env.MAIL_HOST,
     port: parseInt(process.env.MAIL_PORT || "587"),
     secure: process.env.MAIL_SECURE === "true",

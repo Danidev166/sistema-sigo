@@ -92,3 +92,4 @@ async function testComunicacionFamilia() {
 
 // Ejecutar pruebas
 testComunicacionFamilia();
+
