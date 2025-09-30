@@ -94,9 +94,9 @@ export default function Consolidado({ idEstudiante }) {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <section className="bg-white dark:bg-slate-800 p-4 rounded-lg shadow">
           <h3 className="text-lg font-semibold text-blue-700 mb-2">Resumen Académico</h3>
-          <p><strong>Promedio:</strong> {historial.promedio_general ?? '—'}</p>
+          <p><strong>Promedio:</strong> {historial.promedio ?? '—'}</p>
           <p><strong>Asistencia registrada:</strong> {historial.asistencia ?? '—'}%</p>
-          <p><strong>Observaciones:</strong> {historial.observaciones_academicas || '—'}</p>
+          <p><strong>Observaciones:</strong> {historial.observaciones || '—'}</p>
         </section>
 
         <section className="bg-white dark:bg-slate-800 p-4 rounded-lg shadow">
@@ -105,7 +105,7 @@ export default function Consolidado({ idEstudiante }) {
             <ul className="list-disc pl-5 text-sm space-y-1">
               {conducta.slice(0, 3).map((item, i) => (
                 <li key={i}>
-                  {item.categoria || 'Sin categoría'}: {item.observacion?.slice(0, 60) || '—'} ({format(new Date(item.fecha), "dd/MM/yyyy")})
+                  {item.tipo_conducta || 'Sin categoría'}: {item.descripcion?.slice(0, 60) || '—'} ({format(new Date(item.fecha_registro), "dd/MM/yyyy")})
                 </li>
               ))}
             </ul>
@@ -120,7 +120,7 @@ export default function Consolidado({ idEstudiante }) {
             <ul className="list-disc pl-5 text-sm space-y-1">
               {evaluaciones.slice(0, 2).map((evalua, i) => (
                 <li key={i} className="break-words">
-                  <strong>{evalua.tipo_evaluacion}</strong>: {evalua.resultados?.slice(0, 60) || '—'}...
+                  <strong>{evalua.tipo_evaluacion}</strong>: {evalua.resultados || '—'} (Puntaje: {evalua.resultados})
                 </li>
               ))}
             </ul>
@@ -146,7 +146,7 @@ export default function Consolidado({ idEstudiante }) {
             <ul className="list-disc pl-5 text-sm space-y-1">
               {intervenciones.slice(0, 2).map((intv, i) => (
                 <li key={i}>
-                  {intv.accion} - {intv.meta?.slice(0, 40) || '—'}...
+                  {intv.tipo_intervencion} - {intv.descripcion?.slice(0, 40) || '—'}...
                 </li>
               ))}
             </ul>
@@ -160,7 +160,7 @@ export default function Consolidado({ idEstudiante }) {
           <ul className="list-disc pl-5 text-sm space-y-1">
             {familia.slice(0, 2).map((com, i) => (
               <li key={i}>
-                {format(new Date(com.fecha), "dd/MM/yyyy")} - {com.tipo}: {com.detalle?.slice(0, 50) || '—'}...
+                {format(new Date(com.fecha_comunicacion), "dd/MM/yyyy")} - {com.tipo_comunicacion}: {com.detalle?.slice(0, 50) || '—'}...
               </li>
             ))}
           </ul>
