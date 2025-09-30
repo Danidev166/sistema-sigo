@@ -77,25 +77,16 @@ const comunicacionFamiliaSchema = Joi.object({
       'any.only': 'El estado debe ser uno de: Enviado, Leído, Respondido, Pendiente'
     }),
 
-  // Campos específicos para citación a reunión
-  hora_reunion: Joi.when('tipo_comunicacion', {
-    is: 'Citación a Reunión',
-    then: Joi.string().pattern(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/).optional()
-      .messages({
-        'string.pattern.base': 'La hora debe estar en formato HH:MM'
-      }),
-    otherwise: Joi.string().optional()
-  }),
+  // Campos específicos para citación a reunión - SIEMPRE OPCIONALES
+  hora_reunion: Joi.string().allow('').optional()
+    .messages({
+      'string.base': 'La hora debe ser texto'
+    }),
 
-  lugar_reunion: Joi.when('tipo_comunicacion', {
-    is: 'Citación a Reunión',
-    then: Joi.string().min(5).max(100).optional()
-      .messages({
-        'string.min': 'El lugar debe tener al menos 5 caracteres',
-        'string.max': 'El lugar no puede exceder 100 caracteres'
-      }),
-    otherwise: Joi.string().optional()
-  }),
+  lugar_reunion: Joi.string().allow('').optional()
+    .messages({
+      'string.base': 'El lugar debe ser texto'
+    }),
 
   enviar_email: Joi.boolean().default(false)
     .messages({

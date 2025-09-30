@@ -95,7 +95,7 @@ export default function Familia({ idEstudiante }) {
 
       setModalOpen(false);
       setEditingData(null);
-      fetchDatos();
+      fetchApoderados();
     } catch (error) {
       console.error("❌ Error al guardar comunicación:", error);
       toast.error("Error al guardar la comunicación");
