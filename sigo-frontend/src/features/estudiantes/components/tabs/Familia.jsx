@@ -85,7 +85,7 @@ export default function Familia({ idEstudiante }) {
         id_estudiante: idEstudiante,
       };
 
-      if (editingData) {
+      if (editingData && editingData.id) {
         await estudianteService.actualizarComunicacion(editingData.id, data);
         toast.success("Comunicación actualizada correctamente");
       } else {
@@ -112,7 +112,7 @@ export default function Familia({ idEstudiante }) {
       await estudianteService.eliminarComunicacion(item.id);
       toast.success("Comunicación eliminada correctamente");
       setDeleteTarget(null);
-      fetchDatos();
+      fetchApoderados();
     } catch (error) {
       console.error("❌ Error al eliminar comunicación:", error);
       toast.error("Error al eliminar la comunicación");
@@ -312,11 +312,7 @@ export default function Familia({ idEstudiante }) {
                   <div className="flex items-center gap-2 ml-4">
                     <button
                       onClick={() => {
-                        setEditingData({ 
-                          id_estudiante: apoderado.estudiante_id,
-                          nombre_apoderado: apoderado.nombre_apoderado,
-                          email_apoderado: apoderado.email_apoderado
-                        });
+                        setEditingData(null); // Limpiar editingData para crear nueva comunicación
                         setModalOpen(true);
                       }}
                       className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors"
