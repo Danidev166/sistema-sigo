@@ -23,7 +23,7 @@ const ComunicacionFamiliaController = {
               hora: req.body.hora_reunion || 'Por confirmar',
               lugar: req.body.lugar_reunion || 'Liceo Técnico SIGO',
               motivo: req.body.asunto || 'Reunión de seguimiento académico',
-              profesional: req.body.responsable_id || 'Orientador/a'
+              profesional: req.body.responsable_nombre || 'Orientador/a'
             });
             
             logger.info(`📧 Email de citación enviado a: ${estudiante.email_apoderado}`);
@@ -92,7 +92,7 @@ const ComunicacionFamiliaController = {
               hora: req.body.hora_reunion || 'Por confirmar',
               lugar: req.body.lugar_reunion || 'Liceo Técnico SIGO',
               motivo: req.body.asunto || 'Reunión de seguimiento académico',
-              profesional: req.body.responsable_id || 'Orientador/a'
+              profesional: req.body.responsable_nombre || 'Orientador/a'
             });
             
             logger.info(`📧 Email de citación actualizada enviado a: ${estudiante.email_apoderado}`);

@@ -163,6 +163,11 @@ const logAccion = (accion) => {
  */
 const sanitizarDatos = (req, res, next) => {
   try {
+    // Asegurar que req.body existe
+    if (!req.body) {
+      req.body = {};
+    }
+
     // Sanitizar strings básicos
     const sanitizeString = (str) => {
       if (typeof str !== 'string') return str;
