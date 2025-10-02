@@ -94,16 +94,6 @@ export default function FamiliaSimple({ idEstudiante }) {
             Gestiona las comunicaciones con el apoderado del estudiante
           </p>
         </div>
-        <Button
-          onClick={() => {
-            setEditingData(null);
-            setModalOpen(true);
-          }}
-          className="bg-blue-600 text-white hover:bg-blue-700 flex items-center gap-2"
-        >
-          <Plus className="w-4 h-4" />
-          Nueva Comunicación
-        </Button>
       </div>
 
       {/* Información del Apoderado */}
