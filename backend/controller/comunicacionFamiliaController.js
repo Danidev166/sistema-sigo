@@ -8,30 +8,45 @@ const ComunicacionFamiliaController = {
     try {
       const nuevaComunicacion = await model.crear(req.body);
       
-      // Si es una citación a reunión, enviar email al apoderado
-      if (req.body.tipo_comunicacion === 'Citación a Reunión' && req.body.enviar_email) {
+      // Si se solicita envío de email, enviar al apoderado
+      if (req.body.enviar_email) {
         try {
           // Obtener datos del estudiante y apoderado
           const estudiante = await EstudianteModel.obtenerPorId(req.body.id_estudiante);
           
           if (estudiante && estudiante.email_apoderado) {
-            await enviarCitacionReunion({
-              to: estudiante.email_apoderado,
-              apoderado: estudiante.nombre_apoderado || 'Apoderado',
-              estudiante: `${estudiante.nombre} ${estudiante.apellido}`,
-              fecha: req.body.fecha_comunicacion,
-              hora: req.body.hora_reunion || 'Por confirmar',
-              lugar: req.body.lugar_reunion || 'Liceo Técnico SIGO',
-              motivo: req.body.asunto || 'Reunión de seguimiento académico',
-              profesional: req.body.responsable_nombre || 'Orientador/a'
-            });
+            // Si es citación a reunión, usar función específica
+            if (req.body.tipo_comunicacion === 'Citación a Reunión') {
+              await enviarCitacionReunion({
+                to: estudiante.email_apoderado,
+                apoderado: estudiante.nombre_apoderado || 'Apoderado',
+                estudiante: `${estudiante.nombre} ${estudiante.apellido}`,
+                fecha: req.body.fecha_comunicacion,
+                hora: req.body.hora_reunion || 'Por confirmar',
+                lugar: req.body.lugar_reunion || 'Liceo Técnico SIGO',
+                motivo: req.body.asunto || 'Reunión de seguimiento académico',
+                profesional: req.body.responsable_nombre || 'Orientador/a'
+              });
+            } else {
+              // Para otros tipos de comunicación, enviar email genérico
+              const { enviarEmailGenerico } = require("../utils/emailService");
+              await enviarEmailGenerico({
+                to: estudiante.email_apoderado,
+                apoderado: estudiante.nombre_apoderado || 'Apoderado',
+                estudiante: `${estudiante.nombre} ${estudiante.apellido}`,
+                asunto: req.body.asunto,
+                contenido: req.body.contenido,
+                tipo: req.body.tipo_comunicacion,
+                profesional: req.body.responsable_nombre || 'Orientador/a'
+              });
+            }
             
-            logger.info(`📧 Email de citación enviado a: ${estudiante.email_apoderado}`);
+            logger.info(`📧 Email enviado a: ${estudiante.email_apoderado}`);
           } else {
             logger.warn(`⚠️ No se pudo enviar email: estudiante sin email de apoderado`);
           }
         } catch (emailError) {
-          logger.error("❌ Error enviando email de citación:", emailError);
+          logger.error("❌ Error enviando email:", emailError);
           // No fallar la operación principal por error de email
         }
       }

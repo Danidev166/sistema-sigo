@@ -340,9 +340,114 @@ const enviarTestVocacionalQR = async ({ to, estudiante, testType, qrCodeUrl, tes
   }
 };
 
+const enviarEmailGenerico = async ({
+  to,
+  apoderado,
+  estudiante,
+  asunto,
+  contenido,
+  tipo,
+  profesional
+}) => {
+  // Simulación para entorno de desarrollo
+  if (process.env.NODE_ENV === "development") {
+    console.log("📨 [SIMULADO] Enviar email genérico a:", to);
+    console.log("👤 Apoderado:", apoderado);
+    console.log("👨‍🎓 Estudiante:", estudiante);
+    console.log("📌 Asunto:", asunto);
+    console.log("📝 Contenido:", contenido);
+    console.log("🏷️ Tipo:", tipo);
+    console.log("👨‍⚕️ Profesional:", profesional);
+    console.log("✅ Fin de simulación de email genérico");
+    return;
+  }
+
+  // Producción: enviar email real
+  const transporter = nodemailer.createTransport({
+    host: process.env.MAIL_HOST,
+    port: parseInt(process.env.MAIL_PORT || "587"),
+    secure: process.env.MAIL_SECURE === "true",
+    auth: {
+      user: process.env.MAIL_USER,
+      pass: process.env.MAIL_PASS,
+    },
+  });
+
+  const mailOptions = {
+    from: `"SIGO - Liceo Técnico" <${process.env.MAIL_USER}>`,
+    to: to,
+    subject: `[SIGO] ${asunto}`,
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #f9f9f9; padding: 20px;">
+        <div style="background-color: white; border-radius: 8px; padding: 30px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+          
+          <div style="text-align: center; margin-bottom: 30px;">
+            <h1 style="color: #2563eb; margin: 0; font-size: 24px;">SIGO - Liceo Técnico</h1>
+            <p style="color: #666; margin: 5px 0 0 0;">Sistema de Gestión y Orientación</p>
+          </div>
+
+          <div style="background-color: #f0f9ff; border-left: 4px solid #2563eb; padding: 20px; margin-bottom: 25px;">
+            <h2 style="color: #1e40af; margin: 0 0 10px 0; font-size: 18px;">${asunto}</h2>
+            <p style="margin: 0; color: #374151;">
+              <strong>Tipo de Comunicación:</strong> ${tipo}
+            </p>
+          </div>
+
+          <div style="margin-bottom: 25px;">
+            <h3 style="color: #374151; margin: 0 0 15px 0; font-size: 16px;">Estimado/a ${apoderado},</h3>
+            <div style="background-color: #f8fafc; padding: 20px; border-radius: 6px; border: 1px solid #e2e8f0;">
+              <p style="margin: 0 0 15px 0; line-height: 1.6; color: #374151;">
+                ${contenido.replace(/\n/g, '<br>')}
+              </p>
+            </div>
+          </div>
+
+          <div style="background-color: #f9fafb; padding: 20px; border-radius: 6px; margin-bottom: 25px;">
+            <h4 style="color: #374151; margin: 0 0 10px 0; font-size: 14px;">Información del Estudiante</h4>
+            <p style="margin: 0; color: #6b7280;">
+              <strong>Estudiante:</strong> ${estudiante}
+            </p>
+          </div>
+
+          <div style="background-color: #fef3c7; padding: 15px; border-radius: 6px; border: 1px solid #f59e0b; margin-bottom: 25px;">
+            <p style="margin: 0; color: #92400e; font-size: 14px;">
+              <strong>⚠️ Importante:</strong> Este es un mensaje oficial del Liceo Técnico SIGO. 
+              Por favor, mantenga este correo para sus registros.
+            </p>
+          </div>
+
+          <div style="text-align: center; padding: 20px; background-color: #f8fafc; border-radius: 6px;">
+            <p style="margin: 0; color: #6b7280; font-size: 14px;">
+              <strong>Profesional Responsable:</strong> ${profesional}
+            </p>
+            <p style="margin: 5px 0 0 0; color: #9ca3af; font-size: 12px;">
+              Liceo Técnico SIGO - Sistema de Gestión y Orientación
+            </p>
+          </div>
+
+          <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 30px 0;">
+          <p style="font-size: 12px; color: #9ca3af; text-align: center; margin: 0;">
+            Sistema SIGO - Liceo Técnico<br>
+            Este mensaje fue enviado automáticamente
+          </p>
+        </div>
+      </div>
+    `,
+  };
+
+  try {
+    await transporter.sendMail(mailOptions);
+    console.log(`✅ Email genérico enviado a: ${to}`);
+  } catch (error) {
+    console.error("❌ Error enviando email genérico:", error);
+    throw error;
+  }
+};
+
 module.exports = { 
   enviarCorreoAgenda, 
   enviarCodigoRecuperacion, 
   enviarTestVocacionalQR,
-  enviarCitacionReunion
+  enviarCitacionReunion,
+  enviarEmailGenerico
 };

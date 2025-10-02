@@ -250,7 +250,7 @@ const FamiliaModal = ({ isOpen, onClose, onSubmit, estudiante, editingData = nul
                   Enviar por correo electrónico al apoderado
                 </label>
                 <p className="text-xs text-green-600 dark:text-green-400">
-                  Se enviará un email profesional a: {estudiante?.email_apoderado || 'No disponible'}
+                  Se enviará un email profesional a: {apoderado?.email_apoderado || 'No disponible'}
                 </p>
               </div>
             </div>
