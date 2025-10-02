@@ -186,6 +186,7 @@ const routes = [
   { path: "/reportes-mejorado", module: "./routes/reportesMejorado" },
   { path: "/seguimiento-cronologico", module: "./routes/seguimientoCronologico" },
   { path: "/test", module: "./routes/test" },
+  { path: "/test-email", module: "./routes/test-email" },
 ];
 
 routes.forEach(({ path: routePath, module }) => {
