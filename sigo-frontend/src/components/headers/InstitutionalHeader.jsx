@@ -53,9 +53,10 @@ export const InstitutionalHeader = ({
                 transition: 'all 0.2s ease',
                 border: 'none',
                 cursor: 'pointer',
-                background: action.variant === 'secondary' ? 'white' : 'rgba(255, 255, 255, 0.2)',
-                color: action.variant === 'secondary' ? '#0ea5e9' : 'white',
-                border: action.variant === 'secondary' ? '1px solid #e2e8f0' : '1px solid rgba(255, 255, 255, 0.3)'
+                background: action.variant === 'secondary' ? '#f8fafc' : 'rgba(255, 255, 255, 0.9)',
+                color: action.variant === 'secondary' ? '#0ea5e9' : '#0ea5e9',
+                border: action.variant === 'secondary' ? '1px solid #e2e8f0' : '1px solid rgba(255, 255, 255, 0.8)',
+                boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
               }}
               disabled={action.disabled}
             >
