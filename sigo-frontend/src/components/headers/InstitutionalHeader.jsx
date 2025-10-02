@@ -32,21 +32,37 @@ export const InstitutionalHeader = ({
 
     return (
       <div className="header-actions">
-        {actions.map((action, index) => (
-          <button
-            key={index}
-            onClick={action.onClick}
-            className={`header-action-btn ${
-              action.variant === 'secondary' 
-                ? 'header-action-btn-secondary' 
-                : 'header-action-btn-primary'
-            }`}
-            disabled={action.disabled}
-          >
-            {action.icon && <action.icon size={16} />}
-            {action.label}
-          </button>
-        ))}
+          {actions.map((action, index) => (
+            <button
+              key={index}
+              onClick={action.onClick}
+              className={`header-action-btn ${
+                action.variant === 'secondary' 
+                  ? 'header-action-btn-secondary' 
+                  : 'header-action-btn-primary'
+              }`}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                padding: '0.75rem 1.25rem',
+                borderRadius: '8px',
+                fontSize: '0.875rem',
+                fontWeight: '500',
+                textDecoration: 'none',
+                transition: 'all 0.2s ease',
+                border: 'none',
+                cursor: 'pointer',
+                background: action.variant === 'secondary' ? 'white' : 'rgba(255, 255, 255, 0.2)',
+                color: action.variant === 'secondary' ? '#0ea5e9' : 'white',
+                border: action.variant === 'secondary' ? '1px solid #e2e8f0' : '1px solid rgba(255, 255, 255, 0.3)'
+              }}
+              disabled={action.disabled}
+            >
+              {action.icon && <action.icon size={16} />}
+              {action.label}
+            </button>
+          ))}
       </div>
     );
   };
@@ -199,6 +215,22 @@ export const TableHeader = ({
               key={index}
               onClick={filter.onClick}
               className="header-action-btn header-action-btn-secondary"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                padding: '0.75rem 1.25rem',
+                borderRadius: '8px',
+                fontSize: '0.875rem',
+                fontWeight: '500',
+                textDecoration: 'none',
+                transition: 'all 0.2s ease',
+                border: 'none',
+                cursor: 'pointer',
+                background: 'white',
+                color: '#0ea5e9',
+                border: '1px solid #e2e8f0'
+              }}
             >
               {filter.icon && <filter.icon size={14} />}
               {filter.label}
@@ -210,6 +242,22 @@ export const TableHeader = ({
               key={index}
               onClick={action.onClick}
               className="header-action-btn header-action-btn-primary"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                padding: '0.75rem 1.25rem',
+                borderRadius: '8px',
+                fontSize: '0.875rem',
+                fontWeight: '500',
+                textDecoration: 'none',
+                transition: 'all 0.2s ease',
+                border: 'none',
+                cursor: 'pointer',
+                background: action.variant === 'secondary' ? 'white' : 'rgba(255, 255, 255, 0.2)',
+                color: action.variant === 'secondary' ? '#0ea5e9' : 'white',
+                border: action.variant === 'secondary' ? '1px solid #e2e8f0' : '1px solid rgba(255, 255, 255, 0.3)'
+              }}
               disabled={action.disabled}
             >
               {action.icon && <action.icon size={16} />}
