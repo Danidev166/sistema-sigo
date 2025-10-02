@@ -3,7 +3,10 @@ import { X, Send, Calendar, Clock, MapPin, User, FileText } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { toast } from 'react-hot-toast';
 
-const FamiliaModal = ({ isOpen, onClose, onSubmit, estudiante, editingData = null }) => {
+const FamiliaModal = ({ isOpen, onClose, onSubmit, apoderado, editingData = null }) => {
+  // Debug: verificar datos del apoderado
+  console.log("🔍 FamiliaModal - apoderado recibido:", apoderado);
+  
   const [form, setForm] = useState({
     fecha_comunicacion: '',
     tipo_comunicacion: '',
@@ -100,7 +103,7 @@ const FamiliaModal = ({ isOpen, onClose, onSubmit, estudiante, editingData = nul
                 {editingData ? 'Editar Comunicación' : 'Nueva Comunicación'}
               </h2>
               <p className="text-institutional-sm text-gray-500 dark:text-gray-400">
-                {estudiante?.nombre} {estudiante?.apellido}
+                {apoderado?.nombre_apoderado || 'Apoderado'}
               </p>
             </div>
           </div>
