@@ -29,6 +29,13 @@ const estudianteService = {
 
   eliminarSeguimiento: (id) => api.delete(`/seguimiento-academico/${id}`),
 
+  // Nuevas funciones para estadísticas
+  getEstadisticasSeguimiento: (idEstudiante, anio) =>
+    api.get(`/seguimiento-academico/estadisticas/${idEstudiante}?anio=${anio}`),
+
+  getEstadisticasAsistencia: (idEstudiante, anio) =>
+    api.get(`/asistencia/estadisticas/${idEstudiante}?anio=${anio}`),
+
   // Historial Académico (resumen general)
   // Historial Académico (resumen general)
   getHistorialAcademico: (idEstudiante, anio) =>

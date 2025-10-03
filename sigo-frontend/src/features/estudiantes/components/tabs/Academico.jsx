@@ -1,5 +1,5 @@
 // src/features/estudiantes/components/tabs/Academico.jsx
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, memo } from "react";
 import { format } from "date-fns";
 import estudianteService from "../../services/estudianteService";
 import { toast } from "react-hot-toast";
@@ -8,47 +8,50 @@ import AcademicoFormModal from "../../components/academico/AcademicoFormModal";
 import SeguimientoFormModal from "../../components/academico/SeguimientoFormModal";
 import SeguimientoTable from "../../components/academico/SeguimientoTable";
 import DeleteConfirmModal from "../../components/academico/DeleteConfirmModal";
+import AcademicDashboard from "../../../../components/dashboard/AcademicDashboard";
+import useNotifications from "../../../../hooks/useNotifications";
+import useOptimizedData from "../../../../hooks/useOptimizedData";
+import MobileNavigation from "../../../../components/ui/MobileNavigation";
+import OptimizedLoading from "../../../../components/ui/OptimizedLoading";
+import ErrorBoundary from "../../../../components/ui/ErrorBoundary";
 
-export default function Academico({ idEstudiante }) {
+const Academico = memo(({ idEstudiante }) => {
   const [anio, setAnio] = useState(new Date().getFullYear());
-  const [historial, setHistorial] = useState([]);
-  const [seguimiento, setSeguimiento] = useState([]);
-  const [asistencias, setAsistencias] = useState([]);
-  const [loading, setLoading] = useState(true);
-
   const [modalHistorialOpen, setModalHistorialOpen] = useState(false);
   const [modalSeguimientoOpen, setModalSeguimientoOpen] = useState(false);
   const [editingSeguimiento, setEditingSeguimiento] = useState(null);
   const [deleteTarget, setDeleteTarget] = useState(null);
+  const [showDashboard, setShowDashboard] = useState(true);
 
-  const fetchData = useCallback(async () => {
-    setLoading(true);
-    try {
-      const [h, s, a] = await Promise.all([
-        estudianteService.getHistorialAcademico(idEstudiante, anio).catch(() => ({ data: [] })),
-        estudianteService.getSeguimientoAcademico(idEstudiante, anio).catch(() => ({ data: [] })),
-        estudianteService.getAsistencia(idEstudiante).catch(() => ({ data: [] }))
-      ]);
+  // Hook optimizado para datos
+  const {
+    data,
+    loading,
+    error,
+    fetchData,
+    refresh,
+    updateData,
+    calculatedStats
+  } = useOptimizedData(idEstudiante, anio);
 
-      setHistorial(h.data || []);
-      setSeguimiento(s.data || []);
-      setAsistencias(a.data || []);
-    } catch (error) {
-      console.error("Error al cargar datos académicos:", error);
-      toast.error("Error al cargar datos académicos");
-      setHistorial([]);
-      setSeguimiento([]);
-      setAsistencias([]);
-    } finally {
-      setLoading(false);
-    }
-  }, [idEstudiante, anio]);
+  // Hook de notificaciones
+  const { processData: processNotifications } = useNotifications();
 
+  // Extraer datos del hook optimizado
+  const {
+    historial,
+    seguimiento,
+    asistencias,
+    estadisticasSeguimiento,
+    estadisticasAsistencia
+  } = data;
+
+  // Procesar notificaciones cuando cambien los datos
   useEffect(() => {
-    if (idEstudiante) {
-      fetchData();
+    if (seguimiento.length > 0 || asistencias.length > 0) {
+      processNotifications(seguimiento, asistencias, estadisticasSeguimiento, estadisticasAsistencia);
     }
-  }, [fetchData, idEstudiante]);
+  }, [seguimiento, asistencias, estadisticasSeguimiento, estadisticasAsistencia, processNotifications]);
 
   const handleGuardarSeguimiento = async (formData) => {
     try {
@@ -61,7 +64,7 @@ export default function Academico({ idEstudiante }) {
       }
       setModalSeguimientoOpen(false);
       setEditingSeguimiento(null);
-      fetchData();
+      refresh();
     } catch (error) {
       console.error("Error al guardar seguimiento:", error);
       toast.error("Error al guardar seguimiento");
@@ -73,7 +76,7 @@ export default function Academico({ idEstudiante }) {
       await estudianteService.eliminarSeguimiento(deleteTarget.id);
       toast.success("Seguimiento eliminado");
       setDeleteTarget(null);
-      fetchData();
+      refresh();
     } catch (error) {
       console.error("Error al eliminar seguimiento:", error);
       toast.error("Error al eliminar seguimiento");
@@ -97,15 +100,165 @@ export default function Academico({ idEstudiante }) {
 
       toast.success("✅ Historial guardado correctamente");
       setModalHistorialOpen(false);
-      fetchData();
+      refresh();
     } catch (error) {
       console.error("❌ Error al registrar historial:", error);
       toast.error("No se pudo guardar el historial");
     }
   };
 
+  // Mostrar loading optimizado
+  if (loading) {
+    return <OptimizedLoading type="academic" message="Cargando datos académicos..." size="lg" />;
+  }
+
+  // Mostrar error si existe
+  if (error) {
+    return (
+      <ErrorBoundary
+        fallback={(error, retry) => (
+          <div className="text-center p-8">
+            <h3 className="text-lg font-semibold text-red-600 mb-4">
+              Error al cargar datos académicos
+            </h3>
+            <p className="text-gray-600 mb-4">{error?.message || 'Error desconocido'}</p>
+            <button
+              onClick={retry}
+              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+            >
+              Reintentar
+            </button>
+          </div>
+        )}
+      />
+    );
+  }
+
   return (
-    <div className="space-y-10">
+    <ErrorBoundary>
+      <div className="space-y-10">
+      {/* === CONTROLES DE VISTA === */}
+      <div className="bg-white dark:bg-slate-800 shadow rounded-lg p-4 sm:p-6">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <h2 className="text-lg sm:text-xl font-semibold text-gray-800 dark:text-white">
+            📊 Análisis Académico
+          </h2>
+          
+          <div className="flex gap-2">
+            <button
+              onClick={() => setShowDashboard(true)}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                showDashboard
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-slate-700 dark:text-gray-300 dark:hover:bg-slate-600'
+              }`}
+            >
+              📊 Dashboard
+            </button>
+            <button
+              onClick={() => setShowDashboard(false)}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                !showDashboard
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-slate-700 dark:text-gray-300 dark:hover:bg-slate-600'
+              }`}
+            >
+              📋 Tabla de Datos
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* === DASHBOARD CON GRÁFICOS === */}
+      {showDashboard && (
+        <AcademicDashboard
+          idEstudiante={idEstudiante}
+          seguimientoData={seguimiento}
+          asistenciaData={asistencias}
+          estadisticasSeguimiento={estadisticasSeguimiento}
+          estadisticasAsistencia={estadisticasAsistencia}
+          onRefresh={refresh}
+        />
+      )}
+
+      {/* === VISTA DE TABLA DE DATOS === */}
+      {!showDashboard && (
+        <>
+          {/* === ESTADÍSTICAS GENERALES === */}
+          {(estadisticasSeguimiento || estadisticasAsistencia) && (
+            <div className="bg-white dark:bg-slate-800 shadow rounded-lg p-4 sm:p-6">
+              <h2 className="text-lg sm:text-xl font-semibold text-gray-800 dark:text-white mb-4">
+                📊 Estadísticas Generales
+              </h2>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                {/* Estadísticas de Seguimiento */}
+                {estadisticasSeguimiento && (
+                  <>
+                    <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
+                      <div className="text-2xl font-bold text-blue-900 dark:text-blue-100">
+                        {estadisticasSeguimiento.promedio_general || 'N/A'}
+                      </div>
+                      <div className="text-sm text-blue-600 dark:text-blue-300">
+                        Promedio General
+                      </div>
+                      <div className="text-xs text-blue-500 dark:text-blue-400 mt-1">
+                        {estadisticasSeguimiento.total_notas} notas registradas
+                      </div>
+                    </div>
+                    
+                    <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg">
+                      <div className="text-2xl font-bold text-green-900 dark:text-green-100">
+                        {estadisticasSeguimiento.asignaturas_unicas || 0}
+                      </div>
+                      <div className="text-sm text-green-600 dark:text-green-300">
+                        Asignaturas
+                      </div>
+                      <div className="text-xs text-green-500 dark:text-green-400 mt-1">
+                        {estadisticasSeguimiento.tendencia === 'mejorando' ? '📈 Mejorando' :
+                         estadisticasSeguimiento.tendencia === 'empeorando' ? '📉 Empeorando' :
+                         estadisticasSeguimiento.tendencia === 'estable' ? '➡️ Estable' : '📊 Sin datos'}
+                      </div>
+                    </div>
+                  </>
+                )}
+
+                {/* Estadísticas de Asistencia */}
+                {estadisticasAsistencia && (
+                  <>
+                    <div className="bg-purple-50 dark:bg-purple-900/20 p-4 rounded-lg">
+                      <div className="text-2xl font-bold text-purple-900 dark:text-purple-100">
+                        {estadisticasAsistencia.porcentaje_asistencia || 0}%
+                      </div>
+                      <div className="text-sm text-purple-600 dark:text-purple-300">
+                        Asistencia
+                      </div>
+                      <div className="text-xs text-purple-500 dark:text-purple-400 mt-1">
+                        {estadisticasAsistencia.presentes} presentes, {estadisticasAsistencia.ausentes} ausentes
+                      </div>
+                    </div>
+                    
+                    <div className="bg-orange-50 dark:bg-orange-900/20 p-4 rounded-lg">
+                      <div className="text-2xl font-bold text-orange-900 dark:text-orange-100">
+                        {estadisticasAsistencia.total_registros || 0}
+                      </div>
+                      <div className="text-sm text-orange-600 dark:text-orange-300">
+                        Total Registros
+                      </div>
+                      <div className="text-xs text-orange-500 dark:text-orange-400 mt-1">
+                        {estadisticasAsistencia.tendencia === 'mejorando' ? '📈 Mejorando' :
+                         estadisticasAsistencia.tendencia === 'empeorando' ? '📉 Empeorando' :
+                         estadisticasAsistencia.tendencia === 'estable' ? '➡️ Estable' : '📊 Sin datos'}
+                      </div>
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
+          )}
+        </>
+      )}
+
       {/* === HISTORIAL ACADÉMICO === */}
       <div className="bg-white dark:bg-slate-800 shadow rounded-lg p-4 sm:p-6">
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-4">
@@ -223,6 +376,39 @@ export default function Academico({ idEstudiante }) {
         onConfirm={handleEliminarSeguimiento}
         title="¿Deseas eliminar este seguimiento?"
       />
-    </div>
+
+      {/* Navegación móvil */}
+      <MobileNavigation
+        showDashboard={showDashboard}
+        onToggleView={setShowDashboard}
+        onRefresh={refresh}
+        onExport={() => {
+          // Función de exportación básica para móvil
+          const data = {
+            seguimiento,
+            asistencias,
+            estadisticas: {
+              seguimiento: estadisticasSeguimiento,
+              asistencia: estadisticasAsistencia
+            }
+          };
+          
+          const dataStr = JSON.stringify(data, null, 2);
+          const dataBlob = new Blob([dataStr], { type: 'application/json' });
+          const url = URL.createObjectURL(dataBlob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = `datos-academicos-${idEstudiante}-${new Date().toISOString().split('T')[0]}.json`;
+          link.click();
+          URL.revokeObjectURL(url);
+        }}
+        isLoading={loading}
+      />
+      </div>
+    </ErrorBoundary>
   );
-}
+});
+
+Academico.displayName = 'Academico';
+
+export default Academico;

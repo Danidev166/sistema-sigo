@@ -11,6 +11,9 @@ router.use(verifyToken);
 // 🚀 Ruta de gráfico (debe ir antes que las genéricas)
 router.get("/graficos/asistencia-mensual", controller.asistenciaMensual);
 
+// 📊 Ruta de estadísticas
+router.get("/estadisticas/:id", controller.obtenerEstadisticas);
+
 // CRUD clásico
 router.post("/", validateBody(schema), controller.crear);
 router.get("/", controller.obtenerTodos);

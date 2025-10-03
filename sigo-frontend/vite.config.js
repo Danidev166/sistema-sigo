@@ -46,6 +46,10 @@ export default defineConfig({
         '**/*.config.js'
       ]
     },
+    // Configurar React en modo desarrollo para tests
+    define: {
+      'process.env.NODE_ENV': '"development"'
+    },
     // Puedes dejar deps como lo tienes, o simplificar.
     // deps: { inline: ['axios'] } también funciona.
     deps: {

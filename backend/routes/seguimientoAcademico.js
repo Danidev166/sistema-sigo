@@ -10,6 +10,7 @@ router.use(verifyToken);
 
 // Específicas primero
 router.get("/estudiante/:id", controller.obtenerPorEstudiante);
+router.get("/estadisticas/:id", controller.obtenerEstadisticas);
 
 // CRUD
 router.post("/", validateBody(schema), controller.crear);
