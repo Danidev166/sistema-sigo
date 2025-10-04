@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BarChart3, TrendingUp, Calendar, BookOpen, Users, Download, RefreshCw, FileText } from 'lucide-react';
 import AcademicPerformanceChart from '../charts/AcademicPerformanceChart';
 import AttendanceChart from '../charts/AttendanceChart';
-import exportToPDF from '../../services/exportService';
+// import exportToPDF from '../../services/exportService';
 
 const AcademicDashboard = ({ 
   idEstudiante, 
@@ -78,31 +78,35 @@ const AcademicDashboard = ({
   };
 
   const handleExportPDF = (type) => {
-    const estudianteInfo = {
-      nombre: `Estudiante ${idEstudiante}`,
-      curso: 'Curso Actual'
-    };
-
-    let pdf;
+    // Temporalmente deshabilitado para debug
+    console.log('Exportación PDF temporalmente deshabilitada:', type);
+    return;
     
-    switch (type) {
-      case 'seguimiento':
-        pdf = exportToPDF.seguimientoAcademico(seguimientoData, estudianteInfo);
-        break;
-      case 'asistencia':
-        pdf = exportToPDF.asistencia(asistenciaData, estudianteInfo);
-        break;
-      case 'dashboard':
-        pdf = exportToPDF.dashboardCompleto({
-          seguimiento: seguimientoData,
-          asistencia: asistenciaData
-        }, estudianteInfo);
-        break;
-      default:
-        return;
-    }
+    // const estudianteInfo = {
+    //   nombre: `Estudiante ${idEstudiante}`,
+    //   curso: 'Curso Actual'
+    // };
 
-    pdf.save(`reporte-${type}-${idEstudiante}-${new Date().toISOString().split('T')[0]}.pdf`);
+    // let pdf;
+    
+    // switch (type) {
+    //   case 'seguimiento':
+    //     pdf = exportToPDF.seguimientoAcademico(seguimientoData, estudianteInfo);
+    //     break;
+    //   case 'asistencia':
+    //     pdf = exportToPDF.asistencia(asistenciaData, estudianteInfo);
+    //     break;
+    //   case 'dashboard':
+    //     pdf = exportToPDF.dashboardCompleto({
+    //       seguimiento: seguimientoData,
+    //       asistencia: asistenciaData
+    //     }, estudianteInfo);
+    //     break;
+    //   default:
+    //     return;
+    // }
+
+    // pdf.save(`reporte-${type}-${idEstudiante}-${new Date().toISOString().split('T')[0]}.pdf`);
   };
 
   return (
