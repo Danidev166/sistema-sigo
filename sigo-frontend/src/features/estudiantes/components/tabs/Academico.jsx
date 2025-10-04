@@ -8,12 +8,12 @@ import AcademicoFormModal from "../../components/academico/AcademicoFormModal";
 import SeguimientoFormModal from "../../components/academico/SeguimientoFormModal";
 import SeguimientoTable from "../../components/academico/SeguimientoTable";
 import DeleteConfirmModal from "../../components/academico/DeleteConfirmModal";
-import AcademicDashboard from "../../../../components/dashboard/AcademicDashboard";
-import useNotifications from "../../../../hooks/useNotifications";
-import useOptimizedData from "../../../../hooks/useOptimizedData";
-import MobileNavigation from "../../../../components/ui/MobileNavigation";
-import OptimizedLoading from "../../../../components/ui/OptimizedLoading";
-import ErrorBoundary from "../../../../components/ui/ErrorBoundary";
+// import AcademicDashboard from "../../../../components/dashboard/AcademicDashboard";
+// import useNotifications from "../../../../hooks/useNotifications";
+// import useOptimizedData from "../../../../hooks/useOptimizedData";
+// import MobileNavigation from "../../../../components/ui/MobileNavigation";
+// import OptimizedLoading from "../../../../components/ui/OptimizedLoading";
+// import ErrorBoundary from "../../../../components/ui/ErrorBoundary";
 
 const Academico = memo(({ idEstudiante }) => {
   const [anio, setAnio] = useState(new Date().getFullYear());
@@ -22,36 +22,22 @@ const Academico = memo(({ idEstudiante }) => {
   const [editingSeguimiento, setEditingSeguimiento] = useState(null);
   const [deleteTarget, setDeleteTarget] = useState(null);
   const [showDashboard, setShowDashboard] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  // Hook optimizado para datos
-  const {
-    data,
-    loading,
-    error,
-    fetchData,
-    refresh,
-    updateData,
-    calculatedStats
-  } = useOptimizedData(idEstudiante, anio);
+  // Datos simplificados para debug
+  const historial = [];
+  const seguimiento = [];
+  const asistencias = [];
+  const estadisticasSeguimiento = null;
+  const estadisticasAsistencia = null;
 
-  // Hook de notificaciones
-  const { processData: processNotifications } = useNotifications();
-
-  // Extraer datos del hook optimizado
-  const {
-    historial,
-    seguimiento,
-    asistencias,
-    estadisticasSeguimiento,
-    estadisticasAsistencia
-  } = data;
-
-  // Procesar notificaciones cuando cambien los datos
-  useEffect(() => {
-    if (seguimiento.length > 0 || asistencias.length > 0) {
-      processNotifications(seguimiento, asistencias, estadisticasSeguimiento, estadisticasAsistencia);
-    }
-  }, [seguimiento, asistencias, estadisticasSeguimiento, estadisticasAsistencia, processNotifications]);
+  // Procesar notificaciones cuando cambien los datos - TEMPORALMENTE DESHABILITADO
+  // useEffect(() => {
+  //   if (seguimiento.length > 0 || asistencias.length > 0) {
+  //     processNotifications(seguimiento, asistencias, estadisticasSeguimiento, estadisticasAsistencia);
+  //   }
+  // }, [seguimiento, asistencias, estadisticasSeguimiento, estadisticasAsistencia, processNotifications]);
 
   const handleGuardarSeguimiento = async (formData) => {
     try {
@@ -64,7 +50,7 @@ const Academico = memo(({ idEstudiante }) => {
       }
       setModalSeguimientoOpen(false);
       setEditingSeguimiento(null);
-      refresh();
+      // refresh(); // TEMPORALMENTE DESHABILITADO
     } catch (error) {
       console.error("Error al guardar seguimiento:", error);
       toast.error("Error al guardar seguimiento");
@@ -76,7 +62,7 @@ const Academico = memo(({ idEstudiante }) => {
       await estudianteService.eliminarSeguimiento(deleteTarget.id);
       toast.success("Seguimiento eliminado");
       setDeleteTarget(null);
-      refresh();
+      // refresh(); // TEMPORALMENTE DESHABILITADO
     } catch (error) {
       console.error("Error al eliminar seguimiento:", error);
       toast.error("Error al eliminar seguimiento");
@@ -100,43 +86,36 @@ const Academico = memo(({ idEstudiante }) => {
 
       toast.success("✅ Historial guardado correctamente");
       setModalHistorialOpen(false);
-      refresh();
+      // refresh(); // TEMPORALMENTE DESHABILITADO
     } catch (error) {
       console.error("❌ Error al registrar historial:", error);
       toast.error("No se pudo guardar el historial");
     }
   };
 
-  // Mostrar loading optimizado
+  // Mostrar loading simplificado
   if (loading) {
-    return <OptimizedLoading type="academic" message="Cargando datos académicos..." size="lg" />;
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="text-gray-600">Cargando datos académicos...</div>
+      </div>
+    );
   }
 
-  // Mostrar error si existe
+  // Mostrar error simplificado
   if (error) {
     return (
-      <ErrorBoundary
-        fallback={(error, retry) => (
-          <div className="text-center p-8">
-            <h3 className="text-lg font-semibold text-red-600 mb-4">
-              Error al cargar datos académicos
-            </h3>
-            <p className="text-gray-600 mb-4">{error?.message || 'Error desconocido'}</p>
-            <button
-              onClick={retry}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-            >
-              Reintentar
-            </button>
-          </div>
-        )}
-      />
+      <div className="text-center p-8">
+        <h3 className="text-lg font-semibold text-red-600 mb-4">
+          Error al cargar datos académicos
+        </h3>
+        <p className="text-gray-600 mb-4">{error?.message || 'Error desconocido'}</p>
+      </div>
     );
   }
 
   return (
-    <ErrorBoundary>
-      <div className="space-y-10">
+    <div className="space-y-10">
       {/* === CONTROLES DE VISTA === */}
       <div className="bg-white dark:bg-slate-800 shadow rounded-lg p-4 sm:p-6">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -377,8 +356,8 @@ const Academico = memo(({ idEstudiante }) => {
         title="¿Deseas eliminar este seguimiento?"
       />
 
-      {/* Navegación móvil */}
-      <MobileNavigation
+      {/* Navegación móvil - TEMPORALMENTE DESHABILITADA */}
+      {/* <MobileNavigation
         showDashboard={showDashboard}
         onToggleView={setShowDashboard}
         onRefresh={refresh}
@@ -403,9 +382,9 @@ const Academico = memo(({ idEstudiante }) => {
           URL.revokeObjectURL(url);
         }}
         isLoading={loading}
-      />
+      /> */}
       </div>
-    </ErrorBoundary>
+    // </ErrorBoundary>
   );
 });
 
