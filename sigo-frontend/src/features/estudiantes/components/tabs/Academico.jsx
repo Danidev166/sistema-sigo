@@ -8,8 +8,8 @@ import AcademicoFormModal from "../../components/academico/AcademicoFormModal";
 import SeguimientoFormModal from "../../components/academico/SeguimientoFormModal";
 import SeguimientoTable from "../../components/academico/SeguimientoTable";
 import DeleteConfirmModal from "../../components/academico/DeleteConfirmModal";
-// import AcademicDashboard from "../../../../components/dashboard/AcademicDashboard";
-// import useNotifications from "../../../../hooks/useNotifications";
+import AcademicDashboard from "../../../../components/dashboard/AcademicDashboard";
+import useNotifications from "../../../../hooks/useNotifications";
 import useSimpleData from "../../../../hooks/useSimpleData";
 // import MobileNavigation from "../../../../components/ui/MobileNavigation";
 // import OptimizedLoading from "../../../../components/ui/OptimizedLoading";
@@ -42,12 +42,15 @@ const Academico = memo(({ idEstudiante }) => {
     estadisticasAsistencia
   } = data;
 
-  // Procesar notificaciones cuando cambien los datos - TEMPORALMENTE DESHABILITADO
-  // useEffect(() => {
-  //   if (seguimiento.length > 0 || asistencias.length > 0) {
-  //     processNotifications(seguimiento, asistencias, estadisticasSeguimiento, estadisticasAsistencia);
-  //   }
-  // }, [seguimiento, asistencias, estadisticasSeguimiento, estadisticasAsistencia, processNotifications]);
+  // Hook de notificaciones
+  const { processData: processNotifications } = useNotifications();
+
+  // Procesar notificaciones cuando cambien los datos
+  useEffect(() => {
+    if (seguimiento.length > 0 || asistencias.length > 0) {
+      processNotifications(seguimiento, asistencias, estadisticasSeguimiento, estadisticasAsistencia);
+    }
+  }, [seguimiento, asistencias, estadisticasSeguimiento, estadisticasAsistencia, processNotifications]);
 
   const handleGuardarSeguimiento = async (formData) => {
     try {
@@ -164,26 +167,17 @@ const Academico = memo(({ idEstudiante }) => {
         </div>
       </div>
 
-      {/* === DASHBOARD CON GRÁFICOS - TEMPORALMENTE DESHABILITADO === */}
+      {/* === DASHBOARD CON GRÁFICOS === */}
       {showDashboard && (
-        <div className="bg-white dark:bg-slate-800 rounded-lg p-6 shadow-sm border border-gray-200 dark:border-slate-700">
-          <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">
-            📊 Dashboard Académico (Modo Debug)
-          </h3>
-          <p className="text-gray-600 dark:text-gray-300">
-            Dashboard temporalmente simplificado para debug. 
-            Datos: {seguimiento.length} seguimientos, {asistencias.length} asistencias.
-          </p>
-        </div>
+        <AcademicDashboard
+          idEstudiante={idEstudiante}
+          seguimientoData={seguimiento}
+          asistenciaData={asistencias}
+          estadisticasSeguimiento={estadisticasSeguimiento}
+          estadisticasAsistencia={estadisticasAsistencia}
+          onRefresh={refresh}
+        />
       )}
-      {/* <AcademicDashboard
-        idEstudiante={idEstudiante}
-        seguimientoData={seguimiento}
-        asistenciaData={asistencias}
-        estadisticasSeguimiento={estadisticasSeguimiento}
-        estadisticasAsistencia={estadisticasAsistencia}
-        onRefresh={refresh}
-      /> */}
 
       {/* === VISTA DE TABLA DE DATOS === */}
       {!showDashboard && (
