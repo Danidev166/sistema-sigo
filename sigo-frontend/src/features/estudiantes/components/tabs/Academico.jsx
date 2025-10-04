@@ -10,7 +10,7 @@ import SeguimientoTable from "../../components/academico/SeguimientoTable";
 import DeleteConfirmModal from "../../components/academico/DeleteConfirmModal";
 // import AcademicDashboard from "../../../../components/dashboard/AcademicDashboard";
 // import useNotifications from "../../../../hooks/useNotifications";
-// import useOptimizedData from "../../../../hooks/useOptimizedData";
+import useOptimizedData from "../../../../hooks/useOptimizedData";
 // import MobileNavigation from "../../../../components/ui/MobileNavigation";
 // import OptimizedLoading from "../../../../components/ui/OptimizedLoading";
 // import ErrorBoundary from "../../../../components/ui/ErrorBoundary";
@@ -22,15 +22,26 @@ const Academico = memo(({ idEstudiante }) => {
   const [editingSeguimiento, setEditingSeguimiento] = useState(null);
   const [deleteTarget, setDeleteTarget] = useState(null);
   const [showDashboard, setShowDashboard] = useState(true);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
 
-  // Datos simplificados para debug
-  const historial = [];
-  const seguimiento = [];
-  const asistencias = [];
-  const estadisticasSeguimiento = null;
-  const estadisticasAsistencia = null;
+  // Hook optimizado para datos
+  const {
+    data,
+    loading,
+    error,
+    fetchData,
+    refresh,
+    updateData,
+    calculatedStats
+  } = useOptimizedData(idEstudiante, anio);
+
+  // Extraer datos del hook optimizado
+  const {
+    historial,
+    seguimiento,
+    asistencias,
+    estadisticasSeguimiento,
+    estadisticasAsistencia
+  } = data;
 
   // Procesar notificaciones cuando cambien los datos - TEMPORALMENTE DESHABILITADO
   // useEffect(() => {
@@ -50,7 +61,7 @@ const Academico = memo(({ idEstudiante }) => {
       }
       setModalSeguimientoOpen(false);
       setEditingSeguimiento(null);
-      // refresh(); // TEMPORALMENTE DESHABILITADO
+      refresh();
     } catch (error) {
       console.error("Error al guardar seguimiento:", error);
       toast.error("Error al guardar seguimiento");
@@ -62,7 +73,7 @@ const Academico = memo(({ idEstudiante }) => {
       await estudianteService.eliminarSeguimiento(deleteTarget.id);
       toast.success("Seguimiento eliminado");
       setDeleteTarget(null);
-      // refresh(); // TEMPORALMENTE DESHABILITADO
+      refresh();
     } catch (error) {
       console.error("Error al eliminar seguimiento:", error);
       toast.error("Error al eliminar seguimiento");
@@ -86,14 +97,14 @@ const Academico = memo(({ idEstudiante }) => {
 
       toast.success("✅ Historial guardado correctamente");
       setModalHistorialOpen(false);
-      // refresh(); // TEMPORALMENTE DESHABILITADO
+      refresh();
     } catch (error) {
       console.error("❌ Error al registrar historial:", error);
       toast.error("No se pudo guardar el historial");
     }
   };
 
-  // Mostrar loading simplificado
+  // Mostrar loading
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -102,7 +113,7 @@ const Academico = memo(({ idEstudiante }) => {
     );
   }
 
-  // Mostrar error simplificado
+  // Mostrar error
   if (error) {
     return (
       <div className="text-center p-8">
@@ -110,6 +121,12 @@ const Academico = memo(({ idEstudiante }) => {
           Error al cargar datos académicos
         </h3>
         <p className="text-gray-600 mb-4">{error?.message || 'Error desconocido'}</p>
+        <button
+          onClick={() => fetchData(true)}
+          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+        >
+          Reintentar
+        </button>
       </div>
     );
   }
