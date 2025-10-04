@@ -148,17 +148,26 @@ const Academico = memo(({ idEstudiante }) => {
         </div>
       </div>
 
-      {/* === DASHBOARD CON GRÁFICOS === */}
+      {/* === DASHBOARD CON GRÁFICOS - TEMPORALMENTE DESHABILITADO === */}
       {showDashboard && (
-        <AcademicDashboard
-          idEstudiante={idEstudiante}
-          seguimientoData={seguimiento}
-          asistenciaData={asistencias}
-          estadisticasSeguimiento={estadisticasSeguimiento}
-          estadisticasAsistencia={estadisticasAsistencia}
-          onRefresh={refresh}
-        />
+        <div className="bg-white dark:bg-slate-800 rounded-lg p-6 shadow-sm border border-gray-200 dark:border-slate-700">
+          <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">
+            📊 Dashboard Académico (Modo Debug)
+          </h3>
+          <p className="text-gray-600 dark:text-gray-300">
+            Dashboard temporalmente simplificado para debug. 
+            Datos: {seguimiento.length} seguimientos, {asistencias.length} asistencias.
+          </p>
+        </div>
       )}
+      {/* <AcademicDashboard
+        idEstudiante={idEstudiante}
+        seguimientoData={seguimiento}
+        asistenciaData={asistencias}
+        estadisticasSeguimiento={estadisticasSeguimiento}
+        estadisticasAsistencia={estadisticasAsistencia}
+        onRefresh={refresh}
+      /> */}
 
       {/* === VISTA DE TABLA DE DATOS === */}
       {!showDashboard && (
