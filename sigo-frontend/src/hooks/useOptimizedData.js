@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { debounce } from 'lodash';
+import estudianteService from '../features/estudiantes/services/estudianteService';
 
 const useOptimizedData = (idEstudiante, anio) => {
   const [data, setData] = useState({
@@ -47,9 +48,6 @@ const useOptimizedData = (idEstudiante, anio) => {
     setError(null);
 
     try {
-      // Simular importación dinámica del servicio
-      const { default: estudianteService } = await import('../features/estudiantes/services/estudianteService');
-      
       const [h, s, a, statsSeguimiento, statsAsistencia] = await Promise.all([
         estudianteService.getHistorialAcademico(idEstudiante, anio).catch(() => ({ data: [] })),
         estudianteService.getSeguimientoAcademico(idEstudiante, anio).catch(() => ({ data: [] })),
