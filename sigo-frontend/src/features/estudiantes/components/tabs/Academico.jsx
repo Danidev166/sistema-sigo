@@ -10,7 +10,7 @@ import SeguimientoTable from "../../components/academico/SeguimientoTable";
 import DeleteConfirmModal from "../../components/academico/DeleteConfirmModal";
 // import AcademicDashboard from "../../../../components/dashboard/AcademicDashboard";
 // import useNotifications from "../../../../hooks/useNotifications";
-import useOptimizedData from "../../../../hooks/useOptimizedData";
+// import useOptimizedData from "../../../../hooks/useOptimizedData";
 // import MobileNavigation from "../../../../components/ui/MobileNavigation";
 // import OptimizedLoading from "../../../../components/ui/OptimizedLoading";
 // import ErrorBoundary from "../../../../components/ui/ErrorBoundary";
@@ -23,25 +23,18 @@ const Academico = memo(({ idEstudiante }) => {
   const [deleteTarget, setDeleteTarget] = useState(null);
   const [showDashboard, setShowDashboard] = useState(true);
 
-  // Hook optimizado para datos
-  const {
-    data,
-    loading,
-    error,
-    fetchData,
-    refresh,
-    updateData,
-    calculatedStats
-  } = useOptimizedData(idEstudiante, anio);
-
-  // Extraer datos del hook optimizado
-  const {
-    historial,
-    seguimiento,
-    asistencias,
-    estadisticasSeguimiento,
-    estadisticasAsistencia
-  } = data;
+  // Datos simplificados para debug - TEMPORAL
+  const loading = false;
+  const error = null;
+  const historial = [];
+  const seguimiento = [];
+  const asistencias = [];
+  const estadisticasSeguimiento = null;
+  const estadisticasAsistencia = null;
+  
+  // Funciones simplificadas
+  const refresh = () => console.log('Refresh llamado');
+  const fetchData = () => console.log('FetchData llamado');
 
   // Procesar notificaciones cuando cambien los datos - TEMPORALMENTE DESHABILITADO
   // useEffect(() => {
