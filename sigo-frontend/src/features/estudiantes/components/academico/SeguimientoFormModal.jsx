@@ -141,7 +141,7 @@ export default function SeguimientoFormModal({
         asignatura: form.asignatura.trim(),
         nota: parseFloat(form.nota),
         promedio_curso: parseFloat(form.promedio_curso),
-        fecha: new Date(form.fecha)
+        fecha: form.fecha // Enviar como string, no como Date
       });
     } catch (error) {
       console.error('Error al guardar seguimiento:', error);

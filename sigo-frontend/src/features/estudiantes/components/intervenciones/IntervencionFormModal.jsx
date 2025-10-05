@@ -61,7 +61,7 @@ export default function IntervencionFormModal({
     e.preventDefault();
     onSubmit({
       ...form,
-      fecha: new Date(form.fecha),
+      fecha: form.fecha, // Enviar como string, no como Date
     });
   };
 
