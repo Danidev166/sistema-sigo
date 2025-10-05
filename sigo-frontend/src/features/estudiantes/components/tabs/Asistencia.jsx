@@ -92,6 +92,10 @@ export default function Asistencia({ idEstudiante }) {
         toast.error("Error de autenticación. Por favor, inicia sesión nuevamente.");
       } else if (error.response?.status === 400) {
         toast.error("Datos inválidos. Verifica la información ingresada.");
+      } else if (error.response?.status === 409) {
+        toast.error("Ya existe un registro de asistencia para esta fecha. Por favor, edita el registro existente.");
+      } else if (error.response?.status === 500) {
+        toast.error("Error del servidor. Por favor, intenta nuevamente.");
       } else {
         toast.error("Error al guardar asistencia.");
       }

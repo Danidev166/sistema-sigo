@@ -11,19 +11,36 @@ function toPgDate(input) {
 const AsistenciaModel = {
   async crear(data) {
     const pool = await getPool();
-    const query = `
-      INSERT INTO asistencia (id_estudiante, fecha, tipo, justificacion)
-      VALUES ($1, $2, $3, $4)
-      RETURNING *
-    `;
-    const values = [
-      data.id_estudiante,
-      toPgDate(data.fecha),
-      data.tipo,
-      data.justificacion || ''
-    ];
-    const result = await pool.raw.query(query, values);
-    return result.rows[0];
+    
+    try {
+      // Verificar si ya existe un registro para el mismo estudiante y fecha
+      const existingQuery = `
+        SELECT id FROM asistencia 
+        WHERE id_estudiante = $1 AND fecha = $2
+      `;
+      const existing = await pool.raw.query(existingQuery, [data.id_estudiante, toPgDate(data.fecha)]);
+      
+      if (existing.rows.length > 0) {
+        throw new Error(`Ya existe un registro de asistencia para el estudiante ${data.id_estudiante} en la fecha ${data.fecha}`);
+      }
+      
+      const query = `
+        INSERT INTO asistencia (id_estudiante, fecha, tipo, justificacion)
+        VALUES ($1, $2, $3, $4)
+        RETURNING *
+      `;
+      const values = [
+        data.id_estudiante,
+        toPgDate(data.fecha),
+        data.tipo,
+        data.justificacion || ''
+      ];
+      const result = await pool.raw.query(query, values);
+      return result.rows[0];
+    } catch (error) {
+      console.error('Error en AsistenciaModel.crear:', error);
+      throw error;
+    }
   },
 
   async obtenerTodos() {

@@ -21,6 +21,22 @@ const AsistenciaController = {
     } catch (error) {
       logger.error("❌ Error al crear asistencia:", error);
       logger.error("❌ Stack trace:", error.stack);
+      
+      // Manejar errores específicos
+      if (error.message.includes('Ya existe un registro')) {
+        return res.status(409).json({ 
+          error: "Ya existe un registro de asistencia para esta fecha",
+          details: error.message
+        });
+      }
+      
+      if (error.code === '23505') { // Violación de clave única
+        return res.status(409).json({ 
+          error: "Ya existe un registro de asistencia para esta fecha",
+          details: "No se puede crear un registro duplicado"
+        });
+      }
+      
       res.status(500).json({ 
         error: "Error interno del servidor",
         details: error.message,
