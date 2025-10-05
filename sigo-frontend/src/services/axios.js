@@ -36,11 +36,17 @@ export const clearAuthToken = () => {
 api.interceptors.request.use(
   (config) => {
     const token = getToken();
+    console.log('🔍 Axios interceptor - Token encontrado:', !!token);
+    console.log('🔍 Axios interceptor - URL:', config.url);
+    
     if (token) {
       config.headers = config.headers ?? {};
       if (!config.headers.Authorization) {
         config.headers.Authorization = `Bearer ${token}`;
+        console.log('🔍 Axios interceptor - Token agregado:', token.substring(0, 20) + '...');
       }
+    } else {
+      console.warn('⚠️ Axios interceptor - No hay token disponible');
     }
     return config;
   },

@@ -43,11 +43,25 @@ export default function Asistencia({ idEstudiante }) {
 
   const handleSubmit = async (formData) => {
     try {
-      // Debug de autenticación
+      // Debug de autenticación detallado
       const token = localStorage.getItem('token');
       const user = localStorage.getItem('user');
       console.log('🔍 Debug asistencia - Token:', !!token);
       console.log('🔍 Debug asistencia - User:', !!user);
+      console.log('🔍 Debug asistencia - Token valor:', token ? token.substring(0, 20) + '...' : 'No hay token');
+      console.log('🔍 Debug asistencia - User valor:', user ? JSON.parse(user) : 'No hay user');
+      
+      if (!token) {
+        console.error('❌ No hay token de autenticación');
+        toast.error("No estás autenticado. Por favor, inicia sesión nuevamente.");
+        return;
+      }
+      
+      if (!user) {
+        console.error('❌ No hay datos de usuario');
+        toast.error("No hay datos de usuario. Por favor, inicia sesión nuevamente.");
+        return;
+      }
       
       const payload = {
         id_estudiante: idEstudiante,
