@@ -118,7 +118,7 @@ export default function AsistenciaFormModal({
     try {
       await onSubmit({
         ...form,
-        fecha: new Date(form.fecha),
+        fecha: form.fecha, // Enviar como string, no como Date
       });
     } catch (error) {
       console.error('Error al guardar asistencia:', error);

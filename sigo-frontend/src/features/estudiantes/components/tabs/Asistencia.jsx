@@ -43,12 +43,20 @@ export default function Asistencia({ idEstudiante }) {
 
   const handleSubmit = async (formData) => {
     try {
+      // Debug de autenticación
+      const token = localStorage.getItem('token');
+      const user = localStorage.getItem('user');
+      console.log('🔍 Debug asistencia - Token:', !!token);
+      console.log('🔍 Debug asistencia - User:', !!user);
+      
       const payload = {
         id_estudiante: idEstudiante,
-        fecha: formData.fecha,
+        fecha: formData.fecha, // Ya viene como string del modal
         tipo: formData.tipo,
         justificacion: formData.justificacion || ""
       };
+
+      console.log('📤 Enviando payload:', payload);
 
       if (editingData) {
         await estudianteService.actualizarAsistencia(editingData.id, payload);
@@ -63,7 +71,16 @@ export default function Asistencia({ idEstudiante }) {
       fetchAsistencias();
     } catch (error) {
       console.error("❌ Error al guardar asistencia:", error);
-      toast.error("Error al guardar asistencia.");
+      console.error("❌ Error completo:", error.response?.data || error.message);
+      
+      // Mostrar error específico
+      if (error.response?.status === 401) {
+        toast.error("Error de autenticación. Por favor, inicia sesión nuevamente.");
+      } else if (error.response?.status === 400) {
+        toast.error("Datos inválidos. Verifica la información ingresada.");
+      } else {
+        toast.error("Error al guardar asistencia.");
+      }
     }
   };
 
