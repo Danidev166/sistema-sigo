@@ -291,21 +291,41 @@ const Academico = memo(({ idEstudiante }) => {
             <table className="min-w-full text-sm text-left border rounded shadow">
               <thead className="bg-gray-100 dark:bg-slate-700 text-gray-700 dark:text-white">
                 <tr>
-                  <th className="px-4 py-2">Fecha</th>
-                  <th className="px-4 py-2">Promedio</th>
-                  <th className="px-4 py-2">Asistencia</th>
-                  <th className="px-4 py-2">Observaciones</th>
+                  <th className="px-3 sm:px-4 py-2 whitespace-nowrap">Fecha</th>
+                  <th className="px-3 sm:px-4 py-2 whitespace-nowrap">Promedio</th>
+                  <th className="px-3 sm:px-4 py-2 whitespace-nowrap">Asistencia</th>
+                  <th className="px-3 sm:px-4 py-2 whitespace-nowrap">Observaciones</th>
                 </tr>
               </thead>
               <tbody className="bg-white dark:bg-slate-800 text-gray-800 dark:text-white">
                 {historial.map((item) => (
                   <tr key={item.id} className="border-t dark:border-slate-700">
-                    <td className="px-4 py-2">
+                    <td className="px-3 sm:px-4 py-2 whitespace-nowrap">
                       {format(new Date(item.fecha_actualizacion), "dd/MM/yyyy")}
                     </td>
-                    <td className="px-4 py-2">{item.promedio_general}</td>
-                    <td className="px-4 py-2">{item.asistencia}%</td>
-                    <td className="px-4 py-2">{item.observaciones_academicas}</td>
+                    <td className="px-3 sm:px-4 py-2 whitespace-nowrap">
+                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                        item.promedio_general >= 6 ? 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-300' :
+                        item.promedio_general >= 4 ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-300' :
+                        'bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-300'
+                      }`}>
+                        {item.promedio_general}
+                      </span>
+                    </td>
+                    <td className="px-3 sm:px-4 py-2 whitespace-nowrap">
+                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                        item.asistencia >= 80 ? 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-300' :
+                        item.asistencia >= 60 ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-300' :
+                        'bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-300'
+                      }`}>
+                        {item.asistencia}%
+                      </span>
+                    </td>
+                    <td className="px-3 sm:px-4 py-2">
+                      <div className="max-w-xs truncate" title={item.observaciones_academicas}>
+                        {item.observaciones_academicas}
+                      </div>
+                    </td>
                   </tr>
                 ))}
               </tbody>
