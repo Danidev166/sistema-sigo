@@ -164,7 +164,7 @@ app.use(securityMiddleware.preventTimingAttacks);
 app.use(securityMiddleware.validatePayloadSize(10 * 1024 * 1024)); // 10MB
 // HABILITANDO UNO POR UNO PARA IDENTIFICAR EL PROBLEMA
 app.use(securityMiddleware.detectMaliciousBots);
-// app.use(securityMiddleware.validateOrigin);
+app.use(securityMiddleware.validateOrigin);
 // app.use(securityMiddleware.validateIP);
 
 // 8.7) Middleware de métricas y monitoreo
