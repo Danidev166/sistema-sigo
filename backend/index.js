@@ -162,8 +162,8 @@ const securityMiddleware = require("./middleware/securityMiddleware");
 app.use(securityMiddleware.securityHeaders);
 app.use(securityMiddleware.preventTimingAttacks);
 app.use(securityMiddleware.validatePayloadSize(10 * 1024 * 1024)); // 10MB
-// TEMPORALMENTE DESHABILITADO PARA DEBUG
-// app.use(securityMiddleware.detectMaliciousBots);
+// HABILITANDO UNO POR UNO PARA IDENTIFICAR EL PROBLEMA
+app.use(securityMiddleware.detectMaliciousBots);
 // app.use(securityMiddleware.validateOrigin);
 // app.use(securityMiddleware.validateIP);
 
