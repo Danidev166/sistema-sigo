@@ -154,9 +154,12 @@ const auditMiddleware = {
    * Auditoría de acceso a datos sensibles
    */
   dataAccess: (sensitiveFields = ['password', 'token', 'secret', 'key']) => (req, res, next) => {
+    const bodyStr = req.body ? JSON.stringify(req.body) : '';
+    const queryStr = req.query ? JSON.stringify(req.query) : '';
+    
     const hasSensitiveData = sensitiveFields.some(field => 
-      JSON.stringify(req.body).toLowerCase().includes(field) ||
-      JSON.stringify(req.query).toLowerCase().includes(field)
+      bodyStr.toLowerCase().includes(field) ||
+      queryStr.toLowerCase().includes(field)
     );
     
     if (!hasSensitiveData) {
@@ -175,8 +178,8 @@ const auditMiddleware = {
       method: req.method,
       url: req.originalUrl,
       sensitiveFields: sensitiveFields.filter(field => 
-        JSON.stringify(req.body).toLowerCase().includes(field) ||
-        JSON.stringify(req.query).toLowerCase().includes(field)
+        bodyStr.toLowerCase().includes(field) ||
+        queryStr.toLowerCase().includes(field)
       ),
       success: null,
       statusCode: null
