@@ -70,6 +70,12 @@ const securityMiddleware = {
    */
   detectMaliciousBots: (req, res, next) => {
     const userAgent = req.headers['user-agent'] || '';
+    
+    // Si no hay user-agent, no es sospechoso
+    if (!userAgent || userAgent.trim() === '') {
+      return next();
+    }
+    
     const suspiciousPatterns = [
       /bot/i,
       /crawler/i,
@@ -115,9 +121,15 @@ const securityMiddleware = {
    */
   validateOrigin: (req, res, next) => {
     const origin = req.headers.origin || req.headers.referer;
+    
+    // Si no hay origen, permitir (puede ser una request directa)
+    if (!origin || origin.trim() === '') {
+      return next();
+    }
+    
     const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',') || ['http://localhost:3000', 'https://sigo-caupolican.onrender.com'];
     
-    if (origin && !allowedOrigins.some(allowed => origin.startsWith(allowed))) {
+    if (!allowedOrigins.some(allowed => origin.startsWith(allowed))) {
       logger.warn('🚫 Origen no autorizado', {
         origin,
         ip: req.ip,
@@ -138,13 +150,19 @@ const securityMiddleware = {
    */
   validateIP: (req, res, next) => {
     const ip = req.ip || req.connection.remoteAddress;
+    
+    // Si no hay IP, permitir (puede ser localhost)
+    if (!ip || ip.trim() === '') {
+      return next();
+    }
+    
     const blockedIPs = process.env.BLOCKED_IPS?.split(',') || [];
     
     if (blockedIPs.includes(ip)) {
       logger.warn('🚫 IP bloqueada', {
         ip,
         url: req.originalUrl,
-        userAgent: req.headers['user-agent']
+        userAgent: req.headers['user-agent'] || 'unknown'
       });
       
       return res.status(403).json({
