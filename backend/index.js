@@ -157,6 +157,28 @@ app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 const { sanitizeInput } = require("./middleware/inputValidation");
 app.use(sanitizeInput);
 
+// 8.6) Middleware de seguridad avanzada
+const securityMiddleware = require("./middleware/securityMiddleware");
+app.use(securityMiddleware.securityHeaders);
+app.use(securityMiddleware.preventTimingAttacks);
+app.use(securityMiddleware.validatePayloadSize(10 * 1024 * 1024)); // 10MB
+app.use(securityMiddleware.detectMaliciousBots);
+app.use(securityMiddleware.validateOrigin);
+app.use(securityMiddleware.validateIP);
+
+// 8.7) Middleware de métricas y monitoreo
+const metricsMiddleware = require("./middleware/metricsMiddleware");
+app.use(metricsMiddleware.performanceMetrics);
+app.use(metricsMiddleware.apiUsageMetrics);
+app.use(metricsMiddleware.alerting);
+
+// 8.8) Middleware de auditoría completa
+const auditMiddleware = require("./middleware/auditMiddleware");
+app.use(auditMiddleware.fullAudit);
+app.use(auditMiddleware.sensitiveActions(['POST', 'PUT', 'DELETE', 'PATCH']));
+app.use(auditMiddleware.dataAccess(['password', 'token', 'secret', 'key', 'email']));
+app.use(auditMiddleware.configChanges);
+
 // 9) Prefijo API y router principal
 const apiRouter = express.Router();
 
@@ -189,6 +211,7 @@ const routes = [
   { path: "/permisos-roles", module: "./routes/permisosRoles" },
   { path: "/reportes-mejorado", module: "./routes/reportesMejorado" },
   { path: "/seguimiento-cronologico", module: "./routes/seguimientoCronologico" },
+  { path: "/metrics", module: "./routes/metrics" },
   { path: "/test", module: "./routes/test" },
   { path: "/test-email", module: "./routes/test-email" },
 ];

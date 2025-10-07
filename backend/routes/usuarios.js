@@ -7,6 +7,7 @@ const {
   validarActualizacionUsuario
 } = require("../middleware/usuariosValidatorMiddleware");
 const logger = require("../utils/logger");
+const advancedRateLimit = require("../middleware/advancedRateLimit");
 
 // Middleware de logging para acciones sensibles
 const logSensitiveAction = (action) => (req, res, next) => {
@@ -27,6 +28,9 @@ const logSensitiveAction = (action) => (req, res, next) => {
 
 // 🔐 proteger todo
 router.use(verifyToken);
+
+// Rate limiting específico para usuarios
+router.use(advancedRateLimit.perUser(15 * 60 * 1000, 50)); // 50 requests por 15 min por usuario
 
 router.get("/", UsuarioController.listar);
 router.get("/:id", UsuarioController.obtener);
