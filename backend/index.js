@@ -165,7 +165,7 @@ app.use(securityMiddleware.validatePayloadSize(10 * 1024 * 1024)); // 10MB
 // HABILITANDO UNO POR UNO PARA IDENTIFICAR EL PROBLEMA
 app.use(securityMiddleware.detectMaliciousBots);
 app.use(securityMiddleware.validateOrigin);
-// app.use(securityMiddleware.validateIP);
+app.use(securityMiddleware.validateIP);
 
 // 8.7) Middleware de métricas y monitoreo
 const metricsMiddleware = require("./middleware/metricsMiddleware");
@@ -175,11 +175,10 @@ app.use(metricsMiddleware.alerting);
 
 // 8.8) Middleware de auditoría completa
 const auditMiddleware = require("./middleware/auditMiddleware");
-// TEMPORALMENTE DESHABILITADO PARA DEBUG
-// app.use(auditMiddleware.fullAudit);
-// app.use(auditMiddleware.sensitiveActions(['POST', 'PUT', 'DELETE', 'PATCH']));
-// app.use(auditMiddleware.dataAccess(['password', 'token', 'secret', 'key', 'email']));
-// app.use(auditMiddleware.configChanges);
+app.use(auditMiddleware.fullAudit);
+app.use(auditMiddleware.sensitiveActions(['POST', 'PUT', 'DELETE', 'PATCH']));
+app.use(auditMiddleware.dataAccess(['password', 'token', 'secret', 'key', 'email']));
+app.use(auditMiddleware.configChanges);
 
 // 9) Prefijo API y router principal
 const apiRouter = express.Router();

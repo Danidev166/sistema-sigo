@@ -82,7 +82,6 @@ const securityMiddleware = {
       /spider/i,
       /scraper/i,
       /wget/i,
-      /curl/i,
       /python/i,
       /java/i,
       /php/i
@@ -95,7 +94,12 @@ const securityMiddleware = {
       /slurp/i,
       /duckduckbot/i,
       /baiduspider/i,
-      /yandexbot/i
+      /yandexbot/i,
+      /curl/i,  // curl es una herramienta legítima de testing
+      /postman/i,  // Postman para testing de APIs
+      /insomnia/i,  // Insomnia para testing de APIs
+      /httpie/i,  // HTTPie para testing de APIs
+      /go-http-client/i  // Cliente HTTP de Go (usado por Render)
     ];
     
     const isWhitelisted = whitelistedBots.some(pattern => pattern.test(userAgent));
