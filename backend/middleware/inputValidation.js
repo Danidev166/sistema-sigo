@@ -31,36 +31,50 @@ const validateInput = (schema, property = 'body') => {
 
 // Sanitización de strings
 const sanitizeString = (str) => {
-  if (typeof str !== 'string') return str;
-  return str.trim().replace(/[<>]/g, '');
+  if (typeof str !== 'string' || str === null || str === undefined) return str;
+  try {
+    return str.trim().replace(/[<>]/g, '');
+  } catch (error) {
+    console.warn('⚠️ Error sanitizando string:', error.message);
+    return str;
+  }
 };
 
 // Middleware de sanitización general
 const sanitizeInput = (req, res, next) => {
-  const sanitizeObject = (obj) => {
-    if (typeof obj !== 'object' || obj === null) return obj;
-    
-    const sanitized = {};
-    for (const [key, value] of Object.entries(obj)) {
-      if (typeof value === 'string') {
-        sanitized[key] = sanitizeString(value);
-      } else if (typeof value === 'object' && value !== null) {
-        sanitized[key] = sanitizeObject(value);
-      } else {
-        sanitized[key] = value;
+  try {
+    const sanitizeObject = (obj) => {
+      if (typeof obj !== 'object' || obj === null || obj === undefined) return obj;
+      
+      const sanitized = {};
+      for (const [key, value] of Object.entries(obj)) {
+        try {
+          if (typeof value === 'string') {
+            sanitized[key] = sanitizeString(value);
+          } else if (typeof value === 'object' && value !== null && value !== undefined) {
+            sanitized[key] = sanitizeObject(value);
+          } else {
+            sanitized[key] = value;
+          }
+        } catch (error) {
+          console.warn(`⚠️ Error sanitizando propiedad ${key}:`, error.message);
+          sanitized[key] = value;
+        }
       }
-    }
-    return sanitized;
-  };
+      return sanitized;
+    };
 
-  if (req.body) {
-    req.body = sanitizeObject(req.body);
-  }
-  if (req.query) {
-    req.query = sanitizeObject(req.query);
-  }
-  if (req.params) {
-    req.params = sanitizeObject(req.params);
+    if (req.body && typeof req.body === 'object') {
+      req.body = sanitizeObject(req.body);
+    }
+    if (req.query && typeof req.query === 'object') {
+      req.query = sanitizeObject(req.query);
+    }
+    if (req.params && typeof req.params === 'object') {
+      req.params = sanitizeObject(req.params);
+    }
+  } catch (error) {
+    console.warn('⚠️ Error en sanitización general:', error.message);
   }
 
   next();
