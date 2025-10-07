@@ -6,15 +6,33 @@ const {
   validarCreacionUsuario,
   validarActualizacionUsuario
 } = require("../middleware/usuariosValidatorMiddleware");
+const logger = require("../utils/logger");
+
+// Middleware de logging para acciones sensibles
+const logSensitiveAction = (action) => (req, res, next) => {
+  const userId = req.user?.id;
+  const ip = req.ip || req.connection.remoteAddress;
+  const userAgent = req.headers['user-agent'];
+  
+  logger.info(`🔐 ${action} usuario`, {
+    usuario: userId,
+    ip,
+    userAgent,
+    targetUserId: req.params.id,
+    timestamp: new Date().toISOString()
+  });
+  
+  next();
+};
 
 // 🔐 proteger todo
 router.use(verifyToken);
 
 router.get("/", UsuarioController.listar);
 router.get("/:id", UsuarioController.obtener);
-router.post("/", validarCreacionUsuario, UsuarioController.crear);
-router.put("/:id", validarActualizacionUsuario, UsuarioController.actualizar);
-router.patch("/:id/estado", UsuarioController.actualizarEstado);
-router.delete("/:id", UsuarioController.eliminar);
+router.post("/", logSensitiveAction("CREAR"), validarCreacionUsuario, UsuarioController.crear);
+router.put("/:id", logSensitiveAction("ACTUALIZAR"), validarActualizacionUsuario, UsuarioController.actualizar);
+router.patch("/:id/estado", logSensitiveAction("CAMBIAR_ESTADO"), UsuarioController.actualizarEstado);
+router.delete("/:id", logSensitiveAction("ELIMINAR"), UsuarioController.eliminar);
 
 module.exports = router;

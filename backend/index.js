@@ -153,6 +153,10 @@ app.use(morgan(nodeEnv === "development" ? "dev" : "combined"));
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 
+// 8.5) Sanitización global de datos de entrada
+const { sanitizeInput } = require("./middleware/inputValidation");
+app.use(sanitizeInput);
+
 // 9) Prefijo API y router principal
 const apiRouter = express.Router();
 
