@@ -1,7 +1,11 @@
 // backend/models/authModel.js
 const { getPool } = require('../config/db');
 
-const normEmail = (email) => (email || '').trim().toLowerCase();
+const normEmail = (email) => {
+  if (!email || email === null || email === undefined) return '';
+  if (typeof email !== 'string') return '';
+  return email.trim().toLowerCase();
+};
 
 async function buscarPorEmail(email) {
   const pool = await getPool();
