@@ -36,10 +36,15 @@ export default function SeguimientoPsicosocialPage() {
       console.log("🔍 Debug - res.data:", res.data);
       console.log("🔍 Debug - Tipo de res.data:", typeof res.data);
       console.log("🔍 Debug - Es array:", Array.isArray(res.data));
-      setSeguimientos(res.data);
+      
+      // Asegurar que siempre sea un array
+      const datos = Array.isArray(res.data) ? res.data : [];
+      console.log("🔍 Debug - Datos finales:", datos);
+      setSeguimientos(datos);
     } catch (err) {
       console.error("Error al cargar seguimientos:", err);
       toast.error("Error al cargar seguimientos.");
+      setSeguimientos([]); // Asegurar que sea un array vacío en caso de error
     } finally {
       setLoading(false);
     }
@@ -86,9 +91,20 @@ export default function SeguimientoPsicosocialPage() {
   };
 
   useEffect(() => {
+    console.log("🔍 Debug - useEffect ejecutándose");
     cargarSeguimientos();
     cargarEstudiantes();
   }, []);
+
+  // Debug del estado
+  useEffect(() => {
+    console.log("🔍 Debug - Estado actualizado:", {
+      seguimientos: seguimientos.length,
+      estudiantes: estudiantes.length,
+      loading,
+      modalOpen
+    });
+  }, [seguimientos, estudiantes, loading, modalOpen]);
 
   return (
     <ImprovedDashboardLayout>

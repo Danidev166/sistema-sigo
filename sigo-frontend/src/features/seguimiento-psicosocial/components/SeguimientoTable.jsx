@@ -18,7 +18,11 @@ export default function SeguimientoTable({ seguimientos = [], onEdit, onDelete }
   console.log("🔍 Debug SeguimientoTable - length:", seguimientos?.length);
   console.log("🔍 Debug SeguimientoTable - tipo:", typeof seguimientos);
   
-  if (!seguimientos || seguimientos.length === 0) {
+  // Asegurar que seguimientos sea siempre un array
+  const datosSeguros = Array.isArray(seguimientos) ? seguimientos : [];
+  console.log("🔍 Debug SeguimientoTable - datosSeguros:", datosSeguros);
+  
+  if (!datosSeguros || datosSeguros.length === 0) {
     return (
       <div className="text-center py-8 text-gray-500 dark:text-gray-400">
         No hay registros.
@@ -42,7 +46,7 @@ export default function SeguimientoTable({ seguimientos = [], onEdit, onDelete }
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200 dark:divide-slate-600">
-            {seguimientos.map((s) => (
+            {datosSeguros.map((s) => (
               <tr key={s.id} className="hover:bg-gray-50 dark:hover:bg-slate-700/50 transition">
                 <td className="px-4 py-3">
                   {s.fecha_seguimiento ? format(parseISO(s.fecha_seguimiento), "dd/MM/yyyy") : "-"}
@@ -91,7 +95,7 @@ export default function SeguimientoTable({ seguimientos = [], onEdit, onDelete }
 
       {/* Vista móvil */}
       <div className="md:hidden space-y-4 mt-4">
-        {seguimientos.map((s) => (
+        {datosSeguros.map((s) => (
           <div
             key={s.id}
             className="bg-white dark:bg-slate-800 rounded-lg shadow p-4 space-y-2"
