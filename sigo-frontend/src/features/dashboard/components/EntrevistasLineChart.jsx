@@ -24,13 +24,34 @@ import useResponsive from '../../../hooks/useResponsive';
 const EntrevistasLineChart = memo(({ data }) => {
   const { isMobile, isSmallScreen } = useResponsive();
   
+  // 🚀 OPTIMIZACIÓN: Memoizar datos procesados con validación mejorada
   const processedData = useMemo(() => {
-    if (!data || !Array.isArray(data)) return [];
-    return data.map(item => ({
-      ...item,
-      total: Number(item.total) || 0
-    }));
+    if (!data || !Array.isArray(data) || data.length === 0) return [];
+    
+    // Filtrar datos válidos y procesar
+    return data
+      .filter(item => item && typeof item === 'object' && item.mes)
+      .map(item => ({
+        ...item,
+        total: Number(item.total) || 0,
+        mes: String(item.mes).substring(0, 7) // Asegurar formato YYYY-MM
+      }))
+      .sort((a, b) => a.mes.localeCompare(b.mes)); // Ordenar por mes
   }, [data]);
+
+  // 🚀 OPTIMIZACIÓN: Memoizar configuración del gráfico
+  const chartConfig = useMemo(() => ({
+    margin: { 
+      top: 10, 
+      right: isMobile ? 5 : 20, 
+      left: isMobile ? 5 : 10, 
+      bottom: 10 
+    },
+    fontSize: isMobile ? 10 : 12,
+    strokeWidth: isMobile ? 2 : 3,
+    dotRadius: isMobile ? 4 : 6,
+    activeDotRadius: isMobile ? 6 : 8
+  }), [isMobile]);
 
   if (!processedData.length) {
     return (
@@ -54,28 +75,23 @@ const EntrevistasLineChart = memo(({ data }) => {
         <ResponsiveContainer width="100%" height="100%">
           <LineChart
             data={processedData}
-            margin={{ 
-              top: 10, 
-              right: isMobile ? 5 : 20, 
-              left: isMobile ? 5 : 10, 
-              bottom: 10 
-            }}
+            margin={chartConfig.margin}
           >
             <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
             <XAxis 
               dataKey="mes" 
               stroke="#64748b" 
-              fontSize={isMobile ? 10 : 12}
+              fontSize={chartConfig.fontSize}
               tick={{ fill: '#64748b' }}
             />
             <YAxis 
               stroke="#64748b" 
-              fontSize={isMobile ? 10 : 12}
+              fontSize={chartConfig.fontSize}
               label={{ 
                 value: 'Cantidad', 
                 angle: -90, 
                 position: 'insideLeft',
-                style: { textAnchor: 'middle', fontSize: isMobile ? 10 : 12 }
+                style: { textAnchor: 'middle', fontSize: chartConfig.fontSize }
               }}
             />
             <Tooltip
@@ -96,15 +112,15 @@ const EntrevistasLineChart = memo(({ data }) => {
               type="monotone"
               dataKey="total"
               stroke="#2563eb"
-              strokeWidth={isMobile ? 2 : 3}
+              strokeWidth={chartConfig.strokeWidth}
               dot={{ 
-                r: isMobile ? 4 : 6, 
+                r: chartConfig.dotRadius, 
                 fill: '#2563eb', 
                 stroke: '#ffffff', 
                 strokeWidth: 2 
               }}
               activeDot={{ 
-                r: isMobile ? 6 : 8, 
+                r: chartConfig.activeDotRadius, 
                 fill: '#1d4ed8', 
                 stroke: '#ffffff', 
                 strokeWidth: 2 

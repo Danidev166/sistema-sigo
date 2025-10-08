@@ -14,7 +14,7 @@ import { useCallback, useMemo, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../context/useAuth";
 import ImprovedDashboardLayout from "../../../components/layout/ImprovedDashboardLayout";
-import { useCache } from "../../../hooks/useCache";
+import { useCache, startAutoCleanup, cleanExpiredCache } from "../../../hooks/useCache";
 
 import OptimizedSummaryCard from "../components/OptimizedSummaryCard";
 import EntrevistasLineChart from "../components/EntrevistasLineChart";
@@ -48,6 +48,20 @@ export default function DashboardPageFinal() {
       navigate("/dashboard-asistente-social", { replace: true });
     }
   }, [user, navigate]);
+
+  // 🚀 OPTIMIZACIÓN: Iniciar limpieza automática de cache
+  useEffect(() => {
+    // Limpiar cache expirado al cargar
+    cleanExpiredCache();
+    
+    // Iniciar limpieza automática cada 5 minutos
+    startAutoCleanup(5);
+    
+    // Cleanup al desmontar
+    return () => {
+      // La función stopAutoCleanup se puede llamar aquí si es necesario
+    };
+  }, []);
 
   const fetchDashboardStats = useCallback(async () => {
     try {

@@ -7,69 +7,92 @@ const dashboardService = {
     try {
       console.log("🔄 DashboardService: Iniciando carga de datos...");
       
-      // 🚀 Obtener estudiantes
-      console.log("🔄 DashboardService: Obteniendo estudiantes...");
-      const est = await estudianteService.getEstudiantes();
-      console.log("✅ DashboardService: Estudiantes obtenidos:", est.data);
+      // 🚀 OPTIMIZACIÓN: Hacer todas las llamadas en paralelo
+      console.log("🔄 DashboardService: Ejecutando llamadas paralelas...");
       
-      // 🚀 Manejar respuesta con o sin paginación
-      let estudiantes = est.data;
-      if (est.data && est.data.data) {
-        // Si hay paginación, usar los datos paginados
-        estudiantes = est.data.data;
-        console.log("📊 DashboardService: Usando datos paginados");
+      const [
+        estudiantesRes,
+        entrevistasRes,
+        alertasRes,
+        entrevistasPorMesRes,
+        testPorEspecialidadRes
+      ] = await Promise.allSettled([
+        // Obtener estudiantes
+        estudianteService.getEstudiantes(),
+        // Obtener entrevistas (SIN CACHE)
+        api.get("/entrevistas", {
+          headers: { "Cache-Control": "no-cache" },
+        }),
+        // Obtener alertas
+        api.get("/alertas", {
+          headers: { "Cache-Control": "no-cache" },
+        }),
+        // Obtener entrevistas por mes (con fallback)
+        api.get("/entrevistas/por-mes").catch(async (error) => {
+          if (error.status === 401 || error.status === 403) {
+            console.log("⚠️ Usando endpoint de prueba para entrevistas");
+            return await api.get("/entrevistas/por-mes-test");
+          }
+          throw error;
+        }),
+        // Obtener tests por especialidad (con fallback)
+        api.get("/evaluaciones/por-especialidad").catch(async (error) => {
+          if (error.status === 401 || error.status === 403) {
+            console.log("⚠️ Usando endpoint de prueba para evaluaciones");
+            return await api.get("/evaluaciones/por-especialidad-test");
+          }
+          throw error;
+        })
+      ]);
+
+      console.log("✅ DashboardService: Todas las llamadas completadas");
+
+      // 🚀 Procesar estudiantes
+      let estudiantes = [];
+      if (estudiantesRes.status === 'fulfilled') {
+        const est = estudiantesRes.value;
+        estudiantes = est.data?.data || est.data || [];
+        console.log("✅ DashboardService: Estudiantes obtenidos:", estudiantes.length);
+      } else {
+        console.warn("⚠️ DashboardService: Error obteniendo estudiantes:", estudiantesRes.reason);
       }
       
-      // 🚀 Filtrar "activos"
+      // 🚀 Filtrar estudiantes activos
       const estudiantesActivos = estudiantes.filter(
         (e) => e.estado && e.estado.toLowerCase() === "activo"
       );
       console.log("✅ DashboardService: Estudiantes activos:", estudiantesActivos.length);
 
-      // 🚀 Obtener entrevistas (SIN CACHE)
-      console.log("🔄 DashboardService: Obteniendo entrevistas...");
-      const ent = await api.get("/entrevistas", {
-        headers: { "Cache-Control": "no-cache" },
-      });
-      console.log("✅ DashboardService: Entrevistas obtenidas:", ent.data.length);
-
-      // 🚀 Obtener alertas
-      console.log("🔄 DashboardService: Obteniendo alertas...");
-      const alertasRes = await api.get("/alertas", {
-        headers: { "Cache-Control": "no-cache" },
-      });
-      const totalAlertas = alertasRes.data.filter((a) => a.estado === "Nueva").length;
-      console.log("✅ DashboardService: Alertas nuevas:", totalAlertas);
-
-      // 🚀 Obtener entrevistas por mes
-      let entrevistasPorMesResp;
-      try {
-        entrevistasPorMesResp = await api.get("/entrevistas/por-mes");
-      } catch (error) {
-        // Si falla por autenticación, usar endpoint de prueba
-        if (error.status === 401 || error.status === 403) {
-          console.log("⚠️ Usando endpoint de prueba para entrevistas");
-          entrevistasPorMesResp = await api.get("/entrevistas/por-mes-test");
-        } else {
-          throw error;
-        }
+      // 🚀 Procesar entrevistas
+      let entrevistas = [];
+      if (entrevistasRes.status === 'fulfilled') {
+        entrevistas = entrevistasRes.value.data || [];
+        console.log("✅ DashboardService: Entrevistas obtenidas:", entrevistas.length);
+      } else {
+        console.warn("⚠️ DashboardService: Error obteniendo entrevistas:", entrevistasRes.reason);
       }
-      const entrevistasPorMes = entrevistasPorMesResp.data;
 
-      // 🚀 Obtener tests por especialidad
-      let testPorEspecialidadResp;
-      try {
-        testPorEspecialidadResp = await api.get("/evaluaciones/por-especialidad");
-      } catch (error) {
-        // Si falla por autenticación, usar endpoint de prueba
-        if (error.status === 401 || error.status === 403) {
-          console.log("⚠️ Usando endpoint de prueba para evaluaciones");
-          testPorEspecialidadResp = await api.get("/evaluaciones/por-especialidad-test");
-        } else {
-          throw error;
-        }
+      // 🚀 Procesar alertas
+      let totalAlertas = 0;
+      if (alertasRes.status === 'fulfilled') {
+        const alertas = alertasRes.value.data || [];
+        totalAlertas = alertas.filter((a) => a.estado === "Nueva").length;
+        console.log("✅ DashboardService: Alertas nuevas:", totalAlertas);
+      } else {
+        console.warn("⚠️ DashboardService: Error obteniendo alertas:", alertasRes.reason);
       }
-      const testPorEspecialidadRaw = testPorEspecialidadResp.data || [];
+
+      // 🚀 Procesar entrevistas por mes
+      const entrevistasPorMes = entrevistasPorMesRes.status === 'fulfilled' 
+        ? (entrevistasPorMesRes.value.data || [])
+        : [];
+      console.log("📊 DashboardService: Entrevistas por mes:", entrevistasPorMes.length);
+
+      // 🚀 Procesar tests por especialidad
+      const testPorEspecialidadRaw = testPorEspecialidadRes.status === 'fulfilled' 
+        ? (testPorEspecialidadRes.value.data || [])
+        : [];
+      console.log("📊 DashboardService: Tests por especialidad raw:", testPorEspecialidadRaw.length);
 
       // 🚀 Formatear como lo espera TestBarChart
       const especialidades = {};
@@ -93,17 +116,21 @@ const dashboardService = {
       });
 
       const testPorEspecialidad = Object.values(especialidades);
+      console.log("📊 DashboardService: Tests por especialidad procesados:", testPorEspecialidad.length);
 
       // 🚀 Devolver datos al Dashboard
-      return {
+      const result = {
         estudiantes: estudiantesActivos.length,
-        entrevistas: ent.data.length,
+        entrevistas: entrevistas.length,
         alertas: totalAlertas,
         entrevistasPorMes,
         testPorEspecialidad,
       };
+
+      console.log("✅ DashboardService: Datos procesados exitosamente");
+      return result;
     } catch (error) {
-      console.error("Error en dashboardService.getResumen:", error);
+      console.error("❌ Error en dashboardService.getResumen:", error);
       // Devolver datos por defecto en caso de error
       return {
         estudiantes: 0,

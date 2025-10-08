@@ -263,10 +263,25 @@ export default function CargaMasivaModal({ isOpen, onClose, onUpload }) {
     }
   };
 
-  const handleConfirmarCarga = () => {
+  const handleConfirmarCarga = async () => {
     if (errores.length === 0) {
-      onUpload(datos);
-      onClose();
+      try {
+        setIsValidando(true);
+        await onUpload(datos);
+        onClose();
+      } catch (error) {
+        console.error('Error en carga masiva:', error);
+        // Mostrar errores del backend si los hay
+        if (error.response?.data?.errors) {
+          const erroresBackend = error.response.data.errors;
+          setErrores(erroresBackend);
+          setMostrarVistaPrevia(false);
+        } else {
+          alert(`Error en la carga masiva: ${error.message || 'Error desconocido'}`);
+        }
+      } finally {
+        setIsValidando(false);
+      }
     }
   };
 
@@ -401,18 +416,25 @@ export default function CargaMasivaModal({ isOpen, onClose, onUpload }) {
               {errores.map((error, index) => (
                 <div key={index} className="text-xs bg-red-100 dark:bg-red-800/30 p-2 rounded">
                   <div className="font-medium text-red-800 dark:text-red-200">
-                    Fila {error.fila}: {error.estudiante}
+                    {error.fila ? `Fila ${error.fila}: ` : ''}{error.estudiante || error.message || 'Error'}
                   </div>
-                  <ul className="ml-4 mt-1 space-y-1">
-                    {error.errores.map((err, i) => (
-                      <li key={i} className="text-red-700 dark:text-red-300">• {err}</li>
-                    ))}
-                  </ul>
+                  {error.errores && Array.isArray(error.errores) ? (
+                    <ul className="ml-4 mt-1 space-y-1">
+                      {error.errores.map((err, i) => (
+                        <li key={i} className="text-red-700 dark:text-red-300">• {err}</li>
+                      ))}
+                    </ul>
+                  ) : error.detail ? (
+                    <p className="text-red-700 dark:text-red-300 mt-1">{error.detail}</p>
+                  ) : null}
                 </div>
               ))}
             </div>
             <p className="text-xs text-red-700 dark:text-red-300 mt-2">
-              Corrige los errores en tu archivo CSV y vuelve a subirlo.
+              {errores.some(e => e.fila) 
+                ? 'Corrige los errores en tu archivo y vuelve a subirlo.'
+                : 'Revisa los errores y corrige los datos antes de continuar.'
+              }
             </p>
           </div>
         )}
@@ -455,9 +477,17 @@ export default function CargaMasivaModal({ isOpen, onClose, onUpload }) {
             <div className="flex gap-2 mt-4">
               <button
                 onClick={handleConfirmarCarga}
-                className="flex-1 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm font-medium transition"
+                disabled={isValidando}
+                className="flex-1 bg-green-600 hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed text-white px-4 py-2 rounded-md text-sm font-medium transition flex items-center justify-center gap-2"
               >
-                Confirmar Carga
+                {isValidando ? (
+                  <>
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                    Cargando...
+                  </>
+                ) : (
+                  'Confirmar Carga'
+                )}
               </button>
               <button
                 onClick={() => {
@@ -466,7 +496,8 @@ export default function CargaMasivaModal({ isOpen, onClose, onUpload }) {
                   setMostrarVistaPrevia(false);
                   setArchivoNombre(null);
                 }}
-                className="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-md text-sm font-medium transition"
+                disabled={isValidando}
+                className="px-4 py-2 bg-gray-500 hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-md text-sm font-medium transition"
               >
                 Cancelar
               </button>

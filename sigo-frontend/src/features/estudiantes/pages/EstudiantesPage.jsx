@@ -1,6 +1,6 @@
 // src/features/estudiantes/pages/EstudiantesPage.jsx
 import { useState, useEffect, useCallback } from "react";
-import { Plus, Search, FileDown, Filter } from "lucide-react";
+import { Plus, Search, FileDown, Filter, X } from "lucide-react";
 import { toast } from "react-hot-toast";
 import EstudianteTable from "../components/EstudianteTable";
 import EstudianteFormModal from "../components/EstudianteFormModal";
@@ -22,7 +22,16 @@ export default function EstudiantesPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [filters, setFilters] = useState({ curso: "", estado: "" });
+  // 🚀 OPTIMIZACIÓN: Filtros persistentes con localStorage
+  const [filters, setFilters] = useState(() => {
+    try {
+      const savedFilters = localStorage.getItem('sigo_estudiantes_filters');
+      return savedFilters ? JSON.parse(savedFilters) : { curso: "", estado: "" };
+    } catch (error) {
+      console.warn('Error cargando filtros guardados:', error);
+      return { curso: "", estado: "" };
+    }
+  });
 
   const [isCargaMasivaModalOpen, setIsCargaMasivaModalOpen] = useState(false);
   const [isEnvioMasivoModalOpen, setIsEnvioMasivoModalOpen] = useState(false);
@@ -89,10 +98,32 @@ export default function EstudiantesPage() {
     return () => clearTimeout(timeoutId);
   };
 
+  // 🚀 OPTIMIZACIÓN: Guardar filtros en localStorage
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
-    setFilters((prev) => ({ ...prev, [name]: value }));
+    const newFilters = { ...filters, [name]: value };
+    setFilters(newFilters);
     setCurrentPage(1);
+    
+    // Guardar en localStorage
+    try {
+      localStorage.setItem('sigo_estudiantes_filters', JSON.stringify(newFilters));
+    } catch (error) {
+      console.warn('Error guardando filtros:', error);
+    }
+  };
+
+  // 🚀 OPTIMIZACIÓN: Función para limpiar filtros
+  const clearFilters = () => {
+    const defaultFilters = { curso: "", estado: "" };
+    setFilters(defaultFilters);
+    setCurrentPage(1);
+    
+    try {
+      localStorage.removeItem('sigo_estudiantes_filters');
+    } catch (error) {
+      console.warn('Error limpiando filtros:', error);
+    }
   };
 
   // Manejar cambio de cursos seleccionados en el filtro inteligente
@@ -207,6 +238,7 @@ export default function EstudiantesPage() {
     };
   };
 
+  // 🚀 OPTIMIZACIÓN: Paginación mejorada y consistente
   const renderPagination = () => {
     const { page, totalPages, hasNext, hasPrev } = pagination;
     
@@ -217,20 +249,23 @@ export default function EstudiantesPage() {
     let startPage = Math.max(1, page - Math.floor(maxVisiblePages / 2));
     let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
     
+    // Ajustar si no hay suficientes páginas visibles
     if (endPage - startPage + 1 < maxVisiblePages) {
       startPage = Math.max(1, endPage - maxVisiblePages + 1);
     }
     
+    // Generar botones de página
     for (let i = startPage; i <= endPage; i++) {
       pages.push(
         <button
           key={i}
           onClick={() => handlePageChange(i)}
-          className={`px-3 py-1 rounded-md ${
+          className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${
             page === i
-              ? "bg-blue-600 text-white"
-              : "bg-white text-gray-700 hover:bg-gray-50"
+              ? "bg-blue-600 text-white shadow-md"
+              : "bg-white text-gray-700 hover:bg-gray-50 border border-gray-300 dark:bg-slate-700 dark:text-gray-300 dark:border-slate-600 dark:hover:bg-slate-600"
           }`}
+          aria-label={`Ir a página ${i}`}
         >
           {i}
         </button>
@@ -238,23 +273,32 @@ export default function EstudiantesPage() {
     }
     
     return (
-      <>
+      <div className="flex items-center justify-center space-x-1">
+        {/* Botón Anterior */}
         <button
           onClick={() => handlePageChange(page - 1)}
           disabled={!hasPrev}
-          className="px-3 py-1 rounded-md bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="px-3 py-2 text-sm font-medium rounded-md bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed border border-gray-300 dark:bg-slate-700 dark:text-gray-300 dark:border-slate-600 dark:hover:bg-slate-600 transition-colors"
+          aria-label="Página anterior"
         >
-          Anterior
+          ← Anterior
         </button>
-        {pages}
+        
+        {/* Páginas */}
+        <div className="flex space-x-1">
+          {pages}
+        </div>
+        
+        {/* Botón Siguiente */}
         <button
           onClick={() => handlePageChange(page + 1)}
           disabled={!hasNext}
-          className="px-3 py-1 rounded-md bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="px-3 py-2 text-sm font-medium rounded-md bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed border border-gray-300 dark:bg-slate-700 dark:text-gray-300 dark:border-slate-600 dark:hover:bg-slate-600 transition-colors"
+          aria-label="Página siguiente"
         >
-          Siguiente
+          Siguiente →
         </button>
-      </>
+      </div>
     );
   };
 
@@ -271,12 +315,47 @@ export default function EstudiantesPage() {
 
   const handleCargaMasiva = async (data) => {
     try {
-      await estudianteService.createBulk(data);
+      console.log('🚀 Iniciando carga masiva de', data.length, 'estudiantes');
+      
+      // Validar datos antes de enviar
+      if (!data || data.length === 0) {
+        throw new Error('No hay datos para cargar');
+      }
+
+      // Llamar al servicio de carga masiva
+      const response = await estudianteService.createBulk(data);
+      
+      // Verificar respuesta del backend
+      if (response.data && response.data.errors && response.data.errors.length > 0) {
+        // Si hay errores del backend, lanzarlos para que los maneje el modal
+        throw {
+          response: {
+            data: {
+              errors: response.data.errors
+            }
+          }
+        };
+      }
+
+      // Si todo está bien, actualizar la lista
       await fetchEstudiantes();
-      toast.success("Carga masiva exitosa");
+      
+      const estudiantesCreados = response.data?.created || data.length;
+      toast.success(`✅ Carga masiva exitosa: ${estudiantesCreados} estudiantes creados`);
+      
+      console.log('✅ Carga masiva completada exitosamente');
     } catch (error) {
-      toast.error("Error en la carga masiva: " + (error?.message || error));
-      console.error(error);
+      console.error('❌ Error en carga masiva:', error);
+      
+      // Si es un error de validación del backend, re-lanzarlo
+      if (error.response?.data?.errors) {
+        throw error;
+      }
+      
+      // Para otros errores, mostrar mensaje genérico
+      const errorMessage = error?.response?.data?.message || error?.message || 'Error desconocido';
+      toast.error(`❌ Error en la carga masiva: ${errorMessage}`);
+      throw error;
     }
   };
 
@@ -325,7 +404,13 @@ export default function EstudiantesPage() {
             label: "Filtros",
             icon: Filter,
             onClick: () => setIsFilterOpen(true)
-          }
+          },
+          ...(filters.curso || filters.estado ? [{
+            label: "Limpiar Filtros",
+            icon: X,
+            onClick: clearFilters,
+            variant: "secondary"
+          }] : [])
         ]}
       />
 
@@ -410,11 +495,19 @@ export default function EstudiantesPage() {
               onEdit={handleEdit}
               onDelete={handleDelete}
             />
-            <div className="flex justify-between items-center mt-6">
+            <div className="flex flex-col sm:flex-row justify-between items-center mt-6 gap-4">
+              {/* Información de paginación mejorada */}
               <div className="text-sm text-gray-700 dark:text-gray-300">
-                Mostrando {((pagination.page - 1) * pagination.limit) + 1} a {Math.min(pagination.page * pagination.limit, pagination.total)} de {pagination.total} estudiantes
+                <span className="font-medium">
+                  Mostrando {((pagination.page - 1) * pagination.limit) + 1} a {Math.min(pagination.page * pagination.limit, pagination.total)} de {pagination.total} estudiantes
+                </span>
+                <span className="ml-2 text-gray-500 dark:text-gray-400">
+                  (Página {pagination.page} de {pagination.totalPages})
+                </span>
               </div>
-              <div className="flex justify-center gap-2 flex-wrap">
+              
+              {/* Paginación centrada */}
+              <div className="flex justify-center">
                 {renderPagination()}
               </div>
             </div>

@@ -84,13 +84,14 @@ export default function EstudianteFormModal({
     }
   };
 
-  // Componente de input simple memoizado
+  // Componente de input simple memoizado y responsive
   const SimpleInput = useMemo(() => {
     return ({ label, name, type = "text", value, onChange, required = false, error }) => {
       return (
-        <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+        <div className="space-y-1">
+          <label className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300">
             {label}
+            {required && <span className="text-red-500 ml-1">*</span>}
           </label>
           <input
             type={type}
@@ -98,9 +99,18 @@ export default function EstudianteFormModal({
             value={value || ''}
             onChange={onChange}
             required={required}
-            className={`w-full px-3 py-2 border ${error ? 'border-red-500' : 'border-gray-300 dark:border-slate-600'} rounded-md bg-white dark:bg-slate-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm`}
+            className={`w-full px-2 sm:px-3 py-2 border ${
+              error 
+                ? 'border-red-500 focus:border-red-500 focus:ring-red-500' 
+                : 'border-gray-300 dark:border-slate-600 focus:border-blue-500 focus:ring-blue-500'
+            } rounded-md bg-white dark:bg-slate-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-opacity-50 text-sm transition-colors`}
+            placeholder={`Ingrese ${label.toLowerCase()}`}
           />
-          {error && <span className="text-xs text-red-600 mt-1 block">{error}</span>}
+          {error && (
+            <span className="text-xs text-red-600 dark:text-red-400 block">
+              {error}
+            </span>
+          )}
         </div>
       );
     };
@@ -146,74 +156,154 @@ export default function EstudianteFormModal({
     <Dialog
       open={isOpen}
       onClose={onClose}
-      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4"
     >
       <div className="fixed inset-0 bg-black/30 backdrop-blur-sm" aria-hidden="true" />
-      <div className="relative z-10 w-full max-w-3xl bg-white dark:bg-slate-800 rounded-2xl shadow-2xl p-4 sm:p-6 border border-gray-200 dark:border-slate-700 max-h-screen overflow-y-auto">
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 text-gray-500 hover:text-red-600 transition p-1 rounded-full hover:bg-gray-100 dark:hover:bg-slate-700"
-        >
-          <X size={20} />
-        </button>
-        <Dialog.Title className="text-xl font-bold text-center text-gray-800 dark:text-white mb-6">
-          {estudiante ? "Editar Estudiante" : "Agregar Estudiante"}
-        </Dialog.Title>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            <SimpleInput label="Nombre" name="nombre" value={formData.nombre} onChange={handleInputChange} required />
-            <SimpleInput label="Apellido" name="apellido" value={formData.apellido} onChange={handleInputChange} required />
-            <SimpleInput label="RUT" name="rut" value={formData.rut} onChange={handleInputChange} required error={rutError} />
-            <SimpleInput type="email" label="Email" name="email" value={formData.email} onChange={handleInputChange} required />
-            <SelectField
-              label="Curso"
-              name="curso"
-              value={formData.curso}
-              onChange={handleInputChange}
-              options={OPCIONES_CURSOS}
-              required
-            />
-            <SimpleInput type="date" label="Fecha de Nacimiento" name="fechaNacimiento" value={formData.fechaNacimiento} onChange={handleInputChange} required />
-            <SimpleInput label="Teléfono" name="telefono" value={formData.telefono} onChange={handleInputChange} />
-            <div className="lg:col-span-2">
-              <SimpleInput label="Dirección" name="direccion" value={formData.direccion} onChange={handleInputChange} />
+      <div className="relative z-10 w-full max-w-xs sm:max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-5xl bg-white dark:bg-slate-800 rounded-xl sm:rounded-2xl shadow-2xl p-3 sm:p-4 md:p-6 border border-gray-200 dark:border-slate-700 max-h-[95vh] overflow-y-auto">
+        {/* Header responsive */}
+        <div className="flex items-center justify-between mb-4 sm:mb-6">
+          <Dialog.Title className="text-lg sm:text-xl font-bold text-gray-800 dark:text-white">
+            {estudiante ? "Editar Estudiante" : "Agregar Estudiante"}
+          </Dialog.Title>
+          <button
+            onClick={onClose}
+            className="text-gray-500 hover:text-red-600 transition p-1 rounded-full hover:bg-gray-100 dark:hover:bg-slate-700"
+          >
+            <X size={18} className="sm:w-5 sm:h-5" />
+          </button>
+        </div>
+        
+        <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+          {/* Información básica */}
+          <div className="space-y-4">
+            <h3 className="text-base sm:text-lg font-medium text-gray-900 dark:text-white border-b border-gray-200 dark:border-slate-600 pb-2">
+              Información Básica
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+              <SimpleInput 
+                label="Nombre" 
+                name="nombre" 
+                value={formData.nombre} 
+                onChange={handleInputChange} 
+                required 
+              />
+              <SimpleInput 
+                label="Apellido" 
+                name="apellido" 
+                value={formData.apellido} 
+                onChange={handleInputChange} 
+                required 
+              />
+              <SimpleInput 
+                label="RUT" 
+                name="rut" 
+                value={formData.rut} 
+                onChange={handleInputChange} 
+                required 
+                error={rutError} 
+              />
+              <SimpleInput 
+                type="email" 
+                label="Email" 
+                name="email" 
+                value={formData.email} 
+                onChange={handleInputChange} 
+                required 
+              />
+              <SelectField
+                label="Curso"
+                name="curso"
+                value={formData.curso}
+                onChange={handleInputChange}
+                options={OPCIONES_CURSOS}
+                required
+              />
+              <SimpleInput 
+                type="date" 
+                label="Fecha de Nacimiento" 
+                name="fechaNacimiento" 
+                value={formData.fechaNacimiento} 
+                onChange={handleInputChange} 
+                required 
+              />
+              <SimpleInput 
+                label="Teléfono" 
+                name="telefono" 
+                value={formData.telefono} 
+                onChange={handleInputChange} 
+              />
+              <div className="sm:col-span-2 lg:col-span-1">
+                <SimpleInput 
+                  label="Situación Económica" 
+                  name="situacion_economica" 
+                  value={formData.situacion_economica} 
+                  onChange={handleInputChange} 
+                />
+              </div>
+              <div className="sm:col-span-2 lg:col-span-2">
+                <SimpleInput 
+                  label="Dirección" 
+                  name="direccion" 
+                  value={formData.direccion} 
+                  onChange={handleInputChange} 
+                />
+              </div>
+              <div className="sm:col-span-2 lg:col-span-1">
+                <SelectField
+                  label="Estado"
+                  name="estado"
+                  value={formData.estado}
+                  onChange={handleInputChange}
+                  options={[
+                    { value: "Activo", label: "Activo" },
+                    { value: "Inactivo", label: "Inactivo" },
+                  ]}
+                />
+              </div>
             </div>
           </div>
-          <div className="border-t pt-4">
-            <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">
+
+          {/* Información del apoderado */}
+          <div className="space-y-4">
+            <h3 className="text-base sm:text-lg font-medium text-gray-900 dark:text-white border-b border-gray-200 dark:border-slate-600 pb-2">
               Información del Apoderado
             </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              <SimpleInput label="Nombre del Apoderado" name="nombreApoderado" value={formData.nombreApoderado} onChange={handleInputChange} />
-              <SimpleInput label="Teléfono del Apoderado" name="telefonoApoderado" value={formData.telefonoApoderado} onChange={handleInputChange} />
-              <SimpleInput type="email" label="Email del Apoderado" name="emailApoderado" value={formData.emailApoderado} onChange={handleInputChange} />
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+              <SimpleInput 
+                label="Nombre del Apoderado" 
+                name="nombreApoderado" 
+                value={formData.nombreApoderado} 
+                onChange={handleInputChange} 
+              />
+              <SimpleInput 
+                label="Teléfono del Apoderado" 
+                name="telefonoApoderado" 
+                value={formData.telefonoApoderado} 
+                onChange={handleInputChange} 
+              />
+              <SimpleInput 
+                type="email" 
+                label="Email del Apoderado" 
+                name="emailApoderado" 
+                value={formData.emailApoderado} 
+                onChange={handleInputChange} 
+              />
             </div>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            <SimpleInput label="Situación Económica" name="situacion_economica" value={formData.situacion_economica} onChange={handleInputChange} />
-            <SelectField
-              label="Estado"
-              name="estado"
-              value={formData.estado}
-              onChange={handleInputChange}
-              options={[
-                { value: "Activo", label: "Activo" },
-                { value: "Inactivo", label: "Inactivo" },
-              ]}
-            />
-          </div>
-          <div className="flex flex-col sm:flex-row justify-end gap-2 pt-4">
+
+          {/* Botones de acción */}
+          <div className="flex flex-col sm:flex-row justify-end gap-2 sm:gap-3 pt-4 border-t border-gray-200 dark:border-slate-600">
             <button
               type="button"
               onClick={onClose}
-              className="w-full sm:w-auto px-4 py-2 rounded-lg border border-gray-300 dark:border-slate-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700 transition text-sm"
+              className="w-full sm:w-auto px-4 py-2 rounded-lg border border-gray-300 dark:border-slate-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700 transition text-sm font-medium"
             >
               Cancelar
             </button>
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full sm:w-auto px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition text-sm"
+              className="w-full sm:w-auto px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition text-sm font-medium"
             >
               {isSubmitting ? "Guardando..." : "Guardar"}
             </button>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AlertTriangle, RefreshCw, Home, Bug } from 'lucide-react';
+import { AlertTriangle, RefreshCw, Home } from 'lucide-react';
 
 class ErrorBoundary extends Component {
   constructor(props) {
@@ -8,7 +8,8 @@ class ErrorBoundary extends Component {
       hasError: false, 
       error: null, 
       errorInfo: null,
-      retryCount: 0
+      retryCount: 0,
+      showDetails: false
     };
   }
 
@@ -50,8 +51,8 @@ class ErrorBoundary extends Component {
 
   render() {
     if (this.state.hasError) {
-      const { error, retryCount } = this.state;
-      const { fallback, showDetails = false } = this.props;
+      const { error, retryCount, showDetails } = this.state;
+      const { fallback } = this.props;
 
       // Custom fallback component
       if (fallback) {
@@ -60,72 +61,71 @@ class ErrorBoundary extends Component {
 
       return (
         <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-slate-900 p-4">
-          <div className="max-w-md w-full bg-white dark:bg-slate-800 rounded-lg shadow-lg p-6 text-center">
+          <div className="max-w-lg w-full bg-white dark:bg-slate-800 rounded-xl shadow-xl p-8 text-center">
             {/* Error Icon */}
-            <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100 dark:bg-red-900/20 mb-4">
-              <AlertTriangle className="h-6 w-6 text-red-600 dark:text-red-400" />
+            <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-red-100 dark:bg-red-900/20 mb-6">
+              <AlertTriangle className="h-8 w-8 text-red-600 dark:text-red-400" />
             </div>
 
             {/* Error Title */}
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+            <h1 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
               ¡Oops! Algo salió mal
-            </h2>
-
-            {/* Error Message */}
-            <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-              {retryCount > 2 
-                ? 'Hemos intentado varias veces sin éxito. Por favor, recarga la página.'
-                : 'Se produjo un error inesperado. Puedes intentar nuevamente.'
+            </h1>
+            
+            <p className="text-gray-600 dark:text-gray-300 mb-6">
+              {retryCount > 1 
+                ? `Se ha intentado ${retryCount} veces sin éxito.` 
+                : 'Ha ocurrido un error inesperado en la aplicación.'
               }
             </p>
 
-            {/* Error Details (Development only) */}
-            {showDetails && error && process.env.NODE_ENV === 'development' && (
-              <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 rounded-lg text-left">
-                <p className="text-xs text-red-800 dark:text-red-200 font-mono">
+            {/* Error Details (solo en desarrollo) */}
+            {showDetails && error && (
+              <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 rounded-lg text-left">
+                <h3 className="font-medium text-red-800 dark:text-red-200 mb-2">
+                  Detalles del error:
+                </h3>
+                <pre className="text-xs text-red-700 dark:text-red-300 overflow-auto">
                   {error.toString()}
-                </p>
+                </pre>
               </div>
             )}
 
             {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row gap-2">
-              {retryCount <= 2 && (
-                <button
-                  onClick={this.handleRetry}
-                  className="flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-                >
-                  <RefreshCw className="w-4 h-4" />
-                  Intentar de nuevo
-                </button>
-              )}
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <button
+                onClick={this.handleRetry}
+                className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+              >
+                <RefreshCw className="h-4 w-4" />
+                Reintentar
+              </button>
               
               <button
                 onClick={this.handleReload}
-                className="flex items-center justify-center gap-2 px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors font-medium"
               >
-                <RefreshCw className="w-4 h-4" />
-                Recargar página
+                <RefreshCw className="h-4 w-4" />
+                Recargar Página
               </button>
               
               <button
                 onClick={this.handleGoHome}
-                className="flex items-center justify-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors font-medium"
               >
-                <Home className="w-4 h-4" />
-                Ir al inicio
+                <Home className="h-4 w-4" />
+                Ir al Inicio
               </button>
             </div>
 
             {/* Debug Info */}
             {process.env.NODE_ENV === 'development' && (
-              <div className="mt-4 pt-4 border-t border-gray-200 dark:border-slate-700">
+              <div className="mt-6 pt-4 border-t border-gray-200 dark:border-slate-600">
                 <button
                   onClick={() => this.setState(prev => ({ showDetails: !prev.showDetails }))}
-                  className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+                  className="text-xs text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
                 >
-                  <Bug className="w-3 h-3" />
-                  {this.state.showDetails ? 'Ocultar' : 'Mostrar'} detalles técnicos
+                  {showDetails ? 'Ocultar' : 'Mostrar'} detalles técnicos
                 </button>
               </div>
             )}

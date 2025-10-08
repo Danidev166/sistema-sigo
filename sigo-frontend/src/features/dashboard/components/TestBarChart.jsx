@@ -25,25 +25,44 @@ import useResponsive from '../../../hooks/useResponsive';
 const TestBarChart = memo(({ data }) => {
   const { isMobile, isSmallScreen } = useResponsive();
   
+  // 🚀 OPTIMIZACIÓN: Memoizar datos procesados con validación mejorada
   const processedData = useMemo(() => {
-    if (!data || !Array.isArray(data)) return [];
+    if (!data || !Array.isArray(data) || data.length === 0) return [];
     
     // Filtrar datos válidos (solo cursos de enseñanza media)
     const datosValidos = data.filter(item => {
+      if (!item || typeof item !== 'object') return false;
       const curso = item.especialidad?.toString().toLowerCase() || '';
       // Filtrar valores de prueba, debug, test, etc.
-      const valoresInvalidos = ['debug', 'test', 'prueba', 'demo', 'ejemplo', 'null', 'undefined', ''];
+      const valoresInvalidos = ['debug', 'test', 'prueba', 'demo', 'ejemplo', 'null', 'undefined', '', '0'];
       return !valoresInvalidos.includes(curso) && curso.length > 0;
     });
     
-    return datosValidos.map(item => ({
-      especialidad: formatearCurso(item.especialidad),
-      'Test Kuder': Number(item.Kuder) || 0,
-      'Test Holland': Number(item.Holland) || 0,
-      'Test Aptitudes': Number(item.Aptitudes) || 0,
-      total: Number(item.total) || 0
-    }));
+    return datosValidos
+      .map(item => ({
+        especialidad: formatearCurso(item.especialidad),
+        'Test Kuder': Number(item.Kuder) || 0,
+        'Test Holland': Number(item.Holland) || 0,
+        'Test Aptitudes': Number(item.Aptitudes) || 0,
+        total: Number(item.total) || 0
+      }))
+      .sort((a, b) => b.total - a.total) // Ordenar por total descendente
+      .slice(0, 10); // Limitar a 10 especialidades para mejor rendimiento
   }, [data]);
+
+  // 🚀 OPTIMIZACIÓN: Memoizar configuración del gráfico
+  const chartConfig = useMemo(() => ({
+    margin: { 
+      top: 10, 
+      right: isMobile ? 5 : 20, 
+      left: isMobile ? 5 : 10, 
+      bottom: isMobile ? 60 : 50 
+    },
+    fontSize: isMobile ? 10 : 12,
+    legendHeight: isMobile ? 50 : 36,
+    xAxisHeight: isMobile ? 100 : 80,
+    angle: isMobile ? -90 : -45
+  }), [isMobile]);
 
   if (!processedData.length) {
     return (
@@ -67,31 +86,26 @@ const TestBarChart = memo(({ data }) => {
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
             data={processedData}
-            margin={{ 
-              top: 10, 
-              right: isMobile ? 5 : 20, 
-              left: isMobile ? 5 : 10, 
-              bottom: isMobile ? 60 : 50 
-            }}
+            margin={chartConfig.margin}
           >
             <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
             <XAxis 
               dataKey="especialidad" 
               stroke="#64748b"
-              angle={isMobile ? -90 : -45}
+              angle={chartConfig.angle}
               textAnchor="end"
-              height={isMobile ? 100 : 80}
-              fontSize={isMobile ? 10 : 12}
+              height={chartConfig.xAxisHeight}
+              fontSize={chartConfig.fontSize}
               interval={isMobile ? 0 : "preserveStartEnd"}
             />
             <YAxis 
               stroke="#64748b"
-              fontSize={isMobile ? 10 : 12}
+              fontSize={chartConfig.fontSize}
               label={{ 
                 value: 'Cantidad', 
                 angle: -90, 
                 position: 'insideLeft',
-                style: { textAnchor: 'middle', fontSize: isMobile ? 10 : 12 }
+                style: { textAnchor: 'middle', fontSize: chartConfig.fontSize }
               }}
             />
             <Tooltip
@@ -108,7 +122,7 @@ const TestBarChart = memo(({ data }) => {
             />
             <Legend 
               verticalAlign="top" 
-              height={isMobile ? 50 : 36}
+              height={chartConfig.legendHeight}
               wrapperStyle={{ 
                 paddingBottom: '10px',
                 fontSize: isMobile ? '10px' : '12px'
