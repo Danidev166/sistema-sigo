@@ -213,54 +213,40 @@ const EstudianteModel = {
 
   async eliminar(id) {
     const pool = await getPool();
-    const transaction = pool.transaction();
     
     try {
-      await transaction.begin();
+      console.log(`🗑️ ELIMINACIÓN ULTRA SIMPLE - ID: ${id}`);
       
-      // Eliminar registros relacionados primero (en orden específico)
-      const deleteQueries = [
-        'DELETE FROM asistencia WHERE id_estudiante = @id',
-        'DELETE FROM comunicacion_familia WHERE id_estudiante = @id',
-        'DELETE FROM agenda WHERE id_estudiante = @id',
-        'DELETE FROM entrevistas WHERE id_estudiante = @id',
-        'DELETE FROM conducta WHERE id_estudiante = @id',
-        'DELETE FROM intervenciones WHERE id_estudiante = @id',
-        'DELETE FROM seguimiento_psicosocial WHERE id_estudiante = @id',
-        'DELETE FROM seguimiento_academico WHERE id_estudiante = @id',
-        'DELETE FROM seguimiento WHERE id_estudiante = @id',
-        'DELETE FROM seguimiento_cronologico WHERE id_estudiante = @id',
-        'DELETE FROM historial_academico WHERE id_estudiante = @id',
-        'DELETE FROM evaluaciones WHERE id_estudiante = @id',
-        'DELETE FROM entrega_recursos WHERE id_estudiante = @id',
-        'DELETE FROM alertas WHERE id_estudiante = @id',
-        'DELETE FROM notificaciones WHERE id_estudiante = @id',
-        'DELETE FROM movimiento_recursos WHERE id_estudiante = @id'
-      ];
-      
-      // Ejecutar cada query de eliminación
-      for (const query of deleteQueries) {
-        try {
-          await transaction.request()
-            .input('id', sql.Int, id)
-            .query(query);
-        } catch (queryError) {
-          // Si la tabla no existe o no tiene registros, continuar
-          console.log(`⚠️ Advertencia: ${query} - ${queryError.message}`);
-        }
-      }
-      
-      // Finalmente eliminar el estudiante
-      await transaction.request()
+      // SOLO eliminar el estudiante (sin nada más)
+      const result = await pool.request()
         .input('id', sql.Int, id)
         .query('DELETE FROM estudiantes WHERE id = @id');
       
-      await transaction.commit();
-      console.log(`✅ Estudiante ${id} eliminado exitosamente`);
+      console.log(`📊 Resultado eliminación:`, {
+        rowsAffected: result.rowsAffected[0],
+        id: id
+      });
+      
+      if (result.rowsAffected[0] > 0) {
+        console.log(`✅ ÉXITO: Estudiante ${id} eliminado`);
+        return true;
+      } else {
+        console.log(`⚠️ ADVERTENCIA: No se encontró estudiante ${id}`);
+        return false;
+      }
       
     } catch (error) {
-      await transaction.rollback();
-      console.error('❌ Error en eliminación de estudiante:', error);
+      console.error('❌ ERROR CRÍTICO:', error);
+      console.error('❌ Detalles completos:', {
+        message: error.message,
+        code: error.code,
+        number: error.number,
+        state: error.state,
+        severity: error.severity,
+        lineNumber: error.lineNumber,
+        serverName: error.serverName,
+        procName: error.procName
+      });
       throw error;
     }
   },

@@ -150,14 +150,40 @@ static async obtenerTodos(req, res, next) {
 
   static async eliminar(req, res, next) {
     try {
+      console.log(`🔍 CONTROLADOR - Iniciando eliminación - VERSIÓN DEBUG`);
+      console.log(`🔍 Parámetros:`, req.params);
+      console.log(`🔍 Usuario:`, req.user);
+      
       const { id } = req.params;
+      
+      if (!id) {
+        return res.status(400).json({ error: "ID de estudiante requerido" });
+      }
+      
+      console.log(`🔍 ID a eliminar: ${id}`);
+      
+      // Obtener datos del estudiante antes de eliminar
+      console.log(`🔍 Obteniendo datos del estudiante...`);
       const prev = await EstudianteModel.obtenerPorId(id);
-      if (!prev) return res.status(404).json({ error: "Estudiante no encontrado" });
+      if (!prev) {
+        console.log(`❌ Estudiante no encontrado: ${id}`);
+        return res.status(404).json({ error: "Estudiante no encontrado" });
+      }
+      
+      console.log(`✅ Estudiante encontrado:`, prev);
 
-      await EstudianteModel.eliminar(id);
-      res.json({ message: " Estudiante eliminado" });
+      // Eliminar el estudiante
+      console.log(`🔍 Llamando a EstudianteModel.eliminar...`);
+      const resultado = await EstudianteModel.eliminar(id);
+      console.log(`✅ Resultado de eliminación:`, resultado);
+      
+      // Enviar respuesta exitosa
+      console.log(`🔍 Enviando respuesta exitosa...`);
+      res.json({ message: "Estudiante eliminado correctamente" });
+      console.log(`✅ Respuesta enviada exitosamente`);
 
-      await LogsActividadModel.crear({
+      // Crear log de actividad (sin await para no bloquear la respuesta)
+      LogsActividadModel.crear({
         id_usuario: req.user?.id || null,
         accion: 'Eliminar',
         tabla_afectada: 'estudiantes',
@@ -166,8 +192,12 @@ static async obtenerTodos(req, res, next) {
         datos_nuevos: null,
         ip_address: req.ip,
         user_agent: req.headers['user-agent']
+      }).catch(logError => {
+        console.error('Error al crear log de actividad:', logError);
       });
+
     } catch (error) {
+      console.error("❌ ERROR EN CONTROLADOR:", error);
       logger.error("Error al eliminar estudiante", error);
       next(error);
     }
