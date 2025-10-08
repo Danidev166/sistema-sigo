@@ -93,11 +93,11 @@ export default function SeguimientoPsicosocialFormModal({
               required
             >
               <option value="">Seleccione estudiante</option>
-              {estudiantes.map((est) => (
+              {Array.isArray(estudiantes) ? estudiantes.map((est) => (
                 <option key={est.id} value={est.id}>
                   {est.nombre} {est.apellido}
                 </option>
-              ))}
+              )) : null}
             </select>
           </div>
 
