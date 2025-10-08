@@ -38,11 +38,14 @@ const EstudianteSelector = ({ onSelect, onClose }) => {
     try {
       setLoading(true);
       const response = await api.get('/estudiantes');
-      setEstudiantes(response.data);
+      // Asegurar que siempre sea un array
+      const estudiantesData = Array.isArray(response.data) ? response.data : [];
+      setEstudiantes(estudiantesData);
       setError(null);
     } catch (err) {
       console.error('Error al cargar estudiantes:', err);
       setError('Error al cargar la lista de estudiantes');
+      setEstudiantes([]); // Asegurar que sea array vacío en caso de error
     } finally {
       setLoading(false);
     }
