@@ -12,7 +12,7 @@
  */
 // src/features/test-vocacionales/pages/EvaluacionesVocacionalesPage.jsx
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ImprovedDashboardLayout from "../../../components/layout/ImprovedDashboardLayout";
 import { InstitutionalHeader } from "../../../components/headers/InstitutionalHeader";
 import Button from "../../../components/ui/Button";
@@ -20,6 +20,7 @@ import QRGenerator from "../components/QRGenerator";
 import SimpleQRScanner from "../components/SimpleQRScanner";
 import EstudianteSelector from "../components/EstudianteSelector";
 import { QrCode, Smartphone, Users, FileText } from "lucide-react";
+import api from "../../../services/axios";
 
 export default function EvaluacionesVocacionalesPage() {
   const [showQRGenerator, setShowQRGenerator] = useState(false);
@@ -27,6 +28,26 @@ export default function EvaluacionesVocacionalesPage() {
   const [showEstudianteSelector, setShowEstudianteSelector] = useState(false);
   const [selectedTest, setSelectedTest] = useState(null);
   const [estudianteSeleccionado, setEstudianteSeleccionado] = useState(null);
+  const [hasEstudiantes, setHasEstudiantes] = useState(true);
+  const [loadingEstudiantes, setLoadingEstudiantes] = useState(true);
+
+  // Verificar si hay estudiantes al cargar la página
+  useEffect(() => {
+    const checkEstudiantes = async () => {
+      try {
+        setLoadingEstudiantes(true);
+        const response = await api.get('/estudiantes');
+        setHasEstudiantes(response.data && response.data.length > 0);
+      } catch (error) {
+        console.error('Error al verificar estudiantes:', error);
+        setHasEstudiantes(false);
+      } finally {
+        setLoadingEstudiantes(false);
+      }
+    };
+
+    checkEstudiantes();
+  }, []);
 
   const handleGenerateQR = (testType) => {
     setSelectedTest(testType);
@@ -79,6 +100,41 @@ export default function EvaluacionesVocacionalesPage() {
           </div>
         </div>
 
+        {/* Alerta cuando no hay estudiantes */}
+        {!loadingEstudiantes && !hasEstudiantes && (
+          <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4">
+            <div className="flex items-start space-x-3">
+              <div className="w-8 h-8 bg-amber-100 dark:bg-amber-900/30 rounded-full flex items-center justify-center flex-shrink-0">
+                <Users className="h-4 w-4 text-amber-600 dark:text-amber-400" />
+              </div>
+              <div className="flex-1">
+                <h3 className="font-medium text-amber-800 dark:text-amber-200 mb-1">
+                  ⚠️ No hay estudiantes registrados
+                </h3>
+                <p className="text-sm text-amber-700 dark:text-amber-300 mb-3">
+                  Para generar códigos QR de tests vocacionales, primero necesitas registrar estudiantes en el sistema.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-2">
+                  <button
+                    onClick={() => window.location.href = '/estudiantes'}
+                    className="inline-flex items-center px-4 py-2 bg-amber-600 text-white text-sm font-medium rounded-lg hover:bg-amber-700 transition-colors"
+                  >
+                    <User className="h-4 w-4 mr-2" />
+                    Ir a Estudiantes
+                  </button>
+                  <button
+                    onClick={() => window.location.href = '/estudiantes?action=create'}
+                    className="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors"
+                  >
+                    <User className="h-4 w-4 mr-2" />
+                    Agregar Estudiante
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Tarjetas de Test */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
           <CardLink 
@@ -86,18 +142,24 @@ export default function EvaluacionesVocacionalesPage() {
             emoji="🧩" 
             titulo="Test de Kuder"
             onGenerateQR={() => handleGenerateQR('kuder')}
+            hasEstudiantes={hasEstudiantes}
+            loadingEstudiantes={loadingEstudiantes}
           />
           <CardLink 
             to="/evaluaciones/holland" 
             emoji="🧠" 
             titulo="Test de Holland"
             onGenerateQR={() => handleGenerateQR('holland')}
+            hasEstudiantes={hasEstudiantes}
+            loadingEstudiantes={loadingEstudiantes}
           />
           <CardLink 
             to="/evaluaciones/aptitudes" 
             emoji="📊" 
             titulo="Test de Aptitudes"
             onGenerateQR={() => handleGenerateQR('aptitudes')}
+            hasEstudiantes={hasEstudiantes}
+            loadingEstudiantes={loadingEstudiantes}
           />
         </div>
       </div>
@@ -132,7 +194,7 @@ export default function EvaluacionesVocacionalesPage() {
   );
 }
 
-function CardLink({ to, emoji, titulo, onGenerateQR }) {
+function CardLink({ to, emoji, titulo, onGenerateQR, hasEstudiantes, loadingEstudiantes }) {
   return (
     <div className="bg-white dark:bg-slate-800 p-6 rounded-xl shadow hover:shadow-lg border border-gray-200 dark:border-slate-700 transition transform hover:scale-[1.01]">
       <div className="text-center mb-4">
@@ -153,10 +215,17 @@ function CardLink({ to, emoji, titulo, onGenerateQR }) {
         
         <button
           onClick={onGenerateQR}
-          className="w-full px-4 py-2 bg-gray-100 dark:bg-slate-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-slate-600 transition-colors flex items-center justify-center space-x-2"
+          disabled={!hasEstudiantes || loadingEstudiantes}
+          className={`w-full px-4 py-2 rounded-lg transition-colors flex items-center justify-center space-x-2 ${
+            !hasEstudiantes || loadingEstudiantes
+              ? 'bg-gray-100 dark:bg-slate-700 text-gray-400 dark:text-gray-500 cursor-not-allowed'
+              : 'bg-gray-100 dark:bg-slate-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-slate-600'
+          }`}
         >
           <QrCode className="h-4 w-4" />
-          <span>Generar QR</span>
+          <span>
+            {loadingEstudiantes ? 'Verificando...' : !hasEstudiantes ? 'Sin estudiantes' : 'Generar QR'}
+          </span>
         </button>
       </div>
     </div>

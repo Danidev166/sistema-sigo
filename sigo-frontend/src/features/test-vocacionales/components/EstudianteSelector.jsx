@@ -307,11 +307,71 @@ const EstudianteSelector = ({ onSelect, onClose }) => {
               </button>
             </div>
           ) : estudiantesFiltrados.length === 0 ? (
-            <div className="text-center py-8">
-              <User className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-              <p className="text-gray-600 dark:text-gray-300">
-                {search ? 'No se encontraron estudiantes' : 'No hay estudiantes registrados'}
-              </p>
+            <div className="text-center py-12">
+              <div className="w-20 h-20 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-6">
+                <User className="h-10 w-10 text-gray-400" />
+              </div>
+              
+              {search ? (
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-2">
+                    No se encontraron estudiantes
+                  </h3>
+                  <p className="text-gray-600 dark:text-gray-300 mb-4">
+                    No hay estudiantes que coincidan con tu búsqueda: "{search}"
+                  </p>
+                  <button
+                    onClick={() => setSearch('')}
+                    className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+                  >
+                    Limpiar búsqueda
+                  </button>
+                </div>
+              ) : (
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-2">
+                    No hay estudiantes registrados
+                  </h3>
+                  <p className="text-gray-600 dark:text-gray-300 mb-6">
+                    Para generar códigos QR de tests vocacionales, primero necesitas registrar estudiantes en el sistema.
+                  </p>
+                  
+                  <div className="space-y-4">
+                    <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+                      <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-2">
+                        📝 ¿Cómo agregar estudiantes?
+                      </h4>
+                      <ol className="text-sm text-blue-700 dark:text-blue-300 space-y-1 text-left">
+                        <li>1. Ve a la sección "Estudiantes" en el menú principal</li>
+                        <li>2. Haz clic en "Agregar Estudiante"</li>
+                        <li>3. Completa los datos del estudiante</li>
+                        <li>4. Regresa aquí para generar el QR</li>
+                      </ol>
+                    </div>
+                    
+                    <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                      <button
+                        onClick={() => {
+                          // Cerrar este modal y navegar a estudiantes
+                          onClose();
+                          window.location.href = '/estudiantes';
+                        }}
+                        className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors font-medium flex items-center justify-center space-x-2"
+                      >
+                        <User className="h-4 w-4" />
+                        <span>Ir a Estudiantes</span>
+                      </button>
+                      
+                      <button
+                        onClick={onClose}
+                        className="px-6 py-3 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors font-medium"
+                      >
+                        Cerrar
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           ) : (
             <div className="space-y-3">
