@@ -6,19 +6,19 @@ const EstudianteModel = require('../models/estudianteModel');
 class EstudianteController {
 static async obtenerTodos(req, res, next) {
   try {
-    const { page = 1, limit = 10, search = '' } = req.query;
+    const { page, limit, search } = req.query;
     
-    // Si hay parámetros de paginación, usar método paginado
+    // Si hay parámetros de paginación explícitos, usar método paginado
     if (page || limit || search) {
       const result = await EstudianteModel.listarPaginado({
-        page: parseInt(page),
-        limit: parseInt(limit),
-        search: search
+        page: parseInt(page) || 1,
+        limit: parseInt(limit) || 10,
+        search: search || ''
       });
       return res.json(result);
     }
     
-    // Si no hay parámetros, devolver todos los estudiantes
+    // Si no hay parámetros, devolver todos los estudiantes como array directo
     const estudiantes = await EstudianteModel.listar(); 
     res.json(estudiantes);
   } catch (error) {
