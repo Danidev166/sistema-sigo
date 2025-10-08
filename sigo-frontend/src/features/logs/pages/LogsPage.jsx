@@ -13,6 +13,15 @@ const LogsPage = () => {
   const [loading, setLoading] = useState(true);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedLog, setSelectedLog] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pagination, setPagination] = useState({
+    page: 1,
+    limit: 10,
+    total: 0,
+    totalPages: 0,
+    hasNext: false,
+    hasPrev: false
+  });
 
   // Filtros avanzados
   const [filtros, setFiltros] = useState({
@@ -28,11 +37,27 @@ const LogsPage = () => {
     cargarLogs();
   }, []);
 
-  const cargarLogs = async (filtrosParam = filtros) => {
+  const cargarLogs = async (filtrosParam = filtros, page = 1) => {
     try {
       setLoading(true);
-      const data = await LogsService.obtenerTodos(filtrosParam);
-      setLogs(data);
+      const data = await LogsService.obtenerTodosPaginado(filtrosParam, page, 10);
+      
+      // Si la respuesta tiene paginación, usarla
+      if (data.pagination) {
+        setLogs(data.data);
+        setPagination(data.pagination);
+      } else {
+        // Fallback para respuesta sin paginación
+        setLogs(data);
+        setPagination({
+          page: 1,
+          limit: 10,
+          total: data.length,
+          totalPages: 1,
+          hasNext: false,
+          hasPrev: false
+        });
+      }
     } catch (error) {
       toast.error('Error al cargar los logs de actividad');
       console.error('Error cargando logs:', error);
@@ -48,12 +73,20 @@ const LogsPage = () => {
 
   const handleBuscar = (e) => {
     e.preventDefault();
-    cargarLogs(filtros);
+    setCurrentPage(1);
+    cargarLogs(filtros, 1);
   };
 
   const handleLimpiar = () => {
     setFiltros({ usuario: '', accion: '', tabla: '', fecha_desde: '', fecha_hasta: '', ip: '' });
-    cargarLogs({});
+    setCurrentPage(1);
+    cargarLogs({}, 1);
+  };
+
+  // Manejar cambio de página
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+    cargarLogs(filtros, newPage);
   };
 
   const handleEliminarLog = (log) => {
@@ -140,6 +173,49 @@ const LogsPage = () => {
             onDelete={handleEliminarLog}
           />
         </div>
+
+        {/* Paginación */}
+        {pagination.totalPages > 1 && (
+          <div className="flex justify-between items-center mt-6">
+            <div className="text-sm text-gray-700 dark:text-gray-300">
+              Mostrando {((pagination.page - 1) * pagination.limit) + 1} a {Math.min(pagination.page * pagination.limit, pagination.total)} de {pagination.total} logs
+            </div>
+            <div className="flex justify-center gap-2 flex-wrap">
+              <button
+                onClick={() => handlePageChange(pagination.page - 1)}
+                disabled={!pagination.hasPrev}
+                className="px-3 py-1 rounded-md bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed border border-gray-300"
+              >
+                Anterior
+              </button>
+              
+              {Array.from({ length: Math.min(5, pagination.totalPages) }, (_, i) => {
+                const page = i + 1;
+                return (
+                  <button
+                    key={page}
+                    onClick={() => handlePageChange(page)}
+                    className={`px-3 py-1 rounded-md ${
+                      pagination.page === page
+                        ? "bg-blue-600 text-white"
+                        : "bg-white text-gray-700 hover:bg-gray-50 border border-gray-300"
+                    }`}
+                  >
+                    {page}
+                  </button>
+                );
+              })}
+              
+              <button
+                onClick={() => handlePageChange(pagination.page + 1)}
+                disabled={!pagination.hasNext}
+                className="px-3 py-1 rounded-md bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed border border-gray-300"
+              >
+                Siguiente
+              </button>
+            </div>
+          </div>
+        )}
 
         {showDeleteModal && (
           <DeleteConfirmModal

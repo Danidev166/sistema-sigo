@@ -4,8 +4,21 @@ const LogsActividadModel = require('../models/logsActividadModel');
 const EstudianteModel = require('../models/estudianteModel');
 
 class EstudianteController {
-static async obtenerTodos(_req, res, next) {
+static async obtenerTodos(req, res, next) {
   try {
+    const { page = 1, limit = 10, search = '' } = req.query;
+    
+    // Si hay parámetros de paginación, usar método paginado
+    if (page || limit || search) {
+      const result = await EstudianteModel.listarPaginado({
+        page: parseInt(page),
+        limit: parseInt(limit),
+        search: search
+      });
+      return res.json(result);
+    }
+    
+    // Si no hay parámetros, devolver todos los estudiantes
     const estudiantes = await EstudianteModel.listar(); 
     res.json(estudiantes);
   } catch (error) {

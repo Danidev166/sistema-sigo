@@ -2,6 +2,7 @@
 const bcrypt = require("bcrypt");
 const {
   obtenerUsuarios,
+  obtenerUsuariosPaginado,
   obtenerUsuarioPorId,
   crearUsuario,
   actualizarUsuario,
@@ -11,8 +12,21 @@ const {
 const LogsActividadModel = require('../models/logsActividadModel');
 
 const UsuarioController = {
-  listar: async (_req, res) => {
+  listar: async (req, res) => {
     try {
+      const { page = 1, limit = 10, search = '' } = req.query;
+      
+      // Si hay parámetros de paginación, usar método paginado
+      if (page || limit || search) {
+        const result = await obtenerUsuariosPaginado({
+          page: parseInt(page),
+          limit: parseInt(limit),
+          search: search
+        });
+        return res.json(result);
+      }
+      
+      // Si no hay parámetros, devolver todos los usuarios
       const usuarios = await obtenerUsuarios();
       res.json(usuarios);
     } catch (error) {

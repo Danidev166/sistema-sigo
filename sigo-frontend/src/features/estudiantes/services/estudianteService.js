@@ -7,8 +7,8 @@ const estudianteService = {
     api.get("/estudiantes", { headers: { "Cache-Control": "no-cache" } }),
   getEstudiantesActivos: () => api.get("/estudiantes/activos"),
   getEstudianteById: (id) => api.get(`/estudiantes/${id}`),
- getEstudiantesPaginados: (page = 1, limit = 10, search = "") =>
-  api.get(`/estudiantes/paginado?page=${page}&limit=${limit}&search=${encodeURIComponent(search)}`),
+  getEstudiantesPaginados: (page = 1, limit = 10, search = "") =>
+    api.get(`/estudiantes?page=${page}&limit=${limit}&search=${encodeURIComponent(search)}`),
 
 
   createEstudiante: (data) => api.post("/estudiantes", data),

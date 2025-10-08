@@ -26,6 +26,60 @@ const obtenerUsuarios = async () => {
   return result.rows;
 };
 
+const obtenerUsuariosPaginado = async ({ page = 1, limit = 10, search = '' }) => {
+  const offset = (page - 1) * limit;
+  
+  // Construir condición de búsqueda
+  let whereClause = '';
+  let searchParams = [];
+  let paramIndex = 1;
+  
+  if (search && search.trim()) {
+    whereClause = `WHERE (
+      nombre ILIKE $${paramIndex} OR 
+      apellido ILIKE $${paramIndex} OR 
+      email ILIKE $${paramIndex} OR 
+      rol ILIKE $${paramIndex}
+    )`;
+    searchParams.push(`%${search.trim()}%`);
+    paramIndex++;
+  }
+  
+  // Obtener total de registros
+  const countQuery = `
+    SELECT COUNT(*) as total 
+    FROM usuarios 
+    ${whereClause}
+  `;
+  
+  const countResult = await pool.query(countQuery, searchParams);
+  const total = parseInt(countResult.rows[0].total);
+  
+  // Obtener registros paginados
+  const dataQuery = `
+    SELECT id, nombre, apellido, rut, email, rol, estado
+    FROM usuarios
+    ${whereClause}
+    ORDER BY id DESC
+    LIMIT $${paramIndex} OFFSET $${paramIndex + 1}
+  `;
+  
+  const dataParams = [...searchParams, limit, offset];
+  const dataResult = await pool.query(dataQuery, dataParams);
+  
+  return {
+    data: dataResult.rows,
+    pagination: {
+      page: parseInt(page),
+      limit: parseInt(limit),
+      total,
+      totalPages: Math.ceil(total / limit),
+      hasNext: page < Math.ceil(total / limit),
+      hasPrev: page > 1
+    }
+  };
+};
+
 const obtenerUsuarioPorId = async (id) => {
   const result = await pool.query(`
     SELECT id, nombre, apellido, rut, email, rol, estado
@@ -120,6 +174,7 @@ const limpiarTokenReset = async (id) => {
 
 module.exports = {
   obtenerUsuarios,
+  obtenerUsuariosPaginado,
   obtenerUsuarioPorId,
   crearUsuario,
   actualizarUsuario,

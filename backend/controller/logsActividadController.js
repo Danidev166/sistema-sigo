@@ -11,6 +11,19 @@ class LogsActividadController {
         fecha_hasta: req.query.fecha_hasta || null,
         ip: req.query.ip || null,
       };
+      
+      const { page = 1, limit = 10 } = req.query;
+      
+      // Si hay parámetros de paginación, usar método paginado
+      if (page || limit) {
+        const result = await LogsActividadModel.obtenerTodosPaginado(filtros, {
+          page: parseInt(page),
+          limit: parseInt(limit)
+        });
+        return res.json(result);
+      }
+      
+      // Si no hay parámetros, devolver todos los logs
       const data = await LogsActividadModel.obtenerTodos(filtros);
       res.json(Array.isArray(data) ? data : (data.recordset || data));
     } catch (error) {

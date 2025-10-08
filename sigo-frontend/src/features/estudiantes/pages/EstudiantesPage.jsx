@@ -31,17 +31,41 @@ export default function EstudiantesPage() {
   const [estudiantes, setEstudiantes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [pagination, setPagination] = useState({
+    page: 1,
+    limit: 10,
+    total: 0,
+    totalPages: 0,
+    hasNext: false,
+    hasPrev: false
+  });
   
   // Estados para el filtro inteligente
   const [cursosSeleccionados, setCursosSeleccionados] = useState([]);
   const [estudiantesPorCurso, setEstudiantesPorCurso] = useState([]);
 
-  const fetchEstudiantes = useCallback(async () => {
+  const fetchEstudiantes = useCallback(async (page = 1, search = '') => {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await estudianteService.getEstudiantes();
-      setEstudiantes(response.data);
+      const response = await estudianteService.getEstudiantesPaginados(page, 10, search);
+      
+      // Si la respuesta tiene paginación, usarla
+      if (response.data.pagination) {
+        setEstudiantes(response.data.data);
+        setPagination(response.data.pagination);
+      } else {
+        // Fallback para respuesta sin paginación
+        setEstudiantes(response.data);
+        setPagination({
+          page: 1,
+          limit: 10,
+          total: response.data.length,
+          totalPages: 1,
+          hasNext: false,
+          hasPrev: false
+        });
+      }
     } catch (err) {
       setError("Error al cargar estudiantes.");
       console.error("Error fetching students:", err);
@@ -55,8 +79,14 @@ export default function EstudiantesPage() {
   }, [fetchEstudiantes]);
 
   const handleSearch = (e) => {
-    setSearchTerm(e.target.value);
+    const value = e.target.value;
+    setSearchTerm(value);
     setCurrentPage(1);
+    // Debounce search
+    const timeoutId = setTimeout(() => {
+      fetchEstudiantes(1, value);
+    }, 500);
+    return () => clearTimeout(timeoutId);
   };
 
   const handleFilterChange = (e) => {
@@ -101,27 +131,22 @@ export default function EstudiantesPage() {
     }
   };
 
+  // Aplicar filtros locales (cursos y estado) ya que la búsqueda se hace en el backend
   const filteredEstudiantes = (estudiantes || []).filter((est) => {
-    const matchesSearch =
-      est.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      est.apellido.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      est.rut.includes(searchTerm);
-    
     // Filtro por cursos seleccionados (nuevo filtro inteligente)
     const matchesCursos = cursosSeleccionados.length === 0 || cursosSeleccionados.includes(est.curso);
     
     // Filtro por estado (filtro tradicional)
     const matchesEstado = !filters.estado || est.estado === filters.estado;
     
-    return matchesSearch && matchesCursos && matchesEstado;
+    return matchesCursos && matchesEstado;
   });
 
-  const itemsPerPage = 10;
-  const totalPages = Math.ceil(filteredEstudiantes.length / itemsPerPage);
-  const paginatedEstudiantes = filteredEstudiantes.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
+  // Manejar cambio de página
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+    fetchEstudiantes(newPage, searchTerm);
+  };
 
   const handleEdit = (estudiante) => {
     setSelectedEstudiante(estudiante);
@@ -182,20 +207,56 @@ export default function EstudiantesPage() {
     };
   };
 
-  const renderPagination = () =>
-    Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-      <button
-        key={page}
-        onClick={() => setCurrentPage(page)}
-        className={`px-3 py-1 rounded-md ${
-          currentPage === page
-            ? "bg-blue-600 text-white"
-            : "bg-white text-gray-700 hover:bg-gray-50"
-        }`}
-      >
-        {page}
-      </button>
-    ));
+  const renderPagination = () => {
+    const { page, totalPages, hasNext, hasPrev } = pagination;
+    
+    if (totalPages <= 1) return null;
+    
+    const pages = [];
+    const maxVisiblePages = 5;
+    let startPage = Math.max(1, page - Math.floor(maxVisiblePages / 2));
+    let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+    
+    if (endPage - startPage + 1 < maxVisiblePages) {
+      startPage = Math.max(1, endPage - maxVisiblePages + 1);
+    }
+    
+    for (let i = startPage; i <= endPage; i++) {
+      pages.push(
+        <button
+          key={i}
+          onClick={() => handlePageChange(i)}
+          className={`px-3 py-1 rounded-md ${
+            page === i
+              ? "bg-blue-600 text-white"
+              : "bg-white text-gray-700 hover:bg-gray-50"
+          }`}
+        >
+          {i}
+        </button>
+      );
+    }
+    
+    return (
+      <>
+        <button
+          onClick={() => handlePageChange(page - 1)}
+          disabled={!hasPrev}
+          className="px-3 py-1 rounded-md bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          Anterior
+        </button>
+        {pages}
+        <button
+          onClick={() => handlePageChange(page + 1)}
+          disabled={!hasNext}
+          className="px-3 py-1 rounded-md bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          Siguiente
+        </button>
+      </>
+    );
+  };
 
   const handleSubmit = async (formData) => {
     if (selectedEstudiante) {
@@ -345,29 +406,18 @@ export default function EstudiantesPage() {
         ) : (
           <>
             <EstudianteTable
-              estudiantes={paginatedEstudiantes}
+              estudiantes={filteredEstudiantes}
               onEdit={handleEdit}
               onDelete={handleDelete}
             />
-            {totalPages > 1 && (
-              <div className="flex justify-center gap-2 mt-6 flex-wrap">
-                <button
-                  onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-                  disabled={currentPage === 1}
-                  className="px-3 py-1 rounded-md bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50"
-                >
-                  Anterior
-                </button>
-                {renderPagination()}
-                <button
-                  onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-                  disabled={currentPage === totalPages}
-                  className="px-3 py-1 rounded-md bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50"
-                >
-                  Siguiente
-                </button>
+            <div className="flex justify-between items-center mt-6">
+              <div className="text-sm text-gray-700 dark:text-gray-300">
+                Mostrando {((pagination.page - 1) * pagination.limit) + 1} a {Math.min(pagination.page * pagination.limit, pagination.total)} de {pagination.total} estudiantes
               </div>
-            )}
+              <div className="flex justify-center gap-2 flex-wrap">
+                {renderPagination()}
+              </div>
+            </div>
           </>
         )}
       </div>

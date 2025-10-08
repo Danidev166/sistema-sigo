@@ -101,6 +101,70 @@ const EstudianteModel = {
     return r.recordset;
   },
 
+  async listarPaginado({ page = 1, limit = 10, search = '' }) {
+    const pool = await getPool();
+    const offset = (page - 1) * limit;
+    
+    // Construir condición de búsqueda
+    let whereClause = '';
+    let searchParams = {};
+    
+    if (search && search.trim()) {
+      whereClause = `WHERE (
+        nombre ILIKE @search OR 
+        apellido ILIKE @search OR 
+        rut ILIKE @search OR 
+        email ILIKE @search OR
+        curso ILIKE @search
+      )`;
+      searchParams.search = `%${search.trim()}%`;
+    }
+    
+    // Obtener total de registros
+    const countQuery = `
+      SELECT COUNT(*) as total 
+      FROM estudiantes 
+      ${whereClause}
+    `;
+    
+    const countRequest = pool.request();
+    if (searchParams.search) {
+      countRequest.input('search', sql.NVarChar, searchParams.search);
+    }
+    const countResult = await countRequest.query(countQuery);
+    const total = parseInt(countResult.recordset[0].total);
+    
+    // Obtener registros paginados
+    const dataQuery = `
+      SELECT * FROM estudiantes
+      ${whereClause}
+      ORDER BY id DESC
+      LIMIT @limit OFFSET @offset
+    `;
+    
+    const dataRequest = pool.request()
+      .input('limit', sql.Int, limit)
+      .input('offset', sql.Int, offset);
+    
+    if (searchParams.search) {
+      dataRequest.input('search', sql.NVarChar, searchParams.search);
+    }
+    
+    const dataResult = await dataRequest.query(dataQuery);
+    
+    return {
+      data: dataResult.recordset,
+      pagination: {
+        page: parseInt(page),
+        limit: parseInt(limit),
+        total,
+        totalPages: Math.ceil(total / limit),
+        hasNext: page < Math.ceil(total / limit),
+        hasPrev: page > 1
+      }
+    };
+  },
+
   async obtenerPorId(id) {
     const pool = await getPool();
     const r = await pool.request()

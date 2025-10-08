@@ -14,6 +14,7 @@ import {
   TableBody,
 } from "../ui/table";
 import { Button } from "../ui/Button";
+import EnhancedTable from "../../../../components/ui/EnhancedTable";
 
 export default function Asistencia({ idEstudiante }) {
   const [asistencias, setAsistencias] = useState([]);
@@ -134,78 +135,96 @@ export default function Asistencia({ idEstudiante }) {
         </Button>
       </div>
 
-      {/* Tabla o loading */}
+      {/* Tabla mejorada con paginación */}
       {loading ? (
         <div className="flex justify-center py-10">
           <Loader2 className="animate-spin h-6 w-6 text-gray-500" />
         </div>
       ) : (
-        <div className="overflow-x-auto rounded-md shadow bg-white dark:bg-slate-800">
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Fecha</TableCell>
-                <TableCell>Estado</TableCell>
-                <TableCell>Justificación</TableCell>
-                <TableCell className="text-right">Acciones</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {asistencias.length > 0 ? (
-                asistencias.map((a) => (
-                  <TableRow key={a.id}>
-                    <TableCell>
-                      {format(new Date(a.fecha), "dd/MM/yyyy")}
-                    </TableCell>
-                    <TableCell>
-                      {a.tipo === "Presente" ? (
-                        <span className="text-green-600 font-medium">Presente</span>
-                      ) : a.tipo === "justificada" ? (
-                        <span className="text-green-600 font-medium">Justificada</span>
-                      ) : a.tipo === "Pendiente" ? (
-                        <span className="text-yellow-600 font-medium">Pendiente</span>
-                      ) : (
-                        <span className="text-red-600 font-medium capitalize">{a.tipo}</span>
-                      )}
-                    </TableCell>
-                    <TableCell className="capitalize">
-                      {a.justificacion || (
-                        <span className="italic text-gray-400">—</span>
-                      )}
-                    </TableCell>
-                    <TableCell className="text-right">
-                      <div className="flex justify-end gap-2">
-                        <button
-                          onClick={() => {
-                            setEditingData(a);
-                            setModalOpen(true);
-                          }}
-                          className="text-gray-400 hover:text-blue-500"
-                          title="Editar"
-                        >
-                          <Pencil size={16} />
-                        </button>
-                        <button
-                          onClick={() => setDeleteTarget(a)}
-                          className="text-gray-400 hover:text-red-500"
-                          title="Eliminar"
-                        >
-                          <Trash2 size={16} />
-                        </button>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell colSpan={4} className="text-center text-gray-500 dark:text-gray-400 py-6">
-                    No hay registros de asistencia.
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </div>
+        <EnhancedTable
+          data={asistencias}
+          columns={[
+            {
+              key: 'fecha',
+              label: 'Fecha',
+              sortable: true,
+              render: (value) => (
+                <span className="text-sm">
+                  {format(new Date(value), "dd/MM/yyyy")}
+                </span>
+              )
+            },
+            {
+              key: 'tipo',
+              label: 'Estado',
+              sortable: true,
+              render: (value) => {
+                const getStatusStyle = (tipo) => {
+                  switch (tipo) {
+                    case "Presente":
+                      return "text-green-600 font-medium";
+                    case "justificada":
+                      return "text-green-600 font-medium";
+                    case "Pendiente":
+                      return "text-yellow-600 font-medium";
+                    default:
+                      return "text-red-600 font-medium capitalize";
+                  }
+                };
+                return (
+                  <span className={getStatusStyle(value)}>
+                    {value === "justificada" ? "Justificada" : value}
+                  </span>
+                );
+              }
+            },
+            {
+              key: 'justificacion',
+              label: 'Justificación',
+              sortable: false,
+              render: (value) => (
+                <span className="capitalize text-sm">
+                  {value || (
+                    <span className="italic text-gray-400">—</span>
+                  )}
+                </span>
+              )
+            },
+            {
+              key: 'actions',
+              label: 'Acciones',
+              sortable: false,
+              filterable: false,
+              render: (_, row) => (
+                <div className="flex justify-end gap-2">
+                  <button
+                    onClick={() => {
+                      setEditingData(row);
+                      setModalOpen(true);
+                    }}
+                    className="p-2 text-gray-400 hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors"
+                    title="Editar asistencia"
+                  >
+                    <Pencil className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={() => setDeleteTarget(row)}
+                    className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
+                    title="Eliminar asistencia"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                </div>
+              )
+            }
+          ]}
+          searchable={true}
+          sortable={true}
+          filterable={true}
+          pagination={true}
+          itemsPerPage={10}
+          emptyMessage="No hay registros de asistencia"
+        />
       )}
 
       {/* Modales */}
