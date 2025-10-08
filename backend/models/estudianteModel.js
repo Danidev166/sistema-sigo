@@ -215,20 +215,60 @@ const EstudianteModel = {
     const pool = await getPool();
     
     try {
-      console.log(`🗑️ ELIMINACIÓN ULTRA SIMPLE - ID: ${id}`);
+      console.log(`🗑️ INICIANDO ELIMINACIÓN EN CASCADA - ID: ${id}`);
       
-      // SOLO eliminar el estudiante (sin nada más)
+      // Lista de tablas a limpiar (en orden de dependencias)
+      const tablasParaLimpiar = [
+        { nombre: 'agenda', query: 'DELETE FROM agenda WHERE id_estudiante = @id' },
+        { nombre: 'asistencia', query: 'DELETE FROM asistencia WHERE id_estudiante = @id' },
+        { nombre: 'entrevistas', query: 'DELETE FROM entrevistas WHERE id_estudiante = @id' },
+        { nombre: 'evaluaciones_vocacionales', query: 'DELETE FROM evaluaciones_vocacionales WHERE id_estudiante = @id' },
+        { nombre: 'seguimiento_psicosocial', query: 'DELETE FROM seguimiento_psicosocial WHERE id_estudiante = @id' },
+        { nombre: 'entrega_recursos', query: 'DELETE FROM entrega_recursos WHERE id_estudiante = @id' },
+        { nombre: 'intervenciones', query: 'DELETE FROM intervenciones WHERE id_estudiante = @id' },
+        { nombre: 'comunicacion_familia', query: 'DELETE FROM comunicacion_familia WHERE id_estudiante = @id' }
+      ];
+      
+      let eliminacionesExitosas = 0;
+      let eliminacionesFallidas = 0;
+      
+      // Eliminar registros relacionados (sin transacción para evitar abortos)
+      for (const tabla of tablasParaLimpiar) {
+        try {
+          console.log(`🔍 Eliminando registros de ${tabla.nombre}...`);
+          const result = await pool.request()
+            .input('id', sql.Int, id)
+            .query(tabla.query);
+          
+          console.log(`✅ ${tabla.nombre}: ${result.rowsAffected[0]} registros eliminados`);
+          eliminacionesExitosas++;
+        } catch (error) {
+          if (error.code === '42501') {
+            console.log(`⚠️ ADVERTENCIA: Sin permisos para eliminar ${tabla.nombre}, continuando...`);
+            eliminacionesFallidas++;
+          } else {
+            console.log(`❌ ERROR en ${tabla.nombre}:`, error.message);
+            eliminacionesFallidas++;
+          }
+        }
+      }
+      
+      // Finalmente, eliminar el estudiante
+      console.log(`🔍 Eliminando estudiante...`);
       const result = await pool.request()
         .input('id', sql.Int, id)
         .query('DELETE FROM estudiantes WHERE id = @id');
       
       console.log(`📊 Resultado eliminación:`, {
         rowsAffected: result.rowsAffected[0],
-        id: id
+        id: id,
+        eliminacionesExitosas,
+        eliminacionesFallidas
       });
       
       if (result.rowsAffected[0] > 0) {
         console.log(`✅ ÉXITO: Estudiante ${id} eliminado`);
+        console.log(`📈 Resumen: ${eliminacionesExitosas} tablas limpiadas exitosamente, ${eliminacionesFallidas} con problemas de permisos`);
         return true;
       } else {
         console.log(`⚠️ ADVERTENCIA: No se encontró estudiante ${id}`);
@@ -247,6 +287,7 @@ const EstudianteModel = {
         serverName: error.serverName,
         procName: error.procName
       });
+      
       throw error;
     }
   },
