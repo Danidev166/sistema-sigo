@@ -5,24 +5,41 @@ import estudianteService from "../../estudiantes/services/estudianteService";
 const dashboardService = {
   getResumen: async () => {
     try {
+      console.log("🔄 DashboardService: Iniciando carga de datos...");
+      
       // 🚀 Obtener estudiantes
+      console.log("🔄 DashboardService: Obteniendo estudiantes...");
       const est = await estudianteService.getEstudiantes();
+      console.log("✅ DashboardService: Estudiantes obtenidos:", est.data);
+      
+      // 🚀 Manejar respuesta con o sin paginación
+      let estudiantes = est.data;
+      if (est.data && est.data.data) {
+        // Si hay paginación, usar los datos paginados
+        estudiantes = est.data.data;
+        console.log("📊 DashboardService: Usando datos paginados");
+      }
       
       // 🚀 Filtrar "activos"
-      const estudiantesActivos = est.data.filter(
+      const estudiantesActivos = estudiantes.filter(
         (e) => e.estado && e.estado.toLowerCase() === "activo"
       );
+      console.log("✅ DashboardService: Estudiantes activos:", estudiantesActivos.length);
 
       // 🚀 Obtener entrevistas (SIN CACHE)
+      console.log("🔄 DashboardService: Obteniendo entrevistas...");
       const ent = await api.get("/entrevistas", {
         headers: { "Cache-Control": "no-cache" },
       });
+      console.log("✅ DashboardService: Entrevistas obtenidas:", ent.data.length);
 
       // 🚀 Obtener alertas
+      console.log("🔄 DashboardService: Obteniendo alertas...");
       const alertasRes = await api.get("/alertas", {
         headers: { "Cache-Control": "no-cache" },
       });
       const totalAlertas = alertasRes.data.filter((a) => a.estado === "Nueva").length;
+      console.log("✅ DashboardService: Alertas nuevas:", totalAlertas);
 
       // 🚀 Obtener entrevistas por mes
       let entrevistasPorMesResp;

@@ -43,16 +43,18 @@ export default function DashboardPageFinal() {
 
   const fetchDashboardStats = useCallback(async () => {
     try {
-    const data = await dashboardService.getResumen();
-    return {
-      estudiantes: data.estudiantes || 0,
-      entrevistas: data.entrevistas || 0,
-      alertas: data.alertas || 0,
-      entrevistasPorMes: data.entrevistasPorMes || [],
-      testPorEspecialidad: data.testPorEspecialidad || [],
-    };
+      console.log("🔄 Cargando datos del dashboard...");
+      const data = await dashboardService.getResumen();
+      console.log("✅ Datos del dashboard cargados:", data);
+      return {
+        estudiantes: data.estudiantes || 0,
+        entrevistas: data.entrevistas || 0,
+        alertas: data.alertas || 0,
+        entrevistasPorMes: data.entrevistasPorMes || [],
+        testPorEspecialidad: data.testPorEspecialidad || [],
+      };
     } catch (error) {
-      console.error("Error al cargar datos del dashboard:", error);
+      console.error("❌ Error al cargar datos del dashboard:", error);
       // Devolver datos por defecto en caso de error
       return {
         estudiantes: 0,

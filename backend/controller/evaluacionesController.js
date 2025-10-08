@@ -29,7 +29,6 @@ class EvaluacionesController {
     logger.error("❌ Error al obtener test por especialidad:", error);
     next(error);
   }
-}
 
   static async obtenerPorEspecialidadTest(req, res, next) {
     try {

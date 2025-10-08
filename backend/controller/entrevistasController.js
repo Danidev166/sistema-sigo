@@ -48,7 +48,6 @@ class EntrevistasController {
     logger.error("❌ Error al obtener entrevistas por mes:", error);
     next(error);
   }
-}
 
   static async obtenerPorMesTest(req, res, next) {
     try {
