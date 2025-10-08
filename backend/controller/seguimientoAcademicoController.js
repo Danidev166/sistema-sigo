@@ -11,7 +11,7 @@ const SeguimientoAcademicoController = {
       await SeguimientoAcademicoController.calcularPromedioEstudiante(req.body.id_estudiante);
       
       res.status(201).json({ 
-        message: "Seguimiento académico registrado ✅",
+        message: "Seguimiento académico registrado ",
         data: result,
         promedio_actualizado: true
       });
@@ -28,7 +28,7 @@ const SeguimientoAcademicoController = {
         user_agent: req.headers['user-agent']
       });
     } catch (err) {
-      logger.error("❌ Error al crear seguimiento académico: " + err.message);
+      logger.error(" Error al crear seguimiento académico: " + err.message);
       next(err);
     }
   },
@@ -39,7 +39,7 @@ const SeguimientoAcademicoController = {
       res.json(datos);
     } catch (err) {
       logger.error(
-        "❌ Error al obtener todos los seguimientos académicos: " + err.message
+        " Error al obtener todos los seguimientos académicos: " + err.message
       );
       next(err);
     }
@@ -53,7 +53,7 @@ const SeguimientoAcademicoController = {
       res.json(datos);
     } catch (err) {
       logger.error(
-        "❌ Error al obtener seguimientos académicos del estudiante: " + err.message
+        " Error al obtener seguimientos académicos del estudiante: " + err.message
       );
       next(err);
     }
@@ -69,7 +69,7 @@ const SeguimientoAcademicoController = {
       res.json(datos);
     } catch (err) {
       logger.error(
-        "❌ Error al obtener seguimiento académico: " + err.message
+        " Error al obtener seguimiento académico: " + err.message
       );
       next(err);
     }
@@ -79,7 +79,7 @@ const SeguimientoAcademicoController = {
     try {
       const { id } = req.params;
       const result = await SeguimientoAcademicoModel.actualizar(id, req.body);
-      res.json({ message: "Seguimiento académico actualizado ✅", data: result });
+      res.json({ message: "Seguimiento académico actualizado ", data: result });
       
       // Auditoría
       await LogsActividadModel.crear({
@@ -94,7 +94,7 @@ const SeguimientoAcademicoController = {
       });
     } catch (err) {
       logger.error(
-        "❌ Error al actualizar seguimiento académico: " + err.message
+        " Error al actualizar seguimiento académico: " + err.message
       );
       next(err);
     }
@@ -111,7 +111,7 @@ const SeguimientoAcademicoController = {
         await SeguimientoAcademicoController.calcularPromedioEstudiante(seguimiento.id_estudiante);
       }
       
-      res.json({ message: "Seguimiento académico eliminado ✅" });
+      res.json({ message: "Seguimiento académico eliminado " });
       
       // Auditoría
       await LogsActividadModel.crear({
@@ -126,7 +126,7 @@ const SeguimientoAcademicoController = {
       });
     } catch (err) {
       logger.error(
-        "❌ Error al eliminar seguimiento académico: " + err.message
+        " Error al eliminar seguimiento académico: " + err.message
       );
       next(err);
     }
@@ -219,7 +219,7 @@ const SeguimientoAcademicoController = {
 
       res.json(estadisticasCompletas);
     } catch (err) {
-      logger.error("❌ Error al obtener estadísticas: " + err.message);
+      logger.error(" Error al obtener estadísticas: " + err.message);
       next(err);
     }
   },

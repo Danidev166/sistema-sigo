@@ -8,7 +8,7 @@ class EntrevistasController {
       const entrevistas = await EntrevistaModel.obtenerTodas();
       res.json(entrevistas);
     } catch (error) {
-      logger.error("❌ Error al obtener entrevistas:", error);
+      logger.error(" Error al obtener entrevistas:", error);
       next(error);
     }
   }
@@ -22,7 +22,7 @@ class EntrevistasController {
 
       res.json(entrevistas);
     } catch (error) {
-      logger.error("❌ Error al obtener entrevistas:", error);
+      logger.error(" Error al obtener entrevistas:", error);
       next(error);
     }
   }
@@ -36,7 +36,7 @@ class EntrevistasController {
       }
       res.json(entrevista);
     } catch (error) {
-      logger.error("❌ Error al obtener entrevista por ID:", error);
+      logger.error(" Error al obtener entrevista por ID:", error);
       next(error);
     }
   }
@@ -45,7 +45,7 @@ class EntrevistasController {
       const data = await EntrevistaModel.obtenerPorMes();
       res.json(data);
     } catch (error) {
-      logger.error("❌ Error al obtener entrevistas por mes:", error);
+      logger.error(" Error al obtener entrevistas por mes:", error);
       next(error);
     }
   }
@@ -55,7 +55,7 @@ class EntrevistasController {
       const data = await EntrevistaModel.obtenerPorMes();
       res.json(data);
     } catch (error) {
-      logger.error("❌ Error al obtener entrevistas por mes (test):", error);
+      logger.error(" Error al obtener entrevistas por mes (test):", error);
       next(error);
     }
   }
@@ -72,11 +72,11 @@ class EntrevistasController {
       if (motivo) filtros.motivo = motivo;
       if (profesional) filtros.profesional = profesional;
 
-      logger.info("📊 Obteniendo estadísticas de entrevistas con filtros:", filtros);
+      logger.info(" Obteniendo estadísticas de entrevistas con filtros:", filtros);
 
       const estadisticas = await EntrevistaModel.obtenerEstadisticas(filtros);
       
-      logger.info("📊 Estadísticas obtenidas:", estadisticas);
+      logger.info(" Estadísticas obtenidas:", estadisticas);
       
       res.json({
         success: true,
@@ -84,7 +84,7 @@ class EntrevistasController {
         message: "Estadísticas obtenidas correctamente"
       });
     } catch (error) {
-      logger.error("❌ Error al obtener estadísticas de entrevistas:", error);
+      logger.error(" Error al obtener estadísticas de entrevistas:", error);
       
       // Retornar estadísticas por defecto en caso de error
       res.json({
@@ -110,7 +110,7 @@ class EntrevistasController {
     try {
       const nueva = await EntrevistaModel.crear(req.body);
       res.status(201).json({
-        message: "✅ Entrevista registrada",
+        message: " Entrevista registrada",
         entrevista: nueva,
       });
       // Auditoría
@@ -125,7 +125,7 @@ class EntrevistasController {
         user_agent: req.headers['user-agent']
       });
     } catch (error) {
-      logger.error("❌ Error al crear entrevista:", error);
+      logger.error(" Error al crear entrevista:", error);
       next(error);
     }
   }
@@ -138,7 +138,7 @@ class EntrevistasController {
         return res.status(404).json({ error: "Entrevista no encontrada" });
       }
       await EntrevistaModel.actualizar(id, req.body);
-      res.json({ message: "✅ Entrevista actualizada correctamente" });
+      res.json({ message: " Entrevista actualizada correctamente" });
       // Auditoría
       await LogsActividadModel.crear({
         id_usuario: req.user?.id || null,
@@ -151,7 +151,7 @@ class EntrevistasController {
         user_agent: req.headers['user-agent']
       });
     } catch (error) {
-      logger.error("❌ Error al actualizar entrevista:", error);
+      logger.error(" Error al actualizar entrevista:", error);
       next(error);
     }
   }
@@ -164,7 +164,7 @@ class EntrevistasController {
         return res.status(404).json({ error: "Entrevista no encontrada" });
       }
       await EntrevistaModel.eliminar(id);
-      res.json({ message: "✅ Entrevista eliminada correctamente" });
+      res.json({ message: " Entrevista eliminada correctamente" });
       // Auditoría
       await LogsActividadModel.crear({
         id_usuario: req.user?.id || null,
@@ -177,7 +177,7 @@ class EntrevistasController {
         user_agent: req.headers['user-agent']
       });
     } catch (error) {
-      logger.error("❌ Error al eliminar entrevista:", error);
+      logger.error(" Error al eliminar entrevista:", error);
       next(error);
     }
   }
@@ -187,7 +187,7 @@ class EntrevistasController {
       const { idAgenda } = req.params;
       const userId = req.user?.id;
 
-      logger.info("🔍 req.user:", req.user);
+      logger.info(" req.user:", req.user);
 
       // Obtener agenda directamente con PostgreSQL
       const { getPool } = require('../config/db');
@@ -196,7 +196,7 @@ class EntrevistasController {
       const agendaResult = await pool.raw.query('SELECT * FROM agenda WHERE id = $1', [parseInt(idAgenda, 10)]);
       const agenda = agendaResult.rows[0];
 
-      logger.info("🔍 QUERY RESULT obtenerAgendaPorId:", agenda);
+      logger.info(" QUERY RESULT obtenerAgendaPorId:", agenda);
 
       if (!agenda) {
         return res.status(404).json({ error: "Agenda no encontrada" });
@@ -237,9 +237,9 @@ class EntrevistasController {
          WHERE id = $3
       `, [asistio || 'Presente', observaciones || '', parseInt(idAgenda, 10)]);
       
-      logger.info(`📋 Agenda ID ${idAgenda} marcada como asistida`);
+      logger.info(` Agenda ID ${idAgenda} marcada como asistida`);
 
-      // 🆕 ACTUALIZAR REGISTRO DE ASISTENCIA
+      //  ACTUALIZAR REGISTRO DE ASISTENCIA
       try {
         const AsistenciaModel = require('../models/asistenciaModel');
         // Buscar el registro de asistencia relacionado con esta agenda
@@ -257,19 +257,19 @@ class EntrevistasController {
             tipo: 'Presente', // Cambiar de 'Pendiente' a 'Presente'
             justificacion: `Entrevista realizada: ${agenda.motivo} - ${agenda.profesional}. Observaciones: ${observaciones || 'Sin observaciones'}`
           });
-          logger.info(`📋 Asistencia actualizada a 'Presente' para agenda ID ${idAgenda}`);
+          logger.info(` Asistencia actualizada a 'Presente' para agenda ID ${idAgenda}`);
         }
       } catch (asistenciaError) {
-        logger.warn(`⚠️ Error al actualizar asistencia: ${asistenciaError.message}`);
+        logger.warn(` Error al actualizar asistencia: ${asistenciaError.message}`);
       }
 
       res.status(201).json({
-        message: "✅ Entrevista registrada desde Agenda",
+        message: " Entrevista registrada desde Agenda",
         entrevista: nueva
       });
 
     } catch (error) {
-      logger.error("❌ Error al registrar entrevista desde Agenda:", error);
+      logger.error(" Error al registrar entrevista desde Agenda:", error);
       next(error);
     }
   }

@@ -32,9 +32,13 @@ export default function SeguimientoPsicosocialPage() {
     try {
       setLoading(true);
       const res = await seguimientoPsicosocialService.getSeguimientos();
+      console.log("🔍 Debug - Respuesta completa:", res);
+      console.log("🔍 Debug - res.data:", res.data);
+      console.log("🔍 Debug - Tipo de res.data:", typeof res.data);
+      console.log("🔍 Debug - Es array:", Array.isArray(res.data));
       setSeguimientos(res.data);
     } catch (err) {
-      console.error("❌ Error al cargar seguimientos:", err);
+      console.error("Error al cargar seguimientos:", err);
       toast.error("Error al cargar seguimientos.");
     } finally {
       setLoading(false);

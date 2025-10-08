@@ -7,7 +7,7 @@ const SeguimientoCronologicoController = {
       const data = await SeguimientoCronologicoModel.obtenerTodos();
       res.json(data);
     } catch (error) {
-      logger.error("❌ Error al obtener seguimientos cronológicos: " + error.message);
+      logger.error(" Error al obtener seguimientos cronológicos: " + error.message);
       next(error);
     }
   },
@@ -18,7 +18,7 @@ const SeguimientoCronologicoController = {
       if (!data) return res.status(404).json({ error: 'No encontrado' });
       res.json(data);
     } catch (error) {
-      logger.error("❌ Error al obtener seguimiento cronológico: " + error.message);
+      logger.error(" Error al obtener seguimiento cronológico: " + error.message);
       next(error);
     }
   },
@@ -31,7 +31,7 @@ const SeguimientoCronologicoController = {
       const data = await SeguimientoCronologicoModel.obtenerPorEstudiante(id, filtros);
       res.json(data);
     } catch (error) {
-      logger.error("❌ Error al obtener seguimientos cronológicos del estudiante: " + error.message);
+      logger.error(" Error al obtener seguimientos cronológicos del estudiante: " + error.message);
       next(error);
     }
   },
@@ -41,7 +41,7 @@ const SeguimientoCronologicoController = {
       const creado = await SeguimientoCronologicoModel.crear(req.body);
       res.status(201).json({ message: 'Creado correctamente', id: creado?.id || null, data: creado });
     } catch (error) {
-      logger.error("❌ Error al crear seguimiento cronológico: " + error.message);
+      logger.error(" Error al crear seguimiento cronológico: " + error.message);
       next(error);
     }
   },
@@ -51,7 +51,7 @@ const SeguimientoCronologicoController = {
       const result = await SeguimientoCronologicoModel.actualizar(req.params.id, req.body);
       res.json({ message: 'Actualizado correctamente', data: result });
     } catch (error) {
-      logger.error("❌ Error al actualizar seguimiento cronológico: " + error.message);
+      logger.error(" Error al actualizar seguimiento cronológico: " + error.message);
       next(error);
     }
   },
@@ -61,7 +61,7 @@ const SeguimientoCronologicoController = {
       const result = await SeguimientoCronologicoModel.eliminar(req.params.id);
       res.json({ message: 'Eliminado correctamente', data: result });
     } catch (error) {
-      logger.error("❌ Error al eliminar seguimiento cronológico: " + error.message);
+      logger.error(" Error al eliminar seguimiento cronológico: " + error.message);
       next(error);
     }
   },
@@ -71,7 +71,7 @@ const SeguimientoCronologicoController = {
       const data = await SeguimientoCronologicoModel.obtenerEstadisticas();
       res.json(data);
     } catch (error) {
-      logger.error("❌ Error al obtener estadísticas de seguimiento cronológico: " + error.message);
+      logger.error(" Error al obtener estadísticas de seguimiento cronológico: " + error.message);
       next(error);
     }
   }

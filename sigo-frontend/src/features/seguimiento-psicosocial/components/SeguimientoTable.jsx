@@ -14,6 +14,10 @@
 import { format, parseISO } from "date-fns";
 
 export default function SeguimientoTable({ seguimientos = [], onEdit, onDelete }) {
+  console.log("🔍 Debug SeguimientoTable - seguimientos:", seguimientos);
+  console.log("🔍 Debug SeguimientoTable - length:", seguimientos?.length);
+  console.log("🔍 Debug SeguimientoTable - tipo:", typeof seguimientos);
+  
   if (!seguimientos || seguimientos.length === 0) {
     return (
       <div className="text-center py-8 text-gray-500 dark:text-gray-400">

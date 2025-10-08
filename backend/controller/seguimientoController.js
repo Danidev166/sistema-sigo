@@ -7,7 +7,7 @@ const SeguimientoController = {
       const nuevo = await SeguimientoModel.crear(req.body);
       res.status(201).json(nuevo);
     } catch (error) {
-      logger.error("❌ Error al crear seguimiento: " + error.message);
+      logger.error(" Error al crear seguimiento: " + error.message);
       next(error);
     }
   },
@@ -17,7 +17,7 @@ const SeguimientoController = {
       const datos = await SeguimientoModel.listar();
       res.json(datos);
     } catch (error) {
-      logger.error("❌ Error al listar seguimientos: " + error.message);
+      logger.error(" Error al listar seguimientos: " + error.message);
       next(error);
     }
   },
@@ -27,7 +27,7 @@ const SeguimientoController = {
       const datos = await SeguimientoModel.obtenerTodos();
       res.json(datos);
     } catch (error) {
-      logger.error("❌ Error al obtener todos los seguimientos: " + error.message);
+      logger.error(" Error al obtener todos los seguimientos: " + error.message);
       next(error);
     }
   },
@@ -41,7 +41,7 @@ const SeguimientoController = {
       }
       res.json(datos);
     } catch (error) {
-      logger.error("❌ Error al obtener seguimiento: " + error.message);
+      logger.error(" Error al obtener seguimiento: " + error.message);
       next(error);
     }
   },
@@ -52,7 +52,7 @@ const SeguimientoController = {
       const datos = await SeguimientoModel.obtenerPorEstudiante(id);
       res.json(datos);
     } catch (error) {
-      logger.error("❌ Error al obtener seguimientos del estudiante: " + error.message);
+      logger.error(" Error al obtener seguimientos del estudiante: " + error.message);
       next(error);
     }
   },
@@ -61,9 +61,9 @@ const SeguimientoController = {
     try {
       const { id } = req.params;
       const result = await SeguimientoModel.actualizar(id, req.body);
-      res.json({ message: "Seguimiento actualizado ✅", data: result });
+      res.json({ message: "Seguimiento actualizado ", data: result });
     } catch (error) {
-      logger.error("❌ Error al actualizar seguimiento: " + error.message);
+      logger.error(" Error al actualizar seguimiento: " + error.message);
       next(error);
     }
   },
@@ -72,9 +72,9 @@ const SeguimientoController = {
     try {
       const { id } = req.params;
       await SeguimientoModel.eliminar(id);
-      res.json({ message: "Seguimiento eliminado ✅" });
+      res.json({ message: "Seguimiento eliminado " });
     } catch (error) {
-      logger.error("❌ Error al eliminar seguimiento: " + error.message);
+      logger.error(" Error al eliminar seguimiento: " + error.message);
       next(error);
     }
   }

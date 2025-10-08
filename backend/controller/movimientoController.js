@@ -8,7 +8,7 @@ class MovimientoController {
     try {
       const nuevoMovimiento = await MovimientoModel.registrar(req.body);
 
-      // ✅ Si es una salida y tiene estudiante, registrar en Entrega_Recursos
+      //  Si es una salida y tiene estudiante, registrar en Entrega_Recursos
       if (
         (req.body.tipo_movimiento === "Salida" || req.body.tipo_movimiento === "salida") &&
         req.body.id_estudiante &&

@@ -5,10 +5,10 @@ const AsistenciaController = {
   async crear(req, res, next) {
     try {
       const { id_estudiante, fecha, tipo, justificacion } = req.body;
-      logger.info("🔍 Debug - Datos recibidos:", { id_estudiante, fecha, tipo, justificacion });
+      logger.info(" Debug - Datos recibidos:", { id_estudiante, fecha, tipo, justificacion });
       
       const nuevaAsistencia = await AsistenciaModel.crear({ id_estudiante, fecha, tipo, justificacion });
-      logger.info("✅ Debug - Asistencia creada exitosamente:", nuevaAsistencia);
+      logger.info(" Debug - Asistencia creada exitosamente:", nuevaAsistencia);
       
       // Calcular estadísticas de asistencia del estudiante
       const estadisticas = await AsistenciaController.calcularEstadisticasAsistencia(id_estudiante);
@@ -19,8 +19,8 @@ const AsistenciaController = {
         estadisticas: estadisticas
       });
     } catch (error) {
-      logger.error("❌ Error al crear asistencia:", error);
-      logger.error("❌ Stack trace:", error.stack);
+      logger.error(" Error al crear asistencia:", error);
+      logger.error(" Stack trace:", error.stack);
       
       // Manejar errores específicos
       if (error.message.includes('Ya existe un registro')) {
@@ -50,7 +50,7 @@ const AsistenciaController = {
       const asistencias = await AsistenciaModel.obtenerTodos();
       res.json(asistencias);
     } catch (error) {
-      logger.error("❌ Error al obtener asistencias:", error);
+      logger.error(" Error al obtener asistencias:", error);
       next(error);
     }
   },
@@ -62,7 +62,7 @@ const AsistenciaController = {
       if (!asistencia) return res.status(404).json({ error: "Asistencia no encontrada" });
       res.json(asistencia);
     } catch (error) {
-      logger.error("❌ Error al obtener asistencia:", error);
+      logger.error(" Error al obtener asistencia:", error);
       next(error);
     }
   },
@@ -74,7 +74,7 @@ const AsistenciaController = {
       await AsistenciaModel.actualizar(id, { id_estudiante, fecha, tipo, justificacion });
       res.json({ message: "Asistencia actualizada correctamente" });
     } catch (error) {
-      logger.error("❌ Error al actualizar asistencia:", error);
+      logger.error(" Error al actualizar asistencia:", error);
       next(error);
     }
   },
@@ -85,7 +85,7 @@ const AsistenciaController = {
       await AsistenciaModel.eliminar(id);
       res.json({ message: "Asistencia eliminada correctamente" });
     } catch (error) {
-      logger.error("❌ Error al eliminar asistencia:", error);
+      logger.error(" Error al eliminar asistencia:", error);
       next(error);
     }
   },
@@ -95,7 +95,7 @@ const AsistenciaController = {
       const data = await AsistenciaModel.asistenciaMensual();
       res.json(data);
     } catch (error) {
-      logger.error("❌ Error al generar asistencia mensual:", error);
+      logger.error(" Error al generar asistencia mensual:", error);
       next(error);
     }
   },
@@ -182,7 +182,7 @@ const AsistenciaController = {
 
       res.json(estadisticas);
     } catch (error) {
-      logger.error("❌ Error al obtener estadísticas de asistencia:", error);
+      logger.error(" Error al obtener estadísticas de asistencia:", error);
       next(error);
     }
   },

@@ -4,7 +4,6 @@ import { publicRoutes, privateRoutes, fallbackRoute } from './configRouter';
 import ProtectedRoute from './ProtectedRoute';
 import NotificacionesPage from '../features/notificaciones/pages/NotificacionesPage';
 import ConsistencyTest from '../components/ConsistencyTest';
-import DashboardDebug from '../features/dashboard/pages/DashboardDebug';
 
 // Componente de carga optimizado
 const LoadingSpinner = () => (
@@ -49,13 +48,6 @@ export default function AppRouter() {
         
         {/* Ruta temporal para prueba de consistencia */}
         <Route path="/consistency-test" element={<ConsistencyTest />} />
-        
-        {/* Ruta temporal para debug del dashboard */}
-        <Route path="/dashboard-debug" element={
-          <ProtectedRoute>
-            <DashboardDebug />
-          </ProtectedRoute>
-        } />
       </Routes>
     </Suspense>
   );

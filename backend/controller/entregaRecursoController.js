@@ -36,7 +36,7 @@ class EntregaRecursoController {
       const entregas = await EntregaRecursoModel.obtenerPorEstudiante(id);
       res.json(entregas);
     } catch (error) {
-      logger.error("❌ Error al obtener entregas por estudiante:", error);
+      logger.error(" Error al obtener entregas por estudiante:", error);
       next(error);
     }
   }

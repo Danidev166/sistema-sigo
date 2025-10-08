@@ -17,7 +17,7 @@ class EvaluacionesController {
         res.json(evaluaciones);
       }
     } catch (error) {
-      logger.error("❌ Error al obtener evaluaciones:", error);
+      logger.error(" Error al obtener evaluaciones:", error);
       next(error);
     }
   }
@@ -26,7 +26,7 @@ class EvaluacionesController {
       const data = await EvaluacionModel.obtenerPorEspecialidad();
       res.json(data);
     } catch (error) {
-      logger.error("❌ Error al obtener test por especialidad:", error);
+      logger.error(" Error al obtener test por especialidad:", error);
       next(error);
     }
   }
@@ -36,7 +36,7 @@ class EvaluacionesController {
       const data = await EvaluacionModel.obtenerPorEspecialidad();
       res.json(data);
     } catch (error) {
-      logger.error("❌ Error al obtener test por especialidad (test):", error);
+      logger.error(" Error al obtener test por especialidad (test):", error);
       next(error);
     }
   }
@@ -51,7 +51,7 @@ class EvaluacionesController {
       }
       res.json(evaluacion);
     } catch (error) {
-      logger.error("❌ Error al obtener evaluación:", error);
+      logger.error(" Error al obtener evaluación:", error);
       next(error);
     }
   }
@@ -60,9 +60,9 @@ class EvaluacionesController {
   static async crear(req, res, next) {
     try {
       const nueva = await EvaluacionModel.crear(req.body);
-      res.status(201).json({ message: "✅ Evaluación registrada", evaluacion: nueva });
+      res.status(201).json({ message: " Evaluación registrada", evaluacion: nueva });
     } catch (error) {
-      logger.error("❌ Error al crear evaluación:", error);
+      logger.error(" Error al crear evaluación:", error);
       next(error);
     }
   }
@@ -76,9 +76,9 @@ class EvaluacionesController {
       }
 
       await EvaluacionModel.actualizar(id, req.body);
-      res.json({ message: "✅ Evaluación actualizada correctamente" });
+      res.json({ message: " Evaluación actualizada correctamente" });
     } catch (error) {
-      logger.error("❌ Error al actualizar evaluación:", error);
+      logger.error(" Error al actualizar evaluación:", error);
       next(error);
     }
   }
@@ -92,9 +92,9 @@ class EvaluacionesController {
       }
 
       await EvaluacionModel.eliminar(id);
-      res.json({ message: "✅ Evaluación eliminada" });
+      res.json({ message: " Evaluación eliminada" });
     } catch (error) {
-      logger.error("❌ Error al eliminar evaluación:", error);
+      logger.error(" Error al eliminar evaluación:", error);
       next(error);
     }
   }
@@ -107,7 +107,7 @@ class EvaluacionesController {
       // Validar datos requeridos
       if (!email || !estudiante || !testType || !qrCodeUrl || !testUrl) {
         return res.status(400).json({ 
-          error: "⚠️ Faltan datos requeridos: email, estudiante, testType, qrCodeUrl, testUrl" 
+          error: " Faltan datos requeridos: email, estudiante, testType, qrCodeUrl, testUrl" 
         });
       }
 
@@ -115,18 +115,18 @@ class EvaluacionesController {
       const testTypes = ['kuder', 'holland', 'aptitudes'];
       if (!testTypes.includes(testType)) {
         return res.status(400).json({ 
-          error: "❌ Tipo de test inválido. Debe ser: kuder, holland o aptitudes" 
+          error: " Tipo de test inválido. Debe ser: kuder, holland o aptitudes" 
         });
       }
 
       // Validar estructura del estudiante
       if (!estudiante.nombre || !estudiante.apellido) {
         return res.status(400).json({ 
-          error: "❌ Datos del estudiante incompletos. Se requiere nombre y apellido" 
+          error: " Datos del estudiante incompletos. Se requiere nombre y apellido" 
         });
       }
 
-      logger.info("📧 Enviando test vocacional por email:", {
+      logger.info(" Enviando test vocacional por email:", {
         email,
         estudiante: `${estudiante.nombre} ${estudiante.apellido}`,
         testType,
@@ -143,7 +143,7 @@ class EvaluacionesController {
       });
 
       res.json({ 
-        message: "✅ Test vocacional enviado por email correctamente",
+        message: " Test vocacional enviado por email correctamente",
         data: {
           email,
           estudiante: `${estudiante.nombre} ${estudiante.apellido}`,
@@ -153,7 +153,7 @@ class EvaluacionesController {
       });
 
     } catch (error) {
-      logger.error("❌ Error en enviarTestPorEmail:", error);
+      logger.error(" Error en enviarTestPorEmail:", error);
       next(error);
     }
   }

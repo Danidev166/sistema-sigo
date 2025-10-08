@@ -16,7 +16,7 @@ const pool = new Pool(renderConfig);
 
 class ReportesMejoradoController {
   
-  // 📊 Dashboard principal
+  //  Dashboard principal
   static async dashboard(req, res, next) {
     try {
       // Usar la función de la base de datos que devuelve el formato correcto
@@ -26,12 +26,12 @@ class ReportesMejoradoController {
       res.json(dashboardData);
       
     } catch (error) {
-      logger.error("❌ Error en dashboard:", error);
+      logger.error(" Error en dashboard:", error);
       next(error);
     }
   }
   
-  // 📊 Reporte de Estudiantes por Curso
+  //  Reporte de Estudiantes por Curso
   static async estudiantesPorCurso(req, res, next) {
     try {
       const { curso, estado, fecha_desde, fecha_hasta } = req.query;
@@ -107,12 +107,12 @@ class ReportesMejoradoController {
       res.json(result.rows);
       
     } catch (error) {
-      logger.error("❌ Error en estudiantesPorCurso:", error);
+      logger.error(" Error en estudiantesPorCurso:", error);
       next(error);
     }
   }
 
-  // 📊 Reporte Institucional
+  //  Reporte Institucional
   static async reporteInstitucional(req, res, next) {
     try {
       const sql = `
@@ -146,12 +146,12 @@ class ReportesMejoradoController {
       res.json(result.rows);
       
     } catch (error) {
-      logger.error("❌ Error en reporteInstitucional:", error);
+      logger.error(" Error en reporteInstitucional:", error);
       next(error);
     }
   }
 
-  // 📅 Reporte de Asistencia Detallado
+  //  Reporte de Asistencia Detallado
   static async reporteAsistencia(req, res, next) {
     try {
       const { curso, fecha_desde, fecha_hasta } = req.query;
@@ -218,12 +218,12 @@ class ReportesMejoradoController {
       res.json(result.rows);
       
     } catch (error) {
-      logger.error("❌ Error en reporteAsistencia:", error);
+      logger.error(" Error en reporteAsistencia:", error);
       next(error);
     }
   }
 
-  // 📈 Gráfico de Asistencia Mensual
+  //  Gráfico de Asistencia Mensual
   static async graficoAsistenciaMensual(req, res, next) {
     try {
       const sql = `
@@ -244,12 +244,12 @@ class ReportesMejoradoController {
       res.json(result.rows);
       
     } catch (error) {
-      logger.error("❌ Error en graficoAsistenciaMensual:", error);
+      logger.error(" Error en graficoAsistenciaMensual:", error);
       next(error);
     }
   }
 
-  // 📊 Gráfico de Motivos de Entrevistas
+  //  Gráfico de Motivos de Entrevistas
   static async graficoMotivosEntrevistas(req, res, next) {
     try {
       const sql = `
@@ -266,7 +266,7 @@ class ReportesMejoradoController {
       res.json(result.rows);
       
     } catch (error) {
-      logger.error("❌ Error en graficoMotivosEntrevistas:", error);
+      logger.error(" Error en graficoMotivosEntrevistas:", error);
       next(error);
     }
   }

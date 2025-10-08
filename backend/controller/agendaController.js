@@ -9,18 +9,17 @@ class AgendaController {
     try {
       const { tipo, curso, fecha_inicio, fecha_fin, estado } = req.query;
       
-      logger.info("📅 Obteniendo agenda con filtros:", { tipo, curso, fecha_inicio, fecha_fin, estado });
+      logger.info("Obteniendo agenda con filtros:", { tipo, curso, fecha_inicio, fecha_fin, estado });
       
-      // Por ahora, ignorar los filtros y devolver todos los datos
-      // TODO: Implementar filtros en el modelo
+      // Filtros pendientes de implementar
       const agenda = await AgendaModel.obtenerTodos();
       
-      logger.info(`📅 Agenda obtenida: ${agenda.length} registros`);
+      logger.info(`Agenda obtenida: ${agenda.length} registros`);
       
-      // Devolver directamente el array como antes
+      // Retornar datos
       res.json(agenda);
     } catch (error) {
-      logger.error("❌ Error al obtener agenda:", error);
+      logger.error("Error al obtener agenda:", error);
       next(error);
     }
   }
@@ -32,7 +31,7 @@ class AgendaController {
       if (!item) return res.status(404).json({ error: "No encontrada" });
       res.json(item);
     } catch (error) {
-      logger.error("❌ Error al obtener agenda por ID:", error);
+      logger.error("Error al obtener agenda por ID:", error);
       next(error);
     }
   }
@@ -42,7 +41,7 @@ class AgendaController {
       const nuevaAgenda = await AgendaModel.crear(req.body);
       const estudiante = await EstudianteModel.obtenerPorId(req.body.id_estudiante);
 
-      // 🆕 CREAR REGISTRO DE ASISTENCIA AUTOMÁTICAMENTE
+      // Crear registro de asistencia automáticamente
       try {
         const AsistenciaModel = require('../models/asistenciaModel');
         
@@ -61,19 +60,19 @@ class AgendaController {
             tipo: 'Pendiente', // Estado inicial
             justificacion: `Cita agendada: ${req.body.motivo} - ${req.body.profesional}`
           });
-          logger.info(`📋 Registro de asistencia creado automáticamente para agenda ID ${nuevaAgenda.id}`);
+          logger.info(`Registro de asistencia creado automáticamente para agenda ID ${nuevaAgenda.id}`);
         } else {
-          logger.info(`📋 Ya existe asistencia para esta fecha, no se crea duplicado`);
+          logger.info(`Ya existe asistencia para esta fecha, no se crea duplicado`);
         }
       } catch (asistenciaError) {
-        logger.warn(`⚠️ Error al crear asistencia automática: ${asistenciaError.message}`);
+        logger.warn(`Error al crear asistencia automática: ${asistenciaError.message}`);
         // No fallar la creación de agenda por error en asistencia
       }
 
-      logger.info(`📅 Entrevista agendada por ${req.user?.email || "usuario desconocido"} para estudiante ID ${req.body.id_estudiante}`);
+      logger.info(`Entrevista agendada por ${req.user?.email || "usuario desconocido"} para estudiante ID ${req.body.id_estudiante}`);
 
       if (!estudiante?.email) {
-        logger.warn(`⚠️ El estudiante ${req.body.id_estudiante} no tiene correo registrado`);
+        logger.warn(`El estudiante ${req.body.id_estudiante} no tiene correo registrado`);
       } else {
         await enviarCorreoAgenda({
           to: estudiante.email,
@@ -85,10 +84,10 @@ class AgendaController {
           cc: req.body.email_orientador || null
         });
 
-        logger.info(`✉️ Simulación de correo enviada a: ${estudiante.email} (copiado: ${req.body.email_orientador || "N/A"})`);
+        logger.info(`Simulación de correo enviada a: ${estudiante.email} (copiado: ${req.body.email_orientador || "N/A"})`);
       }
 
-      res.status(201).json({ message: "✅ Agenda creada", agenda: nuevaAgenda });
+      res.status(201).json({ message: "Agenda creada", agenda: nuevaAgenda });
       // Auditoría
       await LogsActividadModel.crear({
         id_usuario: req.user?.id || null,
@@ -101,7 +100,7 @@ class AgendaController {
         user_agent: req.headers['user-agent']
       });
     } catch (error) {
-      logger.error("❌ Error al crear agenda:", error);
+      logger.error("Error al crear agenda:", error);
       next(error);
     }
   }
@@ -112,8 +111,8 @@ class AgendaController {
       // Obtener datos anteriores
       const agendaAnterior = await AgendaModel.obtenerPorId(id);
       await AgendaModel.actualizar(id, req.body);
-      logger.info(`✏️ Agenda ID ${id} actualizada por ${req.user?.email || "usuario desconocido"}`);
-      res.json({ message: "✅ Agenda actualizada" });
+      logger.info(`Agenda ID ${id} actualizada por ${req.user?.email || "usuario desconocido"}`);
+      res.json({ message: "Agenda actualizada" });
       // Auditoría
       await LogsActividadModel.crear({
         id_usuario: req.user?.id || null,
@@ -126,7 +125,7 @@ class AgendaController {
         user_agent: req.headers['user-agent']
       });
     } catch (error) {
-      logger.error("❌ Error al actualizar agenda:", error);
+      logger.error("Error al actualizar agenda:", error);
       next(error);
     }
   }
@@ -137,8 +136,8 @@ class AgendaController {
       // Obtener datos anteriores
       const agendaAnterior = await AgendaModel.obtenerPorId(id);
       await AgendaModel.eliminar(id);
-      logger.info(`🗑️ Agenda ID ${id} eliminada por ${req.user?.email || "usuario desconocido"}`);
-      res.json({ message: "✅ Agenda eliminada" });
+      logger.info(`Agenda ID ${id} eliminada por ${req.user?.email || "usuario desconocido"}`);
+      res.json({ message: "Agenda eliminada" });
       // Auditoría
       await LogsActividadModel.crear({
         id_usuario: req.user?.id || null,
@@ -151,18 +150,18 @@ class AgendaController {
         user_agent: req.headers['user-agent']
       });
     } catch (error) {
-      logger.error("❌ Error al eliminar agenda:", error);
+      logger.error("Error al eliminar agenda:", error);
       next(error);
     }
   }
 
-  // 🆕 MÉTODO PARA ACTUALIZAR ASISTENCIA A ENTREVISTA
+  // MÉTODO PARA ACTUALIZAR ASISTENCIA A ENTREVISTA
   static async actualizarAsistencia(req, res, next) {
     try {
       const { id } = req.params;
       const { asistencia, observaciones } = req.body;
       
-      logger.info(`🔍 Debug - Actualizando asistencia para agenda ID ${id}:`, { asistencia, observaciones });
+      logger.info(`Actualizando asistencia para agenda ID ${id}:`, { asistencia, observaciones });
       
       // Validar que el estado de asistencia sea válido
       const estadosValidos = ['Presente', 'Ausente', 'Justificada', 'Pendiente'];
@@ -184,9 +183,9 @@ class AgendaController {
         WHERE id = $2
       `, [asistencia, parseInt(id, 10)]);
       
-      logger.info(`📋 Resultado de actualización:`, result);
+      logger.info(` Resultado de actualización:`, result);
 
-      logger.info(`📋 Asistencia actualizada para agenda ID ${id}: ${asistencia}`);
+      logger.info(` Asistencia actualizada para agenda ID ${id}: ${asistencia}`);
       
       res.json({ 
         message: "Asistencia actualizada correctamente",
@@ -195,8 +194,8 @@ class AgendaController {
       });
       
     } catch (error) {
-      logger.error("❌ Error al actualizar asistencia:", error);
-      logger.error("❌ Stack trace:", error.stack);
+      logger.error("Error al actualizar asistencia:", error);
+      logger.error("Stack trace:", error.stack);
       res.status(500).json({ 
         error: "Error interno del servidor",
         details: error.message,

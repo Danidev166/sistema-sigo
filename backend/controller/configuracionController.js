@@ -125,7 +125,7 @@ const configuracionController = {
     }
   },
 
-  // 📊 estadísticas reales con PG
+  //  estadísticas reales con PG
   async obtenerEstadisticas(_req, res) {
     try {
       const pool = await getPool();
@@ -158,7 +158,7 @@ const configuracionController = {
 
       res.json(estadisticas);
     } catch (error) {
-      logger.error('❌ Error al obtener estadísticas:', error);
+      logger.error(' Error al obtener estadísticas:', error);
       res.status(500).json({ error: 'Error al obtener estadísticas del sistema', detalles: error.message });
     }
   }

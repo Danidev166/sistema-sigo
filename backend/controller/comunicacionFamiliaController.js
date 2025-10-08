@@ -41,22 +41,22 @@ const ComunicacionFamiliaController = {
               });
             }
             
-            logger.info(`📧 Email enviado a: ${estudiante.email_apoderado}`);
+            logger.info(` Email enviado a: ${estudiante.email_apoderado}`);
           } else {
-            logger.warn(`⚠️ No se pudo enviar email: estudiante sin email de apoderado`);
+            logger.warn(` No se pudo enviar email: estudiante sin email de apoderado`);
           }
         } catch (emailError) {
-          logger.error("❌ Error enviando email:", emailError);
+          logger.error(" Error enviando email:", emailError);
           // No fallar la operación principal por error de email
         }
       }
       
       res.status(201).json({ 
-        message: "✅ Comunicación registrada", 
+        message: " Comunicación registrada", 
         comunicacion: nuevaComunicacion 
       });
     } catch (err) {
-      logger.error("❌ Error al registrar comunicación: " + err.message);
+      logger.error(" Error al registrar comunicación: " + err.message);
       next(err);
     }
   },
@@ -74,7 +74,7 @@ const ComunicacionFamiliaController = {
       
       res.json(datos);
     } catch (err) {
-      logger.error("❌ Error al obtener comunicaciones: " + err.message);
+      logger.error(" Error al obtener comunicaciones: " + err.message);
       next(err);
     }
   },
@@ -84,7 +84,7 @@ const ComunicacionFamiliaController = {
       // El middleware ya verificó que existe, usar los datos del request
       res.json(req.comunicacion);
     } catch (err) {
-      logger.error("❌ Error al obtener comunicación: " + err.message);
+      logger.error(" Error al obtener comunicación: " + err.message);
       next(err);
     }
   },
@@ -110,19 +110,19 @@ const ComunicacionFamiliaController = {
               profesional: req.body.responsable_nombre || 'Orientador/a'
             });
             
-            logger.info(`📧 Email de citación actualizada enviado a: ${estudiante.email_apoderado}`);
+            logger.info(` Email de citación actualizada enviado a: ${estudiante.email_apoderado}`);
           }
         } catch (emailError) {
-          logger.error("❌ Error enviando email de citación actualizada:", emailError);
+          logger.error(" Error enviando email de citación actualizada:", emailError);
         }
       }
       
       res.json({ 
-        message: "✅ Comunicación actualizada", 
+        message: " Comunicación actualizada", 
         comunicacion: comunicacionActualizada 
       });
     } catch (err) {
-      logger.error("❌ Error al actualizar comunicación: " + err.message);
+      logger.error(" Error al actualizar comunicación: " + err.message);
       next(err);
     }
   },
@@ -131,11 +131,11 @@ const ComunicacionFamiliaController = {
     try {
       const comunicacionEliminada = await model.eliminar(req.params.id);
       res.json({ 
-        message: "🗑️ Comunicación eliminada",
+        message: " Comunicación eliminada",
         comunicacion: comunicacionEliminada
       });
     } catch (err) {
-      logger.error("❌ Error al eliminar comunicación: " + err.message);
+      logger.error(" Error al eliminar comunicación: " + err.message);
       next(err);
     }
   }

@@ -7,7 +7,7 @@ const ConductaController = {
   async crear(req, res, next) {
     try {
       const result = await model.crear(req.body);
-      res.status(201).json({ message: "✅ Registro de conducta creado" });
+      res.status(201).json({ message: " Registro de conducta creado" });
       // Auditoría
       await LogsActividadModel.crear({
         id_usuario: req.user?.id || null,
@@ -20,7 +20,7 @@ const ConductaController = {
         user_agent: req.headers['user-agent']
       });
     } catch (err) {
-      logger.error("❌ Error al crear conducta:", err);
+      logger.error(" Error al crear conducta:", err);
       next(err);
     }
   },
@@ -32,10 +32,10 @@ const ConductaController = {
     try {
       const data = await model.obtenerPorEstudiante(id);
       logger.info(`[Conducta] Resultado de la consulta: ${JSON.stringify(data)}`);
-      // ✅ SIEMPRE devolver 200 con array (aunque sea vacío)
+      //  SIEMPRE devolver 200 con array (aunque sea vacío)
       res.json(data);
     } catch (error) {
-      logger.error("❌ Error en obtenerPorEstudiante:", error);
+      logger.error(" Error en obtenerPorEstudiante:", error);
       res.status(500).json({ message: "Error al obtener conducta" });
     }
   },
@@ -46,7 +46,7 @@ const ConductaController = {
       const datos = await model.obtenerTodos();
       res.json(datos);
     } catch (err) {
-      logger.error("❌ Error al obtener conductas:", err);
+      logger.error(" Error al obtener conductas:", err);
       next(err);
     }
   },
@@ -56,12 +56,12 @@ const ConductaController = {
     try {
       const dato = await model.obtenerPorId(req.params.id);
       if (!dato) {
-        logger.warn(`⚠️ Registro de conducta no encontrado con ID: ${req.params.id}`);
-        return res.status(404).json({ error: "❌ Registro no encontrado" });
+        logger.warn(` Registro de conducta no encontrado con ID: ${req.params.id}`);
+        return res.status(404).json({ error: " Registro no encontrado" });
       }
       res.json(dato);
     } catch (err) {
-      logger.error("❌ Error al obtener conducta por ID:", err);
+      logger.error(" Error al obtener conducta por ID:", err);
       next(err);
     }
   },
@@ -72,7 +72,7 @@ const ConductaController = {
       // Obtener datos anteriores
       const prev = await model.obtenerPorId(req.params.id);
       await model.actualizar(req.params.id, req.body);
-      res.json({ message: "✅ Registro de conducta actualizado" });
+      res.json({ message: " Registro de conducta actualizado" });
       // Auditoría
       await LogsActividadModel.crear({
         id_usuario: req.user?.id || null,
@@ -85,7 +85,7 @@ const ConductaController = {
         user_agent: req.headers['user-agent']
       });
     } catch (err) {
-      logger.error("❌ Error al actualizar conducta:", err);
+      logger.error(" Error al actualizar conducta:", err);
       next(err);
     }
   },
@@ -96,7 +96,7 @@ const ConductaController = {
       // Obtener datos anteriores
       const prev = await model.obtenerPorId(req.params.id);
       await model.eliminar(req.params.id);
-      res.json({ message: "🗑️ Registro de conducta eliminado" });
+      res.json({ message: " Registro de conducta eliminado" });
       // Auditoría
       await LogsActividadModel.crear({
         id_usuario: req.user?.id || null,
@@ -109,7 +109,7 @@ const ConductaController = {
         user_agent: req.headers['user-agent']
       });
     } catch (err) {
-      logger.error("❌ Error al eliminar conducta:", err);
+      logger.error(" Error al eliminar conducta:", err);
       next(err);
     }
   }

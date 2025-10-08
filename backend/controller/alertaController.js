@@ -19,7 +19,7 @@ const AlertasController = {
         user_agent: req.headers['user-agent']
       });
     } catch (error) {
-      logger.error("❌ Error al generar alertas:", error);
+      logger.error(" Error al generar alertas:", error);
       next(error);
     }
   },
@@ -29,7 +29,7 @@ const AlertasController = {
       const alertas = await AlertasModel.listarAlertas();
       res.json(alertas);
     } catch (error) {
-      logger.error("❌ Error al listar alertas:", error);
+      logger.error(" Error al listar alertas:", error);
       next(error);
     }
   },
@@ -52,7 +52,7 @@ const AlertasController = {
         user_agent: req.headers['user-agent']
       });
     } catch (error) {
-      logger.error("❌ Error al cambiar estado de alerta:", error);
+      logger.error(" Error al cambiar estado de alerta:", error);
       next(error);
     }
   },

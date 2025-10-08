@@ -39,7 +39,7 @@ class ReportesController {
       if (!result.rows.length) return res.status(404).json({ error: "Estudiante no encontrado o sin datos" });
       res.json(result.rows[0]);
     } catch (error) {
-      logger.error("❌ Error en resumenEstudiante:", error);
+      logger.error(" Error en resumenEstudiante:", error);
       next(error);
     }
   }
@@ -70,7 +70,7 @@ class ReportesController {
         estudiantes: detalle.rows,
       });
     } catch (error) {
-      logger.error("❌ Error en reporteGeneral:", error);
+      logger.error(" Error en reporteGeneral:", error);
       next(error);
     }
   }
@@ -92,7 +92,7 @@ class ReportesController {
       const result = await pool.query(sql);
       res.json(result.rows);
     } catch (error) {
-      logger.error("❌ Error en asistenciaMensual:", error);
+      logger.error(" Error en asistenciaMensual:", error);
       next(error);
     }
   }
@@ -110,7 +110,7 @@ class ReportesController {
       const result = await pool.query(sql);
       res.json(result.rows);
     } catch (error) {
-      logger.error("❌ Error en motivosEntrevistas:", error);
+      logger.error(" Error en motivosEntrevistas:", error);
       next(error);
     }
   }
@@ -179,7 +179,7 @@ class ReportesController {
       const result = await pool.query(sql, params);
       res.json(result.rows);
     } catch (error) {
-      logger.error("❌ Error en reporteDerivaciones:", error);
+      logger.error(" Error en reporteDerivaciones:", error);
       next(error);
     }
   }
@@ -244,7 +244,7 @@ class ReportesController {
       const result = await pool.query(sql, params);
       res.json(result.rows);
     } catch (error) {
-      logger.error("❌ Error en reporteEstudiantesAtendidos:", error);
+      logger.error(" Error en reporteEstudiantesAtendidos:", error);
       next(error);
     }
   }
@@ -298,7 +298,7 @@ class ReportesController {
       const result = await pool.query(sql, params);
       res.json(result.rows);
     } catch (error) {
-      logger.error("❌ Error en reporteEntrevistasSeguimientos:", error);
+      logger.error(" Error en reporteEntrevistasSeguimientos:", error);
       next(error);
     }
   }
@@ -356,7 +356,7 @@ class ReportesController {
       const result = await pool.query(sql, params);
       res.json(result.rows);
     } catch (error) {
-      logger.error("❌ Error en reporteSituacionesRiesgo:", error);
+      logger.error(" Error en reporteSituacionesRiesgo:", error);
       next(error);
     }
   }
@@ -408,7 +408,7 @@ class ReportesController {
       const result = await pool.query(sql, params);
       res.json(result.rows);
     } catch (error) {
-      logger.error("❌ Error en reporteAsistenciaCitaciones:", error);
+      logger.error(" Error en reporteAsistenciaCitaciones:", error);
       next(error);
     }
   }
@@ -437,7 +437,7 @@ class ReportesController {
       const result = await pool.query(sql);
       res.json(result.rows);
     } catch (error) {
-      logger.error("❌ Error en reporteGeneralPorCurso:", error);
+      logger.error(" Error en reporteGeneralPorCurso:", error);
       next(error);
     }
   }
@@ -479,7 +479,7 @@ class ReportesController {
       const result = await pool.query(sql);
       res.json(result.rows);
     } catch (error) {
-      logger.error("❌ Error en reporteEstadisticasGlobales:", error);
+      logger.error(" Error en reporteEstadisticasGlobales:", error);
       next(error);
     }
   }
@@ -492,7 +492,7 @@ class ReportesController {
         status: "pending"
       });
     } catch (error) {
-      logger.error("❌ Error en generarPDF:", error);
+      logger.error(" Error en generarPDF:", error);
       next(error);
     }
   }

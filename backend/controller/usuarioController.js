@@ -1,4 +1,4 @@
-// controllers/usuarioController.js  ✅ PG
+// controllers/usuarioController.js   PG
 const bcrypt = require("bcrypt");
 const {
   obtenerUsuarios,
@@ -30,7 +30,7 @@ const UsuarioController = {
       const usuarios = await obtenerUsuarios();
       res.json(usuarios);
     } catch (error) {
-      console.error("❌ Error al listar usuarios:", error);
+      console.error(" Error al listar usuarios:", error);
       res.status(500).json({ mensaje: "Error interno al listar usuarios" });
     }
   },
@@ -41,7 +41,7 @@ const UsuarioController = {
       if (!usuario) return res.status(404).json({ mensaje: "Usuario no encontrado" });
       res.json(usuario);
     } catch (error) {
-      console.error("❌ Error al obtener usuario:", error);
+      console.error(" Error al obtener usuario:", error);
       res.status(500).json({ mensaje: "Error interno al obtener usuario" });
     }
   },
@@ -64,7 +64,7 @@ const UsuarioController = {
         user_agent: req.headers['user-agent']
       });
     } catch (error) {
-      console.error("❌ Error al crear usuario:", error);
+      console.error(" Error al crear usuario:", error);
       res.status(500).json({ mensaje: "Error interno al crear usuario" });
     }
   },
@@ -86,7 +86,7 @@ const UsuarioController = {
         user_agent: req.headers['user-agent']
       });
     } catch (error) {
-      console.error("❌ Error al actualizar usuario:", error);
+      console.error(" Error al actualizar usuario:", error);
       res.status(500).json({ mensaje: "Error interno al actualizar usuario" });
     }
   },
@@ -131,7 +131,7 @@ const UsuarioController = {
       await actualizarEstadoUsuario(id, nuevoEstado);
       res.json({ mensaje: "Estado actualizado correctamente" });
     } catch (error) {
-      console.error("❌ Error al actualizar estado del usuario:", error);
+      console.error(" Error al actualizar estado del usuario:", error);
       res.status(500).json({ mensaje: "Error interno al actualizar estado del usuario" });
     }
   },
@@ -178,7 +178,7 @@ const UsuarioController = {
         user_agent: req.headers['user-agent']
       });
     } catch (error) {
-      console.error("❌ Error al eliminar usuario:", error);
+      console.error(" Error al eliminar usuario:", error);
       res.status(500).json({ mensaje: "Error interno al eliminar usuario" });
     }
   },

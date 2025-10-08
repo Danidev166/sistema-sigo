@@ -20,7 +20,7 @@ const SeguimientoPsicosocialController = {
         user_agent: req.headers['user-agent']
       });
     } catch (error) {
-      logger.error("❌ Error al crear seguimiento psicosocial:", error);
+      logger.error(" Error al crear seguimiento psicosocial:", error);
       next(error);
     }
   },
@@ -30,7 +30,7 @@ const SeguimientoPsicosocialController = {
       const seguimiento = await SeguimientoPsicosocialModel.obtenerTodos();
       res.json(seguimiento);
     } catch (error) {
-      logger.error("❌ Error al obtener seguimientos psicosociales:", error);
+      logger.error(" Error al obtener seguimientos psicosociales:", error);
       next(error);
     }
   },
@@ -46,7 +46,7 @@ const SeguimientoPsicosocialController = {
 
       res.json(seguimiento);
     } catch (error) {
-      logger.error("❌ Error al obtener seguimiento psicosocial:", error);
+      logger.error(" Error al obtener seguimiento psicosocial:", error);
       next(error);
     }
   },
@@ -71,7 +71,7 @@ const SeguimientoPsicosocialController = {
         user_agent: req.headers['user-agent']
       });
     } catch (error) {
-      logger.error("❌ Error al actualizar seguimiento psicosocial:", error);
+      logger.error(" Error al actualizar seguimiento psicosocial:", error);
       next(error);
     }
   },
@@ -95,7 +95,7 @@ const SeguimientoPsicosocialController = {
         user_agent: req.headers['user-agent']
       });
     } catch (error) {
-      logger.error("❌ Error al eliminar seguimiento psicosocial:", error);
+      logger.error(" Error al eliminar seguimiento psicosocial:", error);
       next(error);
     }
   }

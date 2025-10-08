@@ -1,4 +1,4 @@
-// ✅ controller/estudianteController.js (PostgreSQL)
+//  controller/estudianteController.js (PostgreSQL)
 const logger = require("../utils/logger");
 const LogsActividadModel = require('../models/logsActividadModel');
 const EstudianteModel = require('../models/estudianteModel');
@@ -94,7 +94,7 @@ static async obtenerTodos(req, res, next) {
   static async crear(req, res, next) {
     try {
       const nuevo = await EstudianteModel.crear(req.body); // debe devolver el registro creado
-      res.status(201).json({ message: "✅ Estudiante creado", id: nuevo?.id, estudiante: nuevo });
+      res.status(201).json({ message: " Estudiante creado", id: nuevo?.id, estudiante: nuevo });
 
       await LogsActividadModel.crear({
         id_usuario: req.user?.id || null,
@@ -116,7 +116,7 @@ static async obtenerTodos(req, res, next) {
     try {
       const estudiantes = req.body;
       await EstudianteModel.crearMasivo(estudiantes);
-      res.status(201).json({ message: "✅ Estudiantes registrados correctamente" });
+      res.status(201).json({ message: " Estudiantes registrados correctamente" });
     } catch (error) {
       logger.error("Error en carga masiva de estudiantes", error);
       next(error);
@@ -130,7 +130,7 @@ static async obtenerTodos(req, res, next) {
       if (!prev) return res.status(404).json({ error: "Estudiante no encontrado" });
 
       await EstudianteModel.actualizar(id, req.body);
-      res.json({ message: "✅ Estudiante actualizado" });
+      res.json({ message: " Estudiante actualizado" });
 
       await LogsActividadModel.crear({
         id_usuario: req.user?.id || null,
@@ -155,7 +155,7 @@ static async obtenerTodos(req, res, next) {
       if (!prev) return res.status(404).json({ error: "Estudiante no encontrado" });
 
       await EstudianteModel.eliminar(id);
-      res.json({ message: "🗑️ Estudiante eliminado" });
+      res.json({ message: " Estudiante eliminado" });
 
       await LogsActividadModel.crear({
         id_usuario: req.user?.id || null,
@@ -191,7 +191,7 @@ static async obtenerTodos(req, res, next) {
     try {
       const { curso, nombre, email, limit = 10, offset = 0 } = req.query;
       
-      logger.info('📋 Obteniendo lista de apoderados:', { curso, nombre, email, limit, offset });
+      logger.info(' Obteniendo lista de apoderados:', { curso, nombre, email, limit, offset });
       
       const { getPool } = require('../config/db');
       const pool = await getPool();
@@ -279,7 +279,7 @@ static async obtenerTodos(req, res, next) {
       const countResult = await countRequest.query(countQuery);
       const total = countResult.recordset[0].total;
       
-      logger.info(`✅ Apoderados obtenidos: ${result.recordset.length} de ${total}`);
+      logger.info(` Apoderados obtenidos: ${result.recordset.length} de ${total}`);
       
       res.json({
         apoderados: result.recordset,
@@ -297,7 +297,7 @@ static async obtenerTodos(req, res, next) {
       });
       
     } catch (error) {
-      logger.error('❌ Error al obtener apoderados:', error);
+      logger.error(' Error al obtener apoderados:', error);
       next(error);
     }
   }
@@ -344,7 +344,7 @@ static async obtenerTodos(req, res, next) {
       });
       
     } catch (error) {
-      logger.error('❌ Error al obtener estadísticas de apoderados:', error);
+      logger.error(' Error al obtener estadísticas de apoderados:', error);
       next(error);
     }
   }
@@ -374,7 +374,7 @@ static async obtenerTodos(req, res, next) {
       });
       
     } catch (error) {
-      logger.error('❌ Error al obtener cursos:', error);
+      logger.error(' Error al obtener cursos:', error);
       next(error);
     }
   }
