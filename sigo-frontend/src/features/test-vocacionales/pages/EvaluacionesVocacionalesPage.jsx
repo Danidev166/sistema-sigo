@@ -19,7 +19,7 @@ import Button from "../../../components/ui/Button";
 import QRGenerator from "../components/QRGenerator";
 import SimpleQRScanner from "../components/SimpleQRScanner";
 import EstudianteSelector from "../components/EstudianteSelector";
-import { QrCode, Smartphone, Users, FileText } from "lucide-react";
+import { QrCode, Smartphone, Users, FileText, User } from "lucide-react";
 import api from "../../../services/axios";
 
 export default function EvaluacionesVocacionalesPage() {
@@ -30,6 +30,12 @@ export default function EvaluacionesVocacionalesPage() {
   const [estudianteSeleccionado, setEstudianteSeleccionado] = useState(null);
   const [hasEstudiantes, setHasEstudiantes] = useState(true);
   const [loadingEstudiantes, setLoadingEstudiantes] = useState(true);
+  const [error, setError] = useState(null);
+
+  // 🚀 DEBUG: Log para diagnosticar problemas
+  useEffect(() => {
+    console.log('🔍 EvaluacionesVocacionalesPage: Componente montado');
+  }, []);
 
   // Verificar si hay estudiantes al cargar la página
   useEffect(() => {
