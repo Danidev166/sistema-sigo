@@ -31,8 +31,16 @@ import {
 import dashboardService from "../services/dashboardService";
 
 export default function DashboardPageFinal() {
-  const { user, isLoading } = useAuth();
+  const { user, isLoading, isAuthenticated } = useAuth();
   const navigate = useNavigate();
+
+  // Redirigir si no está autenticado
+  useEffect(() => {
+    if (!isLoading && !isAuthenticated) {
+      console.log("❌ Usuario no autenticado, redirigiendo a login");
+      navigate("/login", { replace: true });
+    }
+  }, [isLoading, isAuthenticated, navigate]);
 
   // Redirigir al Asistente Social a su dashboard específico
   useEffect(() => {

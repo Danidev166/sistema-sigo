@@ -22,12 +22,13 @@ class EvaluacionesController {
     }
   }
   static async obtenerPorEspecialidad(req, res, next) {
-  try {
-    const data = await EvaluacionModel.obtenerPorEspecialidad();
-    res.json(data);
-  } catch (error) {
-    logger.error("❌ Error al obtener test por especialidad:", error);
-    next(error);
+    try {
+      const data = await EvaluacionModel.obtenerPorEspecialidad();
+      res.json(data);
+    } catch (error) {
+      logger.error("❌ Error al obtener test por especialidad:", error);
+      next(error);
+    }
   }
 
   static async obtenerPorEspecialidadTest(req, res, next) {
