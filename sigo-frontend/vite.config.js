@@ -29,37 +29,39 @@ export default defineConfig({
     postcss: './postcss.config.js',
   },
 
-  // Vitest (si lo usas)
-  test: {
-    globals: true,
-    environment: 'jsdom',
-    setupFiles: ['./src/setupTests.js'],
-    css: true,
-    coverage: {
-      provider: 'v8',
-      reporter: ['text', 'json', 'html'],
-      exclude: [
-        'node_modules/',
-        'src/stories/',
-        'src/__mocks__/',
-        '**/*.stories.js',
-        '**/*.config.js'
-      ]
-    },
-    // Configurar React en modo desarrollo para tests
-    define: {
-      'process.env.NODE_ENV': '"development"'
-    },
-    // Puedes dejar deps como lo tienes, o simplificar.
-    // deps: { inline: ['axios'] } también funciona.
-    deps: {
-      optimizer: {
-        web: {
-          include: ['axios']
+  // Vitest (solo para desarrollo y testing)
+  ...(process.env.NODE_ENV !== 'production' && {
+    test: {
+      globals: true,
+      environment: 'jsdom',
+      setupFiles: ['./src/setupTests.js'],
+      css: true,
+      coverage: {
+        provider: 'v8',
+        reporter: ['text', 'json', 'html'],
+        exclude: [
+          'node_modules/',
+          'src/stories/',
+          'src/__mocks__/',
+          '**/*.stories.js',
+          '**/*.config.js'
+        ]
+      },
+      // Configurar React en modo desarrollo para tests
+      define: {
+        'process.env.NODE_ENV': '"development"'
+      },
+      // Puedes dejar deps como lo tienes, o simplificar.
+      // deps: { inline: ['axios'] } también funciona.
+      deps: {
+        optimizer: {
+          web: {
+            include: ['axios']
+          }
         }
       }
     }
-  },
+  }),
 
   build: {
     minify: 'terser',
