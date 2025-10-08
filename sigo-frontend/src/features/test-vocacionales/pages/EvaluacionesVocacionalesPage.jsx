@@ -42,10 +42,18 @@ export default function EvaluacionesVocacionalesPage() {
     const checkEstudiantes = async () => {
       try {
         setLoadingEstudiantes(true);
+        console.log('🔍 Verificando estudiantes...');
         const response = await api.get('/estudiantes');
-        setHasEstudiantes(response.data && response.data.length > 0);
+        console.log('📊 Respuesta de estudiantes:', response.data);
+        
+        // Verificar si hay datos válidos
+        const estudiantes = response.data;
+        const hasStudents = Array.isArray(estudiantes) && estudiantes.length > 0;
+        
+        console.log('✅ Estudiantes encontrados:', hasStudents ? estudiantes.length : 0);
+        setHasEstudiantes(hasStudents);
       } catch (error) {
-        console.error('Error al verificar estudiantes:', error);
+        console.error('❌ Error al verificar estudiantes:', error);
         setHasEstudiantes(false);
       } finally {
         setLoadingEstudiantes(false);
