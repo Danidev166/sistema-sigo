@@ -223,6 +223,7 @@ const EstudianteModel = {
         { nombre: 'asistencia', query: 'DELETE FROM asistencia WHERE id_estudiante = @id' },
         { nombre: 'entrevistas', query: 'DELETE FROM entrevistas WHERE id_estudiante = @id' },
         { nombre: 'evaluaciones_vocacionales', query: 'DELETE FROM evaluaciones_vocacionales WHERE id_estudiante = @id' },
+        { nombre: 'seguimiento_academico', query: 'DELETE FROM seguimiento_academico WHERE id_estudiante = @id' },
         { nombre: 'seguimiento_psicosocial', query: 'DELETE FROM seguimiento_psicosocial WHERE id_estudiante = @id' },
         { nombre: 'entrega_recursos', query: 'DELETE FROM entrega_recursos WHERE id_estudiante = @id' },
         { nombre: 'intervenciones', query: 'DELETE FROM intervenciones WHERE id_estudiante = @id' },
