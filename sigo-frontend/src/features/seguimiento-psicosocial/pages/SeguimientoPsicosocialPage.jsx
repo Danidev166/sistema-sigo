@@ -40,6 +40,8 @@ export default function SeguimientoPsicosocialPage() {
       // Asegurar que siempre sea un array
       const datos = Array.isArray(res.data) ? res.data : [];
       console.log("🔍 Debug - Datos finales:", datos);
+      console.log("🔍 Debug - Datos es array:", Array.isArray(datos));
+      console.log("🔍 Debug - Datos length:", datos.length);
       setSeguimientos(datos);
     } catch (err) {
       console.error("Error al cargar seguimientos:", err);
@@ -91,7 +93,7 @@ export default function SeguimientoPsicosocialPage() {
   };
 
   useEffect(() => {
-    console.log("🔍 Debug - useEffect ejecutándose");
+    console.log("🔍 Debug - useEffect ejecutándose - VERSIÓN ACTUALIZADA");
     cargarSeguimientos();
     cargarEstudiantes();
   }, []);
