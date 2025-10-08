@@ -213,9 +213,43 @@ const EstudianteModel = {
 
   async eliminar(id) {
     const pool = await getPool();
-    await pool.request()
-      .input('id', sql.Int, id)
-      .query('DELETE FROM estudiantes WHERE id = @id');
+    const transaction = pool.transaction();
+    
+    try {
+      await transaction.begin();
+      
+      // Eliminar registros relacionados en orden (de más específico a menos específico)
+      const queries = [
+        'DELETE FROM asistencia WHERE id_estudiante = @id',
+        'DELETE FROM comunicacion_familia WHERE id_estudiante = @id',
+        'DELETE FROM agenda WHERE id_estudiante = @id',
+        'DELETE FROM entrevistas WHERE id_estudiante = @id',
+        'DELETE FROM conducta WHERE id_estudiante = @id',
+        'DELETE FROM intervenciones WHERE id_estudiante = @id',
+        'DELETE FROM movimiento_recursos WHERE id_estudiante = @id',
+        'DELETE FROM seguimiento_psicosocial WHERE id_estudiante = @id',
+        'DELETE FROM seguimiento_academico WHERE id_estudiante = @id',
+        'DELETE FROM seguimiento WHERE id_estudiante = @id',
+        'DELETE FROM seguimiento_cronologico WHERE id_estudiante = @id',
+        'DELETE FROM alertas WHERE id_estudiante = @id',
+        'DELETE FROM notificaciones WHERE id_estudiante = @id',
+        'DELETE FROM historial_academico WHERE id_estudiante = @id',
+        'DELETE FROM evaluaciones WHERE id_estudiante = @id',
+        'DELETE FROM entrega_recursos WHERE id_estudiante = @id',
+        'DELETE FROM estudiantes WHERE id = @id'
+      ];
+      
+      for (const query of queries) {
+        await transaction.request()
+          .input('id', sql.Int, id)
+          .query(query);
+      }
+      
+      await transaction.commit();
+    } catch (error) {
+      await transaction.rollback();
+      throw error;
+    }
   },
 
   async listarActivos() {
