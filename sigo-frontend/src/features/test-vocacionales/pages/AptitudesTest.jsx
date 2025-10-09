@@ -148,7 +148,7 @@ export default function AptitudesTest() {
         curso,
       };
 
-      const response = await api.post("/evaluaciones", evaluacionData);
+      const response = await api.post("/evaluaciones/mobile", evaluacionData);
       if (response.status === 201) {
         alert("✅ Evaluación guardada.");
         setForm({ nombre: "", apellido: "", rut: "", curso: "" });

@@ -9,6 +9,9 @@ const verifyToken = require("../middleware/verifyToken");
 // Ruta de prueba sin autenticación
 router.get("/por-especialidad-test", evaluacionController.obtenerPorEspecialidadTest);
 
+// Ruta pública para tests móviles (sin autenticación)
+router.post("/mobile", evaluacionController.crear);
+
 // Protege todo el módulo
 router.use(verifyToken);
 

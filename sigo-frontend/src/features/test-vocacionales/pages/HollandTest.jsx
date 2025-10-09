@@ -167,7 +167,7 @@ export default function HollandTest() {
         curso,
       };
 
-      const response = await api.post("/evaluaciones", evaluacionData);
+      const response = await api.post("/evaluaciones/mobile", evaluacionData);
       if (response.status === 201) {
         alert("✅ Evaluación guardada correctamente.");
         setForm({ nombre: "", apellido: "", rut: "", curso: "" });

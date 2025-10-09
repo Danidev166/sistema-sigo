@@ -20,9 +20,8 @@ const evaluacionMobileService = {
    */
   async guardarEvaluacion(evaluacionData) {
     try {
-      // Debug logs removidos para producción
-      
-      const response = await api.post('/evaluaciones', evaluacionData);
+      // Usar ruta pública para tests móviles (sin autenticación)
+      const response = await api.post('/evaluaciones/mobile', evaluacionData);
 
       // Evaluación guardada exitosamente
       return response.data;
