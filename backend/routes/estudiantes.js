@@ -3,6 +3,23 @@ const router = express.Router();
 const EstudianteController = require("../controller/estudianteController");
 const verifyToken = require("../middleware/verifyToken");
 
+// Ruta pública para obtener estudiantes (sin autenticación)
+router.get("/public", async (req, res) => {
+  try {
+    const pool = await require("../config/db").getPool();
+    const result = await pool.request().query(`
+      SELECT id, nombre, apellido, rut, curso, estado
+      FROM estudiantes 
+      ORDER BY nombre, apellido
+    `);
+    
+    res.json(result.recordset);
+  } catch (error) {
+    console.error("Error al obtener estudiantes públicos:", error);
+    res.status(500).json({ error: "Error al obtener estudiantes" });
+  }
+});
+
 // Protege todo el módulo
 router.use(verifyToken);
 
