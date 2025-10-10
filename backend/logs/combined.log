@@ -308,3 +308,13 @@
 [2025-09-28 21:10:33] INFO: 🔑 Código de recuperación enviado a daniel1822@gmail.com
 [2025-09-28 21:17:56] INFO: 🔑 Código de recuperación enviado a daniel1822@gmail.com
 [2025-09-28 21:19:36] INFO: 🔑 Código de recuperación enviado a daniel1822@gmail.com
+[2025-10-09 23:26:05] INFO: 🔍 AUDIT
+[2025-10-09 23:26:05] INFO: 🔍 AUDIT
+[2025-10-09 23:26:05] ERROR: ❌ Error en request
+[2025-10-09 23:26:06] ERROR: 🚨 ALERTA: Alta tasa de errores
+[2025-10-09 23:26:06] ERROR: 🚨 ALERTA: Error del servidor
+[2025-10-09 23:27:18] INFO: 🔍 AUDIT
+[2025-10-09 23:27:18] INFO: 🔍 AUDIT
+[2025-10-09 23:27:18] ERROR: ❌ Error en request
+[2025-10-09 23:27:18] ERROR: 🚨 ALERTA: Alta tasa de errores
+[2025-10-09 23:27:18] ERROR: 🚨 ALERTA: Error del servidor
