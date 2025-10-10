@@ -15,6 +15,7 @@ router.get("/public", async (req, res) => {
     `);
     
     console.log(`✅ GET /estudiantes/public - ${result.recordset.length} estudiantes encontrados`);
+    console.log(`📋 Estudiantes: ${result.recordset.map(e => `${e.nombre} ${e.apellido}`).join(', ')}`);
     res.json(result.recordset);
   } catch (error) {
     console.error("❌ Error al obtener estudiantes públicos:", error);

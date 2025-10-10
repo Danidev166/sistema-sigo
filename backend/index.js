@@ -287,8 +287,10 @@ if (process.env.NODE_ENV !== "test") {
     console.log(`🌐 Render deployment: ${process.env.RENDER ? 'SÍ' : 'NO'}`);
     console.log(`🔧 NODE_ENV: ${process.env.NODE_ENV}`);
     console.log(`📊 Estudiantes endpoint: http://localhost:${PORT}${API_PREFIX}/estudiantes/public`);
-    console.log(`🚀 VERSIÓN: 2.0.1 - Ruta pública de estudiantes habilitada`);
-    console.log(`⏰ Deploy timestamp: ${new Date().toISOString()}\n`);
+    console.log(`🚀 VERSIÓN: 2.0.2 - FORZANDO REDEPLOY COMPLETO`);
+    console.log(`⏰ Deploy timestamp: ${new Date().toISOString()}`);
+    console.log(`🔧 ESTUDIANTES ESPERADOS: 6 (Isabella, María, Carlos, Ana, Luis, Carmen)`);
+    console.log(`📊 RUTA PÚBLICA: /api/estudiantes/public debe devolver 6 estudiantes\n`);
   });
 }
 

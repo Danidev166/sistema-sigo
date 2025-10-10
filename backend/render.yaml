@@ -32,4 +32,4 @@ services:
       - key: JWT_EXPIRES_IN
         value: 24h
       - key: FRONTEND_URL
-        value: https://sistema-sigo-2025.onrender.com
+        value: https://sigo-caupolican.onrender.com
