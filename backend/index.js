@@ -245,6 +245,11 @@ apiRouter.get("/health", (_req, res) => {
     timestamp: new Date().toISOString(),
     uptime: process.uptime(),
     environment: nodeEnv,
+    version: "2.0.1",
+    endpoints: {
+      estudiantes_public: "/api/estudiantes/public",
+      estudiantes: "/api/estudiantes"
+    }
   });
 });
 
@@ -281,7 +286,9 @@ if (process.env.NODE_ENV !== "test") {
     console.log(`📚 Swagger: http://localhost:${PORT}${API_PREFIX}/docs`);
     console.log(`🌐 Render deployment: ${process.env.RENDER ? 'SÍ' : 'NO'}`);
     console.log(`🔧 NODE_ENV: ${process.env.NODE_ENV}`);
-    console.log(`📊 Estudiantes endpoint: http://localhost:${PORT}${API_PREFIX}/estudiantes/public\n`);
+    console.log(`📊 Estudiantes endpoint: http://localhost:${PORT}${API_PREFIX}/estudiantes/public`);
+    console.log(`🚀 VERSIÓN: 2.0.1 - Ruta pública de estudiantes habilitada`);
+    console.log(`⏰ Deploy timestamp: ${new Date().toISOString()}\n`);
   });
 }
 
