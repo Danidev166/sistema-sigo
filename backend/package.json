@@ -11,7 +11,11 @@
     "start": "node index.js",
     "start:prod": "cross-env NODE_ENV=production node index.js",
     "build": "echo \"No build step required for Node.js\"",
-    "test": "echo \"No tests configured\""
+    "test": "echo \"No tests configured\"",
+    "sync": "node sync-to-render.js",
+    "sync:watch": "nodemon sync-to-render.js",
+    "sync:bidirectional": "node sync-bidirectional.js",
+    "sync:from-render": "node sync-from-render.js"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",

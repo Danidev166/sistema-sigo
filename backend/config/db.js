@@ -1,9 +1,8 @@
 // backend/config/db.js — PostgreSQL con interfaz tipo mssql
 const { Pool } = require("pg");
-// scripts/seed.js
-const isAzure = !!process.env.WEBSITE_SITE_NAME;
-const envFile = (process.env.NODE_ENV === 'production' || isAzure) ? '.env.production' : '.env';
-require('dotenv').config({ path: envFile });
+
+// CARGAR DOTENV PRIMERO - FORZAR .env LOCAL
+require('dotenv').config({ path: '.env' });
 
 /* ========================= Helpers ========================= */
 function bool(v, def = false) {
@@ -13,6 +12,14 @@ function bool(v, def = false) {
 
 /* ==================== Configuración PG ===================== */
 function buildPgConfig() {
+  // Debug de variables
+  console.log('🔧 Debug variables:');
+  console.log('  DATABASE_URL:', process.env.DATABASE_URL ? 'CONFIGURADA' : 'NO CONFIGURADA');
+  console.log('  PGHOST:', process.env.PGHOST);
+  console.log('  PGUSER:', process.env.PGUSER);
+  console.log('  PGPASSWORD:', process.env.PGPASSWORD ? 'CONFIGURADA' : 'NO CONFIGURADA');
+  console.log('  PGDATABASE:', process.env.PGDATABASE);
+
   // Opción 1: DATABASE_URL (recomendada)
   if (process.env.DATABASE_URL) {
     return {
@@ -24,15 +31,26 @@ function buildPgConfig() {
     };
   }
 
-  // Opción 2: variables sueltas PG_*
-  const host = process.env.PGHOST || "localhost";
+  // Opción 2: variables sueltas PG_* - FORZAR TIPOS STRING
+  const host = String(process.env.PGHOST || "localhost");
   const port = parseInt(process.env.PGPORT || "5432", 10);
+  const user = String(process.env.PGUSER || "");
+  const password = String(process.env.PGPASSWORD || "");
+  const database = String(process.env.PGDATABASE || "");
+  
+  console.log('🔧 Configuración final:');
+  console.log('  host:', host, typeof host);
+  console.log('  port:', port, typeof port);
+  console.log('  user:', user, typeof user);
+  console.log('  password:', password ? 'CONFIGURADA' : 'NO CONFIGURADA', typeof password);
+  console.log('  database:', database, typeof database);
+  
   return {
     host,
     port,
-    user: process.env.PGUSER,
-    password: process.env.PGPASSWORD,
-    database: process.env.PGDATABASE,
+    user,
+    password,
+    database,
     ssl: bool(process.env.PG_SSL, false) ? { rejectUnauthorized: false } : false,
     max: parseInt(process.env.PG_POOL_MAX || "10", 10),
     idleTimeoutMillis: parseInt(process.env.PG_IDLE_TIMEOUT || "30000", 10),
