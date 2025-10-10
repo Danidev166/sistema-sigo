@@ -57,7 +57,40 @@ export default function EstudiantesPage() {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await estudianteService.getEstudiantesPaginados(page, 10, search);
+      // Intentar primero con la ruta autenticada
+      let response;
+      try {
+        response = await estudianteService.getEstudiantesPaginados(page, 10, search);
+      } catch (authError) {
+        // Si falla la autenticación, usar la ruta pública
+        console.log('⚠️ Autenticación falló, usando ruta pública');
+        const publicResponse = await estudianteService.getEstudiantesPublic();
+        
+        // Simular paginación para la respuesta pública
+        const allStudents = publicResponse.data;
+        const filteredStudents = search 
+          ? allStudents.filter(est => 
+              `${est.nombre} ${est.apellido}`.toLowerCase().includes(search.toLowerCase()) ||
+              est.rut?.toLowerCase().includes(search.toLowerCase()) ||
+              est.curso?.toLowerCase().includes(search.toLowerCase())
+            )
+          : allStudents;
+        
+        const startIndex = (page - 1) * 10;
+        const endIndex = startIndex + 10;
+        const paginatedStudents = filteredStudents.slice(startIndex, endIndex);
+        
+        setEstudiantes(paginatedStudents);
+        setPagination({
+          page,
+          limit: 10,
+          total: filteredStudents.length,
+          totalPages: Math.ceil(filteredStudents.length / 10),
+          hasNext: endIndex < filteredStudents.length,
+          hasPrev: page > 1
+        });
+        return;
+      }
       
       // Si la respuesta tiene paginación, usarla
       if (response.data.pagination) {

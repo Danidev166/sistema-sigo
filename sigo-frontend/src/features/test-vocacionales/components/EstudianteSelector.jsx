@@ -124,7 +124,33 @@ const EstudianteSelector = ({ onSelect, onClose }) => {
     const matchesEstado = filtroEstado === '' || 
       estudiante.estado === filtroEstado;
     
+    // Debug logs
+    if (estudiante.nombre === 'Isabella') {
+      console.log('🔍 Debug Isabella:', {
+        estudiante: `${estudiante.nombre} ${estudiante.apellido}`,
+        curso: estudiante.curso,
+        estado: estudiante.estado,
+        search,
+        cursosSeleccionados,
+        filtroEstado,
+        matchesSearch,
+        matchesCursos,
+        matchesEstado,
+        total: matchesSearch && matchesCursos && matchesEstado
+      });
+    }
+    
     return matchesSearch && matchesCursos && matchesEstado;
+  });
+
+  // Debug logs para el estado del componente
+  console.log('🔍 EstudianteSelector Debug:', {
+    totalEstudiantes: estudiantes.length,
+    estudiantesFiltrados: estudiantesFiltrados.length,
+    search,
+    cursosSeleccionados,
+    filtroEstado,
+    estudiantes: estudiantes.map(e => `${e.nombre} ${e.apellido} (${e.curso})`)
   });
 
   const handleSelect = (estudiante) => {
