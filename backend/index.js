@@ -212,6 +212,7 @@ const routes = [
   { path: "/permisos-roles", module: "./routes/permisosRoles" },
   { path: "/reportes-mejorado", module: "./routes/reportesMejorado" },
   { path: "/seguimiento-cronologico", module: "./routes/seguimientoCronologico" },
+  { path: "/promocion", module: "./routes/promocion" },
   { path: "/metrics", module: "./routes/metrics" },
   { path: "/test", module: "./routes/test" },
   { path: "/test-email", module: "./routes/test-email" },
