@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test API Estudiantes</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ccc; border-radius: 5px; }
+        .success { background-color: #d4edda; border-color: #c3e6cb; }
+        .error { background-color: #f8d7da; border-color: #f5c6cb; }
+        .info { background-color: #d1ecf1; border-color: #bee5eb; }
+        pre { background-color: #f8f9fa; padding: 10px; border-radius: 3px; overflow-x: auto; }
+        button { padding: 10px 15px; margin: 5px; background-color: #007bff; color: white; border: none; border-radius: 3px; cursor: pointer; }
+        button:hover { background-color: #0056b3; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Test API Estudiantes</h1>
+    <p>Este script prueba las llamadas a la API de estudiantes desde el frontend.</p>
+
+    <div class="test-section info">
+        <h3>📋 Información del Test</h3>
+        <p><strong>URL Base:</strong> <span id="baseUrl">Cargando...</span></p>
+        <p><strong>Timestamp:</strong> <span id="timestamp">Cargando...</span></p>
+    </div>
+
+    <div class="test-section">
+        <h3>🔓 Test 1: Ruta Pública (sin autenticación)</h3>
+        <button onclick="testRutaPublica()">Probar GET /estudiantes/public</button>
+        <div id="resultadoPublica"></div>
+    </div>
+
+    <div class="test-section">
+        <h3>🔒 Test 2: Ruta Protegida (con autenticación)</h3>
+        <button onclick="testRutaProtegida()">Probar GET /estudiantes</button>
+        <div id="resultadoProtegida"></div>
+    </div>
+
+    <div class="test-section">
+        <h3>🔍 Test 3: Verificar Headers y Configuración</h3>
+        <button onclick="verificarConfiguracion()">Verificar Configuración</button>
+        <div id="resultadoConfiguracion"></div>
+    </div>
+
+    <div class="test-section">
+        <h3>📊 Test 4: Análisis de Respuesta</h3>
+        <button onclick="analizarRespuesta()">Analizar Última Respuesta</button>
+        <div id="resultadoAnalisis"></div>
+    </div>
+
+    <script>
+        // Configuración
+        const BASE_URL = 'https://sistema-sigo-backend.onrender.com/api';
+        let ultimaRespuesta = null;
+
+        // Inicializar
+        document.getElementById('baseUrl').textContent = BASE_URL;
+        document.getElementById('timestamp').textContent = new Date().toLocaleString();
+
+        async function testRutaPublica() {
+            const resultado = document.getElementById('resultadoPublica');
+            resultado.innerHTML = '<p>🔄 Probando ruta pública...</p>';
+            
+            try {
+                console.log('🔓 Probando GET /estudiantes/public...');
+                const response = await fetch(`${BASE_URL}/estudiantes/public`);
+                
+                console.log('Response status:', response.status);
+                console.log('Response headers:', [...response.headers.entries()]);
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    ultimaRespuesta = data;
+                    
+                    resultado.innerHTML = `
+                        <div class="success">
+                            <h4>✅ Éxito</h4>
+                            <p><strong>Status:</strong> ${response.status}</p>
+                            <p><strong>Total estudiantes:</strong> ${data.length}</p>
+                            <h5>Estudiantes encontrados:</h5>
+                            <pre>${JSON.stringify(data, null, 2)}</pre>
+                        </div>
+                    `;
+                } else {
+                    const errorText = await response.text();
+                    resultado.innerHTML = `
+                        <div class="error">
+                            <h4>❌ Error</h4>
+                            <p><strong>Status:</strong> ${response.status}</p>
+                            <p><strong>Error:</strong> ${errorText}</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error en test ruta pública:', error);
+                resultado.innerHTML = `
+                    <div class="error">
+                        <h4>❌ Error de Red</h4>
+                        <p><strong>Error:</strong> ${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        async function testRutaProtegida() {
+            const resultado = document.getElementById('resultadoProtegida');
+            resultado.innerHTML = '<p>🔄 Probando ruta protegida...</p>';
+            
+            try {
+                console.log('🔒 Probando GET /estudiantes...');
+                const response = await fetch(`${BASE_URL}/estudiantes`);
+                
+                console.log('Response status:', response.status);
+                console.log('Response headers:', [...response.headers.entries()]);
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    ultimaRespuesta = data;
+                    
+                    resultado.innerHTML = `
+                        <div class="success">
+                            <h4>✅ Éxito</h4>
+                            <p><strong>Status:</strong> ${response.status}</p>
+                            <p><strong>Total estudiantes:</strong> ${Array.isArray(data) ? data.length : 'N/A'}</p>
+                            <h5>Respuesta:</h5>
+                            <pre>${JSON.stringify(data, null, 2)}</pre>
+                        </div>
+                    `;
+                } else {
+                    const errorText = await response.text();
+                    resultado.innerHTML = `
+                        <div class="error">
+                            <h4>❌ Error</h4>
+                            <p><strong>Status:</strong> ${response.status}</p>
+                            <p><strong>Error:</strong> ${errorText}</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error en test ruta protegida:', error);
+                resultado.innerHTML = `
+                    <div class="error">
+                        <h4>❌ Error de Red</h4>
+                        <p><strong>Error:</strong> ${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        function verificarConfiguracion() {
+            const resultado = document.getElementById('resultadoConfiguracion');
+            
+            const config = {
+                baseUrl: BASE_URL,
+                userAgent: navigator.userAgent,
+                timestamp: new Date().toISOString(),
+                cookies: document.cookie,
+                localStorage: {...localStorage},
+                sessionStorage: {...sessionStorage}
+            };
+            
+            resultado.innerHTML = `
+                <div class="info">
+                    <h4>📋 Configuración Actual</h4>
+                    <pre>${JSON.stringify(config, null, 2)}</pre>
+                </div>
+            `;
+        }
+
+        function analizarRespuesta() {
+            const resultado = document.getElementById('resultadoAnalisis');
+            
+            if (!ultimaRespuesta) {
+                resultado.innerHTML = `
+                    <div class="error">
+                        <h4>❌ No hay respuesta para analizar</h4>
+                        <p>Ejecuta primero uno de los tests de API.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            const analisis = {
+                tipo: Array.isArray(ultimaRespuesta) ? 'Array' : typeof ultimaRespuesta,
+                longitud: Array.isArray(ultimaRespuesta) ? ultimaRespuesta.length : 'N/A',
+                claves: Array.isArray(ultimaRespuesta) ? 
+                    (ultimaRespuesta.length > 0 ? Object.keys(ultimaRespuesta[0]) : []) :
+                    Object.keys(ultimaRespuesta),
+                muestra: Array.isArray(ultimaRespuesta) ? 
+                    ultimaRespuesta.slice(0, 3) : 
+                    ultimaRespuesta
+            };
+            
+            resultado.innerHTML = `
+                <div class="info">
+                    <h4>📊 Análisis de Respuesta</h4>
+                    <pre>${JSON.stringify(analisis, null, 2)}</pre>
+                </div>
+            `;
+        }
+
+        // Auto-ejecutar test público al cargar
+        window.addEventListener('load', () => {
+            setTimeout(testRutaPublica, 1000);
+        });
+    </script>
+</body>
+</html>

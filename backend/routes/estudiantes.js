@@ -6,6 +6,7 @@ const verifyToken = require("../middleware/verifyToken");
 // Ruta pública para obtener estudiantes (sin autenticación)
 router.get("/public", async (req, res) => {
   try {
+    console.log("🔓 GET /estudiantes/public - Iniciando consulta");
     const pool = await require("../config/db").getPool();
     const result = await pool.request().query(`
       SELECT id, nombre, apellido, rut, curso, estado
@@ -13,9 +14,10 @@ router.get("/public", async (req, res) => {
       ORDER BY nombre, apellido
     `);
     
+    console.log(`✅ GET /estudiantes/public - ${result.recordset.length} estudiantes encontrados`);
     res.json(result.recordset);
   } catch (error) {
-    console.error("Error al obtener estudiantes públicos:", error);
+    console.error("❌ Error al obtener estudiantes públicos:", error);
     res.status(500).json({ error: "Error al obtener estudiantes" });
   }
 });
