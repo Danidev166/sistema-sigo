@@ -278,7 +278,10 @@ if (process.env.NODE_ENV !== "test") {
   app.listen(PORT, "0.0.0.0", () => {
     console.log("\n🚀 Servidor SIGO PRO iniciado");
     console.log(`📡 Puerto: ${PORT}`);
-    console.log(`📚 Swagger: http://localhost:${PORT}${API_PREFIX}/docs\n`);
+    console.log(`📚 Swagger: http://localhost:${PORT}${API_PREFIX}/docs`);
+    console.log(`🌐 Render deployment: ${process.env.RENDER ? 'SÍ' : 'NO'}`);
+    console.log(`🔧 NODE_ENV: ${process.env.NODE_ENV}`);
+    console.log(`📊 Estudiantes endpoint: http://localhost:${PORT}${API_PREFIX}/estudiantes/public\n`);
   });
 }
 
