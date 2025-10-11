@@ -4,16 +4,19 @@
 
 // 1) Cargar variables de entorno
 // - En Azure App Service usaremos App Settings (no .env)
-// - En local, sí cargamos .env/.env.production según NODE_ENV
+// - En local, siempre usamos .env para desarrollo
+// - En Render, usamos .env.production
 const isAzure = !!process.env.WEBSITE_SITE_NAME;
-const nodeEnv = process.env.NODE_ENV || (isAzure ? "production" : "development");
+const isRender = !!process.env.RENDER;
+const isLocal = !isAzure && !isRender;
 
-if (!isAzure) {
-  const envFile = nodeEnv === "production" ? ".env.production" : ".env";
-  require("dotenv").config({ path: envFile });
-  console.log(`🔧 Cargando configuración desde ${envFile}`);
-} else {
+if (isAzure) {
+  // Azure: usar App Settings
   console.log("🔧 Usando App Settings de Azure (sin .env local)");
+} else {
+  // Local y Render: usar .env.production
+  require("dotenv").config({ path: ".env.production" });
+  console.log(`🔧 Cargando configuración desde .env.production (${isLocal ? 'desarrollo local' : 'Render'})`);
 }
 
 const express = require("express");
@@ -117,13 +120,13 @@ const WINDOW_MS = parseInt(process.env.RATE_LIMIT_WINDOW_MS || `${15 * 60 * 1000
 const GENERAL_MAX = parseInt(
   process.env.RATE_LIMIT_GENERAL_MAX ||
     process.env.RATE_LIMIT_MAX_REQUESTS ||
-    (nodeEnv === "development" ? "1000" : "100"),
+    (isLocal ? "1000" : "100"),
   10
 );
 const AUTH_MAX = parseInt(
   process.env.RATE_LIMIT_AUTH_MAX ||
     process.env.RATE_LIMIT_AUTH_MAX_REQUESTS ||
-    (nodeEnv === "development" ? "50" : "5"),
+    (isLocal ? "50" : "5"),
   10
 );
 
@@ -147,7 +150,7 @@ app.use(generalLimiter);
 app.use("/api/auth", authLimiter);
 
 // 7) Logging
-app.use(morgan(nodeEnv === "development" ? "dev" : "combined"));
+app.use(morgan(isLocal ? "dev" : "combined"));
 
 // 8) Parsers
 app.use(express.json({ limit: "10mb" }));
@@ -245,7 +248,7 @@ apiRouter.get("/health", (_req, res) => {
     status: "OK",
     timestamp: new Date().toISOString(),
     uptime: process.uptime(),
-    environment: nodeEnv,
+    environment: isLocal ? "development" : "production",
     version: "2.0.1",
     endpoints: {
       estudiantes_public: "/api/estudiantes/public",

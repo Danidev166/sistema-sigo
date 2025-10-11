@@ -17,7 +17,7 @@ class PromocionModel {
         -- Datos de asistencia
         COALESCE(a.asistencia_total, 0) as total_clases,
         COALESCE(a.asistencia_presente, 0) as clases_presente,
-        COALESCE(ROUND((a.asistencia_presente::float / NULLIF(a.asistencia_total, 0) * 100), 2), 0) as porcentaje_asistencia,
+        COALESCE(ROUND((a.asistencia_presente::numeric / NULLIF(a.asistencia_total, 0) * 100), 2), 0) as porcentaje_asistencia,
         -- Datos académicos
         COALESCE(ha.promedio_anual, 0) as promedio_anual,
         COALESCE(ha.asignaturas_aprobadas, 0) as asignaturas_aprobadas,
@@ -28,7 +28,7 @@ class PromocionModel {
         SELECT 
           id_estudiante,
           COUNT(*) as asistencia_total,
-          COUNT(CASE WHEN presente = true THEN 1 END) as asistencia_presente
+          COUNT(CASE WHEN tipo IN ('Presente', 'P') THEN 1 END) as asistencia_presente
         FROM asistencia 
         WHERE EXTRACT(YEAR FROM fecha) = @anio
         GROUP BY id_estudiante
@@ -36,12 +36,13 @@ class PromocionModel {
       LEFT JOIN (
         SELECT 
           id_estudiante,
-          AVG(calificacion) as promedio_anual,
-          COUNT(CASE WHEN calificacion >= 4.0 THEN 1 END) as asignaturas_aprobadas,
-          COUNT(CASE WHEN calificacion < 4.0 THEN 1 END) as asignaturas_reprobadas,
-          COUNT(*) as total_asignaturas
+          AVG(promedio_general) as promedio_anual,
+          -- Para asignaturas, usamos lógica simplificada basada en promedio
+          CASE WHEN AVG(promedio_general) >= 4.0 THEN 1 ELSE 0 END as asignaturas_aprobadas,
+          CASE WHEN AVG(promedio_general) < 4.0 THEN 1 ELSE 0 END as asignaturas_reprobadas,
+          1 as total_asignaturas
         FROM historial_academico 
-        WHERE anio = @anio
+        WHERE EXTRACT(YEAR FROM fecha_actualizacion) = @anio
         GROUP BY id_estudiante
       ) ha ON e.id = ha.id_estudiante
       WHERE e.curso = @curso AND e.estado = 'Activo'

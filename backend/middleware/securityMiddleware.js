@@ -131,7 +131,13 @@ const securityMiddleware = {
       return next();
     }
     
-    const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',') || ['http://localhost:3000', 'https://sigo-caupolican.onrender.com'];
+    const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',') || [
+      'http://localhost:3000', 
+      'http://localhost:5173', 
+      'http://localhost:5174', 
+      'http://192.168.18.10:5174', 
+      'https://sigo-caupolican.onrender.com'
+    ];
     
     if (!allowedOrigins.some(allowed => origin.startsWith(allowed))) {
       logger.warn('🚫 Origen no autorizado', {

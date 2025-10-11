@@ -1,8 +1,15 @@
 // backend/config/db.js — PostgreSQL con interfaz tipo mssql
 const { Pool } = require("pg");
 
-// CARGAR DOTENV PRIMERO - FORZAR .env LOCAL
-require('dotenv').config({ path: '.env' });
+// CARGAR DOTENV - SIEMPRE USAR .env.production
+const isAzure = !!process.env.WEBSITE_SITE_NAME;
+const isRender = !!process.env.RENDER;
+const isLocal = !isAzure && !isRender;
+
+if (!isAzure) {
+  // Local y Render: usar .env.production
+  require('dotenv').config({ path: '.env.production' });
+}
 
 /* ========================= Helpers ========================= */
 function bool(v, def = false) {
