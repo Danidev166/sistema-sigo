@@ -8,11 +8,15 @@ import axios from 'axios';
  * - En desarrollo, fallback al backend local.
  */
 const resolveBaseURL = () => {
-  // HARDCODEAR URL CORRECTA - SOLUCIÓN TEMPORAL
-  const isProduction = window.location.hostname.includes('onrender.com');
+  // SOLUCIÓN DEFINITIVA - HARDCODEAR URL CORRECTA
+  console.log('🔍 DETECTANDO ENTORNO...');
+  console.log('🔍 window.location.hostname:', window.location.hostname);
+  console.log('🔍 import.meta.env.PROD:', import.meta.env.PROD);
+  console.log('🔍 import.meta.env.MODE:', import.meta.env.MODE);
   
-  if (isProduction) {
-    console.log('🚀 PRODUCCIÓN DETECTADA - URL: https://sistema-sigo.onrender.com/api');
+  // FORZAR URL CORRECTA SIEMPRE EN PRODUCCIÓN
+  if (import.meta.env.PROD) {
+    console.log('🚀 PRODUCCIÓN FORZADA - URL: https://sistema-sigo.onrender.com/api');
     return 'https://sistema-sigo.onrender.com/api';
   }
   
