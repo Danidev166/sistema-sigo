@@ -9,4 +9,6 @@ services:
       - key: VITE_API_URL
         value: https://sistema-sigo.onrender.com/api
       - key: FORCE_DEPLOY
-        value: "2025-10-12-20-50"
+        value: "2025-10-12-21-00"
+      - key: DEBUG_MODE
+        value: "true"

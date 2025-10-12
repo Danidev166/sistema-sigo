@@ -25,8 +25,12 @@ const resolveBaseURL = () => {
   return 'http://localhost:3001/api';
 };
 
+const baseURL = resolveBaseURL();
+console.log('🚀 AXIOS CONFIGURADO - BaseURL:', baseURL);
+console.log('🚀 AXIOS CONFIGURADO - Timestamp:', new Date().toISOString());
+
 const api = axios.create({
-  baseURL: resolveBaseURL(),
+  baseURL: baseURL,
   headers: {
     'Content-Type': 'application/json',
     Accept: 'application/json',
