@@ -82,6 +82,7 @@ const LOCAL_ORIGINS = [
   "http://192.168.18.10:4174",
   "https://sigo-frontend-2025.onrender.com",
   "https://sistema-sigo-2025.onrender.com",
+  "https://sigo-caupolican.onrender.com",
 ];
 
 const FRONTEND_URLS = parseCsv(process.env.FRONTEND_URLS || process.env.FRONTEND_URL);
@@ -287,7 +288,7 @@ if (process.env.NODE_ENV !== "test") {
     console.log(`🌐 Render deployment: ${process.env.RENDER ? 'SÍ' : 'NO'}`);
     console.log(`🔧 NODE_ENV: ${process.env.NODE_ENV}`);
     console.log(`📊 Estudiantes endpoint: http://localhost:${PORT}${API_PREFIX}/estudiantes/public`);
-    console.log(`🚀 VERSIÓN: 2.0.5 - REVERT TO WORKING STATE`);
+    console.log(`🚀 VERSIÓN: 2.0.6 - CORS FIX FOR SIGO-CAUPOLICAN`);
     console.log(`⏰ Deploy timestamp: ${new Date().toISOString()}`);
     console.log(`🔧 ESTUDIANTES ESPERADOS: 6 (Isabella, María, Carlos, Ana, Luis, Carmen)`);
     console.log(`📊 RUTA PÚBLICA: /api/estudiantes/public debe devolver 6 estudiantes\n`);
