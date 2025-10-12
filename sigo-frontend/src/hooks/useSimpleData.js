@@ -23,7 +23,7 @@ const useSimpleData = (idEstudiante, anio) => {
       const [h, s, a, statsSeguimiento, statsAsistencia] = await Promise.all([
         estudianteService.getHistorialAcademico(idEstudiante, anio).catch(() => ({ data: [] })),
         estudianteService.getSeguimientoAcademico(idEstudiante, anio).catch(() => ({ data: [] })),
-        estudianteService.getAsistencia(idEstudiante).catch(() => ({ data: [] })),
+        estudianteService.getAsistencia(idEstudiante, anio).catch(() => ({ data: [] })),
         estudianteService.getEstadisticasSeguimiento(idEstudiante, anio).catch(() => ({ data: null })),
         estudianteService.getEstadisticasAsistencia(idEstudiante, anio).catch(() => ({ data: null }))
       ]);

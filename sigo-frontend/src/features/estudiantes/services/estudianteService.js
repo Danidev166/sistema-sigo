@@ -65,8 +65,8 @@ const estudianteService = {
   eliminarConducta: (id) => api.delete(`/conducta/${id}`),
 
   // Asistencia
-  getAsistencia: (idEstudiante) =>
-    api.get(`/asistencia?id_estudiante=${idEstudiante}`),
+  getAsistencia: (idEstudiante, anio) =>
+    api.get(`/asistencia/estudiante/${idEstudiante}?anio=${anio}`),
   crearAsistencia: (data) => api.post("/asistencia", data),
   actualizarAsistencia: (id, data) => api.put(`/asistencia/${id}`, data),
   eliminarAsistencia: (id) => api.delete(`/asistencia/${id}`),
