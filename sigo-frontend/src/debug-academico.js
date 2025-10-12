@@ -23,7 +23,7 @@ async function testAcademicoEndpoints() {
         
         // 1. Probar seguimiento académico
         console.log('\n1️⃣ Seguimiento Académico:');
-        const baseURL = window.location.hostname === 'localhost' ? 'http://localhost:3001' : 'https://sigo-backend.onrender.com';
+        const baseURL = window.location.hostname === 'localhost' ? 'http://localhost:3001' : 'https://sistema-sigo.onrender.com';
         const seguimientoResponse = await fetch(`${baseURL}/api/seguimiento-academico/estudiante/${estudianteId}?anio=${anio}`, {
             method: 'GET',
             headers: {
