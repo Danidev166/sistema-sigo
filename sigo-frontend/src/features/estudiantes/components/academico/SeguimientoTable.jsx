@@ -17,6 +17,9 @@ import { format } from "date-fns";
 import EnhancedTable from "../../../../components/ui/EnhancedTable";
 
 export default function SeguimientoTable({ registros, onEdit, onDelete, onExport }) {
+  // DEBUG: Log de datos recibidos
+  console.log('🔍 SeguimientoTable - Registros recibidos:', registros);
+  console.log('🔍 SeguimientoTable - Cantidad de registros:', registros?.length || 0);
   const columns = [
     {
       key: 'asignatura',
