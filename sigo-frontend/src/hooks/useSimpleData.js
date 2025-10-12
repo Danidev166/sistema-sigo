@@ -36,6 +36,16 @@ const useSimpleData = (idEstudiante, anio) => {
         estadisticasAsistencia: statsAsistencia.data
       };
 
+      console.log('🔍 useSimpleData - Datos recibidos:', {
+        historial: newData.historial.length,
+        seguimiento: newData.seguimiento.length,
+        asistencias: newData.asistencias.length,
+        estadisticasSeguimiento: newData.estadisticasSeguimiento,
+        estadisticasAsistencia: newData.estadisticasAsistencia
+      });
+
+      console.log('🔍 useSimpleData - Seguimiento detallado:', newData.seguimiento);
+
       setData(newData);
       return newData;
     } catch (err) {
