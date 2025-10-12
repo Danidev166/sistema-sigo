@@ -99,10 +99,22 @@ app.use(
       if (!origin) return callback(null, true); // curl/servicios internos
       try {
         const url = new URL(origin);
-        if (allowed.has(origin) || allowed.has(url.origin)) return callback(null, true);
-        if (allowSwaRegex && swaRegex.test(url.hostname)) return callback(null, true);
+        console.log(`🔍 CORS - Origen recibido: ${origin}`);
+        console.log(`🔍 CORS - URL.origin: ${url.origin}`);
+        console.log(`🔍 CORS - Orígenes permitidos:`, Array.from(allowed));
+        
+        if (allowed.has(origin) || allowed.has(url.origin)) {
+          console.log(`✅ CORS - Origen permitido: ${origin}`);
+          return callback(null, true);
+        }
+        if (allowSwaRegex && swaRegex.test(url.hostname)) {
+          console.log(`✅ CORS - Origen SWA permitido: ${origin}`);
+          return callback(null, true);
+        }
+        console.log(`❌ CORS - Origen bloqueado: ${origin}`);
         return callback(new Error(`CORS bloqueado para origen: ${origin}`));
-      } catch {
+      } catch (error) {
+        console.log(`❌ CORS - Error procesando origen: ${origin}`, error.message);
         return callback(new Error("Origen inválido"));
       }
     },
@@ -165,7 +177,7 @@ app.use(securityMiddleware.preventTimingAttacks);
 app.use(securityMiddleware.validatePayloadSize(10 * 1024 * 1024)); // 10MB
 // HABILITANDO UNO POR UNO PARA IDENTIFICAR EL PROBLEMA
 app.use(securityMiddleware.detectMaliciousBots);
-app.use(securityMiddleware.validateOrigin);
+// app.use(securityMiddleware.validateOrigin); // DESHABILITADO - conflicto con CORS
 app.use(securityMiddleware.validateIP);
 
 // 8.7) Middleware de métricas y monitoreo
@@ -288,7 +300,7 @@ if (process.env.NODE_ENV !== "test") {
     console.log(`🌐 Render deployment: ${process.env.RENDER ? 'SÍ' : 'NO'}`);
     console.log(`🔧 NODE_ENV: ${process.env.NODE_ENV}`);
     console.log(`📊 Estudiantes endpoint: http://localhost:${PORT}${API_PREFIX}/estudiantes/public`);
-    console.log(`🚀 VERSIÓN: 2.0.6 - CORS FIX FOR SIGO-CAUPOLICAN`);
+    console.log(`🚀 VERSIÓN: 2.0.7 - CORS FIX FOR SIGO-CAUPOLICAN`);
     console.log(`⏰ Deploy timestamp: ${new Date().toISOString()}`);
     console.log(`🔧 ESTUDIANTES ESPERADOS: 6 (Isabella, María, Carlos, Ana, Luis, Carmen)`);
     console.log(`📊 RUTA PÚBLICA: /api/estudiantes/public debe devolver 6 estudiantes\n`);
