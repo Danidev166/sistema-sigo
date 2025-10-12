@@ -288,10 +288,20 @@ if (process.env.NODE_ENV !== "test") {
     console.log(`🌐 Render deployment: ${process.env.RENDER ? 'SÍ' : 'NO'}`);
     console.log(`🔧 NODE_ENV: ${process.env.NODE_ENV}`);
     console.log(`📊 Estudiantes endpoint: http://localhost:${PORT}${API_PREFIX}/estudiantes/public`);
-    console.log(`🚀 VERSIÓN: 2.0.3 - CORS FIX PARA RENDER`);
+    console.log(`🚀 VERSIÓN: 2.0.4 - DEBUG RENDER DEPLOYMENT`);
     console.log(`⏰ Deploy timestamp: ${new Date().toISOString()}`);
     console.log(`🔧 ESTUDIANTES ESPERADOS: 6 (Isabella, María, Carlos, Ana, Luis, Carmen)`);
-    console.log(`📊 RUTA PÚBLICA: /api/estudiantes/public debe devolver 6 estudiantes\n`);
+    console.log(`📊 RUTA PÚBLICA: /api/estudiantes/public debe devolver 6 estudiantes`);
+    console.log(`🔍 CORS Origins: ${JSON.stringify([...LOCAL_ORIGINS, ...FRONTEND_URLS, ...EXTRA_ORIGINS])}`);
+    console.log(`🔍 API_PREFIX: ${API_PREFIX}`);
+    console.log(`🔍 Routes loaded: ${routes.length}`);
+    
+    // Debug: listar todas las rutas registradas
+    console.log("\n📋 Rutas registradas:");
+    routes.forEach(({ path: routePath, module }) => {
+      console.log(`  ✅ ${API_PREFIX}${routePath} -> ${module}`);
+    });
+    console.log("");
   });
 }
 
