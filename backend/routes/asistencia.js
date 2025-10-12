@@ -16,6 +16,9 @@ router.get("/graficos/asistencia-mensual", smartCache, controller.asistenciaMens
 // 📊 Ruta de estadísticas (cache inteligente)
 router.get("/estadisticas/:id", smartCache, controller.obtenerEstadisticas);
 
+// 📋 Ruta para obtener asistencia por estudiante
+router.get("/estudiante/:id", cacheMiddleware(180), controller.obtenerPorEstudiante);
+
 // CRUD clásico
 router.post("/", validateBody(schema), controller.crear);
 router.get("/", cacheMiddleware(180), controller.obtenerTodos);

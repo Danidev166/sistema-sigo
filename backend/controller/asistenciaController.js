@@ -67,6 +67,19 @@ const AsistenciaController = {
     }
   },
 
+  async obtenerPorEstudiante(req, res, next) {
+    try {
+      const { id } = req.params;
+      const { anio } = req.query;
+      
+      const asistencias = await AsistenciaModel.obtenerPorEstudiante(id, anio);
+      res.json(asistencias);
+    } catch (error) {
+      logger.error(" Error al obtener asistencia por estudiante:", error);
+      next(error);
+    }
+  },
+
   async actualizar(req, res, next) {
     try {
       const { id } = req.params;

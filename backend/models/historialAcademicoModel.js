@@ -1,46 +1,41 @@
 // backend/models/historialAcademicoModel.js
-const { sql, getPool } = require('../config/db');
-
-function toSqlDateTime(input) {
-  if (input instanceof Date) return input;
-  if (!input) return new Date();
-  const d = new Date(input);
-  return isNaN(d) ? new Date() : d;
-}
+const { getPool } = require('../config/db');
 
 class HistorialModel {
   static async obtenerTodos() {
     const pool = await getPool();
-    const r = await pool.request().query(`
+    const result = await pool.raw.query(`
       SELECT *
       FROM historial_academico
       ORDER BY fecha_actualizacion DESC, id DESC
     `);
-    return r.recordset;
+    return result.rows;
   }
 
   static async obtenerPorEstudiante(id_estudiante, anio = null) {
     const pool = await getPool();
-    const req = pool.request().input('id_estudiante', sql.Int, id_estudiante);
-    const filtroAnio = anio ? ' AND EXTRACT(YEAR FROM fecha_actualizacion) = @anio' : '';
-    if (anio) req.input('anio', sql.Int, anio);
-
-    const r = await req.query(`
+    let query = `
       SELECT *
       FROM historial_academico
-      WHERE id_estudiante = @id_estudiante
-      ${filtroAnio}
-      ORDER BY fecha_actualizacion DESC, id DESC
-    `);
-    return r.recordset;
+      WHERE id_estudiante = $1
+    `;
+    const params = [id_estudiante];
+    
+    if (anio) {
+      query += ` AND EXTRACT(YEAR FROM fecha_actualizacion) = $2`;
+      params.push(anio);
+    }
+    
+    query += ` ORDER BY fecha_actualizacion DESC, id DESC`;
+
+    const result = await pool.raw.query(query, params);
+    return result.rows;
   }
 
   static async obtenerPorId(id) {
     const pool = await getPool();
-    const r = await pool.request()
-      .input('id', sql.Int, id)
-      .query(`SELECT * FROM historial_academico WHERE id = @id`);
-    return r.recordset[0] || null;
+    const result = await pool.raw.query(`SELECT * FROM historial_academico WHERE id = $1`, [id]);
+    return result.rows[0] || null;
   }
 
   static async crear(data) {
@@ -49,25 +44,29 @@ class HistorialModel {
       promedio_general,
       asistencia,
       observaciones_academicas,
-      fecha_actualizacion
+      fecha_actualizacion,
+      año_academico,
+      curso
     } = data;
 
     const pool = await getPool();
-    const r = await pool.request()
-      .input('id_estudiante',           sql.Int,       id_estudiante)
-      .input('promedio_general',        promedio_general) // sin tipo: el shim lo pasa como valor
-      .input('asistencia',              asistencia)
-      .input('observaciones_academicas',sql.NVarChar,  observaciones_academicas || '')
-      .input('fecha_actualizacion',     sql.DateTime,  toSqlDateTime(fecha_actualizacion || new Date()))
-      .query(`
-        INSERT INTO historial_academico
-          (id_estudiante, promedio_general, asistencia, observaciones_academicas, fecha_actualizacion)
-        VALUES
-          (@id_estudiante, @promedio_general, @asistencia, @observaciones_academicas, @fecha_actualizacion)
-        RETURNING *
-      `);
+    const result = await pool.raw.query(`
+      INSERT INTO historial_academico
+        (id_estudiante, promedio_general, asistencia, observaciones_academicas, fecha_actualizacion, año_academico, curso)
+      VALUES
+        ($1, $2, $3, $4, $5, $6, $7)
+      RETURNING *
+    `, [
+      id_estudiante,
+      promedio_general,
+      asistencia,
+      observaciones_academicas || '',
+      fecha_actualizacion || new Date(),
+      año_academico || new Date().getFullYear().toString(),
+      curso || null
+    ]);
 
-    return r.recordset[0];
+    return result.rows[0];
   }
 
   static async actualizar(id, data) {
@@ -76,33 +75,41 @@ class HistorialModel {
       promedio_general,
       asistencia,
       observaciones_academicas,
-      fecha_actualizacion
+      fecha_actualizacion,
+      año_academico,
+      curso
     } = data;
 
     const pool = await getPool();
-    await pool.request()
-      .input('id',                        sql.Int,      id)
-      .input('id_estudiante',             sql.Int,      id_estudiante)
-      .input('promedio_general',          promedio_general)
-      .input('asistencia',                asistencia)
-      .input('observaciones_academicas',  sql.NVarChar, observaciones_academicas || '')
-      .input('fecha_actualizacion',       sql.DateTime, toSqlDateTime(fecha_actualizacion || new Date()))
-      .query(`
-        UPDATE historial_academico
-           SET id_estudiante            = @id_estudiante,
-               promedio_general         = @promedio_general,
-               asistencia               = @asistencia,
-               observaciones_academicas = @observaciones_academicas,
-               fecha_actualizacion      = @fecha_actualizacion
-         WHERE id = @id
-      `);
+    const result = await pool.raw.query(`
+      UPDATE historial_academico
+         SET id_estudiante            = $1,
+             promedio_general         = $2,
+             asistencia               = $3,
+             observaciones_academicas = $4,
+             fecha_actualizacion      = $5,
+             año_academico            = $6,
+             curso                    = $7
+       WHERE id = $8
+      RETURNING *
+    `, [
+      id_estudiante,
+      promedio_general,
+      asistencia,
+      observaciones_academicas || '',
+      fecha_actualizacion || new Date(),
+      año_academico || new Date().getFullYear().toString(),
+      curso || null,
+      id
+    ]);
+    
+    return result.rows[0];
   }
 
   static async eliminar(id) {
     const pool = await getPool();
-    await pool.request()
-      .input('id', sql.Int, id)
-      .query(`DELETE FROM historial_academico WHERE id = @id`);
+    const result = await pool.raw.query(`DELETE FROM historial_academico WHERE id = $1 RETURNING *`, [id]);
+    return result.rows[0];
   }
 }
 

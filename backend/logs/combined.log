@@ -318,3 +318,149 @@
 [2025-10-09 23:27:18] ERROR: ❌ Error en request
 [2025-10-09 23:27:18] ERROR: 🚨 ALERTA: Alta tasa de errores
 [2025-10-09 23:27:18] ERROR: 🚨 ALERTA: Error del servidor
+[2025-10-12 15:49:08] INFO: 📥 Login recibido:
+[2025-10-12 15:49:09] ERROR:  Error en login: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+[2025-10-12 15:49:09] ERROR: ❌ Error en el servidor: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+[2025-10-12 15:49:09] INFO: 🔍 AUDIT
+[2025-10-12 15:49:09] INFO: 🔍 AUDIT
+[2025-10-12 15:49:09] INFO: 🔍 AUDIT
+[2025-10-12 15:49:09] INFO: 🔍 AUDIT
+[2025-10-12 15:49:09] INFO: 🔍 AUDIT
+[2025-10-12 15:49:09] INFO: 🔍 AUDIT
+[2025-10-12 15:49:09] ERROR: ❌ Error en request
+[2025-10-12 15:49:09] ERROR: 🚨 ALERTA: Alta tasa de errores
+[2025-10-12 15:49:09] ERROR: 🚨 ALERTA: Error del servidor
+[2025-10-12 15:50:24] INFO: 📥 Login recibido:
+[2025-10-12 15:50:26] ERROR:  Error en login: secretOrPrivateKey must have a value
+[2025-10-12 15:50:26] ERROR: ❌ Error en el servidor: secretOrPrivateKey must have a value
+[2025-10-12 15:50:26] INFO: 🔍 AUDIT
+[2025-10-12 15:50:26] INFO: 🔍 AUDIT
+[2025-10-12 15:50:26] INFO: 🔍 AUDIT
+[2025-10-12 15:50:26] INFO: 🔍 AUDIT
+[2025-10-12 15:50:26] INFO: 🔍 AUDIT
+[2025-10-12 15:50:26] INFO: 🔍 AUDIT
+[2025-10-12 15:50:26] WARN: 🐌 Request lento detectado
+[2025-10-12 15:50:26] ERROR: ❌ Error en request
+[2025-10-12 15:50:26] ERROR: 🚨 ALERTA: Alta tasa de errores
+[2025-10-12 15:50:26] ERROR: 🚨 ALERTA: Error del servidor
+[2025-10-12 15:50:39] INFO: 📥 Login recibido:
+[2025-10-12 15:50:40] ERROR:  Error en login: secretOrPrivateKey must have a value
+[2025-10-12 15:50:40] ERROR: ❌ Error en el servidor: secretOrPrivateKey must have a value
+[2025-10-12 15:50:40] INFO: 🔍 AUDIT
+[2025-10-12 15:50:40] INFO: 🔍 AUDIT
+[2025-10-12 15:50:40] INFO: 🔍 AUDIT
+[2025-10-12 15:50:40] INFO: 🔍 AUDIT
+[2025-10-12 15:50:40] INFO: 🔍 AUDIT
+[2025-10-12 15:50:40] INFO: 🔍 AUDIT
+[2025-10-12 15:50:40] ERROR: ❌ Error en request
+[2025-10-12 15:50:40] ERROR: 🚨 ALERTA: Alta tasa de errores
+[2025-10-12 15:50:40] ERROR: 🚨 ALERTA: Error del servidor
+[2025-10-12 15:51:59] INFO: 📥 Login recibido:
+[2025-10-12 15:52:01] INFO:  Login exitoso
+[2025-10-12 15:52:01] INFO: 🔍 AUDIT
+[2025-10-12 15:52:01] INFO: 🔍 AUDIT
+[2025-10-12 15:52:01] INFO: 🔍 AUDIT
+[2025-10-12 15:52:01] INFO: 🔍 AUDIT
+[2025-10-12 15:52:01] INFO: 🔍 AUDIT
+[2025-10-12 15:52:01] INFO: 🔍 AUDIT
+[2025-10-12 15:52:02] WARN: 🐌 Request lento detectado
+[2025-10-12 15:52:03] INFO: 📝 Consultar todas comunicación familiar
+[2025-10-12 15:52:04] INFO: 🔍 AUDIT
+[2025-10-12 15:52:04] INFO: 🔍 AUDIT
+[2025-10-12 15:52:04] WARN: 🐌 Request lento detectado
+[2025-10-12 16:06:16] INFO: 📥 Login recibido:
+[2025-10-12 16:06:18] INFO:  Login exitoso
+[2025-10-12 16:06:18] INFO: 🔍 AUDIT
+[2025-10-12 16:06:18] INFO: 🔍 AUDIT
+[2025-10-12 16:06:18] INFO: 🔍 AUDIT
+[2025-10-12 16:06:18] INFO: 🔍 AUDIT
+[2025-10-12 16:06:18] INFO: 🔍 AUDIT
+[2025-10-12 16:06:18] INFO: 🔍 AUDIT
+[2025-10-12 16:06:20] INFO: 🔍 AUDIT
+[2025-10-12 16:06:20] INFO: 🔍 AUDIT
+[2025-10-12 16:06:20] WARN: 🐌 Request lento detectado
+[2025-10-12 16:06:20] ERROR: ❌ Error en request
+[2025-10-12 16:06:20] ERROR: 🚨 ALERTA: Alta tasa de errores
+[2025-10-12 16:08:11] INFO: 📥 Login recibido:
+[2025-10-12 16:08:12] INFO:  Login exitoso
+[2025-10-12 16:08:12] INFO: 🔍 AUDIT
+[2025-10-12 16:08:12] INFO: 🔍 AUDIT
+[2025-10-12 16:08:12] INFO: 🔍 AUDIT
+[2025-10-12 16:08:12] INFO: 🔍 AUDIT
+[2025-10-12 16:08:12] INFO: 🔍 AUDIT
+[2025-10-12 16:08:12] INFO: 🔍 AUDIT
+[2025-10-12 16:08:12] ERROR: 🚨 ALERTA: Alta tasa de errores
+[2025-10-12 16:08:15] INFO: 🔍 AUDIT
+[2025-10-12 16:08:15] INFO: 🔍 AUDIT
+[2025-10-12 16:08:15] WARN: 🐌 Request lento detectado
+[2025-10-12 16:08:15] ERROR: 🚨 ALERTA: Alta tasa de errores
+[2025-10-12 16:11:36] INFO: 🧹 Rate limits limpiados: 1 entradas expiradas
+[2025-10-12 16:23:29] INFO: 📥 Login recibido:
+[2025-10-12 16:23:31] INFO:  Login exitoso
+[2025-10-12 16:23:31] INFO: 🔍 AUDIT
+[2025-10-12 16:23:31] INFO: 🔍 AUDIT
+[2025-10-12 16:23:31] INFO: 🔍 AUDIT
+[2025-10-12 16:23:31] INFO: 🔍 AUDIT
+[2025-10-12 16:23:31] INFO: 🔍 AUDIT
+[2025-10-12 16:23:31] INFO: 🔍 AUDIT
+[2025-10-12 16:23:31] ERROR: 🚨 ALERTA: Alta tasa de errores
+[2025-10-12 16:23:33] INFO: 🔍 AUDIT
+[2025-10-12 16:23:33] INFO: 🔍 AUDIT
+[2025-10-12 16:23:33] WARN: 🐌 Request lento detectado
+[2025-10-12 16:23:33] ERROR: 🚨 ALERTA: Alta tasa de errores
+[2025-10-12 16:23:33] INFO: 🔍 AUDIT
+[2025-10-12 16:23:33] INFO: 🔍 AUDIT
+[2025-10-12 16:23:33] ERROR: 🚨 ALERTA: Alta tasa de errores
+[2025-10-12 16:23:33] INFO: 🔍 AUDIT
+[2025-10-12 16:23:33] INFO: 🔍 AUDIT
+[2025-10-12 16:23:33] ERROR: ❌ Error en request
+[2025-10-12 16:23:33] ERROR: 🚨 ALERTA: Alta tasa de errores
+[2025-10-12 16:23:34] INFO: Promedio calculado para estudiante 17: 0 (0 notas)
+[2025-10-12 16:23:34] INFO: 🔍 AUDIT
+[2025-10-12 16:23:34] INFO: 🔍 AUDIT
+[2025-10-12 16:23:34] ERROR: 🚨 ALERTA: Alta tasa de errores
+[2025-10-12 16:23:34] INFO: 🔍 AUDIT
+[2025-10-12 16:23:34] INFO: 🔍 AUDIT
+[2025-10-12 16:23:34] ERROR: 🚨 ALERTA: Alta tasa de errores
+[2025-10-12 16:24:41] INFO: 📥 Login recibido:
+[2025-10-12 16:24:42] INFO:  Login exitoso
+[2025-10-12 16:24:42] INFO: 🔍 AUDIT
+[2025-10-12 16:24:42] INFO: 🔍 AUDIT
+[2025-10-12 16:24:42] INFO: 🔍 AUDIT
+[2025-10-12 16:24:42] INFO: 🔍 AUDIT
+[2025-10-12 16:24:42] INFO: 🔍 AUDIT
+[2025-10-12 16:24:42] INFO: 🔍 AUDIT
+[2025-10-12 16:24:42] ERROR: 🚨 ALERTA: Alta tasa de errores
+[2025-10-12 16:24:43] INFO: 🔍 AUDIT
+[2025-10-12 16:24:43] INFO: 🔍 AUDIT
+[2025-10-12 16:24:43] ERROR: 🚨 ALERTA: Alta tasa de errores
+[2025-10-12 16:24:43] INFO: 🔍 AUDIT
+[2025-10-12 16:24:43] INFO: 🔍 AUDIT
+[2025-10-12 16:24:43] ERROR: 🚨 ALERTA: Alta tasa de errores
+[2025-10-12 16:24:44] INFO: 🔍 AUDIT
+[2025-10-12 16:24:44] INFO: 🔍 AUDIT
+[2025-10-12 16:24:44] ERROR: ❌ Error en request
+[2025-10-12 16:24:45] INFO: Promedio calculado para estudiante 17: 0 (0 notas)
+[2025-10-12 16:24:45] INFO: 🔍 AUDIT
+[2025-10-12 16:24:45] INFO: 🔍 AUDIT
+[2025-10-12 16:24:45] INFO: 🔍 AUDIT
+[2025-10-12 16:24:45] INFO: 🔍 AUDIT
+[2025-10-12 16:26:07] INFO: 📥 Login recibido:
+[2025-10-12 16:26:09] INFO:  Login exitoso
+[2025-10-12 16:26:09] INFO: 🔍 AUDIT
+[2025-10-12 16:26:09] INFO: 🔍 AUDIT
+[2025-10-12 16:26:09] INFO: 🔍 AUDIT
+[2025-10-12 16:26:09] INFO: 🔍 AUDIT
+[2025-10-12 16:26:09] INFO: 🔍 AUDIT
+[2025-10-12 16:26:09] INFO: 🔍 AUDIT
+[2025-10-12 16:26:10] INFO: 🔍 AUDIT
+[2025-10-12 16:26:10] INFO: 🔍 AUDIT
+[2025-10-12 16:26:10] INFO: 🔍 AUDIT
+[2025-10-12 16:26:10] INFO: 🔍 AUDIT
+[2025-10-12 16:26:11] INFO: 🔍 AUDIT
+[2025-10-12 16:26:11] INFO: 🔍 AUDIT
+[2025-10-12 16:26:11] INFO: Promedio calculado para estudiante 17: 6.1 (4 notas)
+[2025-10-12 16:26:11] INFO: 🔍 AUDIT
+[2025-10-12 16:26:11] INFO: 🔍 AUDIT
+[2025-10-12 16:26:12] INFO: 🔍 AUDIT
+[2025-10-12 16:26:12] INFO: 🔍 AUDIT

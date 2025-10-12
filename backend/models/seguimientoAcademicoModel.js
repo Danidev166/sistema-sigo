@@ -1,24 +1,13 @@
 // backend/models/seguimientoAcademicoModel.js
-const { Pool } = require('pg');
-
-// Configuración de PostgreSQL para Render
-const renderConfig = {
-  user: 'sigo_user',
-  host: 'dpg-d391d4nfte5s73cff6p0-a.oregon-postgres.render.com',
-  database: 'sigo_pro',
-  password: 'qgEyTD5LiGu22qdSOoROC1UFqjGZaxIv',
-  port: 5432,
-  ssl: { rejectUnauthorized: false },
-};
-
-const pool = new Pool(renderConfig);
+const { getPool } = require('../config/db');
 
 const SeguimientoAcademicoModel = {
   async crear(data) {
+    const pool = await getPool();
     const query = `
       INSERT INTO seguimiento_academico
-        (id_estudiante, rendimiento, asistencia_porcentaje, observaciones, recomendaciones, responsable_id, periodo, fecha_seguimiento)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+        (id_estudiante, rendimiento, asistencia_porcentaje, observaciones, recomendaciones, responsable_id, periodo, fecha_seguimiento, asignatura, nota, promedio_curso, fecha)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
       RETURNING *
     `;
     
@@ -30,14 +19,19 @@ const SeguimientoAcademicoModel = {
       data.recomendaciones || '',
       data.responsable_id || null,
       data.periodo || null,
-      data.fecha_seguimiento || new Date()
+      data.fecha_seguimiento || new Date(),
+      data.asignatura || null,
+      data.nota || null,
+      data.promedio_curso || null,
+      data.fecha || new Date()
     ];
     
-    const result = await pool.query(query, values);
+    const result = await pool.raw.query(query, values);
     return result.rows[0];
   },
 
   async obtenerTodos() {
+    const pool = await getPool();
     const query = `
       SELECT sa.*, e.nombre, e.apellido, e.rut
       FROM seguimiento_academico sa
@@ -45,11 +39,12 @@ const SeguimientoAcademicoModel = {
       ORDER BY sa.fecha_seguimiento DESC, sa.id DESC
     `;
     
-    const result = await pool.query(query);
+    const result = await pool.raw.query(query);
     return result.rows;
   },
 
   async obtenerPorId(id) {
+    const pool = await getPool();
     const query = `
       SELECT sa.*, e.nombre, e.apellido, e.rut
       FROM seguimiento_academico sa
@@ -57,11 +52,12 @@ const SeguimientoAcademicoModel = {
       WHERE sa.id = $1
     `;
     
-    const result = await pool.query(query, [id]);
+    const result = await pool.raw.query(query, [id]);
     return result.rows[0] || null;
   },
 
   async obtenerPorEstudiante(id_estudiante, anio = null) {
+    const pool = await getPool();
     let query = `
       SELECT sa.*, e.nombre, e.apellido, e.rut
       FROM seguimiento_academico sa
@@ -78,23 +74,26 @@ const SeguimientoAcademicoModel = {
     
     query += ` ORDER BY sa.fecha_seguimiento DESC, sa.id DESC`;
     
-    const result = await pool.query(query, params);
+    const result = await pool.raw.query(query, params);
     return result.rows;
   },
 
   async obtenerNotasPorEstudiante(id_estudiante, anio) {
+    const pool = await getPool();
     const query = `
-      SELECT rendimiento, asistencia_porcentaje, observaciones, fecha_seguimiento
+      SELECT asignatura, nota, promedio_curso, fecha, observaciones
       FROM seguimiento_academico
       WHERE id_estudiante = $1 AND EXTRACT(YEAR FROM fecha_seguimiento) = $2
-      ORDER BY fecha_seguimiento DESC
+      AND asignatura IS NOT NULL AND nota IS NOT NULL
+      ORDER BY fecha DESC
     `;
     
-    const result = await pool.query(query, [id_estudiante, anio]);
+    const result = await pool.raw.query(query, [id_estudiante, anio]);
     return result.rows;
   },
 
   async actualizar(id, data) {
+    const pool = await getPool();
     const query = `
       UPDATE seguimiento_academico
       SET id_estudiante = $1,
@@ -104,8 +103,12 @@ const SeguimientoAcademicoModel = {
           recomendaciones = $5,
           responsable_id = $6,
           periodo = $7,
-          fecha_seguimiento = $8
-      WHERE id = $9
+          fecha_seguimiento = $8,
+          asignatura = $9,
+          nota = $10,
+          promedio_curso = $11,
+          fecha = $12
+      WHERE id = $13
       RETURNING *
     `;
     
@@ -118,16 +121,21 @@ const SeguimientoAcademicoModel = {
       data.responsable_id || null,
       data.periodo || null,
       data.fecha_seguimiento || new Date(),
+      data.asignatura || null,
+      data.nota || null,
+      data.promedio_curso || null,
+      data.fecha || new Date(),
       id
     ];
     
-    const result = await pool.query(query, values);
+    const result = await pool.raw.query(query, values);
     return result.rows[0];
   },
 
   async eliminar(id) {
+    const pool = await getPool();
     const query = `DELETE FROM seguimiento_academico WHERE id = $1 RETURNING *`;
-    const result = await pool.query(query, [id]);
+    const result = await pool.raw.query(query, [id]);
     return result.rows[0];
   }
 };

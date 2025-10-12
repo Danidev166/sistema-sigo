@@ -242,3 +242,33 @@
 [2025-10-09 23:27:18] ERROR: ❌ Error en request
 [2025-10-09 23:27:18] ERROR: 🚨 ALERTA: Alta tasa de errores
 [2025-10-09 23:27:18] ERROR: 🚨 ALERTA: Error del servidor
+[2025-10-12 15:49:09] ERROR:  Error en login: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+[2025-10-12 15:49:09] ERROR: ❌ Error en el servidor: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+[2025-10-12 15:49:09] ERROR: ❌ Error en request
+[2025-10-12 15:49:09] ERROR: 🚨 ALERTA: Alta tasa de errores
+[2025-10-12 15:49:09] ERROR: 🚨 ALERTA: Error del servidor
+[2025-10-12 15:50:26] ERROR:  Error en login: secretOrPrivateKey must have a value
+[2025-10-12 15:50:26] ERROR: ❌ Error en el servidor: secretOrPrivateKey must have a value
+[2025-10-12 15:50:26] ERROR: ❌ Error en request
+[2025-10-12 15:50:26] ERROR: 🚨 ALERTA: Alta tasa de errores
+[2025-10-12 15:50:26] ERROR: 🚨 ALERTA: Error del servidor
+[2025-10-12 15:50:40] ERROR:  Error en login: secretOrPrivateKey must have a value
+[2025-10-12 15:50:40] ERROR: ❌ Error en el servidor: secretOrPrivateKey must have a value
+[2025-10-12 15:50:40] ERROR: ❌ Error en request
+[2025-10-12 15:50:40] ERROR: 🚨 ALERTA: Alta tasa de errores
+[2025-10-12 15:50:40] ERROR: 🚨 ALERTA: Error del servidor
+[2025-10-12 16:06:20] ERROR: ❌ Error en request
+[2025-10-12 16:06:20] ERROR: 🚨 ALERTA: Alta tasa de errores
+[2025-10-12 16:08:12] ERROR: 🚨 ALERTA: Alta tasa de errores
+[2025-10-12 16:08:15] ERROR: 🚨 ALERTA: Alta tasa de errores
+[2025-10-12 16:23:31] ERROR: 🚨 ALERTA: Alta tasa de errores
+[2025-10-12 16:23:33] ERROR: 🚨 ALERTA: Alta tasa de errores
+[2025-10-12 16:23:33] ERROR: 🚨 ALERTA: Alta tasa de errores
+[2025-10-12 16:23:33] ERROR: ❌ Error en request
+[2025-10-12 16:23:33] ERROR: 🚨 ALERTA: Alta tasa de errores
+[2025-10-12 16:23:34] ERROR: 🚨 ALERTA: Alta tasa de errores
+[2025-10-12 16:23:34] ERROR: 🚨 ALERTA: Alta tasa de errores
+[2025-10-12 16:24:42] ERROR: 🚨 ALERTA: Alta tasa de errores
+[2025-10-12 16:24:43] ERROR: 🚨 ALERTA: Alta tasa de errores
+[2025-10-12 16:24:43] ERROR: 🚨 ALERTA: Alta tasa de errores
+[2025-10-12 16:24:44] ERROR: ❌ Error en request

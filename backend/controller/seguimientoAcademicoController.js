@@ -142,38 +142,30 @@ const SeguimientoAcademicoController = {
         return null;
       }
 
-      // Calcular promedio ponderado por asignatura
-      const asignaturas = {};
-      seguimientos.forEach(seg => {
-        if (!asignaturas[seg.asignatura]) {
-          asignaturas[seg.asignatura] = {
-            notas: [],
-            promedios_curso: []
-          };
-        }
-        asignaturas[seg.asignatura].notas.push(seg.rendimiento || seg.nota);
-        asignaturas[seg.asignatura].promedios_curso.push(seg.asistencia_porcentaje || seg.promedio_curso);
-      });
-
-      // Calcular promedio general
+      // Calcular promedio usando las notas reales
       let sumaNotas = 0;
       let totalNotas = 0;
       let sumaPromediosCurso = 0;
       let totalPromediosCurso = 0;
+      const asignaturasUnicas = new Set();
 
-      Object.values(asignaturas).forEach(asignatura => {
-        asignatura.notas.forEach(nota => {
-          if (nota && !isNaN(nota)) {
-            sumaNotas += parseFloat(nota);
-            totalNotas++;
-          }
-        });
-        asignatura.promedios_curso.forEach(promedio => {
-          if (promedio && !isNaN(promedio)) {
-            sumaPromediosCurso += parseFloat(promedio);
-            totalPromediosCurso++;
-          }
-        });
+      seguimientos.forEach(seg => {
+        // Usar la nota real, no el rendimiento
+        if (seg.nota && !isNaN(seg.nota)) {
+          sumaNotas += parseFloat(seg.nota);
+          totalNotas++;
+        }
+        
+        // Usar el promedio del curso
+        if (seg.promedio_curso && !isNaN(seg.promedio_curso)) {
+          sumaPromediosCurso += parseFloat(seg.promedio_curso);
+          totalPromediosCurso++;
+        }
+        
+        // Contar asignaturas únicas
+        if (seg.asignatura) {
+          asignaturasUnicas.add(seg.asignatura);
+        }
       });
 
       const promedioGeneral = totalNotas > 0 ? (sumaNotas / totalNotas).toFixed(1) : 0;
@@ -184,7 +176,7 @@ const SeguimientoAcademicoController = {
       return {
         promedio_general: parseFloat(promedioGeneral),
         promedio_curso: parseFloat(promedioCurso),
-        total_asignaturas: Object.keys(asignaturas).length,
+        total_asignaturas: asignaturasUnicas.size,
         total_notas: totalNotas
       };
     } catch (error) {
@@ -203,8 +195,8 @@ const SeguimientoAcademicoController = {
       const seguimientos = await SeguimientoAcademicoModel.obtenerPorEstudiante(id, anio);
       
       // Calcular estadísticas adicionales
-      const asignaturas = [...new Set(seguimientos.map(s => s.asignatura || s.rendimiento))];
-      const notas = seguimientos.map(s => s.rendimiento || s.nota).filter(n => n && !isNaN(n));
+      const asignaturas = [...new Set(seguimientos.map(s => s.asignatura).filter(a => a))];
+      const notas = seguimientos.map(s => s.nota).filter(n => n && !isNaN(n));
       
       const estadisticasCompletas = {
         ...estadisticas,
