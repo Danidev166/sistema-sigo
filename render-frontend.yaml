@@ -1,10 +1,15 @@
 services:
   - type: web
     name: sigo-frontend
-    env: docker
-    dockerfilePath: ./sigo-frontend/Dockerfile
+    env: node
+    buildCommand: cd sigo-frontend && npm install && npm run build
+    startCommand: cd sigo-frontend && npm run preview
     envVars:
       - key: NODE_ENV
         value: production
       - key: VITE_API_URL
         value: https://sistema-sigo.onrender.com/api
+      - key: DEBUG_MODE
+        value: "true"
+      - key: FORCE_DEPLOY
+        value: "2025-10-12-22-00"

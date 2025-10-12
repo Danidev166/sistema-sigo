@@ -8,20 +8,15 @@ import axios from 'axios';
  * - En desarrollo, fallback al backend local.
  */
 const resolveBaseURL = () => {
-  const env = import.meta.env.VITE_API_URL && String(import.meta.env.VITE_API_URL).trim();
-  console.log('🔍 DEBUG - VITE_API_URL:', import.meta.env.VITE_API_URL);
-  console.log('🔍 DEBUG - env processed:', env);
-  console.log('🔍 DEBUG - import.meta.env.PROD:', import.meta.env.PROD);
+  // HARDCODEAR URL CORRECTA - SOLUCIÓN TEMPORAL
+  const isProduction = window.location.hostname.includes('onrender.com');
   
-  if (env) {
-    console.log('🔍 DEBUG - Using VITE_API_URL:', env);
-    return env;
-  }
-  if (import.meta.env.PROD) {
-    console.log('🔍 DEBUG - Using production URL: https://sistema-sigo.onrender.com/api');
+  if (isProduction) {
+    console.log('🚀 PRODUCCIÓN DETECTADA - URL: https://sistema-sigo.onrender.com/api');
     return 'https://sistema-sigo.onrender.com/api';
   }
-  console.log('🔍 DEBUG - Using local URL: http://localhost:3001/api');
+  
+  console.log('🚀 DESARROLLO - URL: http://localhost:3001/api');
   return 'http://localhost:3001/api';
 };
 
