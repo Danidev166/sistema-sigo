@@ -23,7 +23,8 @@ async function testAcademicoEndpoints() {
         
         // 1. Probar seguimiento académico
         console.log('\n1️⃣ Seguimiento Académico:');
-        const seguimientoResponse = await fetch(`http://localhost:3001/api/seguimiento-academico/estudiante/${estudianteId}?anio=${anio}`, {
+        const baseURL = window.location.hostname === 'localhost' ? 'http://localhost:3001' : 'https://sigo-backend.onrender.com';
+        const seguimientoResponse = await fetch(`${baseURL}/api/seguimiento-academico/estudiante/${estudianteId}?anio=${anio}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -37,7 +38,7 @@ async function testAcademicoEndpoints() {
         
         // 2. Probar estadísticas de seguimiento
         console.log('\n2️⃣ Estadísticas de Seguimiento:');
-        const statsSeguimientoResponse = await fetch(`http://localhost:3001/api/seguimiento-academico/estadisticas/${estudianteId}?anio=${anio}`, {
+        const statsSeguimientoResponse = await fetch(`${baseURL}/api/seguimiento-academico/estadisticas/${estudianteId}?anio=${anio}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -51,7 +52,7 @@ async function testAcademicoEndpoints() {
         
         // 3. Probar estadísticas de asistencia
         console.log('\n3️⃣ Estadísticas de Asistencia:');
-        const statsAsistenciaResponse = await fetch(`http://localhost:3001/api/asistencia/estadisticas/${estudianteId}?anio=${anio}`, {
+        const statsAsistenciaResponse = await fetch(`${baseURL}/api/asistencia/estadisticas/${estudianteId}?anio=${anio}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
