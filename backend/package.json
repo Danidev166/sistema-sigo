@@ -6,7 +6,8 @@
   "type": "commonjs",
   "scripts": {
     "seed": "cross-env NODE_ENV=production node scripts/seed.js",
-    "dev": "nodemon index.js",
+    "dev": "node start-dev.js",
+    "dev:local": "nodemon index.js",
     "dev:prod": "cross-env NODE_ENV=production nodemon index.js",
     "start": "node index.js",
     "start:prod": "cross-env NODE_ENV=production node index.js",

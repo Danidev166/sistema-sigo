@@ -508,3 +508,22 @@
 [2025-10-12 19:35:44] WARN: 🚫 Origen no autorizado
 [2025-10-12 19:35:47] WARN: 🚫 Origen no autorizado
 [2025-10-12 19:39:45] WARN: 🚫 Origen no autorizado
+[2025-10-12 19:49:01] INFO: 🧹 Rate limits limpiados: 1 entradas expiradas
+[2025-10-12 21:02:33] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://localhost:5175
+[2025-10-12 21:02:33] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://localhost:5175
+[2025-10-12 21:02:34] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://localhost:5175
+[2025-10-12 21:07:26] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://localhost:5175
+[2025-10-12 21:07:27] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://localhost:5175
+[2025-10-12 21:07:27] ERROR: ❌ Error en el servidor: CORS bloqueado para origen: http://localhost:5175
+[2025-10-12 21:08:04] WARN: 🚫 Origen no autorizado
+[2025-10-12 21:08:53] INFO: 🔍 AUDIT
+[2025-10-12 21:08:53] INFO: 🔍 AUDIT
+[2025-10-12 21:09:01] INFO: 📥 Login recibido:
+[2025-10-12 21:09:01] INFO:  Login exitoso
+[2025-10-12 21:09:01] INFO: 🔍 AUDIT
+[2025-10-12 21:09:01] INFO: 🔍 AUDIT
+[2025-10-12 21:09:01] INFO: 🔍 AUDIT
+[2025-10-12 21:09:01] INFO: 🔍 AUDIT
+[2025-10-12 21:09:01] INFO: 🔍 AUDIT
+[2025-10-12 21:09:01] INFO: 🔍 AUDIT
+[2025-10-12 21:09:25] WARN: 🚫 Origen no autorizado

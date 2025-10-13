@@ -50,7 +50,7 @@ const SeguimientoAcademicoController = {
       const { id } = req.params;
       const { anio } = req.query;
       const datos = await SeguimientoAcademicoModel.obtenerPorEstudiante(id, anio);
-      res.json(datos);
+      res.json(datos); // Mantener formato directo para compatibilidad con frontend
     } catch (err) {
       logger.error(
         " Error al obtener seguimientos académicos del estudiante: " + err.message
