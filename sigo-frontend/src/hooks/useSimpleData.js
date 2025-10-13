@@ -29,9 +29,9 @@ const useSimpleData = (idEstudiante, anio) => {
       ]);
 
       const newData = {
-        historial: h.data || [],
-        seguimiento: s.data || [],
-        asistencias: a.data || [],
+        historial: h.data || h || [],
+        seguimiento: s.data || s || [],
+        asistencias: a.data || a || [],
         estadisticasSeguimiento: statsSeguimiento.data,
         estadisticasAsistencia: statsAsistencia.data
       };
