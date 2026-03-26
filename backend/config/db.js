@@ -1,8 +1,10 @@
 // backend/config/db.js — PostgreSQL con interfaz tipo mssql
 const { Pool } = require("pg");
 
-// CARGAR DOTENV PRIMERO - FORZAR .env LOCAL
-require('dotenv').config({ path: '.env' });
+// Cargar .env sólo en local. En Render/Azure las env vars ya vienen del entorno.
+if (!process.env.RENDER && !process.env.WEBSITE_SITE_NAME) {
+  require("dotenv").config({ path: ".env" });
+}
 
 /* ========================= Helpers ========================= */
 function bool(v, def = false) {
@@ -22,10 +24,16 @@ function buildPgConfig() {
 
   // Opción 1: DATABASE_URL (recomendada)
   if (process.env.DATABASE_URL) {
+    const shouldUseSSL =
+      bool(process.env.PG_SSL, false) ||
+      // Render Postgres normalmente requiere SSL
+      /render\.com/i.test(process.env.DATABASE_URL) ||
+      !!process.env.RENDER;
+
     return {
       connectionString: process.env.DATABASE_URL,
-      // Usa SSL sólo si PG_SSL=true (o si tu proveedor lo requiere)
-      ssl: bool(process.env.PG_SSL, false) ? { rejectUnauthorized: false } : false,
+      // SSL: en Render suele ser requerido; mantenemos rejectUnauthorized=false para managed certs
+      ssl: shouldUseSSL ? { rejectUnauthorized: false } : false,
       max: parseInt(process.env.PG_POOL_MAX || "10", 10),
       idleTimeoutMillis: parseInt(process.env.PG_IDLE_TIMEOUT || "30000", 10),
     };
@@ -51,7 +59,10 @@ function buildPgConfig() {
     user,
     password,
     database,
-    ssl: bool(process.env.PG_SSL, false) ? { rejectUnauthorized: false } : false,
+    ssl:
+      bool(process.env.PG_SSL, false) || !!process.env.RENDER
+        ? { rejectUnauthorized: false }
+        : false,
     max: parseInt(process.env.PG_POOL_MAX || "10", 10),
     idleTimeoutMillis: parseInt(process.env.PG_IDLE_TIMEOUT || "30000", 10),
   };

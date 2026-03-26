@@ -1,32 +1,19 @@
-// src/lib/api.js (o donde tengas tu cliente HTTP)
 import axios from 'axios';
 
 /**
  * Resuelve la baseURL de la API:
  * - Si existe VITE_API_URL, la usa tal cual (puede ser '/api' o una URL completa).
- * - En producción, si no hay VITE_API_URL, usa '/api' (ideal con proxy de Static Web Apps).
+ * - En producción, fallback al backend de Render.
  * - En desarrollo, fallback al backend local.
  */
 const resolveBaseURL = () => {
-  // SOLUCIÓN DEFINITIVA - HARDCODEAR URL CORRECTA
-  console.log('🔍 DETECTANDO ENTORNO...');
-  console.log('🔍 window.location.hostname:', window.location.hostname);
-  console.log('🔍 import.meta.env.PROD:', import.meta.env.PROD);
-  console.log('🔍 import.meta.env.MODE:', import.meta.env.MODE);
-  
-  // FORZAR URL CORRECTA SIEMPRE EN PRODUCCIÓN
-  if (import.meta.env.PROD) {
-    console.log('🚀 PRODUCCIÓN FORZADA - URL: https://sistema-sigo.onrender.com/api');
-    return 'https://sistema-sigo.onrender.com/api';
-  }
-  
-  console.log('🚀 DESARROLLO - URL: http://localhost:3001/api');
+  const v = import.meta.env.VITE_API_URL && String(import.meta.env.VITE_API_URL).trim();
+  if (v) return v; // ej: 'https://tu-backend.onrender.com/api'
+  if (import.meta.env.PROD) return 'https://sistema-sigo.onrender.com/api';
   return 'http://localhost:3001/api';
 };
 
 const baseURL = resolveBaseURL();
-console.log('🚀 AXIOS CONFIGURADO - BaseURL:', baseURL);
-console.log('🚀 AXIOS CONFIGURADO - Timestamp:', new Date().toISOString());
 
 const api = axios.create({
   baseURL: baseURL,
@@ -50,17 +37,11 @@ export const clearAuthToken = () => {
 api.interceptors.request.use(
   (config) => {
     const token = getToken();
-    console.log('🔍 Axios interceptor - Token encontrado:', !!token);
-    console.log('🔍 Axios interceptor - URL:', config.url);
-    
     if (token) {
       config.headers = config.headers ?? {};
       if (!config.headers.Authorization) {
         config.headers.Authorization = `Bearer ${token}`;
-        console.log('🔍 Axios interceptor - Token agregado:', token.substring(0, 20) + '...');
       }
-    } else {
-      console.warn('⚠️ Axios interceptor - No hay token disponible');
     }
     return config;
   },
