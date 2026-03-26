@@ -24,18 +24,28 @@ function buildPgConfig() {
 
   // Opción 1: DATABASE_URL (recomendada)
   if (process.env.DATABASE_URL) {
+    let connectionString = process.env.DATABASE_URL;
     const shouldUseSSL =
       bool(process.env.PG_SSL, false) ||
       // Render Postgres normalmente requiere SSL
       /render\.com/i.test(process.env.DATABASE_URL) ||
       !!process.env.RENDER;
 
+    // En algunos entornos administrados (Render), explicitar sslmode evita cierres prematuros.
+    if (shouldUseSSL && !/sslmode=/i.test(connectionString)) {
+      connectionString += connectionString.includes("?")
+        ? "&sslmode=require"
+        : "?sslmode=require";
+    }
+
     return {
-      connectionString: process.env.DATABASE_URL,
+      connectionString,
       // SSL: en Render suele ser requerido; mantenemos rejectUnauthorized=false para managed certs
       ssl: shouldUseSSL ? { rejectUnauthorized: false } : false,
       max: parseInt(process.env.PG_POOL_MAX || "10", 10),
       idleTimeoutMillis: parseInt(process.env.PG_IDLE_TIMEOUT || "30000", 10),
+      keepAlive: true,
+      connectionTimeoutMillis: parseInt(process.env.PG_CONNECTION_TIMEOUT || "15000", 10),
     };
   }
 
@@ -65,6 +75,8 @@ function buildPgConfig() {
         : false,
     max: parseInt(process.env.PG_POOL_MAX || "10", 10),
     idleTimeoutMillis: parseInt(process.env.PG_IDLE_TIMEOUT || "30000", 10),
+    keepAlive: true,
+    connectionTimeoutMillis: parseInt(process.env.PG_CONNECTION_TIMEOUT || "15000", 10),
   };
 }
 
