@@ -6,14 +6,15 @@
 // - En Azure App Service usaremos App Settings (no .env)
 // - En local, sí cargamos .env/.env.production según NODE_ENV
 const isAzure = !!process.env.WEBSITE_SITE_NAME;
-const nodeEnv = process.env.NODE_ENV || (isAzure ? "production" : "development");
+const isRender = !!process.env.RENDER;
+const nodeEnv = process.env.NODE_ENV || (isAzure || isRender ? "production" : "development");
 
-if (!isAzure) {
+if (!isAzure && !isRender) {
   const envFile = nodeEnv === "production" ? ".env.production" : ".env";
   require("dotenv").config({ path: envFile });
   console.log(`🔧 Cargando configuración desde ${envFile}`);
 } else {
-  console.log("🔧 Usando App Settings de Azure (sin .env local)");
+  console.log("🔧 Usando variables del entorno de despliegue (sin .env local)");
 }
 
 const express = require("express");
