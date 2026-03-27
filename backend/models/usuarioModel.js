@@ -1,15 +1,25 @@
 // backend/models/usuarioModel.js
 const { Pool } = require('pg');
 
-// Configuración de PostgreSQL para Render
-const renderConfig = {
-  user: 'sigo_user',
-  host: 'dpg-d391d4nfte5s73cff6p0-a.oregon-postgres.render.com',
-  database: 'sigo_pro',
-  password: 'qgEyTD5LiGu22qdSOoROC1UFqjGZaxIv',
-  port: 5432,
-  ssl: { rejectUnauthorized: false },
+const bool = (v, def = false) => {
+  if (v === undefined) return def;
+  return ['1', 'true', 'yes', 'on'].includes(String(v).toLowerCase());
 };
+
+// Configuración de PostgreSQL desde variables de entorno (Render/local)
+const renderConfig = process.env.DATABASE_URL
+  ? {
+      connectionString: process.env.DATABASE_URL,
+      ssl: bool(process.env.PG_SSL, false) ? { rejectUnauthorized: false } : false,
+    }
+  : {
+      user: process.env.PGUSER || 'postgres',
+      host: process.env.PGHOST || 'localhost',
+      database: process.env.PGDATABASE || 'postgres',
+      password: process.env.PGPASSWORD || '',
+      port: parseInt(process.env.PGPORT || '5432', 10),
+      ssl: bool(process.env.PG_SSL, false) ? { rejectUnauthorized: false } : false,
+    };
 
 const pool = new Pool(renderConfig);
 
