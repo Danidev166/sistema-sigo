@@ -27,9 +27,7 @@ function buildPgConfig() {
     let connectionString = process.env.DATABASE_URL;
     const shouldUseSSL =
       bool(process.env.PG_SSL, false) ||
-      // Render Postgres normalmente requiere SSL
-      /render\.com/i.test(process.env.DATABASE_URL) ||
-      !!process.env.RENDER;
+      /sslmode=require/i.test(process.env.DATABASE_URL || "");
 
     // En algunos entornos administrados (Render), explicitar sslmode evita cierres prematuros.
     if (shouldUseSSL && !/sslmode=/i.test(connectionString)) {
@@ -70,7 +68,7 @@ function buildPgConfig() {
     password,
     database,
     ssl:
-      bool(process.env.PG_SSL, false) || !!process.env.RENDER
+      bool(process.env.PG_SSL, false)
         ? { rejectUnauthorized: false }
         : false,
     max: parseInt(process.env.PG_POOL_MAX || "10", 10),
