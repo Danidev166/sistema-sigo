@@ -304,3 +304,57 @@ CREATE INDEX IF NOT EXISTS idx_entrevistas_estudiante ON entrevistas(id_estudian
 CREATE INDEX IF NOT EXISTS idx_seguimiento_estudiante ON seguimiento(id_estudiante);
 CREATE INDEX IF NOT EXISTS idx_notificaciones_usuario ON notificaciones(id_usuario);
 CREATE INDEX IF NOT EXISTS idx_logs_fecha ON logs_actividad(fecha_accion);
+
+-- 6. FUNCIONES SQL PARA DASHBOARD Y REPORTES
+CREATE OR REPLACE FUNCTION get_dashboard_final()
+RETURNS JSON AS $$
+DECLARE
+    result JSON;
+BEGIN
+    SELECT json_build_object(
+        'stats', json_build_object(
+            'total_estudiantes', (SELECT COUNT(*) FROM estudiantes),
+            'estudiantes_activos', (SELECT COUNT(*) FROM estudiantes WHERE estado = 'Activo'),
+            'entrevistas_mes', (SELECT COUNT(*) FROM entrevistas WHERE fecha_entrevista >= date_trunc('month', CURRENT_DATE)),
+            'intervenciones_activas', (SELECT COUNT(*) FROM intervenciones WHERE estado IN ('Programada', 'En Proceso')),
+            'alertas_pendientes', (SELECT COUNT(*) FROM alertas WHERE estado = 'Nueva'),
+            'asistencia_promedio', (
+                SELECT COALESCE(ROUND(AVG(
+                    (SELECT (COUNT(CASE WHEN tipo = 'Presente' THEN 1 END)::float / NULLIF(COUNT(*), 0)) * 100
+                     FROM asistencia a2 WHERE a2.id_estudiante = e.id)
+                )::numeric, 1), 0)
+                FROM estudiantes e
+            )
+        ),
+        'recent_activity', (
+            SELECT json_agg(act) FROM (
+                SELECT
+                    'entrevista' as tipo,
+                    e.motivo as descripcion,
+                    e.fecha_entrevista as fecha,
+                    est.nombre || ' ' || est.apellido as estudiante
+                FROM entrevistas e
+                JOIN estudiantes est ON e.id_estudiante = est.id
+                ORDER BY e.fecha_entrevista DESC
+                LIMIT 5
+            ) act
+        ),
+        'charts', json_build_object(
+            'asistencia_mensual', (
+                SELECT json_agg(am) FROM (
+                    SELECT
+                        TO_CHAR(fecha, 'Mon') as mes,
+                        COUNT(CASE WHEN tipo = 'Presente' THEN 1 END) as presentes,
+                        COUNT(*) as total
+                    FROM asistencia
+                    WHERE fecha >= CURRENT_DATE - INTERVAL '6 months'
+                    GROUP BY date_trunc('month', fecha), TO_CHAR(fecha, 'Mon')
+                    ORDER BY date_trunc('month', fecha)
+                ) am
+            )
+        )
+    ) INTO result;
+
+    RETURN result;
+END;
+$$ LANGUAGE plpgsql;
