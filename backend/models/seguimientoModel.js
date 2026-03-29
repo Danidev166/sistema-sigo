@@ -1,20 +1,9 @@
 // backend/models/seguimientoModel.js
-const { Pool } = require('pg');
-
-// Configuración de PostgreSQL para Render
-const renderConfig = {
-  user: 'sigo_user',
-  host: 'dpg-d391d4nfte5s73cff6p0-a.oregon-postgres.render.com',
-  database: 'sigo_pro',
-  password: 'qgEyTD5LiGu22qdSOoROC1UFqjGZaxIv',
-  port: 5432,
-  ssl: { rejectUnauthorized: false },
-};
-
-const pool = new Pool(renderConfig);
+const { getPool } = require('../config/db');
 
 const SeguimientoModel = {
   async crear(data) {
+    const pool = await getPool();
     const query = `
       INSERT INTO seguimiento
         (id_estudiante, fecha_seguimiento, tipo_seguimiento, observaciones, recomendaciones, responsable_id, estado, proxima_fecha)
@@ -33,11 +22,12 @@ const SeguimientoModel = {
       data.proxima_fecha || null
     ];
     
-    const result = await pool.query(query, values);
+    const result = await pool.raw.query(query, values);
     return result.rows[0];
   },
 
   async listar() {
+    const pool = await getPool();
     const query = `
       SELECT s.*, e.nombre, e.apellido, e.rut
       FROM seguimiento s
@@ -45,7 +35,7 @@ const SeguimientoModel = {
       ORDER BY s.fecha_seguimiento DESC, s.id DESC
     `;
     
-    const result = await pool.query(query);
+    const result = await pool.raw.query(query);
     return result.rows;
   },
 
@@ -54,6 +44,7 @@ const SeguimientoModel = {
   },
 
   async obtenerPorId(id) {
+    const pool = await getPool();
     const query = `
       SELECT s.*, e.nombre, e.apellido, e.rut
       FROM seguimiento s
@@ -61,11 +52,12 @@ const SeguimientoModel = {
       WHERE s.id = $1
     `;
     
-    const result = await pool.query(query, [id]);
+    const result = await pool.raw.query(query, [id]);
     return result.rows[0] || null;
   },
 
   async obtenerPorEstudiante(idEstudiante) {
+    const pool = await getPool();
     const query = `
       SELECT s.*, e.nombre, e.apellido, e.rut
       FROM seguimiento s
@@ -74,11 +66,12 @@ const SeguimientoModel = {
       ORDER BY s.fecha_seguimiento DESC, s.id DESC
     `;
     
-    const result = await pool.query(query, [idEstudiante]);
+    const result = await pool.raw.query(query, [idEstudiante]);
     return result.rows;
   },
 
   async actualizar(id, data) {
+    const pool = await getPool();
     const query = `
       UPDATE seguimiento
       SET id_estudiante = $1,
@@ -105,13 +98,14 @@ const SeguimientoModel = {
       id
     ];
     
-    const result = await pool.query(query, values);
+    const result = await pool.raw.query(query, values);
     return result.rows[0];
   },
 
   async eliminar(id) {
+    const pool = await getPool();
     const query = `DELETE FROM seguimiento WHERE id = $1 RETURNING *`;
-    const result = await pool.query(query, [id]);
+    const result = await pool.raw.query(query, [id]);
     return result.rows[0];
   }
 };

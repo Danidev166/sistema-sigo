@@ -1,20 +1,9 @@
 // backend/models/intervencionesModel.js
-const { Pool } = require('pg');
-
-// Configuración de PostgreSQL para Render
-const renderConfig = {
-  user: 'sigo_user',
-  host: 'dpg-d391d4nfte5s73cff6p0-a.oregon-postgres.render.com',
-  database: 'sigo_pro',
-  password: 'qgEyTD5LiGu22qdSOoROC1UFqjGZaxIv',
-  port: 5432,
-  ssl: { rejectUnauthorized: false },
-};
-
-const pool = new Pool(renderConfig);
+const { getPool } = require('../config/db');
 
 const IntervencionModel = {
   async crear(data) {
+    const pool = await getPool();
     const query = `
       INSERT INTO intervenciones
         (id_estudiante, fecha_intervencion, tipo_intervencion, descripcion, objetivo, responsable_id, estado, resultado, fecha_finalizacion)
@@ -34,11 +23,12 @@ const IntervencionModel = {
       data.fecha_finalizacion || null
     ];
     
-    const result = await pool.query(query, values);
+    const result = await pool.raw.query(query, values);
     return result.rows[0];
   },
 
   async obtenerTodos() {
+    const pool = await getPool();
     const query = `
       SELECT i.*, e.nombre, e.apellido, e.rut
       FROM intervenciones i
@@ -46,11 +36,12 @@ const IntervencionModel = {
       ORDER BY i.fecha_intervencion DESC, i.id DESC
     `;
     
-    const result = await pool.query(query);
+    const result = await pool.raw.query(query);
     return result.rows;
   },
 
   async obtenerPorId(id) {
+    const pool = await getPool();
     const query = `
       SELECT i.*, e.nombre, e.apellido, e.rut
       FROM intervenciones i
@@ -58,11 +49,12 @@ const IntervencionModel = {
       WHERE i.id = $1
     `;
     
-    const result = await pool.query(query, [id]);
+    const result = await pool.raw.query(query, [id]);
     return result.rows[0] || null;
   },
 
   async obtenerPorEstudiante(idEstudiante) {
+    const pool = await getPool();
     const query = `
       SELECT i.*, e.nombre, e.apellido, e.rut
       FROM intervenciones i
@@ -71,11 +63,12 @@ const IntervencionModel = {
       ORDER BY i.fecha_intervencion DESC, i.id DESC
     `;
     
-    const result = await pool.query(query, [idEstudiante]);
+    const result = await pool.raw.query(query, [idEstudiante]);
     return result.rows;
   },
 
   async actualizar(id, data) {
+    const pool = await getPool();
     const query = `
       UPDATE intervenciones
       SET fecha_intervencion = $1,
@@ -102,17 +95,19 @@ const IntervencionModel = {
       id
     ];
     
-    const result = await pool.query(query, values);
+    const result = await pool.raw.query(query, values);
     return result.rows[0];
   },
 
   async eliminar(id) {
+    const pool = await getPool();
     const query = `DELETE FROM intervenciones WHERE id = $1 RETURNING *`;
-    const result = await pool.query(query, [id]);
+    const result = await pool.raw.query(query, [id]);
     return result.rows[0];
   },
 
   async obtenerEstadisticas() {
+    const pool = await getPool();
     const query = `
       SELECT 
         COUNT(*) as total_intervenciones,
@@ -122,7 +117,7 @@ const IntervencionModel = {
       FROM intervenciones
     `;
     
-    const result = await pool.query(query);
+    const result = await pool.raw.query(query);
     return result.rows[0];
   }
 };

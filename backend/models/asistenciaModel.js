@@ -1,5 +1,5 @@
 // backend/models/asistenciaModel.js
-const { sql, getPool } = require('../config/db');
+const { getPool } = require('../config/db');
 
 function toPgDate(input) {
   if (!input) return null;

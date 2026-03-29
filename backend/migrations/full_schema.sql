@@ -305,7 +305,16 @@ CREATE INDEX IF NOT EXISTS idx_seguimiento_estudiante ON seguimiento(id_estudian
 CREATE INDEX IF NOT EXISTS idx_notificaciones_usuario ON notificaciones(id_usuario);
 CREATE INDEX IF NOT EXISTS idx_logs_fecha ON logs_actividad(fecha_accion);
 
--- 6. FUNCIONES SQL PARA DASHBOARD Y REPORTES
+-- 6. DATOS INICIALES DE CONFIGURACIÓN
+INSERT INTO configuracion (tipo, clave, valor, descripcion) VALUES
+('institucional', 'nombre_institucion', 'SIGO PRO', 'Nombre del sistema'),
+('institucional', 'entidad', 'Liceo Politécnico Bicentenario Caupolicán', 'Nombre de la entidad'),
+('personalizacion', 'tema_color', 'azul', 'Color del tema'),
+('personalizacion', 'logo_url', '/assets/logo.png', 'Logo del sistema'),
+('politicas', 'retencion_datos', '5', 'Años de retención')
+ON CONFLICT (tipo, clave) DO NOTHING;
+
+-- 7. FUNCIONES SQL PARA DASHBOARD Y REPORTES
 CREATE OR REPLACE FUNCTION get_dashboard_final()
 RETURNS JSON AS $$
 DECLARE
@@ -340,7 +349,7 @@ BEGIN
             ) act
         ),
         'charts', json_build_object(
-            'asistencia_mensual', (
+            'asistencia_mensual', COALESCE((
                 SELECT json_agg(am) FROM (
                     SELECT
                         TO_CHAR(fecha, 'Mon') as mes,
@@ -351,7 +360,7 @@ BEGIN
                     GROUP BY date_trunc('month', fecha), TO_CHAR(fecha, 'Mon')
                     ORDER BY date_trunc('month', fecha)
                 ) am
-            )
+            ), '[]'::json)
         )
     ) INTO result;
 

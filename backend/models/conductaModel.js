@@ -1,20 +1,9 @@
 // backend/models/conductaModel.js
-const { Pool } = require('pg');
-
-// Configuración de PostgreSQL para Render
-const renderConfig = {
-  user: 'sigo_user',
-  host: 'dpg-d391d4nfte5s73cff6p0-a.oregon-postgres.render.com',
-  database: 'sigo_pro',
-  password: 'qgEyTD5LiGu22qdSOoROC1UFqjGZaxIv',
-  port: 5432,
-  ssl: { rejectUnauthorized: false },
-};
-
-const pool = new Pool(renderConfig);
+const { getPool } = require('../config/db');
 
 const ConductaModel = {
   async crear(data) {
+    const pool = await getPool();
     const query = `
       INSERT INTO conducta
         (id_estudiante, fecha_incidente, tipo_conducta, descripcion, gravedad, medidas_tomadas, responsable_id, testigos, seguimiento)
@@ -34,11 +23,12 @@ const ConductaModel = {
       data.seguimiento || ''
     ];
     
-    const result = await pool.query(query, values);
+    const result = await pool.raw.query(query, values);
     return result.rows[0];
   },
 
   async obtenerTodos() {
+    const pool = await getPool();
     const query = `
       SELECT c.*, e.nombre, e.apellido, e.rut
       FROM conducta c
@@ -46,11 +36,12 @@ const ConductaModel = {
       ORDER BY c.fecha_incidente DESC, c.id DESC
     `;
     
-    const result = await pool.query(query);
+    const result = await pool.raw.query(query);
     return result.rows;
   },
 
   async obtenerPorId(id) {
+    const pool = await getPool();
     const query = `
       SELECT c.*, e.nombre, e.apellido, e.rut
       FROM conducta c
@@ -58,11 +49,12 @@ const ConductaModel = {
       WHERE c.id = $1
     `;
     
-    const result = await pool.query(query, [id]);
+    const result = await pool.raw.query(query, [id]);
     return result.rows[0] || null;
   },
 
   async obtenerPorEstudiante(id_estudiante) {
+    const pool = await getPool();
     const query = `
       SELECT c.*, e.nombre, e.apellido, e.rut
       FROM conducta c
@@ -71,11 +63,12 @@ const ConductaModel = {
       ORDER BY c.fecha_incidente DESC, c.id DESC
     `;
     
-    const result = await pool.query(query, [id_estudiante]);
+    const result = await pool.raw.query(query, [id_estudiante]);
     return result.rows;
   },
 
   async actualizar(id, data) {
+    const pool = await getPool();
     const query = `
       UPDATE conducta
       SET id_estudiante = $1,
@@ -104,13 +97,14 @@ const ConductaModel = {
       id
     ];
     
-    const result = await pool.query(query, values);
+    const result = await pool.raw.query(query, values);
     return result.rows[0];
   },
 
   async eliminar(id) {
+    const pool = await getPool();
     const query = `DELETE FROM conducta WHERE id = $1 RETURNING *`;
-    const result = await pool.query(query, [id]);
+    const result = await pool.raw.query(query, [id]);
     return result.rows[0];
   }
 };

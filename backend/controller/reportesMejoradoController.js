@@ -10,13 +10,34 @@ class ReportesMejoradoController {
       const pool = await getPool();
       // Usar la función de la base de datos que devuelve el formato correcto
       const result = await pool.request().query('SELECT get_dashboard_final() as data');
-      const dashboardData = result.recordset[0].data;
+
+      if (!result.recordset || result.recordset.length === 0 || !result.recordset[0].data) {
+        // Fallback si la función devuelve nulo o no existe
+        return res.json({
+          stats: {
+            total_estudiantes: 0,
+            estudiantes_activos: 0,
+            entrevistas_mes: 0,
+            intervenciones_activas: 0,
+            alertas_pendientes: 0,
+            asistencia_promedio: 0
+          },
+          recent_activity: [],
+          charts: { asistencia_mensual: [] }
+        });
+      }
       
-      res.json(dashboardData);
+      res.json(result.recordset[0].data);
       
     } catch (error) {
       logger.error(" Error en dashboard:", error);
-      next(error);
+      // Enviar respuesta amigable en lugar de 500 si es posible
+      res.status(200).json({
+        stats: { total_estudiantes: 0, estudiantes_activos: 0, entrevistas_mes: 0, intervenciones_activas: 0, alertas_pendientes: 0, asistencia_promedio: 0 },
+        recent_activity: [],
+        charts: { asistencia_mensual: [] },
+        error: "Dashboard en mantenimiento (ejecute la restauración integral)"
+      });
     }
   }
   
@@ -105,10 +126,9 @@ class ReportesMejoradoController {
           COUNT(DISTINCT i.id) as intervenciones_activas,
           COALESCE(
             ROUND(AVG(
-              (SELECT ROUND(
-                ((COUNT(CASE WHEN a.tipo = 'Presente' THEN 1 END)::float / 
-                 NULLIF(COUNT(*), 0)) * 100)::numeric, 2
-              ) FROM asistencia a 
+              (SELECT (COUNT(CASE WHEN a.tipo = 'Presente' THEN 1 END)::float /
+                 NULLIF(COUNT(*), 0)) * 100
+              FROM asistencia a
               WHERE a.id_estudiante = e.id 
               AND EXTRACT(YEAR FROM a.fecha) = EXTRACT(YEAR FROM CURRENT_DATE)
               )
