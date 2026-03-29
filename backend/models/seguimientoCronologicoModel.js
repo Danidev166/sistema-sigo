@@ -1,20 +1,9 @@
 // backend/models/seguimientoCronologicoModel.js
-const { Pool } = require('pg');
-
-// Configuración de PostgreSQL para Render
-const renderConfig = {
-  user: 'sigo_user',
-  host: 'dpg-d391d4nfte5s73cff6p0-a.oregon-postgres.render.com',
-  database: 'sigo_pro',
-  password: 'qgEyTD5LiGu22qdSOoROC1UFqjGZaxIv',
-  port: 5432,
-  ssl: { rejectUnauthorized: false },
-};
-
-const pool = new Pool(renderConfig);
+const { getPool } = require('../config/db');
 
 class SeguimientoCronologicoModel {
   static async crear(data) {
+    const pool = await getPool();
     const query = `
       INSERT INTO seguimiento_cronologico
         (id_estudiante, fecha_evento, tipo_evento, descripcion, responsable_id, observaciones)
@@ -31,11 +20,12 @@ class SeguimientoCronologicoModel {
       data.observaciones || ''
     ];
     
-    const result = await pool.query(query, values);
+    const result = await pool.raw.query(query, values);
     return result.rows[0];
   }
 
   static async obtenerTodos() {
+    const pool = await getPool();
     const query = `
       SELECT sc.*, e.nombre, e.apellido, e.rut
       FROM seguimiento_cronologico sc
@@ -43,11 +33,12 @@ class SeguimientoCronologicoModel {
       ORDER BY sc.fecha_evento DESC, sc.id DESC
     `;
     
-    const result = await pool.query(query);
+    const result = await pool.raw.query(query);
     return result.rows;
   }
 
   static async obtenerPorId(id) {
+    const pool = await getPool();
     const query = `
       SELECT sc.*, e.nombre, e.apellido, e.rut
       FROM seguimiento_cronologico sc
@@ -55,11 +46,12 @@ class SeguimientoCronologicoModel {
       WHERE sc.id = $1
     `;
     
-    const result = await pool.query(query, [id]);
+    const result = await pool.raw.query(query, [id]);
     return result.rows[0] || null;
   }
 
   static async obtenerPorEstudiante(idEstudiante, filtros = {}) {
+    const pool = await getPool();
     let query = `
       SELECT sc.*, e.nombre, e.apellido, e.rut
       FROM seguimiento_cronologico sc
@@ -88,18 +80,19 @@ class SeguimientoCronologicoModel {
       paramIndex++;
     }
 
-    query += ` ORDER BY sc.fecha DESC, sc.id DESC`;
+    query += ` ORDER BY sc.fecha_evento DESC, sc.id DESC`;
 
     if (filtros.limite) {
       query += ` LIMIT $${paramIndex}`;
       params.push(filtros.limite);
     }
 
-    const result = await pool.query(query, params);
+    const result = await pool.raw.query(query, params);
     return result.rows;
   }
 
   static async actualizar(id, data) {
+    const pool = await getPool();
     const query = `
       UPDATE seguimiento_cronologico
       SET id_estudiante = $1,
@@ -122,17 +115,19 @@ class SeguimientoCronologicoModel {
       id
     ];
     
-    const result = await pool.query(query, values);
+    const result = await pool.raw.query(query, values);
     return result.rows[0];
   }
 
   static async eliminar(id) {
+    const pool = await getPool();
     const query = `DELETE FROM seguimiento_cronologico WHERE id = $1 RETURNING *`;
-    const result = await pool.query(query, [id]);
+    const result = await pool.raw.query(query, [id]);
     return result.rows[0];
   }
 
   static async obtenerEstadisticas() {
+    const pool = await getPool();
     const query = `
       SELECT 
         COUNT(*) as total_registros,
@@ -141,7 +136,7 @@ class SeguimientoCronologicoModel {
       FROM seguimiento_cronologico
     `;
     
-    const result = await pool.query(query);
+    const result = await pool.raw.query(query);
     return result.rows[0];
   }
 }

@@ -1,5 +1,5 @@
 // backend/models/agendaModel.js
-const { sql, getPool } = require('../config/db');
+const { getPool } = require('../config/db');
 
 // normaliza "HH:mm" -> "HH:mm:ss"
 function normalizeTimeStr(v) {
@@ -21,7 +21,6 @@ class AgendaModel {
     try {
       const pool = await getPool();
       
-      // Consulta para PostgreSQL con LEFT JOIN para obtener datos de estudiantes
       const query = `
         SELECT 
           a.*,
@@ -39,14 +38,9 @@ class AgendaModel {
       `;
       
       const result = await pool.raw.query(query, []);
-      
-      console.log('📅 Agenda obtenida:', result.rows.length, 'registros');
-      console.log('📅 Primer registro:', result.rows[0]);
-      
       return result.rows;
     } catch (error) {
       console.error('❌ Error en obtenerTodos agenda:', error);
-      console.error('❌ Stack trace:', error.stack);
       throw error;
     }
   }

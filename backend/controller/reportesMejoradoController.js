@@ -1,33 +1,43 @@
 // backend/controller/reportesMejoradoController.js
-const { Pool } = require('pg');
+const { getPool } = require('../config/db');
 const logger = require("../utils/logger");
-
-// Configuración de PostgreSQL para Render
-const renderConfig = {
-  user: 'sigo_user',
-  host: 'dpg-d391d4nfte5s73cff6p0-a.oregon-postgres.render.com',
-  database: 'sigo_pro',
-  password: 'qgEyTD5LiGu22qdSOoROC1UFqjGZaxIv',
-  port: 5432,
-  ssl: { rejectUnauthorized: false },
-};
-
-const pool = new Pool(renderConfig);
 
 class ReportesMejoradoController {
   
   //  Dashboard principal
   static async dashboard(req, res, next) {
     try {
+      const pool = await getPool();
       // Usar la función de la base de datos que devuelve el formato correcto
-      const result = await pool.query('SELECT get_dashboard_final()');
-      const dashboardData = result.rows[0].get_dashboard_final;
+      const result = await pool.request().query('SELECT get_dashboard_final() as data');
+
+      if (!result.recordset || result.recordset.length === 0 || !result.recordset[0].data) {
+        // Fallback si la función devuelve nulo o no existe
+        return res.json({
+          stats: {
+            total_estudiantes: 0,
+            estudiantes_activos: 0,
+            entrevistas_mes: 0,
+            intervenciones_activas: 0,
+            alertas_pendientes: 0,
+            asistencia_promedio: 0
+          },
+          recent_activity: [],
+          charts: { asistencia_mensual: [] }
+        });
+      }
       
-      res.json(dashboardData);
+      res.json(result.recordset[0].data);
       
     } catch (error) {
       logger.error(" Error en dashboard:", error);
-      next(error);
+      // Enviar respuesta amigable en lugar de 500 si es posible
+      res.status(200).json({
+        stats: { total_estudiantes: 0, estudiantes_activos: 0, entrevistas_mes: 0, intervenciones_activas: 0, alertas_pendientes: 0, asistencia_promedio: 0 },
+        recent_activity: [],
+        charts: { asistencia_mensual: [] },
+        error: "Dashboard en mantenimiento (ejecute la restauración integral)"
+      });
     }
   }
   
@@ -35,8 +45,10 @@ class ReportesMejoradoController {
   static async estudiantesPorCurso(req, res, next) {
     try {
       const { curso, estado, fecha_desde, fecha_hasta } = req.query;
+      const pool = await getPool();
+      const request = pool.request();
       
-      let sql = `
+      let query = `
         SELECT 
           e.id,
           e.nombre,
@@ -51,12 +63,10 @@ class ReportesMejoradoController {
           e.email,
           e.telefono,
           e.direccion,
-          '' as nombre_apoderado,
-          '' as telefono_apoderado,
-          '' as email_apoderado,
-          -- Datos académicos reales
+          e.nombre_apoderado,
+          e.telefono_apoderado,
+          e.email_apoderado,
           COALESCE(ha.promedio_general, 0) as promedio_general,
-          -- Calcular asistencia real desde la tabla asistencia
           COALESCE(
             (SELECT ROUND(
               ((COUNT(CASE WHEN a.tipo = 'Presente' THEN 1 END)::float / 
@@ -66,9 +76,6 @@ class ReportesMejoradoController {
             AND EXTRACT(YEAR FROM a.fecha) = EXTRACT(YEAR FROM CURRENT_DATE)
             ), 0
           ) as asistencia_porcentaje,
-          -- conducta_promedio no existe en la tabla, usar valor por defecto
-          0 as conducta_promedio,
-          -- Conteos reales
           (SELECT COUNT(*) FROM entrevistas ent WHERE ent.id_estudiante = e.id) as entrevistas_count,
           (SELECT COUNT(*) FROM intervenciones i WHERE i.id_estudiante = e.id) as intervenciones_count,
           (SELECT COUNT(*) FROM entrega_recursos er WHERE er.id_estudiante = e.id) as recursos_entregados
@@ -77,34 +84,27 @@ class ReportesMejoradoController {
         WHERE 1=1
       `;
       
-      const params = [];
-      let paramCount = 0;
-      
       if (curso) {
-        paramCount++;
-        sql += ` AND e.curso = $${paramCount}`;
-        params.push(curso);
+        query += ` AND e.curso = @curso`;
+        request.input('curso', curso);
       }
       if (estado) {
-        paramCount++;
-        sql += ` AND e.estado = $${paramCount}`;
-        params.push(estado);
+        query += ` AND e.estado = @estado`;
+        request.input('estado', estado);
       }
       if (fecha_desde) {
-        paramCount++;
-        sql += ` AND e.fecha_registro >= $${paramCount}`;
-        params.push(fecha_desde);
+        query += ` AND e.fecha_registro >= @fecha_desde`;
+        request.input('fecha_desde', fecha_desde);
       }
       if (fecha_hasta) {
-        paramCount++;
-        sql += ` AND e.fecha_registro <= $${paramCount}`;
-        params.push(fecha_hasta);
+        query += ` AND e.fecha_registro <= @fecha_hasta`;
+        request.input('fecha_hasta', fecha_hasta);
       }
       
-      sql += ` ORDER BY e.curso, asistencia_porcentaje DESC`;
+      query += ` ORDER BY e.curso, asistencia_porcentaje DESC`;
       
-      const result = await pool.query(sql, params);
-      res.json(result.rows);
+      const result = await request.query(query);
+      res.json(result.recordset);
       
     } catch (error) {
       logger.error(" Error en estudiantesPorCurso:", error);
@@ -115,6 +115,7 @@ class ReportesMejoradoController {
   //  Reporte Institucional
   static async reporteInstitucional(req, res, next) {
     try {
+      const pool = await getPool();
       const sql = `
         SELECT 
           e.curso,
@@ -125,10 +126,9 @@ class ReportesMejoradoController {
           COUNT(DISTINCT i.id) as intervenciones_activas,
           COALESCE(
             ROUND(AVG(
-              (SELECT ROUND(
-                ((COUNT(CASE WHEN a.tipo = 'Presente' THEN 1 END)::float / 
-                 NULLIF(COUNT(*), 0)) * 100)::numeric, 2
-              ) FROM asistencia a 
+              (SELECT (COUNT(CASE WHEN a.tipo = 'Presente' THEN 1 END)::float /
+                 NULLIF(COUNT(*), 0)) * 100
+              FROM asistencia a
               WHERE a.id_estudiante = e.id 
               AND EXTRACT(YEAR FROM a.fecha) = EXTRACT(YEAR FROM CURRENT_DATE)
               )
@@ -137,13 +137,12 @@ class ReportesMejoradoController {
         FROM estudiantes e
         LEFT JOIN entrevistas ent ON e.id = ent.id_estudiante
         LEFT JOIN intervenciones i ON e.id = i.id_estudiante
-        LEFT JOIN asistencia a ON e.id = a.id_estudiante
         GROUP BY e.curso
         ORDER BY e.curso
       `;
       
-      const result = await pool.query(sql);
-      res.json(result.rows);
+      const result = await pool.request().query(sql);
+      res.json(result.recordset);
       
     } catch (error) {
       logger.error(" Error en reporteInstitucional:", error);
@@ -155,8 +154,10 @@ class ReportesMejoradoController {
   static async reporteAsistencia(req, res, next) {
     try {
       const { curso, fecha_desde, fecha_hasta } = req.query;
+      const pool = await getPool();
+      const request = pool.request();
       
-      let sql = `
+      let query = `
         SELECT 
           e.id,
           e.nombre,
@@ -164,7 +165,6 @@ class ReportesMejoradoController {
           e.rut,
           e.curso,
           e.estado,
-          -- Calcular asistencia real desde la tabla asistencia
           COALESCE(
             (SELECT ROUND(
               ((COUNT(CASE WHEN a.tipo = 'Presente' THEN 1 END)::float / 
@@ -174,7 +174,6 @@ class ReportesMejoradoController {
             AND EXTRACT(YEAR FROM a.fecha) = EXTRACT(YEAR FROM CURRENT_DATE)
             ), 0
           ) as asistencia_porcentaje,
-          -- Calcular días presentes y ausentes reales
           COALESCE(
             (SELECT COUNT(CASE WHEN a.tipo = 'Presente' THEN 1 END)
              FROM asistencia a 
@@ -193,29 +192,23 @@ class ReportesMejoradoController {
         WHERE 1=1
       `;
       
-      const params = [];
-      let paramCount = 0;
-      
       if (curso) {
-        paramCount++;
-        sql += ` AND e.curso = $${paramCount}`;
-        params.push(curso);
+        query += ` AND e.curso = @curso`;
+        request.input('curso', curso);
       }
       if (fecha_desde) {
-        paramCount++;
-        sql += ` AND e.fecha_registro >= $${paramCount}`;
-        params.push(fecha_desde);
+        query += ` AND e.fecha_registro >= @fecha_desde`;
+        request.input('fecha_desde', fecha_desde);
       }
       if (fecha_hasta) {
-        paramCount++;
-        sql += ` AND e.fecha_registro <= $${paramCount}`;
-        params.push(fecha_hasta);
+        query += ` AND e.fecha_registro <= @fecha_hasta`;
+        request.input('fecha_hasta', fecha_hasta);
       }
       
-      sql += ` ORDER BY e.curso, asistencia_porcentaje DESC`;
+      query += ` ORDER BY e.curso, asistencia_porcentaje DESC`;
       
-      const result = await pool.query(sql, params);
-      res.json(result.rows);
+      const result = await request.query(query);
+      res.json(result.recordset);
       
     } catch (error) {
       logger.error(" Error en reporteAsistencia:", error);
@@ -226,6 +219,7 @@ class ReportesMejoradoController {
   //  Gráfico de Asistencia Mensual
   static async graficoAsistenciaMensual(req, res, next) {
     try {
+      const pool = await getPool();
       const sql = `
         SELECT 
           EXTRACT(MONTH FROM fecha) as mes,
@@ -240,8 +234,8 @@ class ReportesMejoradoController {
         ORDER BY mes
       `;
       
-      const result = await pool.query(sql);
-      res.json(result.rows);
+      const result = await pool.request().query(sql);
+      res.json(result.recordset);
       
     } catch (error) {
       logger.error(" Error en graficoAsistenciaMensual:", error);
@@ -252,6 +246,7 @@ class ReportesMejoradoController {
   //  Gráfico de Motivos de Entrevistas
   static async graficoMotivosEntrevistas(req, res, next) {
     try {
+      const pool = await getPool();
       const sql = `
         SELECT 
           motivo,
@@ -262,8 +257,8 @@ class ReportesMejoradoController {
         ORDER BY cantidad DESC
       `;
       
-      const result = await pool.query(sql);
-      res.json(result.rows);
+      const result = await pool.request().query(sql);
+      res.json(result.recordset);
       
     } catch (error) {
       logger.error(" Error en graficoMotivosEntrevistas:", error);

@@ -1,21 +1,10 @@
 // backend/models/movimientoModel.js
-const { Pool } = require('pg');
-
-// Configuración de PostgreSQL para Render
-const renderConfig = {
-  user: 'sigo_user',
-  host: 'dpg-d391d4nfte5s73cff6p0-a.oregon-postgres.render.com',
-  database: 'sigo_pro',
-  password: 'qgEyTD5LiGu22qdSOoROC1UFqjGZaxIv',
-  port: 5432,
-  ssl: { rejectUnauthorized: false },
-};
-
-const pool = new Pool(renderConfig);
+const { getPool } = require('../config/db');
 
 class MovimientoModel {
   static async registrar(data) {
-    const client = await pool.connect();
+    const pool = await getPool();
+    const client = await pool.raw.connect();
     
     try {
       await client.query('BEGIN');
@@ -68,6 +57,7 @@ class MovimientoModel {
   }
 
   static async obtenerTodos() {
+    const pool = await getPool();
     const query = `
       SELECT m.id, 
              m.fecha, 
@@ -89,11 +79,12 @@ class MovimientoModel {
       ORDER BY m.fecha DESC, m.id DESC
     `;
     
-    const result = await pool.query(query);
+    const result = await pool.raw.query(query);
     return result.rows;
   }
 
   static async obtenerPorId(id) {
+    const pool = await getPool();
     const query = `
       SELECT m.*, 
              r.nombre AS recurso,
@@ -106,12 +97,13 @@ class MovimientoModel {
       WHERE m.id = $1
     `;
     
-    const result = await pool.query(query, [id]);
+    const result = await pool.raw.query(query, [id]);
     return result.rows[0] || null;
   }
 
   static async actualizar(id, data) {
-    const client = await pool.connect();
+    const pool = await getPool();
+    const client = await pool.raw.connect();
     
     try {
       await client.query('BEGIN');
@@ -195,7 +187,8 @@ class MovimientoModel {
   }
 
   static async eliminar(id) {
-    const client = await pool.connect();
+    const pool = await getPool();
+    const client = await pool.raw.connect();
     
     try {
       await client.query('BEGIN');

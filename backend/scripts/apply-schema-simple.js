@@ -1,47 +1,55 @@
 const { Pool } = require('pg');
 const fs = require('fs');
+const path = require('path');
 
-// Configuración de PostgreSQL para Render
+// Configuración de PostgreSQL para Render - USANDO SIEMPRE DATABASE_URL PARA SEGURIDAD
+const connectionString = process.env.DATABASE_URL;
+
+if (!connectionString) {
+  console.error('❌ ERROR: La variable de entorno DATABASE_URL no está configurada.');
+  process.exit(1);
+}
+
 const renderConfig = {
-  user: 'sigo_user',
-  host: 'dpg-d391d4nfte5s73cff6p0-a.oregon-postgres.render.com',
-  database: 'sigo_pro',
-  password: 'qgEyTD5LiGu22qdSOoROC1UFqjGZaxIv',
-  port: 5432,
+  connectionString: connectionString,
   ssl: { rejectUnauthorized: false },
 };
 
-async function applySchemaSimple() {
+async function applyFullSchema() {
   let pool;
   
   try {
-    console.log('🚀 Aplicando esquema a la base de datos de Render...');
-    console.log('Host:', renderConfig.host);
-    console.log('Database:', renderConfig.database);
-    console.log('User:', renderConfig.user);
+    console.log('🚀 Iniciando aplicación del ESQUEMA MAESTRO COMPLETO a Render...');
     
     pool = new Pool(renderConfig);
     
     // Probar conexión
     await pool.query('SELECT NOW()');
-    console.log('✅ Conectado a PostgreSQL de Render');
+    console.log('✅ Conexión exitosa a PostgreSQL');
     
-    // Leer el archivo de esquema
-    const schemaSQL = fs.readFileSync('esquema_completo.sql', 'utf8');
-    console.log('📄 Esquema leído desde esquema_completo.sql');
+    // Leer el archivo de esquema completo
+    const schemaPath = path.join(__dirname, '../migrations/full_schema.sql');
+    const schemaSQL = fs.readFileSync(schemaPath, 'utf8');
+    console.log(`📄 Esquema maestro leído desde ${schemaPath}`);
     
-    // Ejecutar el SQL completo de una vez
-    console.log('📋 Ejecutando esquema completo...');
+    // Ejecutar el esquema completo en una sola transacción
+    console.log('📋 Ejecutando esquema maestro...');
     
+    await pool.query('BEGIN');
     try {
+      // Nota: El split por ; es simple pero efectivo para este esquema
+      // aunque pg permite enviar múltiples comandos si se habilita
       await pool.query(schemaSQL);
+      await pool.query('COMMIT');
       console.log('✅ Esquema ejecutado exitosamente');
     } catch (err) {
-      console.log('⚠️ Algunos comandos pueden haber fallado, continuando...');
-      console.log('Error:', err.message);
+      await pool.query('ROLLBACK');
+      console.log('⚠️  Error durante la ejecución del esquema, se hizo ROLLBACK.');
+      console.log('Detalles:', err.message);
+      throw err;
     }
     
-    // Verificar que las tablas se crearon
+    // Verificar que las tablas se crearon correctamente
     const tablesResult = await pool.query(`
       SELECT table_name 
       FROM information_schema.tables 
@@ -49,51 +57,16 @@ async function applySchemaSimple() {
       ORDER BY table_name
     `);
     
-    console.log(`📋 Tablas creadas en Render: ${tablesResult.rows.length}`);
-    tablesResult.rows.forEach(row => {
-      console.log(`  - ${row.table_name}`);
+    console.log('\n📊 RESUMEN DE TABLAS EN LA BASE DE DATOS:');
+    tablesResult.rows.forEach((row, index) => {
+      console.log(`${index + 1}. ${row.table_name}`);
     });
     
-    // Verificar específicamente la tabla usuarios
-    const usuariosExists = await pool.query(`
-      SELECT EXISTS (
-        SELECT FROM information_schema.tables 
-        WHERE table_schema = 'public' 
-        AND table_name = 'usuarios'
-      );
-    `);
-    
-    if (usuariosExists.rows[0].exists) {
-      console.log('✅ Tabla usuarios creada exitosamente');
-      
-      // Verificar estructura
-      const structureResult = await pool.query(`
-        SELECT column_name, data_type
-        FROM information_schema.columns 
-        WHERE table_name = 'usuarios' 
-        AND table_schema = 'public'
-        ORDER BY ordinal_position
-      `);
-      
-      console.log('📊 Estructura de la tabla usuarios:');
-      structureResult.rows.forEach(col => {
-        console.log(`  - ${col.column_name}: ${col.data_type}`);
-      });
-      
-      // Verificar si hay usuarios
-      const countResult = await pool.query('SELECT COUNT(*) as total FROM usuarios');
-      console.log(`👥 Total de usuarios: ${countResult.rows[0].total}`);
-      
-    } else {
-      console.log('❌ Error: Tabla usuarios no se creó');
-    }
-    
-    console.log('🎉 Proceso completado!');
+    console.log(`\n🎉 ¡SISTEMA RESTAURADO! Total de tablas: ${tablesResult.rows.length}`);
     
   } catch (error) {
-    console.error('❌ Error aplicando esquema:', error.message);
-    console.error('Stack trace:', error.stack);
-    throw error;
+    console.error('❌ Error crítico:', error.message);
+    process.exit(1);
   } finally {
     if (pool) {
       await pool.end();
@@ -104,16 +77,9 @@ async function applySchemaSimple() {
 
 // Ejecutar si se llama directamente
 if (require.main === module) {
-  applySchemaSimple()
-    .then(() => {
-      console.log('✅ Proceso completado');
-      process.exit(0);
-    })
-    .catch((error) => {
-      console.error('❌ Error:', error);
-      process.exit(1);
-    });
+  applyFullSchema()
+    .then(() => process.exit(0))
+    .catch(() => process.exit(1));
 }
 
-module.exports = { applySchemaSimple };
-
+module.exports = { applyFullSchema };

@@ -1,20 +1,9 @@
 // backend/models/seguimientoPsicosocialModel.js
-const { Pool } = require('pg');
-
-// Configuración de PostgreSQL para Render
-const renderConfig = {
-  user: 'sigo_user',
-  host: 'dpg-d391d4nfte5s73cff6p0-a.oregon-postgres.render.com',
-  database: 'sigo_pro',
-  password: 'qgEyTD5LiGu22qdSOoROC1UFqjGZaxIv',
-  port: 5432,
-  ssl: { rejectUnauthorized: false },
-};
-
-const pool = new Pool(renderConfig);
+const { getPool } = require('../config/db');
 
 const SeguimientoPsicosocialModel = {
   async crear(data) {
+    const pool = await getPool();
     const query = `
       INSERT INTO seguimiento_psicosocial
         (id_estudiante, fecha_seguimiento, tipo_seguimiento, observaciones, recomendaciones, profesional_id, estado, proxima_cita)
@@ -33,11 +22,12 @@ const SeguimientoPsicosocialModel = {
       data.proxima_cita || null
     ];
     
-    const result = await pool.query(query, values);
+    const result = await pool.raw.query(query, values);
     return result.rows[0];
   },
 
   async obtenerTodos() {
+    const pool = await getPool();
     const query = `
       SELECT s.*, s.tipo_seguimiento as motivo, e.nombre, e.apellido, e.rut
       FROM seguimiento_psicosocial s
@@ -45,11 +35,12 @@ const SeguimientoPsicosocialModel = {
       ORDER BY s.fecha_seguimiento DESC, s.id DESC
     `;
     
-    const result = await pool.query(query);
+    const result = await pool.raw.query(query);
     return result.rows;
   },
 
   async obtenerPorId(id) {
+    const pool = await getPool();
     const query = `
       SELECT s.*, s.tipo_seguimiento as motivo, e.nombre, e.apellido, e.rut
       FROM seguimiento_psicosocial s
@@ -57,11 +48,12 @@ const SeguimientoPsicosocialModel = {
       WHERE s.id = $1
     `;
     
-    const result = await pool.query(query, [id]);
-    return result.rows[0] || null;
+    const result = await pool.raw.query(query, [id]);
+    return result.recordset ? result.recordset[0] : (result.rows ? result.rows[0] : null);
   },
 
   async obtenerPorEstudiante(idEstudiante) {
+    const pool = await getPool();
     const query = `
       SELECT s.*, s.tipo_seguimiento as motivo, e.nombre, e.apellido, e.rut
       FROM seguimiento_psicosocial s
@@ -70,11 +62,12 @@ const SeguimientoPsicosocialModel = {
       ORDER BY s.fecha_seguimiento DESC, s.id DESC
     `;
     
-    const result = await pool.query(query, [idEstudiante]);
-    return result.rows;
+    const result = await pool.raw.query(query, [idEstudiante]);
+    return result.rows || result.recordset;
   },
 
   async actualizar(id, data) {
+    const pool = await getPool();
     const query = `
       UPDATE seguimiento_psicosocial
       SET fecha_seguimiento = $1,
@@ -99,17 +92,19 @@ const SeguimientoPsicosocialModel = {
       id
     ];
     
-    const result = await pool.query(query, values);
+    const result = await pool.raw.query(query, values);
     return result.rows[0];
   },
 
   async eliminar(id) {
+    const pool = await getPool();
     const query = `DELETE FROM seguimiento_psicosocial WHERE id = $1 RETURNING *`;
-    const result = await pool.query(query, [id]);
+    const result = await pool.raw.query(query, [id]);
     return result.rows[0];
   },
 
   async obtenerEstadisticas() {
+    const pool = await getPool();
     const query = `
       SELECT 
         COUNT(*) as total_seguimientos,
@@ -119,7 +114,7 @@ const SeguimientoPsicosocialModel = {
       FROM seguimiento_psicosocial
     `;
     
-    const result = await pool.query(query);
+    const result = await pool.raw.query(query);
     return result.rows[0];
   }
 };
