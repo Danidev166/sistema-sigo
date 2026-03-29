@@ -2,11 +2,11 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 const {
-  buscarPorEmail,
-  guardarResetToken,
+  obtenerUsuarioPorEmail,
+  actualizarTokenReset,
   buscarPorResetToken,
   actualizarPassword
-} = require("../models/authModel");
+} = require("../models/usuarioModel");
 const logger = require("../utils/logger");
 const { enviarCodigoRecuperacion } = require("../utils/emailService");
 
@@ -27,7 +27,7 @@ class AuthController {
         return res.status(400).json({ error: " Email y contraseña son obligatorios" });
       }
 
-      const usuario = await buscarPorEmail(email);
+      const usuario = await obtenerUsuarioPorEmail(email);
       if (!usuario) return res.status(401).json({ error: " Usuario no encontrado" });
 
       // En PG, 'estado' es 'Activo'/'Inactivo'
@@ -73,12 +73,12 @@ class AuthController {
     try {
       const { email } = req.body;
       if (!email) return res.status(400).json({ error: " Email es obligatorio" });
-      const usuario = await buscarPorEmail(email);
+      const usuario = await obtenerUsuarioPorEmail(email);
       if (!usuario) return res.status(404).json({ error: " Usuario no encontrado" });
 
       const token = crypto.randomBytes(32).toString("hex");
       const expiracion = new Date(Date.now() + 3600000); // 1h
-      await guardarResetToken(email, token, expiracion);
+      await actualizarTokenReset(usuario.id, token, expiracion);
 
       logger.info(`🔗 Token de reset generado para ${email}`);
       res.json({ message: "📩 Se enviaron instrucciones al correo (simulado)", resetToken: token });
@@ -114,11 +114,11 @@ class AuthController {
     try {
       const { email } = req.body;
       if (!email) return res.status(400).json({ error: " Email es obligatorio" });
-      const usuario = await buscarPorEmail(email);
+      const usuario = await obtenerUsuarioPorEmail(email);
       if (!usuario) return res.status(404).json({ error: " Usuario no encontrado" });
       const codigo = Math.floor(100000 + Math.random() * 900000).toString();
       const expiracion = new Date(Date.now() + 15 * 60 * 1000);
-      await guardarResetToken(email, codigo, expiracion);
+      await actualizarTokenReset(usuario.id, codigo, expiracion);
       await enviarCodigoRecuperacion({ to: email, codigo });
       logger.info(`🔑 Código de recuperación enviado a ${email}`);
       res.json({ message: "📩 Código enviado al correo" });
@@ -134,7 +134,7 @@ class AuthController {
       if (!email || !codigo || !password)
         return res.status(400).json({ error: " Todos los campos son obligatorios" });
 
-      const usuario = await buscarPorEmail(email);
+      const usuario = await obtenerUsuarioPorEmail(email);
       if (!usuario || !usuario.reset_token || !usuario.reset_token_expiration)
         return res.status(400).json({ error: " Solicita un código primero" });
       if (usuario.reset_token !== codigo)
@@ -162,7 +162,7 @@ class AuthController {
         return res.status(401).json({ error: " Token inválido" });
       }
 
-      const usuario = await buscarPorEmail(decoded.email);
+      const usuario = await obtenerUsuarioPorEmail(decoded.email);
       if (!usuario) return res.status(401).json({ error: " Usuario no encontrado" });
 
       const newAccessToken = jwt.sign(

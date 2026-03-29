@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { getPool } = require('../config/db');
 
 // Endpoint de prueba simple
 router.get('/health', (req, res) => {
@@ -13,26 +14,14 @@ router.get('/health', (req, res) => {
 // Endpoint de prueba de base de datos
 router.get('/db-test', async (req, res) => {
   try {
-    const { Pool } = require('pg');
-    
-    const renderConfig = {
-      user: 'sigo_user',
-      host: 'dpg-d391d4nfte5s73cff6p0-a.oregon-postgres.render.com',
-      database: 'sigo_pro',
-      password: 'qgEyTD5LiGu22qdSOoROC1UFqjGZaxIv',
-      port: 5432,
-      ssl: { rejectUnauthorized: false },
-    };
-    
-    const pool = new Pool(renderConfig);
-    const result = await pool.query('SELECT NOW() as current_time, COUNT(*) as total_estudiantes FROM estudiantes');
-    await pool.end();
+    const pool = await getPool();
+    const result = await pool.request().query('SELECT NOW() as current_time, COUNT(*) as total_estudiantes FROM estudiantes');
     
     res.json({
       status: 'OK',
       database: 'Connected',
-      current_time: result.rows[0].current_time,
-      total_estudiantes: result.rows[0].total_estudiantes
+      current_time: result.recordset[0].current_time,
+      total_estudiantes: result.recordset[0].total_estudiantes
     });
   } catch (error) {
     res.status(500).json({
@@ -44,4 +33,3 @@ router.get('/db-test', async (req, res) => {
 });
 
 module.exports = router;
-
